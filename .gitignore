@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+target/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.log
+.env
