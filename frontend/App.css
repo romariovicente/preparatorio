@@ -1,0 +1,195 @@
+:root {
+    font-family: Inter, Arial, sans-serif;
+    color: white;
+    background: #03070c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 50% 15%, rgba(0, 217, 255, 0.18), transparent 32%),
+        linear-gradient(135deg, #02050a, #07121b, #020406);
+}
+
+button {
+    font: inherit;
+}
+
+.app {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.hero {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 20px;
+    text-align: center;
+}
+
+.hud-grid {
+    position: fixed;
+    inset: 0;
+    opacity: 0.08;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(0, 220, 255, 0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 220, 255, 0.4) 1px, transparent 1px);
+    background-size: 45px 45px;
+    transform: perspective(500px) rotateX(58deg) scale(2);
+    transform-origin: center bottom;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+.brand-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 220, 255, 0.5);
+    background: rgba(0, 220, 255, 0.08);
+    box-shadow: 0 0 35px rgba(0, 220, 255, 0.3);
+    color: #43ddff;
+    font-size: 36px;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(3rem, 12vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    text-shadow:
+        0 0 20px rgba(0, 220, 255, 0.7),
+        0 0 60px rgba(0, 220, 255, 0.25);
+}
+
+.brand p {
+    margin: 10px 0 0;
+    color: #70eaff;
+    font-size: clamp(0.7rem, 2vw, 1rem);
+    letter-spacing: 0.28em;
+}
+
+.creator {
+    margin-top: 26px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+}
+
+.creator strong {
+    color: #62e5ff;
+}
+
+.hero-description {
+    width: min(700px, 100%);
+    margin: 25px auto;
+    color: rgba(255,255,255,0.74);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: min(900px, 100%);
+}
+
+.hero-actions button {
+    min-height: 55px;
+    padding: 0 25px;
+    border-radius: 13px;
+    border: 1px solid rgba(255,255,255,0.14);
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.primary-button {
+    background: #45ddff;
+    color: #001018;
+    box-shadow: 0 0 30px rgba(69,221,255,0.25);
+}
+
+.secondary-button {
+    background: rgba(255,255,255,0.05);
+    color: white;
+}
+
+.hero-actions button:hover {
+    transform: translateY(-3px);
+}
+
+.systems {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: min(900px, 100%);
+    gap: 10px;
+    margin-top: 35px;
+}
+
+.systems div {
+    padding: 14px 10px;
+    border: 1px solid rgba(69,221,255,0.15);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.025);
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.8);
+}
+
+.camera-info {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 25px;
+    color: rgba(255,255,255,0.42);
+    font-size: 0.65rem;
+    letter-spacing: 0.13em;
+}
+
+@media (max-width: 650px) {
+    .hero {
+        padding: 25px 14px;
+    }
+    .brand {
+        flex-direction: column;
+    }
+    .brand-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+    }
+    .brand p {
+        letter-spacing: 0.12em;
+    }
+    .hero-actions {
+        flex-direction: column;
+    }
+    .hero-actions button {
+        width: 100%;
+    }
+    .systems {
+        grid-template-columns: 1fr 1fr;
+    }
+}
