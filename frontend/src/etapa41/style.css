@@ -1,0 +1,151 @@
+:host {
+  font-family: system-ui, sans-serif;
+  color: #eaf5f1;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+
+button, select {
+  font: inherit;
+  border: 1px solid #648b93;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #244955;
+  color: #f1faf5;
+}
+
+button { cursor: pointer; min-height: 44px; }
+
+button:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+.activity:focus-visible {
+  outline: 3px solid #f4c574;
+  outline-offset: 3px;
+}
+
+.launch {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 10000;
+  background: #18483f;
+  box-shadow: 0 4px 18px #0005;
+}
+
+dialog {
+  padding: 0;
+  border: 1px solid #63858c;
+  border-radius: 16px;
+  width: min(1200px, 96vw);
+  max-width: 96vw;
+  height: min(900px, 92dvh);
+  max-height: 92dvh;
+  color: #eaf5f1;
+  background: #112f39;
+}
+
+dialog[open] { display: flex; flex-direction: column; }
+dialog::backdrop { background: #07141dde; }
+
+header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #4a727c;
+}
+
+h1 { margin: 3px 0; font-size: clamp(18px, 3vw, 27px); }
+h3 { margin-top: 0; }
+p { font-size: 14px; }
+small { color: #b7d6d0; font-size: 12px; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 430px);
+  flex: 1;
+  min-height: 0;
+}
+
+.scene {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+}
+
+.scene-tools {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  background: #173944ed;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+.scene-start { white-space: nowrap; font-size: 12px; }
+.activity { overflow: auto; padding: 20px; }
+.clinical-note { color: #b7d6d0; font-size: 12px; }
+
+label {
+  display: block;
+  font-size: 13px;
+  margin: 12px 0 6px;
+}
+
+select { width: 100%; min-height: 44px; font-size: 14px; }
+details { margin: 16px 0; }
+summary { cursor: pointer; padding-block: 6px; }
+dl { margin: 12px 0; }
+
+dt {
+  color: #b9ead5;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+dd { margin: 4px 0 14px; font-size: 13px; }
+
+fieldset {
+  min-width: 0;
+  margin: 16px 0;
+  padding: 12px;
+  border: 1px solid #64848c;
+  border-radius: 8px;
+}
+
+legend { font-size: 12px; padding-inline: 6px; }
+.clinical-incorrect { border-color: #f4c574; }
+
+button[type=submit] {
+  width: 100%;
+  background: #c0e8d4;
+  color: #183b35;
+  font-weight: 700;
+}
+
+.clinical-record {
+  background: #09252f;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.clinical-record h4 { margin: 0; }
+
+@media (max-width: 760px) {
+  .layout { display: block; overflow: auto; }
+  .scene { height: 280px; }
+  .activity { overflow: visible; padding: 16px; }
+  header { padding: 12px; }
+  header button { font-size: 12px; flex-shrink: 0; }
+}
