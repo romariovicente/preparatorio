@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Grid } from "@react-three/drei";
+import { OrbitControls, Grid, Environment } from "@react-three/drei";
 import ServerHousing from "./ServerHousing";
 
 function LoadingCube() {
@@ -16,8 +16,14 @@ export default function GameWorld() {
   return (
     <Canvas camera={{ position: [0, 5, 10] }} style={{ width: "100vw", height: "100vh" }}>
       <color attach="background" args={['#111111']} />
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[10, 20, 10]} intensity={1} />
+      
+      {/* Iluminação Geral Ajustada */}
+      <ambientLight intensity={1.8} />
+      <directionalLight position={[10, 20, 10]} intensity={2.5} />
+      <directionalLight position={[-10, 10, -10]} intensity={1.2} />
+      
+      {/* Reflexo de ambiente realista para destacar as texturas */}
+      <Environment preset="city" />
       
       <Grid infiniteGrid cellSize={1} sectionSize={5} fadeDistance={30} />
 
