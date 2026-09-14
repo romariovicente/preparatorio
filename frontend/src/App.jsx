@@ -1,64 +1,156 @@
+import eruda from 'eruda';
+eruda.init();
+
+import { useState } from "react";
+
 import "./App.css";
 
+import GameWorld from "./components/GameWorld";
+
+
 function App() {
-    return (
-        <main className="app">
-            <div className="hud-grid"></div>
 
-            <section className="hero">
+const [inGame, setInGame] = useState(false);
 
-                <div className="brand">
-                    <span className="brand-icon">✚</span>
 
-                    <div>
-                        <h1>PREPARATÓRIO</h1>
-                        <p>DO TÉCNICO DE ENFERMAGEM À MEDICINA</p>
-                    </div>
-                </div>
+if (inGame) {
 
-                <div className="creator">
-                    Criado por <strong>Romario Vicente Amaro</strong>
-                </div>
+return (
 
-                <div className="hero-description">
-                    <p>
-                        Um mundo virtual brasileiro de educação,
-                        saúde, ciência, profissões, exploração
-                        e multiplayer.
-                    </p>
-                </div>
+<div className="game-container">
 
-                <div className="hero-actions">
-                    <button className="primary-button">
-                        ENTRAR NO JOGO
-                    </button>
+<GameWorld />
 
-                    <button className="secondary-button">
-                        CRIAR CONTA
-                    </button>
+<button 
 
-                    <button className="secondary-button">
-                        ENTRAR
-                    </button>
-                </div>
+className="exit-button" 
 
-                <div className="systems">
-                    <div>🏥 HOSPITAL</div>
-                    <div>🎓 UNIVERSIDADE</div>
-                    <div>🚑 EMERGÊNCIA</div>
-                    <div>🔬 PESQUISA</div>
-                    <div>🚗 MUNDO ABERTO</div>
-                    <div>👥 MULTIPLAYER</div>
-                </div>
+onClick={() => setInGame(false)}
 
-                <div className="camera-info">
-                    <span>TERCEIRA PESSOA — PADRÃO</span>
-                    <span>PRIMEIRA PESSOA — OPCIONAL</span>
-                </div>
+style={{ position: "absolute", top: 20, right: 20, zIndex: 10 }}
 
-            </section>
-        </main>
-    );
+>
+
+SAIR DO JOGO
+
+</button>
+
+</div>
+
+);
+
 }
+
+
+return (
+
+<main className="app">
+
+<div className="hud-grid"></div>
+
+
+<section className="hero">
+
+<div className="brand">
+
+<span className="brand-icon">✚</span>
+
+<div>
+
+<h1>PREPARATÓRIO</h1>
+
+<p>DO TÉCNICO DE ENFERMAGEM À MEDICINA</p>
+
+</div>
+
+</div>
+
+
+<div className="creator">
+
+Criado por <strong>Romario Vicente Amaro</strong>
+
+</div>
+
+
+<div className="hero-description">
+
+<p>
+
+Um mundo virtual brasileiro de educação,
+
+saúde, ciência, profissões, exploração
+
+e multiplayer.
+
+</p>
+
+</div>
+
+
+<div className="hero-actions">
+
+<button 
+
+className="primary-button"
+
+onClick={() => setInGame(true)}
+
+>
+
+ENTRAR NO JOGO
+
+</button>
+
+
+<button className="secondary-button">
+
+CRIAR CONTA
+
+</button>
+
+
+<button className="secondary-button">
+
+ENTRAR
+
+</button>
+
+</div>
+
+
+<div className="systems">
+
+<div>🏥 HOSPITAL</div>
+
+<div>🎓 UNIVERSIDADE</div>
+
+<div>🚑 EMERGÊNCIA</div>
+
+<div>🔬 PESQUISA</div>
+
+<div>🚗 MUNDO ABERTO</div>
+
+<div>👥 MULTIPLAYER</div>
+
+</div>
+
+
+<div className="camera-info">
+
+<span>TERCEIRA PESSOA — PADRÃO</span>
+
+<span>PRIMEIRA PESSOA — OPCIONAL</span>
+
+</div>
+
+</section>
+
+</main>
+
+);
+
+}
+
 
 export default App;
