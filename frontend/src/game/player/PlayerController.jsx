@@ -2,8 +2,7 @@ import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Vector3 } from "three";
 
-export default function PlayerController({ position, setPosition }) {
-    const velocity = useRef(new Vector3(0, 0, 0));
+export default function PlayerController({ setPosition }) {
     const keys = useRef({ forward: false, backward: false, left: false, right: false, jump: false, run: false });
 
     useEffect(() => {
