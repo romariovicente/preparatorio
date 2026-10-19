@@ -1,0 +1,296 @@
+{
+  "version": 1,
+  "author": "Romario Vicente Amaro",
+  "validatedSourceCatalog": true,
+  "environmentReplacements": [
+    {
+      "id": "real-residence-0",
+      "sourceId": "SUP_cyberpunk_background_appartment_building",
+      "url": "/assets/supplied/SUP_cyberpunk_background_appartment_building.glb",
+      "bytes": 1399536,
+      "sha256": "030f7fa2413cc87573a07190944c1dc0d9fde479ac84ed5626330d1246b7474e",
+      "credits": {
+        "author": "Jungle Jim (https://sketchfab.com/jungle_jim)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/cyberpunk-background-appartment-building-65be0ddf5ca6423ba2ce907ae6d09680",
+        "title": "Cyberpunk Background Appartment building"
+      },
+      "licenseStatus": "attribution",
+      "height": 30,
+      "position": [
+        -80,
+        3.9,
+        -25
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "hidePrefixes": [
+        "BLD_Residential_0_",
+        "BLD_Residential_1_",
+        "BLD_Residential_2_",
+        "BLD_Residential_3_",
+        "BLD_Residential_4_",
+        "BLD_Residential_5_",
+        "BLD_Residential_6_",
+        "BLD_Residential_7_",
+        "BLD_Residential_8_"
+      ]
+    },
+    {
+      "id": "real-residence-1",
+      "sourceId": "SUP_cyberpunk_background_appartment_building",
+      "url": "/assets/supplied/SUP_cyberpunk_background_appartment_building.glb",
+      "bytes": 1399536,
+      "sha256": "030f7fa2413cc87573a07190944c1dc0d9fde479ac84ed5626330d1246b7474e",
+      "credits": {
+        "author": "Jungle Jim (https://sketchfab.com/jungle_jim)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/cyberpunk-background-appartment-building-65be0ddf5ca6423ba2ce907ae6d09680",
+        "title": "Cyberpunk Background Appartment building"
+      },
+      "licenseStatus": "attribution",
+      "height": 30,
+      "position": [
+        -80,
+        3.9,
+        -66
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "hidePrefixes": []
+    },
+    {
+      "id": "real-residence-2",
+      "sourceId": "SUP_cyberpunk_background_appartment_building",
+      "url": "/assets/supplied/SUP_cyberpunk_background_appartment_building.glb",
+      "bytes": 1399536,
+      "sha256": "030f7fa2413cc87573a07190944c1dc0d9fde479ac84ed5626330d1246b7474e",
+      "credits": {
+        "author": "Jungle Jim (https://sketchfab.com/jungle_jim)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/cyberpunk-background-appartment-building-65be0ddf5ca6423ba2ce907ae6d09680",
+        "title": "Cyberpunk Background Appartment building"
+      },
+      "licenseStatus": "attribution",
+      "height": 30,
+      "position": [
+        -80,
+        3.9,
+        70
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "hidePrefixes": []
+    },
+    {
+      "id": "hospital-sports",
+      "sourceId": "SUP_2010_mercedes_sls_amg",
+      "url": "/assets/supplied/SUP_2010_mercedes_sls_amg.glb",
+      "bytes": 10404120,
+      "sha256": "0a7d0012bfd24ac60fc5afa2ff8dd45146a5ebd1ddb1e577fa0777f5c6a47f1f",
+      "credits": {
+        "author": "Dave Love SketchFab (https://sketchfab.com/Tyler_Dave)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/2010-mercedes-sls-amg-fa3fd5eeea674f37bb03283f2c53d563",
+        "title": "2010 Mercedes SLS AMG"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.26,
+      "position": [
+        15,
+        0.1,
+        -54.2
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "hidePrefixes": []
+    },
+    {
+      "id": "hospital-suv",
+      "sourceId": "SUP_volkswagen_atlas_teramont_cross_sport_2025",
+      "url": "/assets/supplied/SUP_volkswagen_atlas_teramont_cross_sport_2025.glb",
+      "bytes": 24637636,
+      "sha256": "e48c4efde85e0667309a68301e47507f71079d1b4cce7e165948d99279154e44",
+      "credits": {
+        "author": "geyges (https://sketchfab.com/geyges)",
+        "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)",
+        "source": "https://sketchfab.com/3d-models/volkswagen-atlas-teramont-cross-sport-2025-8fec636e245a4909814bf564d6da307f",
+        "title": "Volkswagen Atlas Teramont Cross Sport (2025)"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.73,
+      "position": [
+        15,
+        0.1,
+        -46.2
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "hidePrefixes": []
+    },
+    {
+      "id": "store-car",
+      "sourceId": "SUP_2010_mercedes_sls_amg",
+      "url": "/assets/supplied/SUP_2010_mercedes_sls_amg.glb",
+      "bytes": 10404120,
+      "sha256": "0a7d0012bfd24ac60fc5afa2ff8dd45146a5ebd1ddb1e577fa0777f5c6a47f1f",
+      "credits": {
+        "author": "Dave Love SketchFab (https://sketchfab.com/Tyler_Dave)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/2010-mercedes-sls-amg-fa3fd5eeea674f37bb03283f2c53d563",
+        "title": "2010 Mercedes SLS AMG"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.26,
+      "position": [
+        -34,
+        0,
+        43
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "hidePrefixes": []
+    },
+    {
+      "id": "moto-showcase",
+      "sourceId": "SUP_cyberpunk_kawasaki_ninja",
+      "url": "/assets/supplied/SUP_cyberpunk_kawasaki_ninja.glb",
+      "bytes": 13234368,
+      "sha256": "f699eb895c3f839a30ab86515a2d84968130cb47948e731284d12eea13027b0e",
+      "credits": {
+        "author": "SoftNote (https://sketchfab.com/softnote)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/cyberpunk-kawasaki-ninja-7be872db8c644346a13e67808dfaee3e",
+        "title": "Cyberpunk kawasaki ninja"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.3,
+      "position": [
+        -43,
+        0,
+        55
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "hidePrefixes": []
+    },
+    {
+      "id": "dealer-sports",
+      "sourceId": "SUP_2010_mercedes_sls_amg",
+      "url": "/assets/supplied/SUP_2010_mercedes_sls_amg.glb",
+      "bytes": 10404120,
+      "sha256": "0a7d0012bfd24ac60fc5afa2ff8dd45146a5ebd1ddb1e577fa0777f5c6a47f1f",
+      "credits": {
+        "author": "Dave Love SketchFab (https://sketchfab.com/Tyler_Dave)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/2010-mercedes-sls-amg-fa3fd5eeea674f37bb03283f2c53d563",
+        "title": "2010 Mercedes SLS AMG"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.26,
+      "position": [
+        62,
+        0,
+        56
+      ],
+      "rotation": [
+        0,
+        1.5707963267948966,
+        0
+      ],
+      "hidePrefixes": []
+    },
+    {
+      "id": "dealer-suv",
+      "sourceId": "SUP_volkswagen_atlas_teramont_cross_sport_2025",
+      "url": "/assets/supplied/SUP_volkswagen_atlas_teramont_cross_sport_2025.glb",
+      "bytes": 24637636,
+      "sha256": "e48c4efde85e0667309a68301e47507f71079d1b4cce7e165948d99279154e44",
+      "credits": {
+        "author": "geyges (https://sketchfab.com/geyges)",
+        "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)",
+        "source": "https://sketchfab.com/3d-models/volkswagen-atlas-teramont-cross-sport-2025-8fec636e245a4909814bf564d6da307f",
+        "title": "Volkswagen Atlas Teramont Cross Sport (2025)"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.73,
+      "position": [
+        71,
+        0,
+        56
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "hidePrefixes": []
+    }
+  ],
+  "dynamicReplacements": {
+    "mototaxi": {
+      "sourceId": "SUP_cyberpunk_kawasaki_ninja",
+      "url": "/assets/supplied/SUP_cyberpunk_kawasaki_ninja.glb",
+      "bytes": 13234368,
+      "sha256": "f699eb895c3f839a30ab86515a2d84968130cb47948e731284d12eea13027b0e",
+      "credits": {
+        "author": "SoftNote (https://sketchfab.com/softnote)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/cyberpunk-kawasaki-ninja-7be872db8c644346a13e67808dfaee3e",
+        "title": "Cyberpunk kawasaki ninja"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.3
+    },
+    "truck": {
+      "sourceId": "SUP_volvo_concept_truck",
+      "url": "/assets/supplied/SUP_volvo_concept_truck.glb",
+      "bytes": 1234232,
+      "sha256": "d2a954b7cfdb3938b2bed0e0d525ed99b1672c789127030b3f9ef365d757723d",
+      "credits": {
+        "author": "s.probka (https://sketchfab.com/s.probka)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/volvo-concept-truck-6fc9043e43a74c9d9a2ebedf76bf5315",
+        "title": "Volvo concept truck"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.8
+    },
+    "car": {
+      "sourceId": "SUP_2010_mercedes_sls_amg",
+      "url": "/assets/supplied/SUP_2010_mercedes_sls_amg.glb",
+      "bytes": 10404120,
+      "sha256": "0a7d0012bfd24ac60fc5afa2ff8dd45146a5ebd1ddb1e577fa0777f5c6a47f1f",
+      "credits": {
+        "author": "Dave Love SketchFab (https://sketchfab.com/Tyler_Dave)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/2010-mercedes-sls-amg-fa3fd5eeea674f37bb03283f2c53d563",
+        "title": "2010 Mercedes SLS AMG"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.26
+    }
+  },
+  "status": "Detailed supplied residences and vehicles; remaining environments are still being adapted to realism."
+}

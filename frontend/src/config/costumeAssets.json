@@ -1,0 +1,80 @@
+[
+  {
+    "id": "COSTUME_doctor_horror_hospital",
+    "baseId": "SUP_doctor_horror_hospital",
+    "url": "/assets/cyber/CHR_PREP_Nurse_Coat_20261005.glb",
+    "clips": [
+      "Interact",
+      "Dance",
+      "Idle",
+      "Walk"
+    ],
+    "sha256": "481fbc97937a692199410ff0ad22bd3c2534d411888bf65c20db7cc0cbfe0c00",
+    "bytes": 2922796,
+    "bones": 20,
+    "garmentMeshes": 26,
+    "reimportValidated": true,
+    "sourcePreserved": true,
+    "verificationReport": "reports/costumes/doctor_horror_hospital_costume.json",
+    "quality": "prototype",
+    "notes": "Additive low-poly garments weighted to the existing humanoid rig. Original geometry and procedural clips preserved; visual fitting review remains required."
+  },
+  {
+    "id": "COSTUME_jumpsuit_low_poly",
+    "baseId": "SUP_jumpsuit_low_poly",
+    "url": "/assets/cyber/CHR_PREP_jumpsuit_low_poly_Coat_20261005.glb",
+    "clips": [
+      "Interact",
+      "Dance",
+      "Idle",
+      "Walk"
+    ],
+    "sha256": "6d50c060546e290a2493b8ee7c81b2fca899a11eafd3cd8f55c6addc82d07b01",
+    "bytes": 2598596,
+    "bones": 20,
+    "garmentMeshes": 26,
+    "reimportValidated": true,
+    "sourcePreserved": true,
+    "verificationReport": "reports/costumes/jumpsuit_low_poly_costume.json",
+    "quality": "prototype",
+    "notes": "Additive low-poly garments weighted to the existing humanoid rig. Original geometry and procedural clips preserved; visual fitting review remains required."
+  },
+  {
+    "id": "COSTUME_school_girl_v21",
+    "baseId": "SUP_school_girl_v21",
+    "url": "/assets/cyber/CHR_PREP_school_girl_v21_Coat_20261005.glb",
+    "clips": [
+      "Interact",
+      "Dance",
+      "Idle",
+      "Walk"
+    ],
+    "sha256": "72fa4e9c083d25b2400bf87c01342c455027959e91565136bebe643a3bc5b0f5",
+    "bytes": 3495356,
+    "bones": 20,
+    "garmentMeshes": 26,
+    "reimportValidated": true,
+    "sourcePreserved": true,
+    "verificationReport": "reports/costumes/school_girl_v21_costume.json",
+    "quality": "prototype",
+    "notes": "Additive low-poly garments weighted to the existing humanoid rig. Original geometry and procedural clips preserved; visual fitting review remains required."
+  },
+  {
+    "id": "COSTUME_Remy_Senac_20261013",
+    "baseId": "CHR_Remy_Mixamo_20261005",
+    "url": "/assets/characters/CHR_Remy_Senac_Uniform_20261013.glb",
+    "clips": ["Idle", "Walk", "Dance", "Interact"],
+    "sha256": "2cff412ae103b9b7d996d264bd4908cf80bd4e4dc93447afb53bc671c9542bfc",
+    "bytes": 38973072,
+    "bones": 55,
+    "garmentMeshes": 20,
+    "replacedMeshes": ["Tops001", "Bottoms001"],
+    "reimportValidated": true,
+    "cpuValidated": true,
+    "sourcePreserved": true,
+    "verificationReport": "reports/costumes/remy_senac_uniform_20261013.json",
+    "cpuReport": "reports/costumes/remy_uniform_cpu_20261013.json",
+    "quality": "skinned fitted prototype",
+    "notes": "Complete scrub shirt and continuous trousers with anatomical lining, fitted coat with lapels/buttons/pockets and per-user runtime names. Original Remy, original clothes, Oct9 derivative, genuine clips and supplied identity PNG bytes are preserved. No cloth simulation; FK sitting and garment tailoring remain a visual prototype."
+  }
+]

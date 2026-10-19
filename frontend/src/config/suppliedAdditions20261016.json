@@ -1,0 +1,1609 @@
+[
+  {
+    "id": "FAUNA_FOX_20261016",
+    "name": "Raposa",
+    "category": "Animais",
+    "status": "validated",
+    "sourceRelative": "Animais Terrestres\\FOX - Realistic 3D Model\\fox_-_realistic_3d_model_demo_free.glb",
+    "sourceSha256": "6e0615dc8fec710aaa627fe03345c194c52bd0bb7ed23b2d784a54c0335fd7dc",
+    "credits": {
+      "author": "WildMesh 3D (https://sketchfab.com/WildMesh_3D)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/3d-models/fox-realistic-3d-model-demo-free-83b1b144712c43d282d90c2fb15ba450",
+      "title": "FOX - Realistic 3D Model (DEMO FREE)"
+    },
+    "licenseStatus": "supplied embedded attribution; preserve original license terms",
+    "url": "/assets/additions20261016/FAUNA_FOX_20261016.glb",
+    "preview": "/assets/additions20261016/FAUNA_FOX_20261016_PBR.jpg",
+    "bytes": 3282164,
+    "sha256": "60eacb52b55ae5cf9e2d78b95c1c03eabe121b8fcac0d186a43dec927a49b17d",
+    "triangles": 14532,
+    "originalTriangles": 14532,
+    "dimensions": [
+      0.2213394045829773,
+      1.113005518913269,
+      0.6499998569488525
+    ],
+    "height": 0.6499998569488525,
+    "animated": true,
+    "animations": [
+      "Fox|Fox_Howl",
+      "Fox|Fox_Stand",
+      "Fox|Fox_WalkFast_F"
+    ],
+    "rigged": true,
+    "originalRig": true,
+    "playable": false,
+    "visualStyle": "realistic",
+    "reimportValidated": true,
+    "blenderScene": "PREP_FAUNA_FOX_20261016",
+    "qaScene": "PREP_FAUNA_QA_FOX_20261016",
+    "boneCounts": [
+      123
+    ],
+    "referenceClip": "Fox|Fox_Stand",
+    "excludedImporterHelpers": 1,
+    "roundtrip": {
+      "matchingBounds": true,
+      "matchingTriangles": true,
+      "matchingBoneCount": true,
+      "finiteEvaluatedVertices": true,
+      "sampleFrames": [
+        1,
+        9,
+        17
+      ],
+      "maxSampleMotionMeters": 0.007071022406239042
+    },
+    "normalization": {
+      "sourceEvaluatedBounds": [
+        [
+          -0.1390753984451294,
+          -0.67047119140625,
+          -0.004722473677247763
+        ],
+        [
+          0.1263139694929123,
+          0.6640396118164062,
+          0.7746375799179077
+        ]
+      ],
+      "uniformRootScale": 0.8340175956667635,
+      "displayHeightMeters": 0.65,
+      "lengthMeters": null,
+      "note": "Approximate presentation scale; no claim of measured specimen size."
+    },
+    "modifications": "GLB JSON material metadata adapted from audited zero-specular KHR_materials_pbrSpecularGlossiness to core PBR plus supported KHR_materials_specular.specularFactor=0. Original BIN chunk, images, mesh attributes, node transforms, inverse binds, weights, skeletons and clips are byte-identical; original alpha modes/cutoffs, double-sided flags and attribution retained. No Blender skin re-export.",
+    "deliveryMethod": "BIN-skins-animations-images-unmodified; zero-specular-PBR-material-metadata-adapted; pending-independent-Blender-material-QA",
+    "tags": [
+      "fauna",
+      "terrestre",
+      "esqueleto original",
+      "animação",
+      "Entrega de 16/10/2026"
+    ],
+    "description": "Modelo fornecido com esqueleto e movimentos próprios, disponível para inspeção animada.",
+    "timeLocal": "2026-10-16T08:33:29-03:00",
+    "originalReimportValidated": true,
+    "materialCompatibility": {
+      "owner": "prep_fauna_material_compat_20261016_v1",
+      "legacyExtensionRemoved": "KHR_materials_pbrSpecularGlossiness",
+      "supportedZeroSpecularExtension": "KHR_materials_specular",
+      "corePBRBaseColorTextureFromOriginalDiffuse": true,
+      "binaryChunkSha256": "2d4063737e0d791bae224d9da0953b2c929ce87ed6382f3dc861b92dc1fa320a",
+      "materialCount": 2,
+      "blenderMaterialQA": "pending",
+      "originalGLBCheckpoint": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\checkpoints\\FAUNA_LEGACY_SOURCE_20261016\\FAUNA_FOX_20261016.glb",
+      "sourceAttributionPreserved": true
+    },
+    "materialQAScene": "PREP_FAUNA_PBR_QA_FOX_20261016",
+    "materialQA": {
+      "passed": true,
+      "matchingBonesAndTriangles": true,
+      "matchingReferencePoseBounds": true,
+      "actualBaseColorImageLinks": 2,
+      "materials": [
+        {
+          "material": "M_Fox.006",
+          "images": [
+            {
+              "name": "Image_0.193",
+              "size": [
+                1024,
+                1024
+              ]
+            }
+          ]
+        },
+        {
+          "material": "M_Fox_Fur.006",
+          "images": [
+            {
+              "name": "Image_1.157",
+              "size": [
+                256,
+                256
+              ]
+            }
+          ]
+        }
+      ],
+      "noSkinReexport": true,
+      "actualPBRRender": "/assets/additions20261016/FAUNA_FOX_20261016_PBR.jpg"
+    },
+    "previewBeforeMaterialAdaptation": "/assets/additions20261016/FAUNA_FOX_20261016.jpg",
+    "previewSha256": "936f7320825fd55ce4da0da58ec6cba78afa2a34d4ae03e316246690e2b6cd78",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "FAUNA_LIONESS_20261016",
+    "name": "Leoa",
+    "category": "Animais",
+    "status": "validated",
+    "sourceRelative": "Animais Terrestres\\LIONESS - Realistic 3D Model\\lioness_-_realistic_3d_model_demo_free.glb",
+    "sourceSha256": "16b309a73aa72b8a8510f4cd2a4803208d6d19ffdcba1160d8bc9fff7b76c350",
+    "credits": {
+      "author": "WildMesh 3D (https://sketchfab.com/WildMesh_3D)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/3d-models/lioness-realistic-3d-model-demo-free-51e60bf5fe37445e91093b4b00a5b0aa",
+      "title": "LIONESS - Realistic 3D Model (DEMO FREE)"
+    },
+    "licenseStatus": "supplied embedded attribution; preserve original license terms",
+    "url": "/assets/additions20261016/FAUNA_LIONESS_20261016.glb",
+    "preview": "/assets/additions20261016/FAUNA_LIONESS_20261016_PBR.jpg",
+    "bytes": 8904080,
+    "sha256": "37ebe4ce5f5c43760e9475aaf531e69d7976cc58ab9dbe79d1da14ed067b915c",
+    "triangles": 16474,
+    "originalTriangles": 16474,
+    "dimensions": [
+      0.4065598249435425,
+      1.9843722581863403,
+      1.1500003337860107
+    ],
+    "height": 1.1500003337860107,
+    "animated": true,
+    "animations": [
+      "Lioness|Lioness_Breathing",
+      "Lioness|Lioness_Idle",
+      "Lioness|Lioness_WalkFast_F"
+    ],
+    "rigged": true,
+    "originalRig": true,
+    "playable": false,
+    "visualStyle": "realistic",
+    "reimportValidated": true,
+    "blenderScene": "PREP_FAUNA_LIONESS_20261016",
+    "qaScene": "PREP_FAUNA_QA_LIONESS_20261016",
+    "boneCounts": [
+      125
+    ],
+    "referenceClip": "Lioness|Lioness_Idle",
+    "excludedImporterHelpers": 1,
+    "roundtrip": {
+      "matchingBounds": true,
+      "matchingTriangles": true,
+      "matchingBoneCount": true,
+      "finiteEvaluatedVertices": true,
+      "sampleFrames": [
+        1,
+        9,
+        17
+      ],
+      "maxSampleMotionMeters": 0.2889022949043058
+    },
+    "normalization": {
+      "sourceEvaluatedBounds": [
+        [
+          -0.23326949775218964,
+          -1.2727926969528198,
+          -0.013779638335108757
+        ],
+        [
+          0.24179895222187042,
+          1.0459619760513306,
+          1.3300046920776367
+        ]
+      ],
+      "uniformRootScale": 0.8557920883425829,
+      "displayHeightMeters": 1.15,
+      "lengthMeters": null,
+      "note": "Approximate presentation scale; no claim of measured specimen size."
+    },
+    "modifications": "GLB JSON material metadata adapted from audited zero-specular KHR_materials_pbrSpecularGlossiness to core PBR plus supported KHR_materials_specular.specularFactor=0. Original BIN chunk, images, mesh attributes, node transforms, inverse binds, weights, skeletons and clips are byte-identical; original alpha modes/cutoffs, double-sided flags and attribution retained. No Blender skin re-export.",
+    "deliveryMethod": "BIN-skins-animations-images-unmodified; zero-specular-PBR-material-metadata-adapted; pending-independent-Blender-material-QA",
+    "tags": [
+      "fauna",
+      "terrestre",
+      "esqueleto original",
+      "animação",
+      "Entrega de 16/10/2026"
+    ],
+    "description": "Modelo fornecido com esqueleto e movimentos próprios, disponível para inspeção animada.",
+    "timeLocal": "2026-10-16T08:33:54-03:00",
+    "originalReimportValidated": true,
+    "materialCompatibility": {
+      "owner": "prep_fauna_material_compat_20261016_v1",
+      "legacyExtensionRemoved": "KHR_materials_pbrSpecularGlossiness",
+      "supportedZeroSpecularExtension": "KHR_materials_specular",
+      "corePBRBaseColorTextureFromOriginalDiffuse": true,
+      "binaryChunkSha256": "bd1477201a788a9f916a65d82c44d170d2e2d3a7cc5337e6f0bf03324df92066",
+      "materialCount": 1,
+      "blenderMaterialQA": "pending",
+      "originalGLBCheckpoint": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\checkpoints\\FAUNA_LEGACY_SOURCE_20261016\\FAUNA_LIONESS_20261016.glb",
+      "sourceAttributionPreserved": true
+    },
+    "materialQAScene": "PREP_FAUNA_PBR_QA_LIONESS_20261016",
+    "materialQA": {
+      "passed": true,
+      "matchingBonesAndTriangles": true,
+      "matchingReferencePoseBounds": true,
+      "actualBaseColorImageLinks": 1,
+      "materials": [
+        {
+          "material": "M_Lioness.002",
+          "images": [
+            {
+              "name": "Image_0.194",
+              "size": [
+                2048,
+                2048
+              ]
+            }
+          ]
+        }
+      ],
+      "noSkinReexport": true,
+      "actualPBRRender": "/assets/additions20261016/FAUNA_LIONESS_20261016_PBR.jpg"
+    },
+    "previewBeforeMaterialAdaptation": "/assets/additions20261016/FAUNA_LIONESS_20261016.jpg",
+    "previewSha256": "d3ad9f9848a4b529fb318f0649099af961bfd3fd3aa16929b2d78a5f2110f27b",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "FAUNA_RABBIT_20261016",
+    "name": "Coelho",
+    "category": "Animais",
+    "status": "validated",
+    "sourceRelative": "Animais Terrestres\\RABBIT - Realistic 3D Model\\rabbit_-_realistic_3d_model_demo_free.glb",
+    "sourceSha256": "6329c42867723e259615d92c307d10fd3133ece4e35864f02d7750cfe3b38e3d",
+    "credits": {
+      "author": "WildMesh 3D (https://sketchfab.com/WildMesh_3D)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/3d-models/rabbit-realistic-3d-model-demo-free-d70284ea0d7644988bdcd327c3ffb59a",
+      "title": "RABBIT - Realistic 3D Model (DEMO FREE)"
+    },
+    "licenseStatus": "supplied embedded attribution; preserve original license terms",
+    "url": "/assets/additions20261016/FAUNA_RABBIT_20261016.glb",
+    "preview": "/assets/additions20261016/FAUNA_RABBIT_20261016_PBR.jpg",
+    "bytes": 2729360,
+    "sha256": "38f271c74f8b985c004157dc994caed15d7d265614b43000d8d725e30c118d93",
+    "triangles": 9232,
+    "originalTriangles": 9232,
+    "dimensions": [
+      0.30382150411605835,
+      0.8373705744743347,
+      0.44999992847442627
+    ],
+    "height": 0.44999992847442627,
+    "animated": true,
+    "animations": [
+      "Rabbit|Rabbit_Idle",
+      "Rabbit|Rabbit_WalkSlow_F"
+    ],
+    "rigged": true,
+    "originalRig": true,
+    "playable": false,
+    "visualStyle": "realistic",
+    "reimportValidated": true,
+    "blenderScene": "PREP_FAUNA_RABBIT_20261016",
+    "qaScene": "PREP_FAUNA_QA_RABBIT_20261016",
+    "boneCounts": [
+      103
+    ],
+    "referenceClip": "Rabbit|Rabbit_Idle",
+    "excludedImporterHelpers": 1,
+    "roundtrip": {
+      "matchingBounds": true,
+      "matchingTriangles": true,
+      "matchingBoneCount": true,
+      "finiteEvaluatedVertices": true,
+      "sampleFrames": [
+        1,
+        9,
+        17
+      ],
+      "maxSampleMotionMeters": 0.07400325713794181
+    },
+    "normalization": {
+      "sourceEvaluatedBounds": [
+        [
+          -0.10982277989387512,
+          -0.3592873811721802,
+          -0.019514460116624832
+        ],
+        [
+          0.107248455286026,
+          0.23898851871490479,
+          0.3019968569278717
+        ]
+      ],
+      "uniformRootScale": 1.399639640975776,
+      "displayHeightMeters": 0.45,
+      "lengthMeters": null,
+      "note": "Approximate presentation scale; no claim of measured specimen size."
+    },
+    "modifications": "GLB JSON material metadata adapted from audited zero-specular KHR_materials_pbrSpecularGlossiness to core PBR plus supported KHR_materials_specular.specularFactor=0. Original BIN chunk, images, mesh attributes, node transforms, inverse binds, weights, skeletons and clips are byte-identical; original alpha modes/cutoffs, double-sided flags and attribution retained. No Blender skin re-export.",
+    "deliveryMethod": "BIN-skins-animations-images-unmodified; zero-specular-PBR-material-metadata-adapted; pending-independent-Blender-material-QA",
+    "tags": [
+      "fauna",
+      "terrestre",
+      "esqueleto original",
+      "animação",
+      "Entrega de 16/10/2026"
+    ],
+    "description": "Modelo fornecido com esqueleto e movimentos próprios, disponível para inspeção animada.",
+    "timeLocal": "2026-10-16T08:34:17-03:00",
+    "originalReimportValidated": true,
+    "materialCompatibility": {
+      "owner": "prep_fauna_material_compat_20261016_v1",
+      "legacyExtensionRemoved": "KHR_materials_pbrSpecularGlossiness",
+      "supportedZeroSpecularExtension": "KHR_materials_specular",
+      "corePBRBaseColorTextureFromOriginalDiffuse": true,
+      "binaryChunkSha256": "55ee39d3b8e1f1c6fc023a14ca1b6f0466f28051a972e44a91fbdf305ed95f52",
+      "materialCount": 1,
+      "blenderMaterialQA": "pending",
+      "originalGLBCheckpoint": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\checkpoints\\FAUNA_LEGACY_SOURCE_20261016\\FAUNA_RABBIT_20261016.glb",
+      "sourceAttributionPreserved": true
+    },
+    "materialQAScene": "PREP_FAUNA_PBR_QA_RABBIT_20261016",
+    "materialQA": {
+      "passed": true,
+      "matchingBonesAndTriangles": true,
+      "matchingReferencePoseBounds": true,
+      "actualBaseColorImageLinks": 1,
+      "materials": [
+        {
+          "material": "M_Rabbit.002",
+          "images": [
+            {
+              "name": "Image_0.195",
+              "size": [
+                1024,
+                1024
+              ]
+            }
+          ]
+        }
+      ],
+      "noSkinReexport": true,
+      "actualPBRRender": "/assets/additions20261016/FAUNA_RABBIT_20261016_PBR.jpg"
+    },
+    "previewBeforeMaterialAdaptation": "/assets/additions20261016/FAUNA_RABBIT_20261016.jpg",
+    "previewSha256": "6586e99b86e8bd11996052837de05ff45c2914213c987974c4d6c2904d69fcc0",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "FAUNA_WOLF_20261016",
+    "name": "Lobo",
+    "category": "Animais",
+    "status": "validated",
+    "sourceRelative": "Animais Terrestres\\WOLF - Realistic 3D Model\\wolf_-_realistic_3d_model_demo_free.glb",
+    "sourceSha256": "4bbe8043b30c9f1abb55eaf09313ef430c8f22a9c7d1b9e375d496e511222178",
+    "credits": {
+      "author": "WildMesh 3D (https://sketchfab.com/WildMesh_3D)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/3d-models/wolf-realistic-3d-model-demo-free-8840b859a566485c874a27b1731e1db8",
+      "title": "WOLF - Realistic 3D Model (DEMO FREE)"
+    },
+    "licenseStatus": "supplied embedded attribution; preserve original license terms",
+    "url": "/assets/additions20261016/FAUNA_WOLF_20261016.glb",
+    "preview": "/assets/additions20261016/FAUNA_WOLF_20261016_PBR.jpg",
+    "bytes": 7904532,
+    "sha256": "6aa5cdb58bf86374e8bbf6912e228f8a6994e1c4535ee2a76de9f297df580768",
+    "triangles": 16262,
+    "originalTriangles": 16262,
+    "dimensions": [
+      0.31560635566711426,
+      1.5141825675964355,
+      0.9499998688697815
+    ],
+    "height": 0.9499998688697815,
+    "animated": true,
+    "animations": [
+      "Wolf|Wolf_Howl",
+      "Wolf|Wolf_WalkFast_F"
+    ],
+    "rigged": true,
+    "originalRig": true,
+    "playable": false,
+    "visualStyle": "realistic",
+    "reimportValidated": true,
+    "blenderScene": "PREP_FAUNA_WOLF_20261016",
+    "qaScene": "PREP_FAUNA_QA_WOLF_20261016",
+    "boneCounts": [
+      123
+    ],
+    "referenceClip": "Wolf|Wolf_WalkFast_F",
+    "excludedImporterHelpers": 1,
+    "roundtrip": {
+      "matchingBounds": true,
+      "matchingTriangles": true,
+      "matchingBoneCount": true,
+      "finiteEvaluatedVertices": true,
+      "sampleFrames": [
+        1,
+        9,
+        17
+      ],
+      "maxSampleMotionMeters": 0.7160550884979915
+    },
+    "normalization": {
+      "sourceEvaluatedBounds": [
+        [
+          -0.2343473583459854,
+          -1.375680685043335,
+          -0.015323839150369167
+        ],
+        [
+          0.20079435408115387,
+          0.7119961977005005,
+          1.2944871187210083
+        ]
+      ],
+      "uniformRootScale": 0.7252954837460163,
+      "displayHeightMeters": 0.95,
+      "lengthMeters": null,
+      "note": "Approximate presentation scale; no claim of measured specimen size."
+    },
+    "modifications": "GLB JSON material metadata adapted from audited zero-specular KHR_materials_pbrSpecularGlossiness to core PBR plus supported KHR_materials_specular.specularFactor=0. Original BIN chunk, images, mesh attributes, node transforms, inverse binds, weights, skeletons and clips are byte-identical; original alpha modes/cutoffs, double-sided flags and attribution retained. No Blender skin re-export.",
+    "deliveryMethod": "BIN-skins-animations-images-unmodified; zero-specular-PBR-material-metadata-adapted; pending-independent-Blender-material-QA",
+    "tags": [
+      "fauna",
+      "terrestre",
+      "esqueleto original",
+      "animação",
+      "Entrega de 16/10/2026"
+    ],
+    "description": "Modelo fornecido com esqueleto e movimentos próprios, disponível para inspeção animada.",
+    "timeLocal": "2026-10-16T08:34:41-03:00",
+    "originalReimportValidated": true,
+    "materialCompatibility": {
+      "owner": "prep_fauna_material_compat_20261016_v1",
+      "legacyExtensionRemoved": "KHR_materials_pbrSpecularGlossiness",
+      "supportedZeroSpecularExtension": "KHR_materials_specular",
+      "corePBRBaseColorTextureFromOriginalDiffuse": true,
+      "binaryChunkSha256": "12dc463e90bb018989ba8363141dd681162a4c19a17a5a19b9ddf4031507b023",
+      "materialCount": 1,
+      "blenderMaterialQA": "pending",
+      "originalGLBCheckpoint": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\checkpoints\\FAUNA_LEGACY_SOURCE_20261016\\FAUNA_WOLF_20261016.glb",
+      "sourceAttributionPreserved": true
+    },
+    "materialQAScene": "PREP_FAUNA_PBR_QA_WOLF_20261016",
+    "materialQA": {
+      "passed": true,
+      "matchingBonesAndTriangles": true,
+      "matchingReferencePoseBounds": true,
+      "actualBaseColorImageLinks": 1,
+      "materials": [
+        {
+          "material": "M_Wolf.002",
+          "images": [
+            {
+              "name": "Image_0.196",
+              "size": [
+                2048,
+                2048
+              ]
+            }
+          ]
+        }
+      ],
+      "noSkinReexport": true,
+      "actualPBRRender": "/assets/additions20261016/FAUNA_WOLF_20261016_PBR.jpg"
+    },
+    "previewBeforeMaterialAdaptation": "/assets/additions20261016/FAUNA_WOLF_20261016.jpg",
+    "previewSha256": "6d3b4d3b596fcc7b03891e834ee9261ece339257ae869ffde1f14784130b0048",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "FAUNA_HORSE_20261016",
+    "name": "Cavalo com sela",
+    "category": "Animais",
+    "status": "validated",
+    "sourceRelative": "Montarias dos Personagens\\HORSE - Realistic 3D Model\\horse_-_realistic_3d_model_demo_free.glb",
+    "sourceSha256": "743fd70ec937dde1aa550afde17eeb506ca538933e291eca41d2fa8d5ffb20ea",
+    "credits": {
+      "author": "WildMesh 3D (https://sketchfab.com/WildMesh_3D)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/3d-models/horse-realistic-3d-model-demo-free-65d6a70a6721495f938c93e80a5998e4",
+      "title": "HORSE - Realistic 3D Model (DEMO FREE)"
+    },
+    "licenseStatus": "supplied embedded attribution; preserve original license terms",
+    "url": "/assets/additions20261016/FAUNA_HORSE_20261016.glb",
+    "preview": "/assets/additions20261016/FAUNA_HORSE_20261016_PBR.jpg",
+    "bytes": 27318192,
+    "sha256": "1f5524b58ea7abc4c8cf805892155a29bfc6380cd41015f455503a973f0b9d5f",
+    "triangles": 82426,
+    "originalTriangles": 82426,
+    "dimensions": [
+      0.9110790491104126,
+      2.6594109535217285,
+      2.250000238418579
+    ],
+    "height": 2.250000238418579,
+    "animated": true,
+    "animations": [
+      "Horse|Horse_Idle",
+      "Horse|Horse_Walk"
+    ],
+    "rigged": true,
+    "originalRig": true,
+    "playable": false,
+    "visualStyle": "realistic",
+    "reimportValidated": true,
+    "blenderScene": "PREP_FAUNA_HORSE_20261016",
+    "qaScene": "PREP_FAUNA_QA_HORSE_20261016",
+    "boneCounts": [
+      677
+    ],
+    "referenceClip": "Horse|Horse_Idle",
+    "excludedImporterHelpers": 1,
+    "roundtrip": {
+      "matchingBounds": true,
+      "matchingTriangles": true,
+      "matchingBoneCount": true,
+      "finiteEvaluatedVertices": true,
+      "sampleFrames": [
+        1,
+        9,
+        17
+      ],
+      "maxSampleMotionMeters": 0.03727641749017173
+    },
+    "normalization": {
+      "sourceEvaluatedBounds": [
+        [
+          -0.4565160274505615,
+          -3.1279373168945312,
+          -0.004396739415824413
+        ],
+        [
+          0.44688278436660767,
+          -0.49094510078430176,
+          2.2266361713409424
+        ]
+      ],
+      "uniformRootScale": 1.0085015116006937,
+      "displayHeightMeters": 2.25,
+      "lengthMeters": null,
+      "note": "Approximate presentation scale; no claim of measured specimen size."
+    },
+    "modifications": "GLB JSON material metadata adapted from audited zero-specular KHR_materials_pbrSpecularGlossiness to core PBR plus supported KHR_materials_specular.specularFactor=0. Original BIN chunk, images, mesh attributes, node transforms, inverse binds, weights, skeletons and clips are byte-identical; original alpha modes/cutoffs, double-sided flags and attribution retained. No Blender skin re-export.",
+    "deliveryMethod": "BIN-skins-animations-images-unmodified; zero-specular-PBR-material-metadata-adapted; pending-independent-Blender-material-QA",
+    "tags": [
+      "fauna",
+      "terrestre",
+      "esqueleto original",
+      "animação",
+      "Entrega de 16/10/2026"
+    ],
+    "description": "Modelo fornecido com esqueleto e movimentos próprios, disponível para inspeção animada.",
+    "timeLocal": "2026-10-16T08:35:15-03:00",
+    "originalReimportValidated": true,
+    "materialCompatibility": {
+      "owner": "prep_fauna_material_compat_20261016_v1",
+      "legacyExtensionRemoved": "KHR_materials_pbrSpecularGlossiness",
+      "supportedZeroSpecularExtension": "KHR_materials_specular",
+      "corePBRBaseColorTextureFromOriginalDiffuse": true,
+      "binaryChunkSha256": "21f7dfe6c6ff3bb40a3eaa7d8f405e1da5d674c123f03710c4a26804901f16a8",
+      "materialCount": 5,
+      "blenderMaterialQA": "pending",
+      "originalGLBCheckpoint": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\checkpoints\\FAUNA_LEGACY_SOURCE_20261016\\FAUNA_HORSE_20261016.glb",
+      "sourceAttributionPreserved": true
+    },
+    "materialQAScene": "PREP_FAUNA_PBR_QA_HORSE_20261016",
+    "materialQA": {
+      "passed": true,
+      "matchingBonesAndTriangles": true,
+      "matchingReferencePoseBounds": true,
+      "actualBaseColorImageLinks": 5,
+      "materials": [
+        {
+          "material": "M_Eye.002",
+          "images": [
+            {
+              "name": "Image_1.158",
+              "size": [
+                1024,
+                1024
+              ]
+            }
+          ]
+        },
+        {
+          "material": "M_Hair.002",
+          "images": [
+            {
+              "name": "Image_2.023",
+              "size": [
+                2048,
+                2048
+              ]
+            }
+          ]
+        },
+        {
+          "material": "M_Saddle1.002",
+          "images": [
+            {
+              "name": "Image_4.104",
+              "size": [
+                1024,
+                1024
+              ]
+            }
+          ]
+        },
+        {
+          "material": "M_Body.002",
+          "images": [
+            {
+              "name": "Image_0.197",
+              "size": [
+                2048,
+                2048
+              ]
+            }
+          ]
+        },
+        {
+          "material": "M_Saddle2.002",
+          "images": [
+            {
+              "name": "Image_3.119",
+              "size": [
+                1024,
+                1024
+              ]
+            }
+          ]
+        }
+      ],
+      "noSkinReexport": true,
+      "actualPBRRender": "/assets/additions20261016/FAUNA_HORSE_20261016_PBR.jpg"
+    },
+    "previewBeforeMaterialAdaptation": "/assets/additions20261016/FAUNA_HORSE_20261016.jpg",
+    "previewSha256": "b561f7b709cbaa3f058b17a2e456134bff23a9697bae9942b4d8bcdd99f78885",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "FAUNA_MEGALODON_20261016",
+    "name": "Megalodonte",
+    "category": "Animais",
+    "status": "validated",
+    "sourceRelative": "Animais Marinhos\\megalodon\\megalodon.glb",
+    "sourceSha256": "3c708fae2dc95527c59d4ede869095c44d08d59c99f745c15450d95f6178a216",
+    "credits": {
+      "author": "Pablo Medrano (https://sketchfab.com/pjmedranog)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/megalodon-ecae76225ba24db8bd77f829f25a00b1",
+      "title": "megalodon"
+    },
+    "licenseStatus": "supplied embedded attribution; preserve original license terms",
+    "url": "/assets/additions20261016/FAUNA_MEGALODON_20261016.glb",
+    "preview": "/assets/additions20261016/FAUNA_MEGALODON_20261016.jpg",
+    "bytes": 33835776,
+    "sha256": "3c708fae2dc95527c59d4ede869095c44d08d59c99f745c15450d95f6178a216",
+    "triangles": 17439,
+    "originalTriangles": 17439,
+    "dimensions": [
+      4.839802265167236,
+      12.000001907348633,
+      4.63852596282959
+    ],
+    "height": 4.63852596282959,
+    "animated": true,
+    "animations": [
+      "Animation"
+    ],
+    "rigged": true,
+    "originalRig": true,
+    "playable": false,
+    "visualStyle": "realistic",
+    "reimportValidated": true,
+    "blenderScene": "PREP_FAUNA_MEGALODON_20261016",
+    "qaScene": "PREP_FAUNA_QA_MEGALODON_20261016",
+    "boneCounts": [
+      106
+    ],
+    "referenceClip": "Animation",
+    "excludedImporterHelpers": 1,
+    "roundtrip": {
+      "matchingBounds": true,
+      "matchingTriangles": true,
+      "matchingBoneCount": true,
+      "finiteEvaluatedVertices": true,
+      "sampleFrames": [
+        1,
+        9,
+        17
+      ],
+      "maxSampleMotionMeters": 0.27103159536081445
+    },
+    "normalization": {
+      "sourceEvaluatedBounds": [
+        [
+          -68.71755981445312,
+          -119.23662567138672,
+          3.6555936336517334
+        ],
+        [
+          30.096481323242188,
+          125.76689147949219,
+          98.36017608642578
+        ]
+      ],
+      "uniformRootScale": 0.04897889023482629,
+      "displayHeightMeters": null,
+      "lengthMeters": 12,
+      "note": "Approximate presentation scale; no claim of measured specimen size."
+    },
+    "modifications": "Delivered GLB is byte-identical to supplied source. Blender display uses an outer parent only; source skeleton, inverse binds, weights, materials and clips retained without skin re-export.",
+    "deliveryMethod": "verified-original-glb-copy; Blender source and independent reimport both evaluated at matching display transforms",
+    "tags": [
+      "fauna",
+      "marinho",
+      "esqueleto original",
+      "animação",
+      "Entrega de 16/10/2026"
+    ],
+    "description": "Modelo fornecido com esqueleto e movimentos próprios, disponível para inspeção animada.",
+    "timeLocal": "2026-10-16T08:35:41-03:00",
+    "previewSha256": "657019725d6412a9bbe1d91dcb1c718e0a3225e5cc90807f2796ba06c46b6a7d",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "EDU_Liver_Gallbladder_20261016",
+    "name": "Fígado e vesícula biliar",
+    "category": "Anatomia",
+    "sourceRelative": "Esqueleto\\Anatomy - Human Liver and Gallbladder\\model_0.obj",
+    "sourceFiles": [
+      {
+        "file": "Esqueleto\\Anatomy - Human Liver and Gallbladder\\model_0.obj",
+        "sha256": "7edfec13d1e5e6481351316840f5d2fc3e216896a5e37d368d950b28be322eec",
+        "bytes": 2696209
+      }
+    ],
+    "sourceSha256": "7edfec13d1e5e6481351316840f5d2fc3e216896a5e37d368d950b28be322eec",
+    "sourceHashMethod": "file-sha256",
+    "originalTriangles": 25801,
+    "sourceFanTriangles": 25801,
+    "importedTriangles": 16128,
+    "credits": {},
+    "licenseStatus": "unknown",
+    "status": "validated",
+    "reimportValidated": true,
+    "url": "/assets/additions20261016/EDU_Liver_Gallbladder_20261016.glb",
+    "bytes": 387148,
+    "sha256": "051a42c8153af6eff30f320f2cea04585cf833daa5dcc5fba3b53124b88297be",
+    "triangles": 16128,
+    "meshes": 1,
+    "dimensions": [
+      1.2058793306350708,
+      0.8508228063583374,
+      0.3500000238418579
+    ],
+    "dimensionsConvention": "Blender X/Y/Z meters; GLB exports Y up",
+    "animated": false,
+    "animations": [],
+    "originalRig": false,
+    "skins": 0,
+    "preparedTriangles": 16128,
+    "meshPrimitiveTriangles": 16128,
+    "sourceBounds": {
+      "meshes": 1,
+      "vertices": 9001,
+      "triangles": 16128,
+      "boundsMin": [
+        -1.062399983406067,
+        0.08763650059700012,
+        -1.6915037631988525
+      ],
+      "boundsMax": [
+        10.901585578918457,
+        8.528972625732422,
+        1.780979037284851
+      ],
+      "dimensions": [
+        11.963985443115234,
+        8.441335678100586,
+        3.472482681274414
+      ],
+      "sourceFanTriangles": 25801,
+      "sourceRepeatedIndexFaces": 9673,
+      "positiveAreaGeometryMatchesSource": true,
+      "positiveAreaGeometrySha256Float32": "c0745ae6f70eea43340d8ea812fdfc86d1a6d5cb72cebc69003c37b16cc25a9c"
+    },
+    "displayScaleFromSourceUnits": 0.10079243587649918,
+    "sourceTopologyProof": [
+      {
+        "file": "Esqueleto\\Anatomy - Human Liver and Gallbladder\\model_0.obj",
+        "rawFaceRecords": 25801,
+        "sourceFanTriangles": 25801,
+        "facesWithRepeatedVertexIndices": 9673,
+        "zeroAreaFacesWithDistinctIndices": 0,
+        "usableIndexTriangles": 16128,
+        "positiveAreaTriangles": 16128,
+        "expectedImportedTrianglesMin": 16128,
+        "expectedImportedTrianglesMax": 16128,
+        "positiveAreaGeometrySha256Float32": "c0745ae6f70eea43340d8ea812fdfc86d1a6d5cb72cebc69003c37b16cc25a9c",
+        "diagnosis": "Repeated-index triangle records have zero area and are rejected by OBJ mesh validation; source fan count is not usable surface count"
+      }
+    ],
+    "importedPositiveAreaGeometryMatchesSource": true,
+    "displayHeightMeters": 0.35,
+    "scaleMeaning": "Educational display scale; not clinical measurements",
+    "materialRecovery": "PBR colors reconstructed per assembly/source part; supplied MTL missing; no diagnostic or tissue segmentation claim",
+    "textureRecovery": "No PNG association inferred; UVs retained when supplied; no reliable MTL or per-face material labels",
+    "modifications": "OBJ importer rejects repeated-index zero-area face records; all positive-area source triangles independently matched by coordinates. Shared coordinates preserved; one assembly root centers/scales display; reconstructed PBR educational palette; no mesh reduction or rig generation",
+    "validation": "Source topology diagnosis plus exact float32 positive-area triangle multiset match before normalization; exported GLB reimported with exact delivered triangle count; finite vertices/world bounds; source/display bounds compared; actual Blender 512px PNG rendered",
+    "preview": "/assets/additions20261016/EDU_Liver_Gallbladder_20261016.png",
+    "previewSha256": "432acf94e398cc46653c1be16e65c7b05162fd17512711ea88b079ca63df244f",
+    "previewSize": [
+      512,
+      512
+    ],
+    "previewEvidence": "Actual reimported model rendered by Blender EEVEE",
+    "scene": "PREP_ANATOMY_ASSETS_20261016",
+    "collection": "PREP_ANAT_EDU_Liver_Gallbladder_20261016",
+    "qaScene": "PREP_ANATOMY_QA_1_20261016",
+    "sourceParts": 1,
+    "prepOwner": "prep_anatomy_import_20261016_v1",
+    "rigged": false,
+    "playable": false,
+    "catalogAdded": "2026-10-16",
+    "tags": [
+      "Entrega de 16/10/2026"
+    ]
+  },
+  {
+    "id": "EDU_Lungs_20261016",
+    "name": "Pulmões",
+    "category": "Anatomia",
+    "sourceRelative": "Esqueleto\\Anatomy - Human Lungs\\model_0.obj",
+    "sourceFiles": [
+      {
+        "file": "Esqueleto\\Anatomy - Human Lungs\\model_0.obj",
+        "sha256": "3d8aa56287c481ab32e77e8af1f9877f8aa12f873c8c3c5073681a3f40ef13cd",
+        "bytes": 7518555
+      }
+    ],
+    "sourceSha256": "3d8aa56287c481ab32e77e8af1f9877f8aa12f873c8c3c5073681a3f40ef13cd",
+    "sourceHashMethod": "file-sha256",
+    "originalTriangles": 68610,
+    "sourceFanTriangles": 68610,
+    "importedTriangles": 44400,
+    "credits": {},
+    "licenseStatus": "unknown",
+    "status": "validated",
+    "reimportValidated": true,
+    "url": "/assets/additions20261016/EDU_Lungs_20261016.glb",
+    "bytes": 1019252,
+    "sha256": "9b1490efeff7ea0a9eefd19eb286bb253476409e02275fb68e713691f78578af",
+    "triangles": 44400,
+    "meshes": 1,
+    "dimensions": [
+      0.4777468740940094,
+      0.14206823706626892,
+      0.550000011920929
+    ],
+    "dimensionsConvention": "Blender X/Y/Z meters; GLB exports Y up",
+    "animated": false,
+    "animations": [],
+    "originalRig": false,
+    "skins": 0,
+    "preparedTriangles": 44400,
+    "meshPrimitiveTriangles": 44400,
+    "sourceBounds": {
+      "meshes": 1,
+      "vertices": 23456,
+      "triangles": 44400,
+      "boundsMin": [
+        -13.692899703979492,
+        -3.6432900428771973,
+        0.0
+      ],
+      "boundsMax": [
+        12.935661315917969,
+        4.2752814292907715,
+        30.655790328979492
+      ],
+      "dimensions": [
+        26.62856101989746,
+        7.918571472167969,
+        30.655790328979492
+      ],
+      "sourceFanTriangles": 68610,
+      "sourceRepeatedIndexFaces": 24210,
+      "positiveAreaGeometryMatchesSource": true,
+      "positiveAreaGeometrySha256Float32": "0fe2ed579041efe3a778ab8c1ec2e13033bfafc0d0bcfd5f8772d0137ce65e8b"
+    },
+    "displayScaleFromSourceUnits": 0.017941145672570533,
+    "sourceTopologyProof": [
+      {
+        "file": "Esqueleto\\Anatomy - Human Lungs\\model_0.obj",
+        "rawFaceRecords": 68610,
+        "sourceFanTriangles": 68610,
+        "facesWithRepeatedVertexIndices": 24210,
+        "zeroAreaFacesWithDistinctIndices": 0,
+        "usableIndexTriangles": 44400,
+        "positiveAreaTriangles": 44400,
+        "expectedImportedTrianglesMin": 44400,
+        "expectedImportedTrianglesMax": 44400,
+        "positiveAreaGeometrySha256Float32": "0fe2ed579041efe3a778ab8c1ec2e13033bfafc0d0bcfd5f8772d0137ce65e8b",
+        "diagnosis": "Repeated-index triangle records have zero area and are rejected by OBJ mesh validation; source fan count is not usable surface count"
+      }
+    ],
+    "importedPositiveAreaGeometryMatchesSource": true,
+    "displayHeightMeters": 0.55,
+    "scaleMeaning": "Educational display scale; not clinical measurements",
+    "materialRecovery": "PBR colors reconstructed per assembly/source part; supplied MTL missing; no diagnostic or tissue segmentation claim",
+    "textureRecovery": "No PNG association inferred; UVs retained when supplied; no reliable MTL or per-face material labels",
+    "modifications": "OBJ importer rejects repeated-index zero-area face records; all positive-area source triangles independently matched by coordinates. Shared coordinates preserved; one assembly root centers/scales display; reconstructed PBR educational palette; no mesh reduction or rig generation",
+    "validation": "Source topology diagnosis plus exact float32 positive-area triangle multiset match before normalization; exported GLB reimported with exact delivered triangle count; finite vertices/world bounds; source/display bounds compared; actual Blender 512px PNG rendered",
+    "preview": "/assets/additions20261016/EDU_Lungs_20261016.png",
+    "previewSha256": "88b71f270a609cdfc13d62ee7f1d66d94557ba0d0cb2d6682e36373d0cff20c0",
+    "previewSize": [
+      512,
+      512
+    ],
+    "previewEvidence": "Actual reimported model rendered by Blender EEVEE",
+    "scene": "PREP_ANATOMY_ASSETS_20261016",
+    "collection": "PREP_ANAT_EDU_Lungs_20261016",
+    "qaScene": "PREP_ANATOMY_QA_2_20261016",
+    "sourceParts": 1,
+    "prepOwner": "prep_anatomy_import_20261016_v1",
+    "rigged": false,
+    "playable": false,
+    "catalogAdded": "2026-10-16",
+    "tags": [
+      "Entrega de 16/10/2026"
+    ]
+  },
+  {
+    "id": "EDU_Kidney_Urinary_20261016",
+    "name": "Rins e sistema urinário",
+    "category": "Anatomia",
+    "sourceRelative": "Esqueleto\\Anatomy - Human kidney and urinary system\\model_0.obj",
+    "sourceFiles": [
+      {
+        "file": "Esqueleto\\Anatomy - Human kidney and urinary system\\model_0.obj",
+        "sha256": "d0d39278cb1d112b3c9dacc47344117b0a8297f5502bdbbe0fa566faf469e658",
+        "bytes": 16426610
+      }
+    ],
+    "sourceSha256": "d0d39278cb1d112b3c9dacc47344117b0a8297f5502bdbbe0fa566faf469e658",
+    "sourceHashMethod": "file-sha256",
+    "originalTriangles": 145866,
+    "sourceFanTriangles": 145866,
+    "importedTriangles": 91176,
+    "credits": {},
+    "licenseStatus": "unknown",
+    "status": "validated",
+    "reimportValidated": true,
+    "url": "/assets/additions20261016/EDU_Kidney_Urinary_20261016.glb",
+    "bytes": 2167220,
+    "sha256": "a512175db1b2b1a731b34ff163cac815fa55368e3c9a3ce003986aba9168d165",
+    "triangles": 91176,
+    "meshes": 1,
+    "dimensions": [
+      0.2873185873031616,
+      0.09587429463863373,
+      0.5999999642372131
+    ],
+    "dimensionsConvention": "Blender X/Y/Z meters; GLB exports Y up",
+    "animated": false,
+    "animations": [],
+    "originalRig": false,
+    "skins": 0,
+    "preparedTriangles": 91176,
+    "meshPrimitiveTriangles": 91176,
+    "sourceBounds": {
+      "meshes": 1,
+      "vertices": 50557,
+      "triangles": 91176,
+      "boundsMin": [
+        -7.597479820251465,
+        -2.4760398864746094,
+        0.00025729701155796647
+      ],
+      "boundsMax": [
+        7.243040084838867,
+        2.476039409637451,
+        30.9913330078125
+      ],
+      "dimensions": [
+        14.840519905090332,
+        4.9520792961120605,
+        30.99107551574707
+      ],
+      "sourceFanTriangles": 145866,
+      "sourceRepeatedIndexFaces": 54690,
+      "positiveAreaGeometryMatchesSource": true,
+      "positiveAreaGeometrySha256Float32": "44cb9aa31eb6b62a37dd582abb3eb95265b52ec9bd5d746e026228d246bfb617"
+    },
+    "displayScaleFromSourceUnits": 0.019360412190884014,
+    "sourceTopologyProof": [
+      {
+        "file": "Esqueleto\\Anatomy - Human kidney and urinary system\\model_0.obj",
+        "rawFaceRecords": 145866,
+        "sourceFanTriangles": 145866,
+        "facesWithRepeatedVertexIndices": 54690,
+        "zeroAreaFacesWithDistinctIndices": 0,
+        "usableIndexTriangles": 91176,
+        "positiveAreaTriangles": 91176,
+        "expectedImportedTrianglesMin": 91176,
+        "expectedImportedTrianglesMax": 91176,
+        "positiveAreaGeometrySha256Float32": "44cb9aa31eb6b62a37dd582abb3eb95265b52ec9bd5d746e026228d246bfb617",
+        "diagnosis": "Repeated-index triangle records have zero area and are rejected by OBJ mesh validation; source fan count is not usable surface count"
+      }
+    ],
+    "importedPositiveAreaGeometryMatchesSource": true,
+    "displayHeightMeters": 0.6,
+    "scaleMeaning": "Educational display scale; not clinical measurements",
+    "materialRecovery": "PBR colors reconstructed per assembly/source part; supplied MTL missing; no diagnostic or tissue segmentation claim",
+    "textureRecovery": "No PNG association inferred; UVs retained when supplied; no reliable MTL or per-face material labels",
+    "modifications": "OBJ importer rejects repeated-index zero-area face records; all positive-area source triangles independently matched by coordinates. Shared coordinates preserved; one assembly root centers/scales display; reconstructed PBR educational palette; no mesh reduction or rig generation",
+    "validation": "Source topology diagnosis plus exact float32 positive-area triangle multiset match before normalization; exported GLB reimported with exact delivered triangle count; finite vertices/world bounds; source/display bounds compared; actual Blender 512px PNG rendered",
+    "preview": "/assets/additions20261016/EDU_Kidney_Urinary_20261016.png",
+    "previewSha256": "fbfe222ff6f60ffe68955ad997de2f13bcd6d3a91d622cf2811d425f4fafddfd",
+    "previewSize": [
+      512,
+      512
+    ],
+    "previewEvidence": "Actual reimported model rendered by Blender EEVEE",
+    "scene": "PREP_ANATOMY_ASSETS_20261016",
+    "collection": "PREP_ANAT_EDU_Kidney_Urinary_20261016",
+    "qaScene": "PREP_ANATOMY_QA_3_20261016",
+    "sourceParts": 1,
+    "prepOwner": "prep_anatomy_import_20261016_v1",
+    "rigged": false,
+    "playable": false,
+    "catalogAdded": "2026-10-16",
+    "tags": [
+      "Entrega de 16/10/2026"
+    ]
+  },
+  {
+    "id": "EDU_Spine_Torso_RibCage_20261016",
+    "name": "Tronco, coluna e caixa torácica",
+    "category": "Anatomia",
+    "sourceRelative": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_0.obj",
+    "sourceFiles": [
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_0.obj",
+        "sha256": "eada06c2c82fa1036ffe60b8c3ec833a8e4e7ed2cad81063f8a27863b9e9e1c5",
+        "bytes": 6723479
+      },
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_1.obj",
+        "sha256": "1b082f73d87952c52dc414cda7a68191f40d0da331e6e077707aaa314bdc89ab",
+        "bytes": 3954723
+      },
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_2.obj",
+        "sha256": "7341b4904ea56d2bba1993bb13cff0e8b0eb24ed9ac7a9722f3f61cb681221a9",
+        "bytes": 1032372
+      },
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_3.obj",
+        "sha256": "36f554ead3d0d0a8c79d648deb5674edd65d41cc4b64570146d4b07dd3ec9dfd",
+        "bytes": 546655
+      }
+    ],
+    "sourceSha256": "6495b52a0afab29a5ac3379d827e754a59476869683fdf3a4afff2b435976ed3",
+    "sourceHashMethod": "sha256-of-json-sourceFiles-sort-keys",
+    "originalTriangles": 109224,
+    "sourceFanTriangles": 109224,
+    "importedTriangles": 68104,
+    "credits": {},
+    "licenseStatus": "unknown",
+    "status": "validated",
+    "reimportValidated": true,
+    "url": "/assets/additions20261016/EDU_Spine_Torso_RibCage_20261016.glb",
+    "bytes": 1723836,
+    "sha256": "a86c3ce02b226083d2616e19cba76f9f4e63b3f794ec99ec252772f2fcbb2135",
+    "triangles": 68104,
+    "meshes": 4,
+    "dimensions": [
+      0.2667142152786255,
+      0.20968616008758545,
+      0.7000000476837158
+    ],
+    "dimensionsConvention": "Blender X/Y/Z meters; GLB exports Y up",
+    "animated": false,
+    "animations": [],
+    "originalRig": false,
+    "skins": 0,
+    "preparedTriangles": 68104,
+    "meshPrimitiveTriangles": 68104,
+    "sourceBounds": {
+      "meshes": 4,
+      "vertices": 40892,
+      "triangles": 68104,
+      "boundsMin": [
+        -15.994099617004395,
+        -19.62833023071289,
+        0.010159799829125404
+      ],
+      "boundsMax": [
+        15.994192123413086,
+        5.520316123962402,
+        83.9644546508789
+      ],
+      "dimensions": [
+        31.988292694091797,
+        25.14864730834961,
+        83.95429229736328
+      ],
+      "sourceFanTriangles": 109224,
+      "sourceRepeatedIndexFaces": 41120,
+      "positiveAreaGeometryMatchesSource": true,
+      "positiveAreaGeometrySha256Float32": "afa2960bf8fa40f53def1d88842d3b75f8f0a14569303d4f85aefc89f07164e8"
+    },
+    "displayScaleFromSourceUnits": 0.008337870042764668,
+    "sourceTopologyProof": [
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_0.obj",
+        "rawFaceRecords": 58054,
+        "sourceFanTriangles": 58054,
+        "facesWithRepeatedVertexIndices": 21882,
+        "zeroAreaFacesWithDistinctIndices": 1,
+        "usableIndexTriangles": 36172,
+        "positiveAreaTriangles": 36171,
+        "expectedImportedTrianglesMin": 36171,
+        "expectedImportedTrianglesMax": 36172,
+        "positiveAreaGeometrySha256Float32": "ac6dee5ca8caf1d8d7c618c6f3addda13974f48eebed07bc6de2eecbc86a83fc",
+        "diagnosis": "Repeated-index triangle records have zero area and are rejected by OBJ mesh validation; source fan count is not usable surface count"
+      },
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_1.obj",
+        "rawFaceRecords": 36488,
+        "sourceFanTriangles": 36488,
+        "facesWithRepeatedVertexIndices": 13656,
+        "zeroAreaFacesWithDistinctIndices": 0,
+        "usableIndexTriangles": 22832,
+        "positiveAreaTriangles": 22832,
+        "expectedImportedTrianglesMin": 22832,
+        "expectedImportedTrianglesMax": 22832,
+        "positiveAreaGeometrySha256Float32": "51ab2d949414e42f042f22cf327a01111a561fe87109d04d70da50e637d00e01",
+        "diagnosis": "Repeated-index triangle records have zero area and are rejected by OBJ mesh validation; source fan count is not usable surface count"
+      },
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_2.obj",
+        "rawFaceRecords": 9252,
+        "sourceFanTriangles": 9252,
+        "facesWithRepeatedVertexIndices": 3692,
+        "zeroAreaFacesWithDistinctIndices": 0,
+        "usableIndexTriangles": 5560,
+        "positiveAreaTriangles": 5560,
+        "expectedImportedTrianglesMin": 5560,
+        "expectedImportedTrianglesMax": 5560,
+        "positiveAreaGeometrySha256Float32": "cdfe0b04f34eb0a49d0d4021bf462d63db5712c46e60663eebdda7a214aaa477",
+        "diagnosis": "Repeated-index triangle records have zero area and are rejected by OBJ mesh validation; source fan count is not usable surface count"
+      },
+      {
+        "file": "Esqueleto\\Anatomy - Human Spine Torso and Rib Cage\\model_3.obj",
+        "rawFaceRecords": 5430,
+        "sourceFanTriangles": 5430,
+        "facesWithRepeatedVertexIndices": 1890,
+        "zeroAreaFacesWithDistinctIndices": 0,
+        "usableIndexTriangles": 3540,
+        "positiveAreaTriangles": 3540,
+        "expectedImportedTrianglesMin": 3540,
+        "expectedImportedTrianglesMax": 3540,
+        "positiveAreaGeometrySha256Float32": "e7e82f1da5bf1b368ba02a239e4ee35170816c04046c790ceddd4918f11850af",
+        "diagnosis": "Repeated-index triangle records have zero area and are rejected by OBJ mesh validation; source fan count is not usable surface count"
+      }
+    ],
+    "importedPositiveAreaGeometryMatchesSource": true,
+    "displayHeightMeters": 0.7,
+    "scaleMeaning": "Educational display scale; not clinical measurements",
+    "materialRecovery": "PBR colors reconstructed per assembly/source part; supplied MTL missing; no diagnostic or tissue segmentation claim",
+    "textureRecovery": "No PNG association inferred; UVs retained when supplied; no reliable MTL or per-face material labels",
+    "modifications": "OBJ importer rejects repeated-index zero-area face records; all positive-area source triangles independently matched by coordinates. Shared coordinates preserved; one assembly root centers/scales display; reconstructed PBR educational palette; no mesh reduction or rig generation",
+    "validation": "Source topology diagnosis plus exact float32 positive-area triangle multiset match before normalization; exported GLB reimported with exact delivered triangle count; finite vertices/world bounds; source/display bounds compared; actual Blender 512px PNG rendered",
+    "preview": "/assets/additions20261016/EDU_Spine_Torso_RibCage_20261016.png",
+    "previewSha256": "a347485749f004fc2c94035995c28dc8b6d9d478571da7478914b5f72ee8b881",
+    "previewSize": [
+      512,
+      512
+    ],
+    "previewEvidence": "Actual reimported model rendered by Blender EEVEE",
+    "scene": "PREP_ANATOMY_ASSETS_20261016",
+    "collection": "PREP_ANAT_EDU_Spine_Torso_RibCage_20261016",
+    "qaScene": "PREP_ANATOMY_QA_4_20261016",
+    "sourceParts": 4,
+    "prepOwner": "prep_anatomy_import_20261016_v1",
+    "rigged": false,
+    "playable": false,
+    "catalogAdded": "2026-10-16",
+    "tags": [
+      "Entrega de 16/10/2026"
+    ]
+  },
+  {
+    "id": "SUP_trem_composicao_obj_20261016",
+    "name": "Trem — composição fornecida",
+    "category": "Trens",
+    "sourceRelative": "Trem",
+    "sourceFiles": [
+      "Trem\\model_0.obj",
+      "Trem\\model_1.obj",
+      "Trem\\model_10.obj",
+      "Trem\\model_11.obj",
+      "Trem\\model_12.obj",
+      "Trem\\model_13.obj",
+      "Trem\\model_14.obj",
+      "Trem\\model_15.obj",
+      "Trem\\model_16.obj",
+      "Trem\\model_17.obj",
+      "Trem\\model_18.obj",
+      "Trem\\model_19.obj",
+      "Trem\\model_2.obj",
+      "Trem\\model_20.obj",
+      "Trem\\model_21.obj",
+      "Trem\\model_22.obj",
+      "Trem\\model_23.obj",
+      "Trem\\model_24.obj",
+      "Trem\\model_25.obj",
+      "Trem\\model_26.obj",
+      "Trem\\model_27.obj",
+      "Trem\\model_28.obj",
+      "Trem\\model_29.obj",
+      "Trem\\model_3.obj",
+      "Trem\\model_4.obj",
+      "Trem\\model_5.obj",
+      "Trem\\model_6.obj",
+      "Trem\\model_7.obj",
+      "Trem\\model_8.obj",
+      "Trem\\model_9.obj"
+    ],
+    "sourceSha256": "e811e252bd356606535674aa95988f427b67d7f3a3c5fe74b0313edaa020d7d2",
+    "sourceHashType": "ordered multipart relative-path and SHA-256 fingerprint",
+    "sourceFileHashes": {
+      "Trem\\model_0.obj": "1cd13254f789e5dd4bde5a3dd56ce89aad39592a798bb8b3140cdad54c1656b1",
+      "Trem\\model_1.obj": "4824e83ca45a8efbbd81969ad50dd1297dd2f6a56fcda71f905da059ca715478",
+      "Trem\\model_2.obj": "c2e7144273d6723275ce207376386565213da2fe6f61066b4e747475d85b90de",
+      "Trem\\model_3.obj": "9b609a0c700a86d8a45329c919f1af8cbba64e4779d819148cbd5080a498fe40",
+      "Trem\\model_4.obj": "0f564b9fc1c5e6ba020c8c7a0f7337e5ee68dffad638e122da88dee035c49aaa",
+      "Trem\\model_5.obj": "75c981423675a47c563c1fcbe1158fb6df614894c24dd58c8caf51e8f0841f07",
+      "Trem\\model_6.obj": "33520acf8addb5f1ecb168fb6a3f9f5830d96da3e6beb0a6044ddd223ba57105",
+      "Trem\\model_7.obj": "56efd5a25887d007afafbb1dfb988e740ab8c26bf236a1e6efb760dc172f3e3f",
+      "Trem\\model_8.obj": "892630e5526decd02cd0c0241066bd692c0d69549b8cde28ef067c8cd150ac70",
+      "Trem\\model_9.obj": "3b0d1cd127fc8cc4fb34ef4976857ca303aec3d03bfe51054e6601668100357b",
+      "Trem\\model_10.obj": "663b2a55d488626ec88fdf4ad1ae649620989e092d2bb2d52c732b405889ee9c",
+      "Trem\\model_11.obj": "d78c9a5c4ce4ff05fa8f7412534a848074b04d70b1a6d749a05132007f8ec5a5",
+      "Trem\\model_12.obj": "1fbb20ccd7accb694b04a33e8bb96b52d524649a9ffbb9612e013cb6551ecae7",
+      "Trem\\model_13.obj": "1d109160f351b14326caf71eb1de9a31c06da5ec6af5ce4c6c276249749653bf",
+      "Trem\\model_14.obj": "5a4bc64cb698fd3c9798842abc50035540bbb87e12e251939243c8bdd646186d",
+      "Trem\\model_15.obj": "19ca9417b5badbc4f31ec8b2658dabee7cbc118d7d2e284697416794ac0a129b",
+      "Trem\\model_16.obj": "d36d075e16c2529d2ba43e26c11851578c8cb0d8a76c9b486b0996dd12a676e1",
+      "Trem\\model_17.obj": "1a629ad3ee7ea8227cf5a918ecff89638cb4976ad34e055d2b8d5b3eada960c2",
+      "Trem\\model_18.obj": "531d4c5517326be94c649d32b873be78842d9a5f4dc0f8eb1a2d034c8857431f",
+      "Trem\\model_19.obj": "26210eec8eaf4cec57811ddcb47d80ed818cfa8b0fec11adf961be96201de33a",
+      "Trem\\model_20.obj": "ff9e5caa83ca15e5337786ddab6631629d093a545e003e743d037a1e48950e91",
+      "Trem\\model_21.obj": "f55f798229e8c9b113d6e2ff6be2ae32fb813cb6b3c11b7727b7769ae9ffe45a",
+      "Trem\\model_22.obj": "0ae54eaf8aed6bf6ef99dd669a99ccfa31668d1f806f53592bbefce30bca0e3d",
+      "Trem\\model_23.obj": "695a8ca6a579a411374c587c76c138adc371a6801a4a4d6f663396eaf009fba2",
+      "Trem\\model_24.obj": "6faa79125af0231d9c3ba8cf8745ffaf75e2827e7bc63e18bedb72fafc6c29e2",
+      "Trem\\model_25.obj": "20489f8383ea701f178a9bab204297e90aca06a5ccc9d2bbe1ca87f0ef0fbfbb",
+      "Trem\\model_26.obj": "5e569dca758206efc08daa6f37855b439e144ae9eb8a321a3bc52d98d5d288d7",
+      "Trem\\model_27.obj": "9f26efbfa096c1214ad190e0f762458532e0b999fe1c581f173a4dc8de713e65",
+      "Trem\\model_28.obj": "493582ac30be7c734b062910b4d709ff93fccfa70ef6c923108566985af81a21",
+      "Trem\\model_29.obj": "a79d369ec12abcfaa86cc0abfa7956cfbe327ab99cb5687eb6cd23a51e6a7a27"
+    },
+    "status": "validated",
+    "url": "/assets/supplied/SUP_trem_composicao_obj_20261016.glb",
+    "preview": "/assets/supplied/SUP_trem_composicao_obj_20261016.jpg",
+    "sha256": "a49d657496a7fb1dd02a0a2b47677454c5e2927f78d7a0fa5b345feb92e9dd3c",
+    "bytes": 24996024,
+    "triangles": 873770,
+    "meshes": 30,
+    "originalTriangles": 1408971,
+    "preparedTriangles": 873770,
+    "meshPrimitiveTriangles": 873770,
+    "dimensions": [
+      227.59051513671875,
+      5.022231101989746,
+      5.801698207855225
+    ],
+    "dimensionsAxisOrder": "Blender XYZ; GLB uses standard Y-up",
+    "animated": false,
+    "reimportValidated": true,
+    "sourceCategory": "rail_train",
+    "animations": [],
+    "originalRig": false,
+    "rigged": false,
+    "playable": false,
+    "drivable": false,
+    "heavyAsset": false,
+    "description": "Composição estática com 30 partes preservadas; materiais PBR provisórios. A unidade original não foi informada.",
+    "licenseStatus": "unknown",
+    "credits": {},
+    "tags": [
+      "rail",
+      "multipart",
+      "static",
+      "supplied",
+      "20261016",
+      "Entrega de 16/10/2026"
+    ],
+    "modifications": "One shared-origin translation on independent static copies; scale retained; no geometry deduplication, welding or reduction. Missing MTL replaced by a provisional PBR palette; local images require existing UV plus an explicit material-name match.",
+    "validation": "Blender GLB reimport; all source parts represented; finite vertices; exact exported/reimported triangle count; bounds within 0.002 source units; preview rendered from reimported geometry.",
+    "previewSha256": "a58af133b5a1f6e6c2f3a5ea9f8107b5a825b7a15726ae7f9a0ef44b05ba6237",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "SUP_trilhos_obj_20261016",
+    "name": "Trilhos — conjunto fornecido",
+    "category": "Trens",
+    "sourceRelative": "Trilhos do Trem andar em Cima",
+    "sourceFiles": [
+      "Trilhos do Trem andar em Cima\\model_0.obj",
+      "Trilhos do Trem andar em Cima\\model_1.obj"
+    ],
+    "sourceSha256": "351f115a112533d81bd352da61546a166f30b4e5c9863d2092cdb608c2424522",
+    "sourceHashType": "ordered multipart relative-path and SHA-256 fingerprint",
+    "sourceFileHashes": {
+      "Trilhos do Trem andar em Cima\\model_0.obj": "f59b881fe067b8b88ac7755611c0a2a3c0e6529e809e79da10bd1d8e959f2929",
+      "Trilhos do Trem andar em Cima\\model_1.obj": "af23ffc72e2c1f073789f6bed02337d3df1ac037783ef3cc59f354d32deb38e2"
+    },
+    "status": "validated",
+    "url": "/assets/supplied/SUP_trilhos_obj_20261016.glb",
+    "preview": "/assets/supplied/SUP_trilhos_obj_20261016.jpg",
+    "sha256": "b6d70baf26d33df8afb902fbb5acb03a90b48050c40ee79fd3567e8d0b1c421d",
+    "bytes": 138544,
+    "triangles": 2012,
+    "meshes": 2,
+    "originalTriangles": 5889,
+    "preparedTriangles": 2012,
+    "meshPrimitiveTriangles": 2012,
+    "dimensions": [
+      51.022560119628906,
+      29.18206024169922,
+      9.646288871765137
+    ],
+    "dimensionsAxisOrder": "Blender XYZ; GLB uses standard Y-up",
+    "animated": false,
+    "reimportValidated": true,
+    "sourceCategory": "rail_track",
+    "animations": [],
+    "originalRig": false,
+    "rigged": false,
+    "playable": false,
+    "drivable": false,
+    "heavyAsset": false,
+    "description": "Conjunto estático com os dois OBJ em suas coordenadas compartilhadas. Sem sistema de percurso ou dirigibilidade.",
+    "licenseStatus": "unknown",
+    "credits": {},
+    "tags": [
+      "rail",
+      "multipart",
+      "static",
+      "supplied",
+      "20261016",
+      "Entrega de 16/10/2026"
+    ],
+    "modifications": "One shared-origin translation on independent static copies; scale retained; no geometry deduplication, welding or reduction. Missing MTL replaced by a provisional PBR palette; local images require existing UV plus an explicit material-name match.",
+    "validation": "Blender GLB reimport; all source parts represented; finite vertices; exact exported/reimported triangle count; bounds within 0.002 source units; preview rendered from reimported geometry.",
+    "previewSha256": "5809029e0e9517114848379b88f282d0bf39fedea99646104d1169a20fd1540a",
+    "catalogAdded": "2026-10-16"
+  },
+  {
+    "id": "TRAIN_Centraal_Station_LOD1_20261016",
+    "name": "Estação Central de Amsterdam · LOD1",
+    "category": "Trens",
+    "sourceRelative": "Estação de Trem Central\\centraal_station_amsterdam.glb",
+    "sourceSha256": "6998b94de7dd765982f4fecadf2a0dd00bb307199148b66a49be9a2a3533de10",
+    "sourceFiles": [
+      {
+        "file": "Estação de Trem Central\\centraal_station_amsterdam.glb",
+        "sha256": "6998b94de7dd765982f4fecadf2a0dd00bb307199148b66a49be9a2a3533de10",
+        "bytes": 102505320
+      }
+    ],
+    "credits": {
+      "author": "Jungle Jim (https://sketchfab.com/jungle_jim)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/centraal-station-amsterdam-582a09c29440490da209c26cc9dcc147",
+      "title": "Centraal Station Amsterdam"
+    },
+    "licenseStatus": "attribution",
+    "originalTriangles": 1130377,
+    "status": "validated",
+    "reimportValidated": true,
+    "originalRig": false,
+    "rigged": false,
+    "animated": false,
+    "animations": [],
+    "skins": 0,
+    "url": "/assets/additions20261016/TRAIN_Centraal_Station_LOD1_20261016.glb",
+    "bytes": 27669260,
+    "sha256": "cfa3b6650335304077e8fc1e76999b92c8bc1cf58c2b3404acfb4f4932b94e9c",
+    "triangles": 224450,
+    "preparedTriangles": 224450,
+    "meshPrimitiveTriangles": 224450,
+    "meshes": 27,
+    "dimensions": [
+      286.5558776855469,
+      133.0049819946289,
+      36.776432037353516
+    ],
+    "dimensionsConvention": "Blender XYZ meters; GLB exports Y up",
+    "sourceDimensionsGLTF_XYZ": [
+      286.5557861328125,
+      36.948036193847656,
+      133.00498247146606
+    ],
+    "sourceDimensionsBlenderXYZ": [
+      286.5557861328125,
+      133.00498247146606,
+      36.948036193847656
+    ],
+    "sourceUnits": "meters, glTF convention",
+    "sourceScaleRetained": 1,
+    "normalization": "Translation only; centered XY and grounded Z; not fitted to city",
+    "geometryModified": true,
+    "lod": {
+      "level": 1,
+      "targetTriangles": 225000,
+      "maxTriangles": 250000,
+      "actualTriangles": 224450,
+      "method": "Original preparation: per-mesh collapse on copied meshes; static world matrices baked into copies, batched by material. Repair measured and reused those bytes only."
+    },
+    "originalPreserved": true,
+    "originalSourceScene": "PREP_STATION_SOURCE_20261016",
+    "derivativeScene": "PREP_STATION_LOD_20261016",
+    "qaScene": "PREP_STATION_QA_20261016",
+    "sourceCollection": "PREP_STATION_SOURCE_20261016",
+    "collection": "PREP_STATION_LOD_20261016",
+    "hierarchyPreserved": false,
+    "sourceHierarchyPreserved": true,
+    "derivativeMaterialBatches": 27,
+    "materialBatching": {
+      "inputSourceMeshes": 1118,
+      "outputMaterialBatches": 27,
+      "trianglesAfter": 224450,
+      "audit": "Read from preserved LOD and source scenes; no geometry operation performed by repair"
+    },
+    "textureCapPixels": 1024,
+    "textures": [
+      {
+        "copiedName": "ST16_LOD_Image_5.097",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_5.097",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_1.156",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_1.156",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_2.021",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_2.021",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_4.103",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_4.103",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_8.089",
+        "lodDimensions": [
+          1024,
+          512
+        ],
+        "sourceName": "Image_8.089",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_0.192",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_0.192",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_3.118",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_3.118",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_6.096",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_6.096",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_7.091",
+        "lodDimensions": [
+          1024,
+          1024
+        ],
+        "sourceName": "Image_7.091",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_9.089",
+        "lodDimensions": [
+          1024,
+          512
+        ],
+        "sourceName": "Image_9.089",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_10.087",
+        "lodDimensions": [
+          1024,
+          512
+        ],
+        "sourceName": "Image_10.087",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      },
+      {
+        "copiedName": "ST16_LOD_Image_11.084",
+        "lodDimensions": [
+          1024,
+          512
+        ],
+        "sourceName": "Image_11.084",
+        "inspection": "Read from preserved LOD image datablock during repair; source image bytes unchanged during repair"
+      }
+    ],
+    "materialRecovery": "Original supplied PBR copied into owned materials and images by preparation; original shared datablocks preserved during repair",
+    "modifications": "Static copied LOD; <=27 material batches; owned textures <=1024px; original meter scale retained; source hierarchy kept in SOURCE scene. Repair did not re-export or alter geometry.",
+    "validation": "Existing GLB reimport: equal triangles and face-referenced world extrema with original tolerance, finite vertices, visible meshes, delivered textures <=1024px, actual delivered GLB rendered at 512px. Existing source and project objects unchanged during repair.",
+    "preview": "/assets/additions20261016/TRAIN_Centraal_Station_LOD1_20261016.png",
+    "previewSha256": "fe25284e5bc3c9845093f9da0b46732bab0940072b95e82034633bc3c7e72e6b",
+    "previewSize": [
+      512,
+      512
+    ],
+    "previewEvidence": "Actual delivered GLB reimport rendered in Blender EEVEE",
+    "repairDiagnosis": "Blender object bounding boxes included loose vertices not referenced by faces; glTF exported the actual faces correctly.",
+    "prepOwner": "prep_station_import_20261016_v1",
+    "playable": false,
+    "catalogAdded": "2026-10-16",
+    "tags": [
+      "Entrega de 16/10/2026"
+    ]
+  }
+]

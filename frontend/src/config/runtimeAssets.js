@@ -1,0 +1,22 @@
+import {resolveAssetReferences} from './deploymentConfig.js';
+import originalsRaw from './suppliedAssets.json';
+const originals=resolveAssetReferences(originalsRaw);
+import rigsRaw from './riggedAssets.json';
+const rigs=resolveAssetReferences(rigsRaw);
+import mixamoRaw from './mixamoAssets.json';
+const mixamo=resolveAssetReferences(mixamoRaw);
+import monumentsRaw from './monumentAssets.json';
+const monuments=resolveAssetReferences(monumentsRaw);
+import {newDeliveryRuntimeAssets} from './newDeliveryRuntimeAssets.js';
+import additionsRaw from './suppliedAdditions20261016.json';
+const additions=resolveAssetReferences(additionsRaw);
+import {mergeAssetCatalog,normalizeCatalogAddition} from './assetCatalog.js';
+const historicalAssets=[...originals.map(asset=>{
+  const rig=rigs.find(r=>r.id===asset.id);
+  if(rig)return {...asset,...rig,animated:true,animations:rig.clips,rigged:true,sourceUrl:asset.url};
+  const animations=asset.exportedAnimations??asset.animations;
+  const walkClip=animations.find(n=>/walk/i.test(n)),idleClip=animations.find(n=>/idle/i.test(n));
+  return {...asset,animations,rigged:Boolean(asset.originalRig),playable:asset.category==='Personagens'&&Boolean(asset.originalRig&&walkClip&&idleClip),walkClip,idleClip};
+}),...mixamo.filter(asset=>asset.reimportValidated&&asset.rigged&&asset.playable),...monuments.filter(asset=>asset.reimportValidated),...newDeliveryRuntimeAssets];
+export const runtimeAssets=mergeAssetCatalog(historicalAssets,additions.filter(asset=>asset.status==='validated').map(normalizeCatalogAddition));
+export const playableCharacters=runtimeAssets.filter(a=>a.rigged&&a.playable);

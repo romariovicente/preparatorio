@@ -1,0 +1,1174 @@
+[
+  {
+    "id": "VEH_Bus_City_20261006",
+    "label": "Ônibus urbano PREPARATÓRIO",
+    "category": "bus",
+    "status": "validated",
+    "sourceCredits": {},
+    "licenseStatus": "No license or attribution file in supplied OBJ folder; source provenance pending",
+    "sources": [
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_0.obj",
+        "sha256": "24bf6a14abf10315b4046bff65c81f48785d6db6729fe840135742c3bcf57bfa",
+        "geometrySha256": "bc90dc436750cf8fc7f540a095206db067107b8b8d2ae9e2de495511d3fd9eaf",
+        "missingMtllib": [
+          "model_0.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_1.obj",
+        "sha256": "019c11568422fa4cd3c2c6e87df696911396a41f63a54a9b1f096fd1a8cd54bb",
+        "geometrySha256": "6fc7a9bd739b62229ad6e273c7aae2aed6d7c94563b13290b9db8f1db887bc47",
+        "missingMtllib": [
+          "model_1.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_2.obj",
+        "sha256": "e49303f31e4ee6cffa53096a2575bb3f88d61fb45f5d5d01abd31f00e7cf4c8f",
+        "geometrySha256": "a5c1c1747913054f87c04221fd30ead4aad329d42f6a4b3c6ca4ef1fa772eef6",
+        "missingMtllib": [
+          "model_2.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_3.obj",
+        "sha256": "44500fcd06cbd860669f827e086514851fbf6654f2b0301a461a5dbbd03f429b",
+        "geometrySha256": "feb198ecc51a61a549887ca5a76c8a534dab3111bfcfcda2ef4f9188412fa8b7",
+        "missingMtllib": [
+          "model_3.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_4.obj",
+        "sha256": "1e631d9c6c4236def82693d509124d62af23f8b4ca582e675a37bf2938da0494",
+        "geometrySha256": "b35c166eabff901dbc05e7f2b0c1c62032388feb47226f44c8bc1c9587d9c02b",
+        "missingMtllib": [
+          "model_4.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_5.obj",
+        "sha256": "676927cec11ac8aeec5dce1721e66669248672f297ed4941dda4590c72988031",
+        "geometrySha256": "8bf3f45d2a978fc65b4d3fb56e2e6ba79e7c9a7ac5c6c433b8be42a8fcd2245d",
+        "missingMtllib": [
+          "model_5.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_6.obj",
+        "sha256": "b4448f279a93a6f3497130c14c08a653f0f356df7f1c61d84d78560e5cd7f546",
+        "geometrySha256": "b4fa02e663943c4bb777112b8a5f492a76e934eb1ddc5bb3846d1ebd6e03f79e",
+        "missingMtllib": [
+          "model_6.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_7.obj",
+        "sha256": "e926c356d119da684d8625adad86a3c96b71ef82fac39820f4a1486d9b3e1d0d",
+        "geometrySha256": "63d35ac67b1b162bc7c84f6da06089fd1baf6a0fcd4b1aa3f3e64040b68e979e",
+        "missingMtllib": [
+          "model_7.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_8.obj",
+        "sha256": "b5dfe63fef4c541cbe61f34b42e686deefafd00ac6ec05fdd0c5923eddb7aac3",
+        "geometrySha256": "e34cfe6d8a115554ecac39b41806b3e3331d854880afa10e047c92358712d1c6",
+        "missingMtllib": [
+          "model_8.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_9.obj",
+        "sha256": "fb68964b63dd479ac2811e59c71f7942b3139cabe469e46eaf4cc9bae0639ab0",
+        "geometrySha256": "34ec709bbd88b093bc0f43a47685d32e67529eede26e0f875fd0a8c580f1ff31",
+        "missingMtllib": [
+          "model_9.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_10.obj",
+        "sha256": "4b3031c5455d51073176e4deaaef6fdc21979ad18c638ea792ece0c0469c98ba",
+        "geometrySha256": "c04049e574bebee0132a0d1176b05d3f806dde1afc4335d9d6f9738ec172aa20",
+        "missingMtllib": [
+          "model_10.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_11.obj",
+        "sha256": "608a36d6167be3ff82a5469d34ea459846ef1657b9da13a1a445b909828a14e0",
+        "geometrySha256": "55c9a3adc670ba119e41290eae5f7c742776a9db441ee328bdbcb7c690794278",
+        "missingMtllib": [
+          "model_11.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_12.obj",
+        "sha256": "dffee97588bf9e7ba3dff8745173d97ce14ffbf23120eca7ac42daf08031edcc",
+        "geometrySha256": "fff37edb1a5f9e8349bde7221098228f1ad3f852c0ce954b5b742ff371e68a14",
+        "missingMtllib": [
+          "model_12.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_13.obj",
+        "sha256": "a0e3fa3ac79a574c6adf6226cf5144e5c391753e5cf10f8b4048621b9af8bf13",
+        "geometrySha256": "92c1b3f8abe82f78bd497e03867dd07e522c91198606a4b30dbc52f03b6d8017",
+        "missingMtllib": [
+          "model_13.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_14.obj",
+        "sha256": "d89b7030359dda2c299c48816fc3a0473c1dbf8e04f504b06d8e7f4c7ef8ed0d",
+        "geometrySha256": "070db153313c59d4b1ee56d4464c03f733995c53551c37dea72d38ceee7f2867",
+        "missingMtllib": [
+          "model_14.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_15.obj",
+        "sha256": "8250c89263c0428b1be63b0972ab1fca0f543af6f6099b7c793c9c38817d87ee",
+        "geometrySha256": "e52ad4ad4620d90e88dd0784a2d3387790717cbd8a6f8937be003720d4b0a0a8",
+        "missingMtllib": [
+          "model_15.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_16.obj",
+        "sha256": "5dbd98bbe4a4cde521d90bb9bce4e04656fa32f9cb68b78e240e799ecd2b95c2",
+        "geometrySha256": "177d675fafc3b5a2a0348761285b236522fd0a15c61b7447aa390cc0c2b14acd",
+        "missingMtllib": [
+          "model_16.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_17.obj",
+        "sha256": "b246faf52831001f8b024f3b1711e65e70d13548b68d10ca5e7ec8840b4cb7de",
+        "geometrySha256": "63d151fb6b794044c604ac1ef303538a6b37dbf351bc4474192a4b7b72fa25c9",
+        "missingMtllib": [
+          "model_17.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_18.obj",
+        "sha256": "e324d9427917e1d1eefbce62fe271dccbf0c4076b953a365b9653e9d0c26aadf",
+        "geometrySha256": "6d1718cd0ecb6620aba139472d0a92a413d662d8f42551163d254ccf95494c20",
+        "missingMtllib": [
+          "model_18.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_19.obj",
+        "sha256": "bdc861ec660ab1fc2b39e165a361c2ff39a8ecf21166ce11bff5a1e0f41c672d",
+        "geometrySha256": "fbc22ecd1ea9e4e46324be9681ca7ec621f60b2d435a19dfe2375cebf014bbdc",
+        "missingMtllib": [
+          "model_19.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_20.obj",
+        "sha256": "7590903694bd2f847a2861fb824145f1261709771fbc4e87aab6fcc4562ffc1c",
+        "geometrySha256": "f1e2aedc42258c9cfece643da67579aeb1073f96fb8e86bbe0676cc762286223",
+        "missingMtllib": [
+          "model_20.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_21.obj",
+        "sha256": "b13f1f192eac86e87737d5af211cf32aeb2490ef352722f835bee31bc8a53cd2",
+        "geometrySha256": "2019a1591441dc1acf3646d1a20cb98ea697bf3513e5e29f7371c95b75bf23e0",
+        "missingMtllib": [
+          "model_21.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_22.obj",
+        "sha256": "8070d570cea4c911f0091eae89a3265ed65fc6eb12a0fabc4b2a2e6a632845de",
+        "geometrySha256": "940bba5507ba0eb352ffc6763bb05de0ccf1dc3633818340ea008bbdabd720ee",
+        "missingMtllib": [
+          "model_22.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_23.obj",
+        "sha256": "30cf701c85dab75dcaf9111a97c2216c4cc66d5ddef03ff625a946ae4a700109",
+        "geometrySha256": "a4b08be9417f798f8a738cdd685c8becab113c80a925e6aeea215740d8a315cb",
+        "missingMtllib": [
+          "model_23.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_24.obj",
+        "sha256": "5c5bde3bbe53b8186759862c4eb673e99ed30697892f6c60887b5895c1f2d058",
+        "geometrySha256": "8d47cfc5b9eaf4c4146f1f48a2a05bd5288a4a6d175b1d1ef3bff52291c483c2",
+        "missingMtllib": [
+          "model_24.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_25.obj",
+        "sha256": "7d9827e6c60a878b91a7b3f24351242647308dcf4c204a8f8656929ff3270439",
+        "geometrySha256": "3f2bca9db231bef676bd161047eb6ae75a7bdf2196d6d072f00c2b8d1e49beae",
+        "missingMtllib": [
+          "model_25.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_26.obj",
+        "sha256": "7236b4a3478cb74ea919836f9297be8dc65917ddc6924ffa9c0452559d8a950f",
+        "geometrySha256": "93cf72aedb113847b86fabfd2bb7c4f0584bf120cfd5c8d763599489cff54d9f",
+        "missingMtllib": [
+          "model_26.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_27.obj",
+        "sha256": "92cb533d557fb9b5f3e96f9fbd23fcf75055224ed457249fe4068cd10fdabd5c",
+        "geometrySha256": "a1184a087ca2b680b45c409c9c9f87e164672ef9f319b51e38a9ca037efe7979",
+        "missingMtllib": [
+          "model_27.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_28.obj",
+        "sha256": "aae64d5586aa22641c729d4dc8f1160e3bdf24c074f853fd2345ec4c9b61367c",
+        "geometrySha256": "19370ddf5a481d38b331deb7f8c123f992ca77496bf50dd664f2d113e682ca9d",
+        "missingMtllib": [
+          "model_28.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_29.obj",
+        "sha256": "3c418eb43d7bf28f8181769d78cd95655d51d04c206846f1a9c07b5019c67c0e",
+        "geometrySha256": "b02df565cb064216ba02314022c6c6e4fe6cfc60c16df364a7af1512c2432fdf",
+        "missingMtllib": [
+          "model_29.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_30.obj",
+        "sha256": "9e11d1a93b386451429945ba73a359ed6a04a28ea1186ebe2ac62d840a9a1541",
+        "geometrySha256": "24bb0edcfa485705f046db71cf50511ca06b6a40801589dc3174a5fdfa6e9d82",
+        "missingMtllib": [
+          "model_30.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\BUS Yuxdesign high detail polygon model\\model_31.obj",
+        "sha256": "7d894056c0f79bf56aeffde16d5b10d145b67811317881e6c8b2b2eae0a96d04",
+        "geometrySha256": "8617c1fdfc0998c605a945e41465632a5f9556ed3aab49c2d88d0584a0a87570",
+        "missingMtllib": [
+          "model_31.mtl"
+        ]
+      }
+    ],
+    "omittedDuplicateParts": [
+      "ônibus\\BUS Yuxdesign high detail polygon model\\model_32.obj",
+      "ônibus\\BUS Yuxdesign high detail polygon model\\model_33.obj"
+    ],
+    "modifications": [
+      "Uniform normalization of freshly imported static derivative only; centered horizontal origin and minimum Z=0; source geometry and files retained",
+      "Missing OBJ MTL: documented provisional part-level PBR materials; no source logos/textures copied to buses",
+      "Per-part decimation to web presentation budget; part hierarchy and source scene preserved",
+      "Original Portuguese 3D PREPARATÓRIO/HOSPITAL CENTRO fleet signage added"
+    ],
+    "rigged": false,
+    "animations": [],
+    "sourceBounds": [
+      [
+        -1400.699951171875,
+        -6318.10009765625,
+        0.3212270140647888
+      ],
+      [
+        1476.1234130859375,
+        6051.00439453125,
+        3173.63330078125
+      ]
+    ],
+    "originalTriangles": 1582802,
+    "normalizationScale": 0.001002497796653914,
+    "preparedTriangles": 245977,
+    "preparedBounds": [
+      [
+        -1.4421427249908447,
+        -6.209006309509277,
+        0
+      ],
+      [
+        1.451035976409912,
+        6.199969291687012,
+        3.1883084774017334
+      ]
+    ],
+    "url": "/assets/new-delivery/VEH_Bus_City_20261006.glb",
+    "bytes": 9532192,
+    "sha256": "2dbd9dd8ed6ff818443efea92e8c2856b0cf046257516fcfcb6927fb72014274",
+    "dimensions": [
+      2.893178701400757,
+      12.408975601196289,
+      3.1883084774017334
+    ],
+    "triangles": 245963,
+    "meshCount": 34,
+    "origin": "horizontal center; ground Z=0; GLB Y-up",
+    "validation": "Delivered GLB reimported; finite vertices; triangle primitives and bounds match",
+    "blend": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\new_delivery_20261006\\VEH_Bus_City_20261006.blend",
+    "collection": "PREP_DELIVERY_VEH_Bus_City_20261006",
+    "preview": "/assets/new-delivery/VEH_Bus_City_20261006.preview.png",
+    "previewRendered": true,
+    "static": true,
+    "height": 3.1883084774017334,
+    "dimensionsOrder": "Blender XYZ = width,depth,height",
+    "gltfDimensions": [
+      2.893178701400757,
+      3.1883084774017334,
+      12.408975601196289
+    ]
+  },
+  {
+    "id": "VEH_Bus_BRT_20261006",
+    "label": "Ônibus articulado PREPARATÓRIO",
+    "category": "bus",
+    "status": "validated",
+    "sourceCredits": {},
+    "licenseStatus": "No license or attribution file in supplied OBJ folder; source provenance pending",
+    "sources": [
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_0.obj",
+        "sha256": "8bdebb12a752491b245ad6e322698f153633c09743b6f1e8dcac8406649e3cbb",
+        "geometrySha256": "da98d48620e80090c6e29d29498dcafdf1db4553e79b2bfe2308709776486871",
+        "missingMtllib": [
+          "model_0.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_1.obj",
+        "sha256": "26451cc3cad2cdada975d8d0758b5d1d9288bc9961317e3feef314d0e8eea64b",
+        "geometrySha256": "d32458217ec5e41037fa64f9b7669e8f3b6170937303a0bb7a142c9a075a88f2",
+        "missingMtllib": [
+          "model_1.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_2.obj",
+        "sha256": "dd0458b533d16d13741a9774773120691b8f66ada8a90a7928f104728ba0c469",
+        "geometrySha256": "47ec059b01137c5a34063efa972342bff5c89d58db07f31e111810f4f0b4f0cc",
+        "missingMtllib": [
+          "model_2.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_3.obj",
+        "sha256": "189b9d6ab053f24215d639ff87163c8626dc625bae9acd7ca702a0ae0cba9ede",
+        "geometrySha256": "b3741e152a9a475ef76711a428790c1d131fcd9d5b2e05a16be26ef542ece05c",
+        "missingMtllib": [
+          "model_3.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_4.obj",
+        "sha256": "dccbe7dc111d7e15f684226c4b8178551ff54f74a94c08a6b0076f53f893ada5",
+        "geometrySha256": "2773c37fde261277754b1922724622db32f4c252013fe5fde422f30127afa1bc",
+        "missingMtllib": [
+          "model_4.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_5.obj",
+        "sha256": "aa1c0e3354f54226243833f9da05b11822c60f198bb799b0cd051470d0eea3b8",
+        "geometrySha256": "145ce23931b7c4e2ec0461293a5c6aa3b705f9a93e1edd64ad8b165246b1abbd",
+        "missingMtllib": [
+          "model_5.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_6.obj",
+        "sha256": "89b644bd71b506db166bd9ab20f1fd5dbd1642e35faac15b6b7ff38432413868",
+        "geometrySha256": "5098b059dc2d7184a198903953ccb2ef2dbb3e07ddfdb8b2c44bc052287f4266",
+        "missingMtllib": [
+          "model_6.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_7.obj",
+        "sha256": "a452e763d44fd23a776110ce60f915fe812d26b9d324885f0b5722a8bc2bfbf8",
+        "geometrySha256": "3e0becb53b07cc5b08bc66d26bff12ef7186ff489a237baf05e3cb7b5d3061e6",
+        "missingMtllib": [
+          "model_7.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_8.obj",
+        "sha256": "4561a652468531deb75281fe7d926fabcabcfab56bbd2de9f3813749ae440e1a",
+        "geometrySha256": "75641be8eb91d3e7aa2b5a214d75412a178c33d4a3f9861ebad3771ed4f137a4",
+        "missingMtllib": [
+          "model_8.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_9.obj",
+        "sha256": "177cd852a03e6d23c927423902b2be3a51d79e963a01da4c32b67f5d999b5726",
+        "geometrySha256": "d9787255ff9ce89f9a461e3f55f5ddcb69a236f6414aed4f10d792877155a96b",
+        "missingMtllib": [
+          "model_9.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_10.obj",
+        "sha256": "74430e0aaf4c8162990fe227bd31bd6f3acc6258df3b68d2e26cfedacb98b9f2",
+        "geometrySha256": "d8383d70766b72f28e076859e9491b6e603c8e496f4f10ceec7c31d6288767f2",
+        "missingMtllib": [
+          "model_10.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_11.obj",
+        "sha256": "afb22b380d3f1acff1af0ad5c3659dc3c94ba2b7fc538860a58e7aab3a517df0",
+        "geometrySha256": "3a62cde86e42c107e1fd5faaa2dadeceaead1c57df28d6db7fb2bfee90cdaf28",
+        "missingMtllib": [
+          "model_11.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_12.obj",
+        "sha256": "ec8b41469fb9d18c05d32a081b83727fdf2e8396584d2097d044559008b2e929",
+        "geometrySha256": "8aa6de1c6219be65e0029a8970f259c9b9cd494c09be31ba6916f686317cb335",
+        "missingMtllib": [
+          "model_12.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_13.obj",
+        "sha256": "a3f48697d205f4e1b4861015ba87ea2c25deea1ee8767b1022902be657cce15f",
+        "geometrySha256": "e42ee0bb61facedc04c0bf4cfb203338d4485d05a3e4b21ea51fc6c8f56802bb",
+        "missingMtllib": [
+          "model_13.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_14.obj",
+        "sha256": "56530cde3ddbeb5b29825d0fa31c5583aff75393b47888bce64523445a17a034",
+        "geometrySha256": "edc99a1baf5f35870755bf390d9442de787effa776fca27e53bacb4f97932f51",
+        "missingMtllib": [
+          "model_14.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_15.obj",
+        "sha256": "71305852192f2f4311cb8888458dafcd8aa1e9bb11d1cb9f867cd2203f2ef1d9",
+        "geometrySha256": "85056aee6df921b0e6f2b7201bb28cd5706fd3bc202086e47646aeabc6973b46",
+        "missingMtllib": [
+          "model_15.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_16.obj",
+        "sha256": "07b9ad13c1fd806f457e354015ba428d14d5e5e682ae5add9bf2466fd6d37083",
+        "geometrySha256": "e79136d21abfb4f24a321bf426ca5bc4545096b7be3358bcbdb4f974c2a57ed6",
+        "missingMtllib": [
+          "model_16.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_17.obj",
+        "sha256": "f3cd48bccdbfb8c93a5cbe38b6442f528f8577027294cbccc6ae5d6669f5692c",
+        "geometrySha256": "1d9bcb79065b788b9815e237181bc74b2b0919aa3367cbd17fb02049688c1a12",
+        "missingMtllib": [
+          "model_17.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_18.obj",
+        "sha256": "a89776303a157de2c59f18eb2aa3969db51723c7f3b346a615f4a30ee2eaa08e",
+        "geometrySha256": "3de990aa8276816cf9f204dd88e4d287a85a23d6e8a83777bae1e0a378ff4533",
+        "missingMtllib": [
+          "model_18.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_19.obj",
+        "sha256": "d6789356141958246aaffda99965453a5549d0bd3b5f27a10f7444b0156900f7",
+        "geometrySha256": "a2ff234ecdd90ae5d3f3c97605a8ddbc73d6380c9e56e909f4d81a09296a2a0c",
+        "missingMtllib": [
+          "model_19.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_20.obj",
+        "sha256": "ec2e102c943abfe694f37cbf890ff4283479b1467a92bd292d8a0c302df821dc",
+        "geometrySha256": "a2f195f49c881bbbc360c3bbc70be9eecd81328dd19a6fd60342955978f2513c",
+        "missingMtllib": [
+          "model_20.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_21.obj",
+        "sha256": "0fc37bb3f8af59dc47471068cad51024eb3e3e75a555438a7adf2ca2d4ee753d",
+        "geometrySha256": "66bb0fce46e7b060b9d72b74ebe23762812f59d6ff185d75df7abb081b9deb9f",
+        "missingMtllib": [
+          "model_21.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_22.obj",
+        "sha256": "185fe0ececb8f502fec2517b99a7b8befa1c2496c42b2370ac4b30b8752adaf2",
+        "geometrySha256": "ba1f0204c5b7d967f2419c10a081276f5f675482dc83499dbf3cd498a7c67523",
+        "missingMtllib": [
+          "model_22.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_23.obj",
+        "sha256": "c278205fec77b56dd72f43bbf4b85af9933af86d38f475792b86f7bc9bd7db9d",
+        "geometrySha256": "7794b48ac5ad700a3d4a93b2f6485f330f8bf0719fa004928d3602c0ab02944d",
+        "missingMtllib": [
+          "model_23.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_24.obj",
+        "sha256": "4bde5ff934e4678e0e63db571c1f01566c7cb84845e79ba3c7ec017d3b78a417",
+        "geometrySha256": "36b1a8f0ca0eaece5a80e6d48f656a953e6ca01c34b5ffad6b4d211a76990329",
+        "missingMtllib": [
+          "model_24.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_25.obj",
+        "sha256": "37b94f594e5995ff5589f544fbda7a577681e5921e921854fe65b90bb4907679",
+        "geometrySha256": "5a57c4ce7fb639c8ce61bc278cd735ee3ef2e4b09f7171addc2fa21664bc47e7",
+        "missingMtllib": [
+          "model_25.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_26.obj",
+        "sha256": "85cbea5b07096543d945286bce2b77b847e6f170d8c7ef8208d718d9f72c9e0e",
+        "geometrySha256": "2625a8e62f7c45e8780aeffc4dcd39d6c827f4130191c55ca2be22970edeb058",
+        "missingMtllib": [
+          "model_26.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_27.obj",
+        "sha256": "11b45380e5653db5c66b36c3286bf889f8857e09ae37d8d8beae81940ca5705e",
+        "geometrySha256": "1dac0a31e68e2a1acf897c0ff7243f2720d10fab0ec5f2d3ffb554a478597c4e",
+        "missingMtllib": [
+          "model_27.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_28.obj",
+        "sha256": "e3ebc2041d3c9e58a977157e045662324f94447c3a06f42263732b67c4293c90",
+        "geometrySha256": "d6702991d62cd9d06188d7721a30a8225e580f6e52786635e849346055dae818",
+        "missingMtllib": [
+          "model_28.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_29.obj",
+        "sha256": "df237ebe040d661d3943458f0051200030bee8ddfa2be9342287afdab3eb21a3",
+        "geometrySha256": "c4ee4af6a57c8c39ff9baa480d0eeb22056b99090b571e5f34b4e220490d2882",
+        "missingMtllib": [
+          "model_29.mtl"
+        ]
+      },
+      {
+        "file": "ônibus\\Caio Millennium BRT - Mecedes Benz O500UDA\\model_30.obj",
+        "sha256": "73d56cc2c2fff9f6d36821715a0282910d3f0fbba6b418d13a04ae0f3e433c28",
+        "geometrySha256": "f89ce06a9d76a50d655466efeecd603a7beb5369126a69bb59b0576cb33f6780",
+        "missingMtllib": [
+          "model_30.mtl"
+        ]
+      }
+    ],
+    "omittedDuplicateParts": [],
+    "excludedPresentationParts": [
+      {
+        "file": "model_13.obj",
+        "faces": 12,
+        "reason": "Only rectangular display pedestal faces at/below tire ground removed from derivative; articulation bellows retained; source scene intact"
+      }
+    ],
+    "modifications": [
+      "Uniform normalization of freshly imported static derivative only; centered horizontal origin and minimum Z=0; source geometry and files retained",
+      "Missing OBJ MTL: documented provisional part-level PBR materials; no source logos/textures copied to buses",
+      "Per-part decimation to web presentation budget; part hierarchy and source scene preserved",
+      "Original Portuguese 3D PREPARATÓRIO/HOSPITAL CENTRO fleet signage added"
+    ],
+    "rigged": false,
+    "animations": [],
+    "sourceBounds": [
+      [
+        -1.673949956893921,
+        -10.111000061035156,
+        -1.0706700086593628
+      ],
+      [
+        1.6739526987075806,
+        13.156096458435059,
+        3.7608275413513184
+      ]
+    ],
+    "originalTriangles": 767338,
+    "normalizationScale": 1.0038431897758786,
+    "preparedTriangles": 246713,
+    "preparedBounds": [
+      [
+        -1.5770982503890991,
+        -11.60908317565918,
+        0
+      ],
+      [
+        1.586100459098816,
+        11.600000381469727,
+        3.7759714126586914
+      ]
+    ],
+    "url": "/assets/new-delivery/VEH_Bus_BRT_20261006.glb",
+    "bytes": 9470744,
+    "sha256": "3fa902590ba9aac8619b81ddb52071daf598e18c6b4754fa71b2b88a431bf816",
+    "dimensions": [
+      3.163198709487915,
+      23.209083557128906,
+      3.7759714126586914
+    ],
+    "triangles": 246699,
+    "meshCount": 33,
+    "origin": "horizontal center; ground Z=0; GLB Y-up",
+    "validation": "Delivered GLB reimported; finite vertices; triangle primitives and bounds match",
+    "blend": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\new_delivery_20261006\\VEH_Bus_BRT_20261006.blend",
+    "collection": "PREP_DELIVERY_VEH_Bus_BRT_20261006",
+    "preview": "/assets/new-delivery/VEH_Bus_BRT_20261006.preview.png",
+    "components": [
+      {
+        "name": "VEH_Bus_BRT_20261006_model_0.obj",
+        "sourcePart": "model_0.obj",
+        "materialRole": "white"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_1.obj",
+        "sourcePart": "model_1.obj",
+        "materialRole": "body"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_2.obj",
+        "sourcePart": "model_2.obj",
+        "materialRole": "body"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_3.obj",
+        "sourcePart": "model_3.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_4.obj",
+        "sourcePart": "model_4.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_5.obj",
+        "sourcePart": "model_5.obj",
+        "materialRole": "glass"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_6.obj",
+        "sourcePart": "model_6.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_7.obj",
+        "sourcePart": "model_7.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_8.obj",
+        "sourcePart": "model_8.obj",
+        "materialRole": "dark"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_9.obj",
+        "sourcePart": "model_9.obj",
+        "materialRole": "dark"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_10.obj",
+        "sourcePart": "model_10.obj",
+        "materialRole": "dark"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_11.obj",
+        "sourcePart": "model_11.obj",
+        "materialRole": "dark"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_12.obj",
+        "sourcePart": "model_12.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_13.obj",
+        "sourcePart": "model_13.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_14.obj",
+        "sourcePart": "model_14.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_15.obj",
+        "sourcePart": "model_15.obj",
+        "materialRole": "white"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_16.obj",
+        "sourcePart": "model_16.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_17.obj",
+        "sourcePart": "model_17.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_18.obj",
+        "sourcePart": "model_18.obj",
+        "materialRole": "seat"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_19.obj",
+        "sourcePart": "model_19.obj",
+        "materialRole": "seat"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_20.obj",
+        "sourcePart": "model_20.obj",
+        "materialRole": "seat"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_21.obj",
+        "sourcePart": "model_21.obj",
+        "materialRole": "white"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_22.obj",
+        "sourcePart": "model_22.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_23.obj",
+        "sourcePart": "model_23.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_24.obj",
+        "sourcePart": "model_24.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_25.obj",
+        "sourcePart": "model_25.obj",
+        "materialRole": "white"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_26.obj",
+        "sourcePart": "model_26.obj",
+        "materialRole": "body"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_27.obj",
+        "sourcePart": "model_27.obj",
+        "materialRole": "glass"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_28.obj",
+        "sourcePart": "model_28.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_29.obj",
+        "sourcePart": "model_29.obj",
+        "materialRole": "metal"
+      },
+      {
+        "name": "VEH_Bus_BRT_20261006_model_30.obj",
+        "sourcePart": "model_30.obj",
+        "materialRole": "glass"
+      },
+      {
+        "name": "SIGN_PREPARATÓRIO",
+        "sourcePart": null,
+        "materialRole": null
+      },
+      {
+        "name": "SIGN_HOSPITAL_CENTRO",
+        "sourcePart": null,
+        "materialRole": null
+      }
+    ],
+    "previewRendered": true,
+    "static": true,
+    "height": 3.7759714126586914,
+    "dimensionsOrder": "Blender XYZ = width,depth,height",
+    "gltfDimensions": [
+      3.163198709487915,
+      3.7759714126586914,
+      23.209083557128906
+    ]
+  },
+  {
+    "id": "MOD_Bus_Stop_20261006",
+    "label": "Parada de ônibus",
+    "category": "stop",
+    "status": "validated",
+    "sourceCredits": {
+      "author": "sheba1998 (https://sketchfab.com/sheba1998)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/gbus-bus-stop-ba4808305d8544eca08c0dcffda79ef4",
+      "title": "Gbus Bus Stop"
+    },
+    "licenseStatus": "CC-BY-4.0 embedded in supplied GLB",
+    "sources": [
+      {
+        "file": "Parada de ônibus\\gbus_bus_stop.glb",
+        "sha256": "608809ecae553338de51401e7b7dd1394726a4fbd823168879a71b25c72f1d57"
+      }
+    ],
+    "omittedDuplicateParts": [],
+    "modifications": [
+      "Uniform normalization of freshly imported static derivative only; centered horizontal origin and minimum Z=0; source geometry and files retained",
+      "Original supplied PBR materials retained on derivative; textures capped at 2048 character / 1024 environment"
+    ],
+    "rigged": false,
+    "animations": [],
+    "sourceBounds": [
+      [
+        -4.415980815887451,
+        -3.1843936443328857,
+        -0.02673916332423687
+      ],
+      [
+        3.2350196838378906,
+        3.1843936443328857,
+        2.7357282638549805
+      ]
+    ],
+    "originalTriangles": 3808,
+    "normalizationScale": 1.045614883999444,
+    "preparedTriangles": 3808,
+    "preparedBounds": [
+      [
+        -4,
+        -3.3296492099761963,
+        0
+      ],
+      [
+        3.999999761581421,
+        3.3296492099761963,
+        2.888477087020874
+      ]
+    ],
+    "url": "/assets/new-delivery/MOD_Bus_Stop_20261006.glb",
+    "bytes": 33284068,
+    "sha256": "d32c5bd9c3d8424933c3e4f1d911b944c8fdda0c8c262f50629495dc4142f186",
+    "dimensions": [
+      8,
+      6.659298419952393,
+      2.888477087020874
+    ],
+    "triangles": 3808,
+    "meshCount": 44,
+    "origin": "horizontal center; ground Z=0; GLB Y-up",
+    "validation": "Delivered GLB reimported; finite vertices; triangle primitives and bounds match",
+    "blend": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\new_delivery_20261006\\MOD_Bus_Stop_20261006.blend",
+    "collection": "PREP_DELIVERY_MOD_Bus_Stop_20261006",
+    "preview": "/assets/new-delivery/MOD_Bus_Stop_20261006.preview.png",
+    "previewRendered": true,
+    "static": true,
+    "height": 2.888477087020874,
+    "dimensionsOrder": "Blender XYZ = width,depth,height",
+    "gltfDimensions": [
+      8,
+      2.888477087020874,
+      6.659298419952393
+    ]
+  },
+  {
+    "id": "BLD_Bus_Terminal_20261006",
+    "label": "Terminal de ônibus",
+    "category": "terminal",
+    "status": "validated",
+    "sourceCredits": {},
+    "licenseStatus": "No license or attribution file in supplied OBJ folder; source provenance pending",
+    "sources": [
+      {
+        "file": "Terminal de Ônibus\\model_0.obj",
+        "sha256": "9f5c83450f11e205204b5286be6e682a2f21723a5b6ddf4bd34e29839d924a6b",
+        "geometrySha256": "1494161e9dee64b4a8d712fcebb0674e6022ade8b61ab5a3b006feb705ece9ee",
+        "missingMtllib": [
+          "model_0.mtl"
+        ]
+      }
+    ],
+    "omittedDuplicateParts": [],
+    "modifications": [
+      "Uniform normalization of freshly imported static derivative only; centered horizontal origin and minimum Z=0; source geometry and files retained",
+      "Missing OBJ MTL: documented provisional part-level PBR materials; no source logos/textures copied to buses",
+      "Terminal diffuse and normal association recovered from unambiguous matching basename; specular map retained in source, not asserted to be roughness"
+    ],
+    "rigged": false,
+    "animations": [],
+    "sourceBounds": [
+      [
+        -25.86389923095703,
+        -16.871503829956055,
+        -0.0000023339844119618647
+      ],
+      [
+        26.278554916381836,
+        21.03499984741211,
+        5.461702346801758
+      ]
+    ],
+    "originalTriangles": 7403,
+    "normalizationScale": 0.9972679450592413,
+    "preparedTriangles": 7403,
+    "preparedBounds": [
+      [
+        -26,
+        -18.901470184326172,
+        1.1368683772161603e-13
+      ],
+      [
+        25.999998092651367,
+        18.901470184326172,
+        5.44678258895874
+      ]
+    ],
+    "url": "/assets/new-delivery/BLD_Bus_Terminal_20261006.glb",
+    "bytes": 2441096,
+    "sha256": "8ea91ba7b38bfd1403b893b135cc057d978ab8d2a01a9a8e2b06344ef3f89adb",
+    "dimensions": [
+      52,
+      37.802947998046875,
+      5.446784019470215
+    ],
+    "triangles": 7403,
+    "meshCount": 1,
+    "origin": "horizontal center; ground Z=0; GLB Y-up",
+    "validation": "Delivered GLB reimported; finite vertices; triangle primitives and bounds match",
+    "blend": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\new_delivery_20261006\\BLD_Bus_Terminal_20261006.blend",
+    "collection": "PREP_DELIVERY_BLD_Bus_Terminal_20261006",
+    "preview": "/assets/new-delivery/BLD_Bus_Terminal_20261006.preview.png",
+    "previewRendered": true,
+    "static": true,
+    "height": 5.446784019470215,
+    "dimensionsOrder": "Blender XYZ = width,depth,height",
+    "gltfDimensions": [
+      52,
+      5.446784019470215,
+      37.802947998046875
+    ]
+  },
+  {
+    "id": "CHAR_Student_XVIII_20261006",
+    "label": "Estudante do século XVIII",
+    "category": "character",
+    "status": "validated",
+    "sourceCredits": {
+      "author": "agbpontes (https://sketchfab.com/agbpontes)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/estudiante-s-xviii-61a8ae7296884ed3a4d43d838b5412bd",
+      "title": "Estudiante S. XVIII"
+    },
+    "licenseStatus": "CC-BY-4.0 embedded in supplied GLB",
+    "sources": [
+      {
+        "file": "Personagens\\Estudiante S. XVIII\\estudiante_s._xviii.glb",
+        "sha256": "0cb9cbe6e9eb067bdafd5e83eddffbca9413dd06d972264604753bca035aded9"
+      }
+    ],
+    "omittedDuplicateParts": [],
+    "modifications": [
+      "Uniform normalization of freshly imported static derivative only; centered horizontal origin and minimum Z=0; source geometry and files retained",
+      "Original supplied PBR materials retained on derivative; textures capped at 2048 character / 1024 environment",
+      "Per-part decimation to web presentation budget; part hierarchy and source scene preserved"
+    ],
+    "rigged": false,
+    "animations": [],
+    "sourceBounds": [
+      [
+        -0.6585440039634705,
+        -0.3319416046142578,
+        -0.9504843354225159
+      ],
+      [
+        0.6559492349624634,
+        0.3337670862674713,
+        0.9485763311386108
+      ]
+    ],
+    "originalTriangles": 833320,
+    "normalizationScale": 0.9215081834340669,
+    "preparedTriangles": 64993,
+    "preparedBounds": [
+      [
+        -0.6050386428833008,
+        -0.3063206970691681,
+        0
+      ],
+      [
+        0.6058437824249268,
+        0.30634191632270813,
+        1.7506091594696045
+      ]
+    ],
+    "url": "/assets/new-delivery/CHAR_Student_XVIII_20261006.glb",
+    "bytes": 15768004,
+    "sha256": "f3c2341d75e9840bb4204c57ef7a40affa69787b8267a1fcc004b9afe88d9a8b",
+    "dimensions": [
+      1.2108824253082275,
+      0.6126626133918762,
+      1.7506091594696045
+    ],
+    "triangles": 64993,
+    "meshCount": 8,
+    "origin": "horizontal center; ground Z=0; GLB Y-up",
+    "validation": "Delivered GLB reimported; finite vertices; triangle primitives and bounds match",
+    "blend": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\new_delivery_20261006\\CHAR_Student_XVIII_20261006.blend",
+    "collection": "PREP_DELIVERY_CHAR_Student_XVIII_20261006",
+    "preview": "/assets/new-delivery/CHAR_Student_XVIII_20261006.preview.png",
+    "rigStatus": "Two historical photogrammetry figures side by side; no skeleton or animation; cultural static display, not claimed playable",
+    "previewRendered": true,
+    "static": true,
+    "height": 1.7506091594696045,
+    "dimensionsOrder": "Blender XYZ = width,depth,height",
+    "gltfDimensions": [
+      1.2108824253082275,
+      1.7506091594696045,
+      0.6126626133918762
+    ],
+    "figures": 2
+  },
+  {
+    "id": "EDU_Anatomy_XRay_20261006",
+    "label": "Anatomia humana em camadas",
+    "category": "anatomy",
+    "status": "validated",
+    "sourceCredits": {},
+    "licenseStatus": "No license or attribution file in supplied OBJ folder; source provenance pending",
+    "sources": [
+      {
+        "file": "Esqueleto\\Raio X Anatomia Humana\\model_0.obj",
+        "sha256": "0fd457ed010b9878614942d62fab505a4c95d25fd6bb487c4bed9b314c793464",
+        "geometrySha256": "7ac7e2be2b14711cf96891b82d291c3f149c1ab958ab39fd340f87b110de62e0",
+        "missingMtllib": [
+          "model_0.mtl"
+        ]
+      },
+      {
+        "file": "Esqueleto\\Raio X Anatomia Humana\\model_1.obj",
+        "sha256": "0cdc735e57cf7f123aa8e406fbed4fb8b057884c876a59153a9ccf2b964131f3",
+        "geometrySha256": "35ac6c97444f68c3445c67593c13edc651584dd1751f8b1f3aae1c3277224d1d",
+        "missingMtllib": [
+          "model_1.mtl"
+        ]
+      },
+      {
+        "file": "Esqueleto\\Raio X Anatomia Humana\\model_2.obj",
+        "sha256": "4d61a0acf833691984ad1336ccb632aac7fc82f81ab0ece22d3ca953fa888730",
+        "geometrySha256": "acf98c5cad0a87e2b1c179b9e0f97debac6a91a3dcc8bdebbfdab01de2055e85",
+        "missingMtllib": [
+          "model_2.mtl"
+        ]
+      },
+      {
+        "file": "Esqueleto\\Raio X Anatomia Humana\\model_3.obj",
+        "sha256": "4619b30c36b5b74305ea72f36b54be375ff111679d5498628ccdb4b84bbf1353",
+        "geometrySha256": "532ac1befd2c912d2eb37bc9cbafdeff4f3d0a782f9fc2a25419bc92d27166b0",
+        "missingMtllib": [
+          "model_3.mtl"
+        ]
+      },
+      {
+        "file": "Esqueleto\\Raio X Anatomia Humana\\model_9.obj",
+        "sha256": "e616736e08cbfb98e1632061f316d4d3801287576e58da4a136fb6fffbf656cb",
+        "geometrySha256": "8a93a1f990dfb1842382f7fa84170d0a2f6262d0bcebb7772a109a11de85b521",
+        "missingMtllib": [
+          "model_9.mtl"
+        ]
+      }
+    ],
+    "omittedDuplicateParts": [
+      "Esqueleto\\Raio X Anatomia Humana\\model_4.obj",
+      "Esqueleto\\Raio X Anatomia Humana\\model_5.obj",
+      "Esqueleto\\Raio X Anatomia Humana\\model_6.obj",
+      "Esqueleto\\Raio X Anatomia Humana\\model_7.obj",
+      "Esqueleto\\Raio X Anatomia Humana\\model_8.obj",
+      "Esqueleto\\Raio X Anatomia Humana\\model_10.obj",
+      "Esqueleto\\Raio X Anatomia Humana\\model_11.obj"
+    ],
+    "modifications": [
+      "Uniform normalization of freshly imported static derivative only; centered horizontal origin and minimum Z=0; source geometry and files retained",
+      "Missing OBJ MTL: documented provisional part-level PBR materials; no source logos/textures copied to buses",
+      "Per-part decimation to web presentation budget; part hierarchy and source scene preserved"
+    ],
+    "rigged": false,
+    "animations": [],
+    "sourceBounds": [
+      [
+        -346405,
+        -165718,
+        -1263810
+      ],
+      [
+        346413.90625,
+        142721.703125,
+        611297.9375
+      ]
+    ],
+    "originalTriangles": 186031,
+    "normalizationScale": 9.599447071848662e-7,
+    "preparedTriangles": 179997,
+    "preparedBounds": [
+      [
+        -0.33253389596939087,
+        -0.14804252982139587,
+        0
+      ],
+      [
+        0.33253392577171326,
+        0.14804252982139587,
+        1.7999999523162842
+      ]
+    ],
+    "url": "/assets/new-delivery/EDU_Anatomy_XRay_20261006.glb",
+    "bytes": 3883100,
+    "sha256": "09c47ad9cf247d084e3187d24bd66dcea9f4a6a645c33c2bfb5176f084a8097a",
+    "dimensions": [
+      0.6650677919387817,
+      0.29608505964279175,
+      1.7999999523162842
+    ],
+    "triangles": 179997,
+    "meshCount": 5,
+    "origin": "horizontal center; ground Z=0; GLB Y-up",
+    "validation": "Delivered GLB reimported; finite vertices; triangle primitives and bounds match",
+    "blend": "C:\\Users\\Senac\\Documents\\Codex\\2026-09-28\\referenced-chatgpt-conversation-this-is-an\\outputs\\preparatorio\\art\\blender\\new_delivery_20261006\\EDU_Anatomy_XRay_20261006.blend",
+    "collection": "PREP_DELIVERY_EDU_Anatomy_XRay_20261006",
+    "preview": "/assets/new-delivery/EDU_Anatomy_XRay_20261006.preview.png",
+    "previewRendered": true,
+    "static": true,
+    "height": 1.7999999523162842,
+    "dimensionsOrder": "Blender XYZ = width,depth,height",
+    "gltfDimensions": [
+      0.6650677919387817,
+      1.7999999523162842,
+      0.29608505964279175
+    ]
+  }
+]

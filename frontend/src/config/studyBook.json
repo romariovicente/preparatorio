@@ -1,0 +1,414 @@
+{
+  "title": "Guia Técnico de Enfermagem",
+  "url": "/assets/knowledge/guia_enfermagem.pdf",
+  "pages": 150,
+  "sha256": "7c98539884214a31f43404e3a8c65175f5f0fa4b833f418c27d572eca2a7736d",
+  "driveUrl": "https://drive.google.com/file/d/1a_TqJ0M44kXhwFPvkwXiXGcW_kMEyt-F/view",
+  "notice": "Material de estudo fornecido pelo criador, elaborado com assistência de IA. A apresentação informa que não recebeu validação clínica independente. Exercícios de matemática são fictícios; conteúdos clínicos requerem orientação docente e protocolos atualizados.",
+  "lessons": [
+    {
+      "id": "page-7",
+      "title": "Número sem unidade não basta",
+      "page": 7,
+      "category": "Matemática",
+      "quiz": {
+        "question": "Qual registro apresenta número e unidade?",
+        "options": [
+          "100",
+          "100 mL",
+          "cem"
+        ],
+        "answer": 1,
+        "explanation": "A unidade informa a grandeza. O número sozinho é ambíguo."
+      }
+    },
+    {
+      "id": "page-8",
+      "title": "Somar e subtrair com decimais",
+      "page": 8,
+      "category": "Matemática",
+      "quiz": {
+        "question": "Quanto é 1,25 + 0,50?",
+        "options": [
+          "1,30",
+          "1,75",
+          "6,25"
+        ],
+        "answer": 1,
+        "explanation": "Alinhe as casas decimais: 1,25 + 0,50 = 1,75."
+      }
+    },
+    {
+      "id": "page-9",
+      "title": "Multiplicar: quantas porções?",
+      "page": 9,
+      "category": "Matemática",
+      "quiz": {
+        "question": "Quanto é 1,2 × 4?",
+        "options": [
+          "4,8",
+          "1,6",
+          "12,4"
+        ],
+        "answer": 0,
+        "explanation": "São quatro parcelas iguais: 1,2 + 1,2 + 1,2 + 1,2."
+      }
+    },
+    {
+      "id": "page-10",
+      "title": "Dividir: repartir ou descobrir porções",
+      "page": 10,
+      "category": "Matemática",
+      "quiz": {
+        "question": "Quanto é 1,25 ÷ 0,25?",
+        "options": [
+          "0,5",
+          "5",
+          "50"
+        ],
+        "answer": 1,
+        "explanation": "Confira pela multiplicação: 5 × 0,25 = 1,25."
+      }
+    },
+    {
+      "id": "page-11",
+      "title": "Fração, decimal e porcentagem",
+      "page": 11,
+      "category": "Matemática",
+      "quiz": {
+        "question": "A fração 3/4 corresponde a:",
+        "options": [
+          "25%",
+          "34%",
+          "75%"
+        ],
+        "answer": 2,
+        "explanation": "3 dividido por 4 é 0,75; em porcentagem, 75%."
+      }
+    },
+    {
+      "id": "page-12",
+      "title": "A ordem das operações e a calculadora",
+      "page": 12,
+      "category": "Matemática",
+      "quiz": {
+        "question": "Em 2 + 3 × 4, qual operação vem primeiro?",
+        "options": [
+          "Adição",
+          "Multiplicação",
+          "Qualquer uma"
+        ],
+        "answer": 1,
+        "explanation": "Sem parênteses, a multiplicação antecede a adição."
+      }
+    },
+    {
+      "id": "page-13",
+      "title": "Conversão de massa e volume",
+      "page": 13,
+      "category": "Matemática",
+      "quiz": {
+        "question": "Quantos mL há em 1 L?",
+        "options": [
+          "10",
+          "100",
+          "1000"
+        ],
+        "answer": 2,
+        "explanation": "O prefixo mili representa a milésima parte: 1000 mL = 1 L."
+      }
+    },
+    {
+      "id": "page-14",
+      "title": "Tempo não funciona na base 100",
+      "page": 14,
+      "category": "Matemática",
+      "quiz": {
+        "question": "Uma hora e meia corresponde a:",
+        "options": [
+          "150 minutos",
+          "90 minutos",
+          "60 minutos"
+        ],
+        "answer": 1,
+        "explanation": "Uma hora tem 60 minutos. Meia hora acrescenta 30 minutos."
+      }
+    },
+    {
+      "id": "page-15",
+      "title": "O que as letras da fórmula querem dizer",
+      "page": 15,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-16",
+      "title": "Concentração: reduzir a “por 1 mL”",
+      "page": 16,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-17",
+      "title": "Regra de três, linha por linha",
+      "page": 17,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-18",
+      "title": "Regra de três com unidades diferentes",
+      "page": 18,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-19",
+      "title": "Análise dimensional: a unidade guia a conta",
+      "page": 19,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-20",
+      "title": "Ler rótulos e escalas",
+      "page": 20,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-21",
+      "title": "Comprimidos, líquidos e gotas orais",
+      "page": 21,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-22",
+      "title": "Reconstituição: do pó à concentração",
+      "page": 22,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-23",
+      "title": "Diluição: demonstrando C1 × V1 = C2 × V2",
+      "page": 23,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-24",
+      "title": "Porcentagem no rótulo",
+      "page": 24,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-25",
+      "title": "UI, unidades, mmol e mEq",
+      "page": 25,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-26",
+      "title": "Dose por peso: primeiro a massa",
+      "page": 26,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-27",
+      "title": "Dose diária e número de administrações",
+      "page": 27,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-28",
+      "title": "Conferir uma faixa e um limite fornecidos",
+      "page": 28,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-29",
+      "title": "Velocidade da bomba: volume dividido pelo tempo",
+      "page": 29,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-30",
+      "title": "Fórmulas inversas: tempo e volume",
+      "page": 30,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-31",
+      "title": "Gotejamento: de mL para gotas",
+      "page": 31,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-32",
+      "title": "Microgotas e conversões de fluxo",
+      "page": 32,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-33",
+      "title": "De mg/h e unidades/h para mL/h",
+      "page": 33,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-34",
+      "title": "mcg/kg/min: uma etapa de cada vez",
+      "page": 34,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-35",
+      "title": "Arredondamento, precisão e erro percentual",
+      "page": 35,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-36",
+      "title": "Balanço hídrico e débito urinário",
+      "page": 36,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-37",
+      "title": "Totais, estoque e superfície corporal",
+      "page": 37,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-38",
+      "title": "Escolha a fórmula pela pergunta",
+      "page": 38,
+      "category": "Matemática"
+    },
+    {
+      "id": "page-47",
+      "title": "Anatomia: orientação e sistemas",
+      "page": 47,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-48",
+      "title": "Respiração, circulação e perfusão",
+      "page": 48,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-49",
+      "title": "Digestão, rins, fígado e medicamentos",
+      "page": 49,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-50",
+      "title": "Sinais vitais: medir e interpretar tendências",
+      "page": 50,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-51",
+      "title": "Higiene, conforto e mobilidade",
+      "page": 51,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-52",
+      "title": "Pele, feridas e prevenção de lesões",
+      "page": 52,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-53",
+      "title": "Nutrição e segurança da alimentação",
+      "page": 53,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-54",
+      "title": "Eliminações e dispositivos urinários",
+      "page": 54,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-55",
+      "title": "Coletas, exames e segurança da amostra",
+      "page": 55,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-56",
+      "title": "Diabetes e cuidados cardiovasculares",
+      "page": 56,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-57",
+      "title": "Cuidados respiratórios e neurológicos",
+      "page": 57,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-58",
+      "title": "Cirurgia: antes e depois",
+      "page": 58,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-59",
+      "title": "CME, limpeza e prevenção de infecções",
+      "page": 59,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-60",
+      "title": "Saúde da mulher e atenção obstétrica",
+      "page": 60,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-61",
+      "title": "Recém-nascido, criança e adolescente",
+      "page": 61,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-62",
+      "title": "Pessoa idosa, saúde mental e cuidado paliativo",
+      "page": 62,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-63",
+      "title": "SUS, atenção primária e imunização",
+      "page": 63,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-64",
+      "title": "Processo de Enfermagem e comunicação",
+      "page": 64,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-65",
+      "title": "Reconhecer piora e pedir ajuda a tempo",
+      "page": 65,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-66",
+      "title": "Roteiro para estudar qualquer doença",
+      "page": 66,
+      "category": "Bases do curso"
+    },
+    {
+      "id": "page-70",
+      "title": "Patógenos, mecanismos e casos",
+      "page": 70,
+      "category": "Leitura ilustrada"
+    },
+    {
+      "id": "page-95",
+      "title": "Anatomia, vias e procedimentos ilustrados",
+      "page": 95,
+      "category": "Leitura ilustrada"
+    }
+  ]
+}

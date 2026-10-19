@@ -5,9 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "node --test src/etapa41/*.test.js src/config/*.test.js src/world/*.test.js src/cyber/*.test.js src/hospital/*.test.js src/network/*.test.js",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:source": "node scripts/test-source.mjs",
+    "check:cloud": "node scripts/check-cloud-deployment.mjs",
+    "build:pages": "npm run check:cloud && vite build && node scripts/finish-pages.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

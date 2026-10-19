@@ -1,0 +1,13 @@
+[
+  {"id":"hospital","label":"Hospital PREP","center":[48,0,-38],"width":36,"depth":27,"height":4.2,"opening":3.2,"style":"slide","color":"#d8e1e2","hidePrefixes":["BLD_PREP_Emergency_HEA_Concept_","BLD_HEA_Accent","HEA_RedCross"],"interior":"hospital"},
+  {"id":"laboratory","label":"Laboratório PREP","center":[80,0,-38],"width":23,"depth":24,"height":4.2,"opening":3.2,"style":"slide","color":"#98acb4","hidePrefixes":["BLD_PREP_Laboratory_"],"interior":"laboratory"},
+  {"id":"store","label":"Loja de itens","center":[-45,0,25],"width":20,"depth":15,"height":3.8,"opening":2.8,"style":"swing","color":"#c3bcb0","hidePrefixes":["BLD_ItemShop_"],"interior":"store"},
+  {"id":"moto-dealer","label":"Concessionária de motocicletas","center":[-46,0,53],"width":21,"depth":17,"height":3.8,"opening":3.2,"style":"slide","color":"#bcc7ca","hidePrefixes":["BLD_MotoDealer_"],"interior":"moto"},
+  {"id":"car-dealer","label":"Concessionária de veículos","center":[67,0,57],"width":24,"depth":22,"height":4.8,"opening":4.4,"style":"slide","color":"#d4d6d4","hidePrefixes":["BLD_CarDealer_"],"interior":"car"},
+  {"id":"hangar","label":"Hangar PREP","center":[85,0,90],"width":30,"depth":22,"height":6,"opening":6,"style":"slide","color":"#9ba8b1","hidePrefixes":["BLD_HelicopterHangar_","HANGAR_Door"],"interior":"hangar"},
+  {"id":"station","label":"Estação Arapiraca","center":[-70,0,-88],"width":27,"depth":16,"height":4.2,"opening":3.2,"style":"slide","color":"#c1c5c4","hidePrefixes":["BLD_Station_"],"interior":"station"},
+  {"id":"farm-house","label":"Casa da fazenda","center":[-26,0,104],"width":13,"depth":12,"height":3.2,"opening":1.6,"style":"swing","color":"#dac6ad","hidePrefixes":["FARM_House_"],"interior":"house"},
+  {"id":"residence-1","label":"Edifício Residencial 01","center":[-80,0,-25],"width":36,"depth":24,"height":3.8,"opening":2.8,"style":"slide","color":"#c7c5bb","hidePrefixes":[],"interior":"house"},
+  {"id":"residence-2","label":"Edifício Residencial 02","center":[-80,0,-66],"width":36,"depth":24,"height":3.8,"opening":2.8,"style":"slide","color":"#c7c5bb","hidePrefixes":[],"interior":"house"},
+  {"id":"residence-3","label":"Edifício Residencial 03","center":[-80,0,70],"width":36,"depth":24,"height":3.8,"opening":2.8,"style":"slide","color":"#c7c5bb","hidePrefixes":[],"interior":"house"}
+]

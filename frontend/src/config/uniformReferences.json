@@ -1,0 +1,72 @@
+{
+  "id": "senac_nursing_20261009",
+  "name": "Senac · Técnico de Enfermagem",
+  "kind": "supplied-2d-reference",
+  "files": [
+    {
+      "name": "senac-logo.png",
+      "sourceFile": "file_0000000019f8820e83f4b2b6bf3519f4.png",
+      "role": "identity-logo",
+      "url": "/assets/uniforms/senac_20261009/senac-logo.png",
+      "sha256": "df402e416d378275f20be5daf2e80fb36bba558b046c1da719f09b6b7384c335",
+      "bytes": 528166,
+      "sourcePreserved": true
+    },
+    {
+      "name": "jaleco-reference.png",
+      "sourceFile": "file_000000004438820e8fd03848b8884c5e.png",
+      "role": "reference-coat",
+      "url": "/assets/uniforms/senac_20261009/jaleco-reference.png",
+      "sha256": "976fd1d788cefe5232258c1b90bbc1ae3576d58ac9bc6f856e679df326433ae6",
+      "bytes": 2153001,
+      "sourcePreserved": true
+    },
+    {
+      "name": "polo-reference-a.png",
+      "sourceFile": "file_000000008de0820e92410ebffc030cf6.png",
+      "role": "reference-polo",
+      "url": "/assets/uniforms/senac_20261009/polo-reference-a.png",
+      "sha256": "9cf3063c3f3ed0624f141f8744096e7c2ba063258881e854381c82e70bf1da4a",
+      "bytes": 2100385,
+      "sourcePreserved": true
+    },
+    {
+      "name": "romario-lettering-reference.png",
+      "sourceFile": "file_00000000a254820ebef4f77ffb58a176.png",
+      "role": "reference-lettering",
+      "url": "/assets/uniforms/senac_20261009/romario-lettering-reference.png",
+      "sha256": "c729e87f78a6163d5baa76e780189c6c303f60c757853a48a765a9de37b39007",
+      "bytes": 1651021,
+      "sourcePreserved": true
+    },
+    {
+      "name": "polo-reference-b.png",
+      "sourceFile": "file_00000000cbec820ea88cce5e10e5ba7f.png",
+      "role": "reference-polo",
+      "url": "/assets/uniforms/senac_20261009/polo-reference-b.png",
+      "sha256": "755153e3c3c6ad810210bfed462c37bc1d1f785d027201f8c428678fc3b65cf9",
+      "bytes": 2210326,
+      "sourcePreserved": true
+    },
+    {
+      "name": "nursing-crest.png",
+      "sourceFile": "file_00000000e158820e8735fc17ca6766cc.png",
+      "role": "identity-crest",
+      "url": "/assets/uniforms/senac_20261009/nursing-crest.png",
+      "sha256": "8f3a12406fab57a0000391277e61ee14de71641956322c2a00e1af9c8f9d420c",
+      "bytes": 2942745,
+      "sourcePreserved": true
+    },
+    {
+      "name": "crest-with-romario-reference.png",
+      "sourceFile": "file_00000000f450820ebd846b9e5dd0ec4c.png",
+      "role": "reference-composite",
+      "url": "/assets/uniforms/senac_20261009/crest-with-romario-reference.png",
+      "sha256": "02773c19ba429b8dbc0000d485f73c02d938f8de546b61f9c40cc2b665b9a708",
+      "bytes": 2794339,
+      "sourcePreserved": true
+    }
+  ],
+  "wearableCostumeId": "COSTUME_Remy_Senac_20261009",
+  "note": "Mockups orientam a modelagem. Marca e brasão originais entram sem edição; nome de cada jogador é gerado em tempo real."
+}

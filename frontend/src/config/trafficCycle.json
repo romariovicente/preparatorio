@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "fictional_game_demonstration_not_measured_HEA_programming",
+  "certifiedRoadDesign": false,
+  "unit": "second",
+  "blenderFramesPerSecond": 60,
+  "flashingRedOnSeconds": 0.5,
+  "sourceReference": "arapiracaReference.json",
+  "pedestrianPolicy": "exclusive_stage_all_vehicle_axes_red",
+  "turningMovementsVerified": false,
+  "stages": [
+    {"id": "NS_GREEN", "duration": 18, "ns": "green", "ew": "red", "pedNs": "red", "pedEw": "red"},
+    {"id": "NS_YELLOW", "duration": 3, "ns": "yellow", "ew": "red", "pedNs": "red", "pedEw": "red"},
+    {"id": "CLEAR_NS", "duration": 2, "ns": "red", "ew": "red", "pedNs": "red", "pedEw": "red"},
+    {"id": "EW_GREEN", "duration": 18, "ns": "red", "ew": "green", "pedNs": "red", "pedEw": "red"},
+    {"id": "EW_YELLOW", "duration": 3, "ns": "red", "ew": "yellow", "pedNs": "red", "pedEw": "red"},
+    {"id": "CLEAR_EW", "duration": 2, "ns": "red", "ew": "red", "pedNs": "red", "pedEw": "red"},
+    {"id": "PEDESTRIAN_GREEN", "duration": 10, "ns": "red", "ew": "red", "pedNs": "green", "pedEw": "green"},
+    {"id": "PEDESTRIAN_CLEAR", "duration": 6, "ns": "red", "ew": "red", "pedNs": "flashing-red", "pedEw": "flashing-red"},
+    {"id": "CLEAR_PEDESTRIAN", "duration": 2, "ns": "red", "ew": "red", "pedNs": "red", "pedEw": "red"}
+  ]
+}

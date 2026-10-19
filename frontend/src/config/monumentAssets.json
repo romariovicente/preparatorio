@@ -1,0 +1,82 @@
+[
+  {
+    "id": "PROP_Florence_Nightingale_Real_20261005",
+    "name": "Florence Nightingale · monumento",
+    "height": 6.6,
+    "positions": [
+      [
+        -23,
+        0.01,
+        3
+      ],
+      [
+        22,
+        0.01,
+        -16
+      ],
+      [
+        24,
+        0.01,
+        -22
+      ],
+      [
+        -55,
+        0.01,
+        -32
+      ]
+    ],
+    "hidePrefixes": [
+      "STAT_Nightingale"
+    ],
+    "license": "CC-BY-NC-SA-4.0",
+    "author": "Scan-the-World",
+    "source": "https://zenodo.org/records/21163474",
+    "url": "/assets/monuments/PROP_Florence_Nightingale_Real_20261005.glb",
+    "bytes": 8550744,
+    "sha256": "1adb56df3433c0c17928bf2656ab74332c7f8b64231f37f9d4c94156e5079488",
+    "category": "Monumentos",
+    "reimportValidated": true,
+    "status": "validated",
+    "rigged": false,
+    "playable": false,
+    "animations": [],
+    "credits": {
+      "author": "Scan-the-World",
+      "license": "CC-BY-NC-SA-4.0",
+      "source": "https://zenodo.org/records/21163474"
+    }
+  },
+  {
+    "id": "PROP_Brain_Real_20261005",
+    "name": "Cérebro · Praça do Conhecimento",
+    "height": 6,
+    "positions": [
+      [
+        0,
+        3.1,
+        0
+      ]
+    ],
+    "hidePrefixes": [
+      "PLAZA_BrainHemisphere",
+      "PLAZA_BrainFold"
+    ],
+    "license": "CC-BY-4.0",
+    "author": "Human Reference Atlas / Allen Institute",
+    "source": "https://humanatlas.io/3d-reference-library",
+    "url": "/assets/monuments/PROP_Brain_Real_20261005.glb",
+    "bytes": 3339936,
+    "sha256": "3e2adcd24dffb69e80af78a93d50e8b8256521191977c062f0cfe6a7cd4336de",
+    "category": "Monumentos",
+    "reimportValidated": true,
+    "status": "validated",
+    "rigged": false,
+    "playable": false,
+    "animations": [],
+    "credits": {
+      "author": "Human Reference Atlas / Allen Institute",
+      "license": "CC-BY-4.0",
+      "source": "https://humanatlas.io/3d-reference-library"
+    }
+  }
+]

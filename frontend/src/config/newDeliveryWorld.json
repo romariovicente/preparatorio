@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "author": "Romario Vicente Amaro",
+  "units": "meters",
+  "assetCatalog": "newDeliveryAssets.json",
+  "hidePrefixes": ["PARK_Centro", "PARK_Label_Centro", "PARK_Line_Centro", "SIGN_Info_ONIBUS", "SIGN_Pole_ONIBUS"],
+  "dynamicReplacements": {"bus": "VEH_Bus_City_20261006", "bus-brt": "VEH_Bus_BRT_20261006"},
+  "compositions": [
+    {"id":"delivery-terminal","assetId":"BLD_Bus_Terminal_20261006","label":"Terminal Rodoviário PREPARATÓRIO","position":[-25,0,-51],"rotation":[0,0,0],"role":"terminal","labelOffset":6.15},
+    {"id":"delivery-brt","assetId":"VEH_Bus_BRT_20261006","label":"Ônibus articulado · Terminal pela Via Oeste","position":[-106,0,-49],"rotation":[0,0,0],"role":"transit-vehicle","labelOffset":4.4},
+    {"id":"delivery-stop-plaza","assetId":"MOD_Bus_Stop_20261006","label":"Parada · Praça do Conhecimento","position":[6,0,42.3],"rotation":[0,3.141592653589793,0],"role":"bus-stop","stopId":"plaza","labelOffset":3.4},
+    {"id":"delivery-stop-hospital","assetId":"MOD_Bus_Stop_20261006","label":"Parada · Hospital PREPARATÓRIO","position":[97,0,-47],"rotation":[0,1.5707963267948966,0],"role":"bus-stop","stopId":"hospital","labelOffset":3.4},
+    {"id":"delivery-stop-store","assetId":"MOD_Bus_Stop_20261006","label":"Parada · Loja de itens","position":[-55,0,40.7],"rotation":[0,3.141592653589793,0],"role":"bus-stop","stopId":"store","labelOffset":3.4},
+    {"id":"delivery-stop-station","assetId":"MOD_Bus_Stop_20261006","label":"Parada · Estação Arapiraca","position":[-101,0,-89],"rotation":[0,-1.5707963267948966,0],"role":"bus-stop","stopId":"station","labelOffset":3.4},
+    {"id":"delivery-anatomy","assetId":"EDU_Anatomy_XRay_20261006","label":"Hospital · Anatomia humana","position":[62.5,0.17,-28.5],"rotation":[0,-0.7,0],"role":"educational-exhibit","buildingId":"hospital","labelOffset":2.5,"pedestal":{"width":1.1,"depth":0.85,"height":0.15}},
+    {"id":"delivery-history","assetId":"CHAR_Student_XVIII_20261006","label":"Praça · Estudantes do século XVIII","position":[-31,0.17,13],"rotation":[0,0.25,0],"role":"cultural-exhibit","labelOffset":2.45,"pedestal":{"width":1.8,"depth":1.1,"height":0.15},"playable":false}
+  ],
+  "zones": [
+    {"id":"delivery-terminal","label":"Terminal Rodoviário PREPARATÓRIO","position":[-25,0,-51],"approach":[-25,0,-30]},
+    {"id":"delivery-stop-plaza","label":"Parada · Praça do Conhecimento","position":[6,0,42.3],"approach":[6,0,37.7],"stopId":"plaza"},
+    {"id":"delivery-stop-hospital","label":"Parada · Hospital PREPARATÓRIO","position":[97,0,-47],"approach":[102,0,-45],"stopId":"hospital"},
+    {"id":"delivery-stop-store","label":"Parada · Loja de itens","position":[-55,0,40.7],"approach":[-55,0,36.5],"stopId":"store"},
+    {"id":"delivery-stop-station","label":"Parada · Estação Arapiraca","position":[-101,0,-89],"approach":[-106,0,-89],"stopId":"station"},
+    {"id":"delivery-anatomy","label":"Hospital · Exposição de anatomia","position":[62.5,0,-28.5],"approach":[59.5,0,-28.5],"buildingId":"hospital","interior":true},
+    {"id":"delivery-history","label":"Praça · Exposição cultural","position":[-31,0,13],"approach":[-31,0,15.5]}
+  ],
+  "colliders": [
+    {"id":"delivery-terminal-core","x":-25,"z":-56,"w":51.8,"d":26,"note":"Enclosed rear wings; entrance canopy remains reachable. Exact rendered walls also participate in solid mesh collisions."},
+    {"id":"delivery-anatomy","x":62.5,"z":-28.5,"w":1.1,"d":0.85},
+    {"id":"delivery-history","x":-31,"z":13,"w":1.8,"d":1.1},
+    {"id":"delivery-stop-plaza-back","x":6,"z":43.5,"w":5.5,"d":0.22},
+    {"id":"delivery-stop-hospital-back","x":95.8,"z":-47,"w":0.22,"d":5.5},
+    {"id":"delivery-stop-store-back","x":-55,"z":41.9,"w":5.5,"d":0.22},
+    {"id":"delivery-stop-station-back","x":-99.8,"z":-89,"w":0.22,"d":5.5}
+  ],
+  "parkingOverrides": [
+    {"id":"Centro-0","label":"Terminal · vaga 01","position":[7,0.1,-66],"size":[5,3.6]},
+    {"id":"Centro-1","label":"Terminal · vaga 02","position":[7,0.1,-61],"size":[5,3.6]},
+    {"id":"Centro-2","label":"Terminal · vaga 03","position":[7,0.1,-56],"size":[5,3.6]},
+    {"id":"Centro-3","label":"Terminal · vaga 04","position":[7,0.1,-51],"size":[5,3.6]}
+  ],
+  "roadConnections": {
+    "status":"Modelo conceitual de circulação; travessia ferroviária sem controle operacional implementado.",
+    "sourceScene":"/assets/cyber/ENV_Arapiraca_RealMaterials_v3_20261005.glb",
+    "materials": {
+      "asfalto":{"source":"MAT_ARAP_REAL_asphalt","linearColor":[0.055,0.056,0.052],"roughness":0.95},
+      "branco":{"source":"MAT_ARAP_white","linearColor":[0.91,0.94,0.93],"roughness":0.6},
+      "ciclofaixa":{"source":"MAT_ARAP_bike_red","linearColor":[0.48,0.025,0.03],"roughness":0.8},
+      "calcada":{"source":"MAT_ARAP_REAL_concrete","linearColor":[0.42,0.41,0.38],"roughness":0.84}
+    },
+    "existingRoads":[
+      {"id":"ROAD_AL220_HEA_AXIS","from":[-115,-80],"to":[113,58],"width":12},
+      {"id":"ROAD_EAST_WEST","from":[-106,35],"to":[108,35],"width":12},
+      {"id":"ROAD_NORTH_ACCESS","from":[-106,-75],"to":[108,-75],"width":12},
+      {"id":"ROAD_SOUTH_ACCESS","from":[-106,80],"to":[108,80],"width":12},
+      {"id":"ROAD_WEST_COLLECTOR","from":[-80,-108],"to":[-80,115],"width":12},
+      {"id":"ROAD_EAST_COLLECTOR","from":[35,-108],"to":[35,115],"width":12},
+      {"id":"ROAD_OUTER_COLLECTOR","from":[105,-108],"to":[105,115],"width":12}
+    ],
+    "streets":[
+      {"id":"via-norte","label":"Via Norte · Ônibus","from":[-108.8,-99],"to":[105,-99],"width":4.4,"surfaceY":0.151,"labelPosition":[-20,0.4,-99],"direction":[-1,0],"arrowPositions":[[-96,-99],[-42,-99],[12,-99],[68,-99]]},
+      {"id":"via-oeste","label":"Via Oeste · Estação e acesso ao terminal","from":[-106,-100.8],"to":[-106,35],"width":5.6,"surfaceY":0.151,"labelPosition":[-106,0.4,-48],"direction":[0,1],"arrowPositions":[[-106,-57],[-106,-25],[-106,7]],"edgeGaps":[{"side":-1,"from":-94,"to":-84,"reason":"Frente aberta da parada da estação"},{"side":-1,"from":-51,"to":-40,"reason":"Embarque do terminal e passagem a pé"}]},
+      {"id":"via-oeste-desvio-inicio","label":"Via Oeste · contorno da sinalização","from":[-106,-5],"to":[-102,15],"width":5.6,"endPadding":4,"surfaceY":0.151,"direction":[0,1],"arrowPositions":[]},
+      {"id":"via-oeste-desvio-fim","label":"Via Oeste · contorno da sinalização","from":[-102,15],"to":[-102,35],"width":5.6,"endPadding":4,"surfaceY":0.151,"direction":[0,1],"arrowPositions":[]},
+      {"id":"via-oeste-curva-praca","label":"Via Oeste · espaço de curva do articulado","from":[-114,34],"to":[-88,34],"width":20,"surfaceY":0.151,"direction":[1,0],"arrowPositions":[]},
+      {"id":"via-norte-curva-oeste","label":"Via Norte · espaço de curva do articulado","from":[-116,-97],"to":[-90,-97],"width":28,"surfaceY":0.151,"direction":[1,0],"arrowPositions":[]},
+      {"id":"via-norte-curva-leste","label":"Via Norte · espaço de curva do articulado","from":[84,-101],"to":[116,-101],"width":18,"surfaceY":0.151,"direction":[-1,0],"arrowPositions":[]},
+      {"id":"via-leste-curva-praca","label":"Via Leste · espaço de curva do articulado","from":[94,35],"to":[117,35],"width":12,"surfaceY":0.151,"direction":[0,-1],"arrowPositions":[]},
+      {"id":"via-leste-desvio-portal-inicio","label":"Via Leste · contorno do portal","from":[105,35],"to":[111.2,20],"width":8.4,"endPadding":4,"surfaceY":0.151,"direction":[0,-1],"arrowPositions":[]},
+      {"id":"via-leste-desvio-portal","label":"Via Leste · contorno do portal","from":[111.2,-18],"to":[111.2,20],"width":8.4,"endPadding":4,"surfaceY":0.151,"direction":[0,-1],"arrowPositions":[]},
+      {"id":"via-leste-desvio-portal-fim","label":"Via Leste · contorno do portal","from":[111.2,-18],"to":[105,-35],"width":8.4,"endPadding":4,"surfaceY":0.151,"direction":[0,-1],"arrowPositions":[]}
+    ],
+    "cycleLanes":[
+      {"id":"ciclo-oeste","label":"Ciclofaixa Oeste","from":[-110.1,-94.6],"to":[-110.1,42.3],"width":1.8,"surfaceY":0.231,"symbols":[[-110.1,-60],[-110.1,-30],[-110.1,0]],"direction":[0,1]},
+      {"id":"ciclo-noroeste","label":"Ciclofaixa · acesso à estação","from":[-110.1,-94.6],"to":[-87,-94.6],"width":1.8,"surfaceY":0.231,"symbols":[[-94,-94.6]],"direction":[1,0]},
+      {"id":"ciclo-norte","label":"Ciclofaixa Norte","from":[-53,-94.6],"to":[97.7,-94.6],"width":1.8,"surfaceY":0.231,"symbols":[[-35,-94.6],[8,-94.6],[67,-94.6]],"direction":[1,0]},
+      {"id":"ciclo-praca-conexao","label":"Ciclofaixa · ligação à praça","from":[-110.1,42.3],"to":[-106,42.3],"width":1.8,"surfaceY":0.231,"symbols":[],"direction":[1,0]}
+    ],
+    "sidewalks":[
+      {"id":"calcada-oeste","label":"Calçada Oeste","from":[-112.1,-94.6],"to":[-112.1,44.1],"width":1.6,"surfaceY":0.231},
+      {"id":"calcada-noroeste","label":"Calçada · acesso à estação","from":[-112.1,-92.4],"to":[-87,-92.4],"width":1.6,"surfaceY":0.231},
+      {"id":"calcada-norte","label":"Calçada Norte","from":[-53,-92.4],"to":[94.1,-92.4],"width":1.6,"surfaceY":0.231},
+      {"id":"passagem-estacao-oeste","label":"Passagem a pé · Estação","from":[-87,-96.7],"to":[-87,-94.6],"width":0.9,"surfaceY":0.231},
+      {"id":"passagem-estacao-norte","label":"Passagem a pé · Estação","from":[-87,-96.7],"to":[-53,-96.7],"width":0.9,"surfaceY":0.231},
+      {"id":"passagem-estacao-leste","label":"Passagem a pé · Estação","from":[-53,-96.7],"to":[-53,-94.6],"width":0.9,"surfaceY":0.231},
+      {"id":"passagem-terminal-embarque","label":"Terminal · acesso pela Via Oeste","from":[-102.5,-49],"to":[-102.5,-41],"width":3,"surfaceY":0.231},
+      {"id":"passagem-terminal-via-oeste","label":"Terminal · passagem a pé","from":[-106,-49],"to":[-55,-49],"width":3,"surfaceY":0.231},
+      {"id":"passagem-terminal-residencias","label":"Terminal · passagem a pé","from":[-55,-49],"to":[-55,-39],"width":3,"surfaceY":0.231},
+      {"id":"passagem-terminal-monumento-sul","label":"Terminal · contorno do monumento","from":[-55,-39],"to":[-42,-39],"width":3,"surfaceY":0.231},
+      {"id":"passagem-terminal-monumento-leste","label":"Terminal · contorno do monumento","from":[-42,-39],"to":[-42,-32],"width":3,"surfaceY":0.231},
+      {"id":"passagem-terminal-entrada","label":"Terminal · passagem a pé","from":[-42,-32],"to":[-25,-32],"width":3,"surfaceY":0.231},
+      {"id":"passagem-terminal-canopy","label":"Terminal · entrada","from":[-25,-32],"to":[-25,-30],"width":3,"surfaceY":0.231}
+    ],
+    "crossings":[
+      {"id":"travessia-estacao","label":"Travessia · Estação Arapiraca","position":[-106,-81.5],"direction":[0,1],"span":9.4,"width":3.6,"surfaceY":0.249}
+    ],
+    "notices":[
+      {"id":"ciclo-estacao-oeste","label":"Estação · desmonte da bicicleta","position":[-87,0.45,-94.6]},
+      {"id":"ciclo-estacao-leste","label":"Estação · retome a ciclofaixa","position":[-53,0.45,-94.6]},
+      {"id":"travessia-ferroviaria","label":"Travessia ferroviária · demonstração","position":[-112.1,0.45,-97.5]}
+    ],
+    "pedestrianLinks":[{"id":"passagem-estacao","label":"Estação · ligação a pé entre ciclofaixas","points":[[-87,-94.6],[-87,-96.7],[-53,-96.7],[-53,-94.6]],"width":0.9,"note":"Trecho estreito do protótipo; sem declaração de acessibilidade normativa."},{"id":"passagem-terminal","label":"Terminal · acesso pela Via Oeste","points":[[-106,-49],[-55,-49],[-55,-39],[-42,-39],[-42,-32],[-25,-32],[-25,-30]],"width":3,"note":"Embarque externo; a passagem contorna Florence Nightingale sem alterar o monumento, o terminal ou as residências."}],
+    "railCrossings":[{"id":"ferrovia-noroeste","position":[-106,-93.1],"railFrom":[-115,-85],"railTo":[-95,-103],"note":"Pisos planos não controlam nem bloqueiam o trem; representação conceitual exige controle adicional antes de uso operacional."}],
+    "audit":"Asfalto novo recortado contra os sete corredores do GLB e contra os próprios trechos novos. Ciclofaixas e calçadas recortadas contra faixas equivalentes existentes. Intervalo X=-87..-53 preserva a fachada da estação. Bordas na parada oeste ficam abertas. Materiais copiados dos fatores PBR do GLB original, que permanece intacto."
+  },
+  "routeOverrides": {
+    "bus": {
+      "id":"bus","label":"Ônibus circular PREPARATÓRIO","speed":10,"dwell":9,
+      "points":[{"x":0,"z":35},{"x":10,"z":35},{"x":25,"z":36.5},{"x":75,"z":36.5},{"x":90,"z":35},{"x":105,"z":35},{"x":111.2,"z":20},{"x":111.2,"z":-18},{"x":105,"z":-35},{"x":105,"z":-45},{"x":105,"z":-99},{"x":-106,"z":-99},{"x":-106,"z":-89},{"x":-106,"z":-5},{"x":-102,"z":15},{"x":-102,"z":35},{"x":-45,"z":35}],
+      "stops":[
+        {"id":"plaza","label":"Praça PREP","position":{"x":0,"y":0,"z":35}},
+        {"id":"hospital","label":"Hospital","position":{"x":105,"y":0,"z":-45}},
+        {"id":"station","label":"Estação Arapiraca","position":{"x":-106,"y":0,"z":-89}},
+        {"id":"store","label":"Loja","position":{"x":-45,"y":0,"z":35}}
+      ]
+    }
+  },
+  "placementAudit": {
+    "terminalRejectedPosition":[0,0,-90],
+    "terminalRejectedReason":"The 38 m footprint crosses the north train at Z=-103 and the old bus road at Z=-75.",
+    "terminalChosenReason":"West central area clears buildings, rendered car replacements and monuments. Only four Centro parking bays need relocation; their identities are preserved.",
+    "routeCorrection":"Both existing buses circulate outside the central plaza. BRT terminal boarding is at X=-106/Z=-49. Local lane offsets preserve the Via Oeste sign, praça lamp and ocean portal, while added junction aprons cover the articulated sweep. A 3 m pedestrian link skirts the preserved Florence Nightingale monument. Railway crossings remain conceptual, and the 25-degree articulation animation is not an operational turning certification.",
+    "provenance":"Local supplied OBJ sources have no MTL/license files. Recovered materials are provisional and originals stay intact. Stop/historical figure licenses are embedded CC BY 4.0.",
+    "historicalFigureStatus":"Two scanned historical figures in one model; no rig or animation; cultural exhibit only."
+  }
+}

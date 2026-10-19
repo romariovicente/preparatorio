@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "date": "2026-10-13",
+  "author": "Romario Vicente Amaro",
+  "status": "planning-only",
+  "runtimeEnabled": false,
+  "units": "meters",
+  "coordinateSystem": "Frontend XZ, Y-up. Blender position = [x, -z, y]. No scaling or independent recentering of existing assets.",
+  "world": {
+    "bounds": {"minX": -2000, "maxX": 2000, "minZ": -2000, "maxZ": 2000},
+    "terrainSize": [4000, 4000],
+    "terrainAreaM2": 16000000,
+    "terrainElevation": -0.6,
+    "coastalWater": {"bounds": {"minX": -650, "maxX": 1950, "minZ": 1725, "maxZ": 1975}, "surfaceY": -0.3},
+    "note": "4 km planning envelope includes urban land, coast and reserved expansion. It is not a fully populated city or a replacement runtime boundary."
+  },
+  "legacy": {
+    "districtId": "legacy-central",
+    "runtimeBounds": {"minX": -118, "maxX": 118, "minZ": -118, "maxZ": 118},
+    "visualTerrainBounds": {"minX": -130, "maxX": 130, "minZ": -130, "maxZ": 130},
+    "urbanPlateSize": [218, 194],
+    "runtimeAreaM2": 55696,
+    "transform": {"position": [0, 0, 0], "rotation": [0, 0, 0], "scale": [1, 1, 1]},
+    "preservation": "Keep the current 236 m playable district, 260 m visual base, building IDs, doors, classroom shared origins, character, coat, rigs, animations and multiplayer unchanged. Macro gateways stop outside the visual base.",
+    "protectedAssets": [
+      {"role": "legacy-city", "url": "/assets/cyber/ENV_Arapiraca_RealMaterials_v3_20261005.glb", "bytes": 13241084, "triangles": 258144, "meshes": 3889, "sha256": "cc422619eee36b065ea3d6de66b656980d9dac944007e8bee2654808e11af3f4"},
+      {"role": "original-remy", "url": "/assets/characters/CHR_Remy_Mixamo_20261005.glb", "bytes": 35079156, "sha256": "4d1caf2e917b0496438460e61a496ca0bd4342f52735651dea77a68a545f3d0e"},
+      {"role": "classroom-architecture", "url": "/assets/environments/ENV_Classroom_Futuristic_20261007.glb", "bytes": 4296812, "triangles": 179120, "meshes": 389, "sha256": "2efaf719694bb44c7e561b06abb72e5cbd9234f50b49c4afa9ebdc7ce5f63011"},
+      {"role": "classroom-students", "url": "/assets/environments/NPC_Classroom_Remy_20261007.glb", "bytes": 47020492, "triangles": 422328, "meshes": 84, "sha256": "1ddf2e43741601019384be60dc3ec15da828e9abcd9319f2ffc47654d512bb27"},
+      {"role": "anatomy", "url": "/assets/new-delivery/EDU_Anatomy_XRay_20261006.glb", "bytes": 3883100, "triangles": 179997, "meshes": 5, "sha256": "09c47ad9cf247d084e3187d24bd66dcea9f4a6a645c33c2bfb5176f084a8097a"}
+    ]
+  },
+  "humanScale": {
+    "referenceCharacterHeight": 1.7,
+    "playerRadius": 0.4,
+    "newDoorHeight": 2.4,
+    "newPublicDoorWidth": 1.6,
+    "newHospitalDoubleDoorWidth": 2.4,
+    "publicHospitalCorridorWidth": 3.2,
+    "technicalHospitalCorridorWidth": 2.6,
+    "classroomAisleTargetWidth": 1.6,
+    "multiplayerWaitingClearance": 1.8,
+    "note": "Game planning dimensions, not a declaration of architectural or clinical regulatory compliance. Existing 1.7 m character and valid classroom proportions are preserved."
+  },
+  "movementProfiles": {
+    "walk": {"speedMetersPerSecond": 1.7, "note": "Future macro walking target; current runtime still uses 5 m/s."},
+    "jog": {"speedMetersPerSecond": 3.6},
+    "car": {"speedMetersPerSecond": 14},
+    "moto": {"speedMetersPerSecond": 10},
+    "bus": {"speedMetersPerSecond": 10},
+    "brt": {"speedMetersPerSecond": 8},
+    "train": {"speedMetersPerSecond": 16}
+  },
+  "roadProfiles": {
+    "express": {"rightOfWayWidth": 30, "drivableWidth": 21, "medianWidth": 3, "shoulderWidthEachSide": 3, "sidewalkWidthEachSide": 0, "cycleWidthEachSide": 0},
+    "arterial": {"rightOfWayWidth": 20, "drivableWidth": 12, "medianWidth": 0, "shoulderWidthEachSide": 0, "sidewalkWidthEachSide": 2.4, "cycleWidthEachSide": 1.6},
+    "secondary": {"rightOfWayWidth": 12, "drivableWidth": 7, "medianWidth": 0, "shoulderWidthEachSide": 0, "sidewalkWidthEachSide": 2.5, "cycleWidthEachSide": 0},
+    "local": {"rightOfWayWidth": 8, "drivableWidth": 5, "medianWidth": 0, "shoulderWidthEachSide": 0, "sidewalkWidthEachSide": 1.5, "cycleWidthEachSide": 0}
+  },
+  "districts": [
+    {"id": "legacy-central", "label": "Distrito central existente", "collection": "DISTRICT_LEGACY_PRESERVED", "center": [0, 0], "size": [300, 300], "phase": "preserved", "color": "#82939a"},
+    {"id": "hospital", "label": "Saúde e complexo hospitalar", "collection": "DISTRICT_HOSPITAL", "center": [500, 300], "size": [600, 650], "phase": "blockout-1", "color": "#de6170"},
+    {"id": "university", "label": "Universidade e educação", "collection": "DISTRICT_UNIVERSITY", "center": [-450, -600], "size": [650, 550], "phase": "blockout-1", "color": "#439ace"},
+    {"id": "downtown", "label": "Comércio, serviços e trocas", "collection": "DISTRICT_DOWNTOWN", "center": [-450, 450], "size": [700, 600], "phase": "reserved", "color": "#ba79ce"},
+    {"id": "residential", "label": "Bairros residenciais", "collection": "DISTRICT_RESIDENTIAL", "center": [-1300, 300], "size": [650, 1100], "phase": "reserved", "color": "#cfac68"},
+    {"id": "industrial", "label": "Indústria e logística", "collection": "DISTRICT_INDUSTRIAL", "center": [650, -1100], "size": [600, 750], "phase": "reserved", "color": "#bc8750"},
+    {"id": "airport", "label": "Aeroporto e operações", "collection": "DISTRICT_AIRPORT", "center": [1450, -1100], "size": [900, 1500], "phase": "reserved", "color": "#7996cb"},
+    {"id": "beach", "label": "Praia e lazer", "collection": "DISTRICT_BEACH", "center": [300, 1525], "size": [1200, 350], "phase": "reserved", "color": "#4bbcc3"},
+    {"id": "marina", "label": "Marina, pesca e serviços náuticos", "collection": "DISTRICT_MARINA", "center": [1450, 1450], "size": [500, 500], "phase": "reserved", "color": "#4b9db0"},
+    {"id": "expansion-north", "label": "Expansão norte", "collection": "DISTRICT_EXPANSION_NORTH", "center": [-1250, -1450], "size": [700, 650], "phase": "future", "color": "#718870"},
+    {"id": "expansion-south", "label": "Expansão sul", "collection": "DISTRICT_EXPANSION_SOUTH", "center": [-1200, 1450], "size": [800, 600], "phase": "future", "color": "#718870"}
+  ],
+  "lots": [
+    {"id": "hospital-main", "districtId": "hospital", "label": "Hospital principal · volume modular", "center": [500, 300], "size": [220, 200], "buildingSize": [120, 24, 90], "approach": [500, 420], "entrance": [500, 355], "role": "hospital", "publicAccess": "hospital-access", "serviceApproach": [630, 320], "emergencyApproach": [630, 400]},
+    {"id": "university-main", "districtId": "university", "label": "Campus universitário", "center": [-450, -600], "size": [220, 180], "buildingSize": [140, 16, 90], "approach": [-450, -490], "entrance": [-450, -545], "role": "university", "publicAccess": "university-access"},
+    {"id": "commercial-main", "districtId": "downtown", "label": "Comércio e garagem", "center": [-450, 450], "size": [180, 160], "buildingSize": [110, 32, 90], "approach": [-450, 550], "entrance": [-450, 505], "role": "commercial", "publicAccess": "downtown-access"},
+    {"id": "residential-main", "districtId": "residential", "label": "Quadra residencial", "center": [-1300, 300], "size": [160, 200], "buildingSize": [80, 18, 70], "approach": [-1300, 420], "entrance": [-1300, 345], "role": "residential", "publicAccess": "residential-access"},
+    {"id": "industrial-main", "districtId": "industrial", "label": "Centro logístico", "center": [650, -1100], "size": [220, 220], "buildingSize": [160, 10, 100], "approach": [650, -970], "entrance": [650, -1040], "role": "industrial", "publicAccess": "industrial-access"},
+    {"id": "airport-terminal", "districtId": "airport", "label": "Terminal aeroportuário", "center": [1200, -1100], "size": [260, 200], "buildingSize": [180, 14, 100], "approach": [1200, -980], "entrance": [1200, -1040], "role": "airport", "publicAccess": "airport-access"},
+    {"id": "airport-runway", "districtId": "airport", "label": "Reserva de pista e operação", "center": [1530, -1100], "size": [200, 1400], "buildingSize": [45, 0.15, 1200], "role": "runway-reserve", "note": "Planning reserve only. Aircraft selection, operational safety areas and flight mechanics remain to be designed."},
+    {"id": "beach-services", "districtId": "beach", "label": "Serviços da praia", "center": [250, 1450], "size": [80, 60], "buildingSize": [40, 7, 20], "approach": [250, 1400], "entrance": [250, 1430], "role": "beach", "publicAccess": "beach-access"},
+    {"id": "marina-services", "districtId": "marina", "label": "Serviços da marina", "center": [1450, 1400], "size": [180, 140], "buildingSize": [90, 8, 40], "approach": [1450, 1490], "entrance": [1450, 1430], "role": "marina", "publicAccess": "marina-access"}
+  ],
+  "roads": [
+    {"id": "peripheral-ring", "label": "Rodovia periférica", "profile": "express", "points": [[-1800, -1950], [1950, -1950], [1950, 1700], [-1800, 1700], [-1800, -1950]]},
+    {"id": "west-spine", "label": "Avenida Oeste", "profile": "arterial", "points": [[-900, -1950], [-900, -250], [-900, 0], [-900, 850], [-900, 1700]]},
+    {"id": "east-spine", "label": "Avenida Leste", "profile": "arterial", "points": [[975, -1950], [975, -950], [975, -900], [975, -250], [975, 450], [975, 850], [975, 1250], [975, 1700]]},
+    {"id": "north-cross", "label": "Ligação Norte", "profile": "arterial", "points": [[-1800, -250], [-900, -250], [-650, -250], [0, -250], [650, -250], [975, -250], [1950, -250]]},
+    {"id": "south-cross", "label": "Ligação Sul", "profile": "arterial", "points": [[-1800, 850], [-1450, 850], [-900, 850], [-650, 850], [0, 850], [650, 850], [975, 850], [1125, 850], [1950, 850]]},
+    {"id": "heritage-ring", "label": "Contorno do distrito preservado", "profile": "secondary", "points": [[-170, -170], [170, -170], [170, 170], [-170, 170], [-170, -170]]},
+    {"id": "heritage-north", "label": "Aproximação norte · distrito atual", "profile": "secondary", "points": [[0, -250], [0, -170]]},
+    {"id": "heritage-south", "label": "Aproximação sul · distrito atual", "profile": "secondary", "points": [[0, 850], [0, 170]]},
+    {"id": "heritage-west", "label": "Aproximação oeste · distrito atual", "profile": "secondary", "points": [[-900, 0], [-170, 0]]},
+    {"id": "hospital-spine", "label": "Avenida do Hospital", "profile": "secondary", "points": [[650, -250], [650, 150], [650, 320], [650, 400], [650, 450], [650, 850]]},
+    {"id": "hospital-access", "label": "Entrada pública do hospital", "profile": "local", "points": [[975, 450], [650, 450], [500, 450], [500, 420]]},
+    {"id": "hospital-service", "label": "Acesso técnico e logística", "profile": "local", "points": [[650, 320], [630, 320]]},
+    {"id": "hospital-emergency", "label": "Aproximação de ambulâncias", "profile": "local", "points": [[650, 400], [630, 400]]},
+    {"id": "university-access", "label": "Entrada da universidade", "profile": "secondary", "points": [[-650, -250], [-650, -450], [-450, -450], [-450, -490]]},
+    {"id": "downtown-access", "label": "Entrada do centro comercial", "profile": "secondary", "points": [[-650, 850], [-650, 600], [-450, 600], [-450, 550]]},
+    {"id": "residential-access", "label": "Entrada do bairro residencial", "profile": "secondary", "points": [[-1450, 850], [-1450, 500], [-1300, 500], [-1300, 420]]},
+    {"id": "industrial-access", "label": "Acesso logístico", "profile": "secondary", "points": [[975, -900], [800, -900], [650, -900], [650, -970]]},
+    {"id": "airport-access", "label": "Acesso ao terminal aeroportuário", "profile": "secondary", "points": [[975, -950], [1200, -950], [1200, -980]]},
+    {"id": "beach-access", "label": "Avenida da Praia", "profile": "secondary", "points": [[975, 1250], [500, 1250], [250, 1250], [250, 1400]]},
+    {"id": "marina-access", "label": "Avenida da Marina", "profile": "secondary", "points": [[1125, 850], [1125, 1500], [1450, 1500], [1450, 1490]]}
+  ],
+  "plannedRoutes": [
+    {"id": "hospital-university", "fromLot": "hospital-main", "toLot": "university-main", "mode": "car", "plannedDwellSeconds": 20, "path": [[500, 420], [500, 450], [650, 450], [650, -250], [-650, -250], [-650, -450], [-450, -450], [-450, -490]]},
+    {"id": "hospital-downtown", "fromLot": "hospital-main", "toLot": "commercial-main", "mode": "car", "plannedDwellSeconds": 20, "path": [[500, 420], [500, 450], [650, 450], [650, 850], [-650, 850], [-650, 600], [-450, 600], [-450, 550]]},
+    {"id": "hospital-airport", "fromLot": "hospital-main", "toLot": "airport-terminal", "mode": "car", "plannedDwellSeconds": 30, "path": [[500, 420], [500, 450], [975, 450], [975, -950], [1200, -950], [1200, -980]]},
+    {"id": "hospital-beach", "fromLot": "hospital-main", "toLot": "beach-services", "mode": "car", "plannedDwellSeconds": 20, "path": [[500, 420], [500, 450], [650, 450], [650, 850], [975, 850], [975, 1250], [250, 1250], [250, 1400]]},
+    {"id": "hospital-marina", "fromLot": "hospital-main", "toLot": "marina-services", "mode": "car", "plannedDwellSeconds": 20, "path": [[500, 420], [500, 450], [650, 450], [650, 850], [1125, 850], [1125, 1500], [1450, 1500], [1450, 1490]]},
+    {"id": "residential-airport", "fromLot": "residential-main", "toLot": "airport-terminal", "mode": "car", "plannedDwellSeconds": 30, "path": [[-1300, 420], [-1300, 500], [-1450, 500], [-1450, 850], [-900, 850], [-900, -250], [975, -250], [975, -950], [1200, -950], [1200, -980]]},
+    {"id": "university-airport", "fromLot": "university-main", "toLot": "airport-terminal", "mode": "bus", "plannedDwellSeconds": 36, "path": [[-450, -490], [-450, -450], [-650, -450], [-650, -250], [975, -250], [975, -950], [1200, -950], [1200, -980]]},
+    {"id": "airport-marina", "fromLot": "airport-terminal", "toLot": "marina-services", "mode": "brt", "plannedDwellSeconds": 36, "path": [[1200, -980], [1200, -950], [975, -950], [975, 850], [1125, 850], [1125, 1500], [1450, 1500], [1450, 1490]]}
+  ],
+  "hospitalPhases": [
+    {"id": "hospital-phase-1", "sectors": ["entrada", "recepção", "espera", "acolhimento", "triagem", "emergência", "estabilização", "posto de enfermagem", "medicação"], "interactionFamilies": ["sinais vitais", "anamnese", "SBAR", "SOAP", "identificação", "cálculos e segurança medicamentosa"]},
+    {"id": "hospital-phase-2", "sectors": ["coleta", "laboratório", "imagem", "farmácia", "observação", "internação", "administração", "apoio e funcionários"], "interactionFamilies": ["amostras", "biossegurança", "armazenamento", "dispensação", "registros", "evolução"]},
+    {"id": "hospital-phase-3", "sectors": ["UTI", "cirurgia", "RPA", "CME", "expurgo", "utilidades", "doca", "heliponto", "áreas técnicas"], "interactionFamilies": ["checklist", "paramentação", "fluxo seguro", "equipes cooperativas"]}
+  ],
+  "performancePlan": {
+    "status": "unmeasured-targets",
+    "chunkSizeMeters": 200,
+    "loadRadiusMeters": 250,
+    "prefetchRadiusMeters": 400,
+    "distantHlodRadiusMeters": 1200,
+    "interiors": "Load only when approaching/entering the relevant building, with a lower-detail exterior retained outside.",
+    "mobile": {"targetFps": 30, "visibleTriangles": 300000, "drawCalls": 200, "activeAssetDownloadBytes": 32000000, "estimatedGpuMemoryBytes": 128000000, "maxTextureSize": 1024, "shadowMapSize": 1024},
+    "desktop": {"targetFps": 60, "visibleTriangles": 900000, "drawCalls": 500, "activeAssetDownloadBytes": 96000000, "estimatedGpuMemoryBytes": 384000000, "maxTextureSize": 2048, "shadowMapSize": 2048},
+    "note": "Targets require device profiling. File bytes are not GPU memory; mesh count is not measured draw calls. Current classroom bundle alone is 55,200,404 bytes and 781,445 triangles. Expansion cannot duplicate eager loading of every detailed model."
+  },
+  "references": {
+    "master": "00_PROMPT_MESTRE/PROMPT_MESTRE_CONTINUIDADE_PREPARATORIO.txt",
+    "concepts01to03": "Macro scale, district identity, hospital sectors and human reference only.",
+    "concept04": "Original PREPARATORIO visual hierarchy, future HUD and smartphone organization.",
+    "concept05": "First/third person driving, vehicle previews and garage categories.",
+    "concept06": "Blockout workflow, road hierarchy, collections and asset budgets.",
+    "hospital01to03": "Teaching room circulation and educational displays.",
+    "hospital04to07": "Laboratory stations, equipment layout and individual interaction points.",
+    "hospital08to10": "Multiplayer reception, waiting areas and generous circulation.",
+    "uiContactSheet": "Garage, clothes-only customization, paint controls, smartphone navigation and driving cameras as principles only.",
+    "policy": "No copied logos, names, UI layouts, maps, meshes, textures or reference-game assets. No nudity; excluded reference remains completely ignored."
+  }
+}

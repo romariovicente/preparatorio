@@ -1,0 +1,617 @@
+{
+  "version": 1,
+  "author": "Romario Vicente Amaro",
+  "units": "meters",
+  "sceneUrl": "/assets/cyber/ENV_Arapiraca_RealMaterials_v3_20261005.glb",
+  "props": [
+    {
+      "id": "bus",
+      "url": "/assets/cyber/PROP_bus_scene_20261005.glb",
+      "label": "Ônibus Conhecimento",
+      "category": "Transporte",
+      "animations": [],
+      "bytes": 118380,
+      "sha256": "993046a1edc7a5d0e846da5e297c25788969135dd165d6ab45c61e0e694d89b6"
+    },
+    {
+      "id": "train",
+      "url": "/assets/cyber/PROP_train_scene_20261005.glb",
+      "label": "Trem futurista",
+      "category": "Transporte",
+      "animations": [],
+      "bytes": 115500,
+      "sha256": "78379c8e497606016bd07784dfc4abb44daf131dc1215e91eb8ea11b927c0bdf"
+    },
+    {
+      "id": "elevator",
+      "url": "/assets/cyber/PROP_elevator_scene_20261005.glb",
+      "label": "Cabine elevador",
+      "category": "Interações",
+      "animations": [],
+      "bytes": 8760,
+      "sha256": "48e2906e7eb063cb84caad1c48208066e67e9837ace88958b33bc83d3750df7b"
+    },
+    {
+      "id": "tractor",
+      "url": "/assets/cyber/PROP_tractor_scene_20261005.glb",
+      "label": "Trator agrícola",
+      "category": "Fazenda",
+      "animations": [],
+      "bytes": 35232,
+      "sha256": "cbeca8ee076d5784f68520b45751ac9e9b9cfbc913ccb78bffcc8f15b957984f"
+    },
+    {
+      "id": "harvester",
+      "url": "/assets/cyber/PROP_harvester_scene_20261005.glb",
+      "label": "Colheitadeira",
+      "category": "Fazenda",
+      "animations": [],
+      "bytes": 33464,
+      "sha256": "1098ba965a08c7dd44e4a0581134312b69d3ef5bacb30721b187e0de7efc8f0f"
+    },
+    {
+      "id": "mototaxi",
+      "url": "/assets/cyber/PROP_mototaxi_scene_20261005.glb",
+      "label": "Mototáxi",
+      "category": "Transporte",
+      "animations": [],
+      "bytes": 60084,
+      "sha256": "c3fff0662f1020f64d2569ceb961a85eda0768c17c249cdbd952c4075af895a9"
+    },
+    {
+      "id": "truck",
+      "url": "/assets/cyber/PROP_truck_scene_20261005.glb",
+      "label": "Cavalo mecânico",
+      "category": "Transporte",
+      "animations": [],
+      "bytes": 44464,
+      "sha256": "fb2272b28a7aaa1ff575e724987605e999420980296d6a13dc533db6515010b2"
+    },
+    {
+      "id": "smartphone",
+      "url": "/assets/cyber/PROP_smartphone_scene_20261005.glb",
+      "label": "CHRONOVITAE",
+      "category": "Interações",
+      "animations": [],
+      "bytes": 24256,
+      "sha256": "716821865992711fd78fae1272ee5479b1e9975606cdbd7bb2f56368b9afc6f2"
+    },
+    {
+      "id": "fishing-rod",
+      "url": "/assets/cyber/PROP_fishing-rod_scene_20261005.glb",
+      "label": "Vara de pesca",
+      "category": "Interações",
+      "animations": [],
+      "bytes": 7996,
+      "sha256": "714b5644308caec939b735df243d7b3b6cdb51214a9180de0921e242764f0a8c"
+    },
+    {
+      "id": "flower",
+      "url": "/assets/cyber/PROP_flower_scene_20261005.glb",
+      "label": "Flor coletável",
+      "category": "Interações",
+      "animations": [],
+      "bytes": 22672,
+      "sha256": "d428cc8f3cbdc32e9b2b4be650a0e74bb7edcb55ab3aeab27e39a87181e90446"
+    },
+    {
+      "id": "bench",
+      "url": "/assets/cyber/PROP_bench_scene_20261005.glb",
+      "label": "Banco para sentar",
+      "category": "Interações",
+      "animations": [],
+      "bytes": 7420,
+      "sha256": "d16789e062ba23b05e26b94aaf9af53a320331134e733cd50b135e3ff03e4ca1"
+    },
+    {
+      "id": "shark",
+      "url": "/assets/cyber/PROP_shark_scene_20261005.glb",
+      "label": "Tubarão estilizado",
+      "category": "Fauna",
+      "animations": [],
+      "bytes": 13008,
+      "sha256": "51b3a0d99f0a2d5118b4217cc413f2b5823e7419a09104fd537337479c345283"
+    },
+    {
+      "id": "fish-blue",
+      "url": "/assets/cyber/PROP_fish-blue_scene_20261005.glb",
+      "label": "Peixe azul",
+      "category": "Fauna",
+      "animations": [],
+      "bytes": 13160,
+      "sha256": "9c85160f0b21e63f4c66bd1552f7164ecb9c653ad8e3fef202b9acce23853c67"
+    },
+    {
+      "id": "fish-yellow",
+      "url": "/assets/cyber/PROP_fish-yellow_scene_20261005.glb",
+      "label": "Peixe amarelo",
+      "category": "Fauna",
+      "animations": [],
+      "bytes": 13076,
+      "sha256": "84c441694c266e0a47eedc9d080c8c760c7fb455d302a54020d8181c65bfc056"
+    },
+    {
+      "id": "fish-red",
+      "url": "/assets/cyber/PROP_fish-red_scene_20261005.glb",
+      "label": "Peixe vermelho",
+      "category": "Fauna",
+      "animations": [],
+      "bytes": 13208,
+      "sha256": "b7fbf11817f35392f00e8d3ef42a5bba60361e55490b47f91175e6ba23f26b32"
+    },
+    {
+      "id": "truck-trailer-flatbed",
+      "url": "/assets/cyber/PROP_truck-trailer-flatbed_scene_20261005.glb",
+      "label": "Reboque flatbed",
+      "category": "Transporte",
+      "animations": [],
+      "bytes": 29916,
+      "sha256": "4416588a77dbf681f5c0f34d48f94f3e9d096bb998a516980db9aa10a64d0a0e"
+    },
+    {
+      "id": "truck-trailer-box",
+      "url": "/assets/cyber/PROP_truck-trailer-box_scene_20261005.glb",
+      "label": "Reboque box",
+      "category": "Transporte",
+      "animations": [],
+      "bytes": 29764,
+      "sha256": "a82aecfa25a94bf2cf9c49621b098de66f100efefc9af0e7d139cac5119c6b47"
+    },
+    {
+      "id": "truck-trailer-tanker",
+      "url": "/assets/cyber/PROP_truck-trailer-tanker_scene_20261005.glb",
+      "label": "Reboque tanker",
+      "category": "Transporte",
+      "animations": [],
+      "bytes": 32780,
+      "sha256": "b5ed85a39f01f4cae59f337b32fd5f9771348e09fd8e8447dffb41cb96686ba5"
+    }
+  ],
+  "zones": [
+    {
+      "id": "plaza",
+      "label": "Praça do Conhecimento",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "approach": [
+        0,
+        0,
+        20
+      ]
+    },
+    {
+      "id": "hospital",
+      "label": "Hospital de Emergência PREP",
+      "position": [
+        48,
+        0,
+        -38
+      ],
+      "approach": [
+        48,
+        0,
+        -21
+      ]
+    },
+    {
+      "id": "laboratory",
+      "label": "Laboratório e acelerador",
+      "position": [
+        80,
+        0,
+        -38
+      ],
+      "approach": [
+        79,
+        0,
+        7
+      ]
+    },
+    {
+      "id": "station",
+      "label": "Estação Arapiraca",
+      "position": [
+        -70,
+        0,
+        -55
+      ],
+      "approach": [
+        -70,
+        0,
+        -43
+      ]
+    },
+    {
+      "id": "store",
+      "label": "Loja e roupas",
+      "position": [
+        -45,
+        0,
+        25
+      ],
+      "approach": [
+        -45,
+        0,
+        37
+      ]
+    },
+    {
+      "id": "hangar",
+      "label": "Hangar e concessionárias",
+      "position": [
+        85,
+        0,
+        65
+      ],
+      "approach": [
+        85,
+        0,
+        73
+      ]
+    },
+    {
+      "id": "farm",
+      "label": "Fazenda",
+      "position": [
+        0,
+        0,
+        100
+      ],
+      "approach": [
+        0,
+        0,
+        105
+      ]
+    },
+    {
+      "id": "bus-stop",
+      "label": "Ponto Conhecimento",
+      "position": [
+        0,
+        0,
+        35
+      ],
+      "approach": [
+        0,
+        0,
+        35
+      ]
+    },
+    {
+      "id": "amazon",
+      "label": "Portal Amazônia",
+      "position": [
+        -90,
+        0,
+        90
+      ],
+      "approach": [
+        -90,
+        0,
+        90
+      ]
+    },
+    {
+      "id": "black-forest",
+      "label": "Portal Floresta Negra",
+      "position": [
+        -90,
+        0,
+        -95
+      ],
+      "approach": [
+        -90,
+        0,
+        -95
+      ]
+    },
+    {
+      "id": "beach",
+      "label": "Portal Oceano",
+      "position": [
+        105,
+        0,
+        0
+      ],
+      "approach": [
+        105,
+        0,
+        0
+      ]
+    }
+  ],
+  "colliders": [
+    {
+      "x": 48,
+      "z": -38,
+      "w": 36,
+      "d": 27
+    },
+    {
+      "x": 48,
+      "z": -59,
+      "w": 26,
+      "d": 10
+    },
+    {
+      "x": 80,
+      "z": -38,
+      "w": 23,
+      "d": 24
+    },
+    {
+      "x": -45,
+      "z": 25,
+      "w": 20,
+      "d": 15
+    },
+    {
+      "x": -46,
+      "z": 53,
+      "w": 21,
+      "d": 17
+    },
+    {
+      "x": 67,
+      "z": 57,
+      "w": 24,
+      "d": 22
+    },
+    {
+      "x": 85,
+      "z": 90,
+      "w": 30,
+      "d": 22
+    },
+    {
+      "x": -70,
+      "z": -88,
+      "w": 27,
+      "d": 16
+    },
+    {
+      "x": -26,
+      "z": 104,
+      "w": 13,
+      "d": 12
+    },
+    {
+      "x": 25,
+      "z": 104,
+      "w": 18,
+      "d": 14
+    }
+  ],
+  "clock": {
+    "epochMs": 1791201600000,
+    "orbitPeriodSeconds": 120,
+    "dayPeriodSeconds": 240,
+    "orbitRadius": 14,
+    "sunCenter": [
+      0,
+      55,
+      0
+    ],
+    "blenderFps": 60,
+    "blenderStartFrame": 1
+  },
+  "biomes": [
+    {
+      "id": "amazon",
+      "label": "Floresta Amazônica",
+      "url": "/assets/cyber/ENV_Biome_amazon_scene_20261005.glb",
+      "combatAllowed": true,
+      "safeRadius": 12,
+      "bytes": 754456,
+      "sha256": "b0b4d796909604a5407afd272a5c446de0152a6930058bfad6b2baf53c337d75"
+    },
+    {
+      "id": "black-forest",
+      "label": "Floresta Negra",
+      "url": "/assets/cyber/ENV_Biome_black-forest_scene_20261005.glb",
+      "combatAllowed": true,
+      "safeRadius": 12,
+      "bytes": 710888,
+      "sha256": "64f0d651259cbd267dc97fbb34543d89e1a942e9f81152ca1033d08a94825e31"
+    },
+    {
+      "id": "ocean",
+      "label": "Reserva marinha",
+      "url": "/assets/cyber/ENV_Biome_ocean_scene_20261005.glb",
+      "combatAllowed": false,
+      "safeRadius": 12,
+      "bytes": 104196,
+      "sha256": "3f1de31c15b11f25f1ea5ab7b01f43379b9b416f5f100dc74db91fa646ac9c15"
+    }
+  ],
+  "parking": [
+    {
+      "id": "Hospital-0",
+      "position": [
+        15,
+        0.1,
+        -54.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Hospital-1",
+      "position": [
+        15,
+        0.1,
+        -50.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Hospital-2",
+      "position": [
+        15,
+        0.1,
+        -46.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Hospital-3",
+      "position": [
+        15,
+        0.1,
+        -42.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Centro-0",
+      "position": [
+        -6,
+        0.1,
+        -48.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Centro-1",
+      "position": [
+        -6,
+        0.1,
+        -44.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Centro-2",
+      "position": [
+        -6,
+        0.1,
+        -40.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Centro-3",
+      "position": [
+        -6,
+        0.1,
+        -36.2
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Hangar-0",
+      "position": [
+        96,
+        0.1,
+        58.8
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Hangar-1",
+      "position": [
+        96,
+        0.1,
+        62.8
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Hangar-2",
+      "position": [
+        96,
+        0.1,
+        66.8
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "Hangar-3",
+      "position": [
+        96,
+        0.1,
+        70.8
+      ],
+      "size": [
+        5,
+        3.6
+      ]
+    },
+    {
+      "id": "utility-truck",
+      "label": "Utilitários e reboques",
+      "position": [
+        90,
+        0.1,
+        50
+      ],
+      "size": [
+        6,
+        18
+      ],
+      "heading": 0
+    },
+    {
+      "id": "utility-agriculture",
+      "label": "Equipamentos agrícolas",
+      "position": [
+        96,
+        0.1,
+        50
+      ],
+      "size": [
+        6,
+        18
+      ],
+      "heading": 0
+    }
+  ],
+  "reference": "arapiracaReference.json",
+  "status": "Interactive local prototype; geographically compressed fictional city.",
+  "visualTarget": "realism",
+  "artStatus": "Prototype geometry with more natural PBR materials; realistic asset replacement in progress.",
+  "trafficCycle": "trafficCycle.json",
+  "undergroundBounds": {
+    "minX": -28,
+    "maxX": -8,
+    "minZ": 49,
+    "maxZ": 69,
+    "floorY": -6
+  },
+  "singleSceneRevision": true
+}

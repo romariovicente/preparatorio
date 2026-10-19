@@ -1,0 +1,17 @@
+.hospital-viewer { position: relative; width: 100%; height: 100%; min-height: 280px; }
+.hospital-object-panel { position: absolute; top: 12px; left: 12px; z-index: 5; width: min(270px, calc(100% - 24px)); max-height: calc(100% - 90px); overflow: auto; padding: 10px 12px; border: 1px solid #87abb0; border-radius: 12px; background: #123640ee; color: #effbf8; box-shadow: 0 8px 24px #06252c45; }
+.hospital-object-panel summary { padding: 0; font-size: 14px; font-weight: 700; }
+.hospital-object-panel p { margin: 8px 0; font-size: 12px; line-height: 1.45; }
+.hospital-object-panel label { margin: 8px 0 3px; font-size: 12px; }
+.hospital-object-panel select { padding: 7px 8px; margin: 0; font-size: 12px; }
+.hospital-object-panel button { padding: 7px 8px; font-size: 12px; min-height: 36px; }
+.hospital-object-panel button:disabled { cursor: default; opacity: .5; }
+.hospital-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.hospital-controls { display: flex; gap: 5px; flex-wrap: wrap; }
+.hospital-controls button { flex: 1; min-width: 44px; }
+.hospital-object-panel .hospital-session-note { font-size: 10px; color: #b5d2cf; margin-bottom: 0; }
+.hospital-object-panel .hospital-status { padding: 7px; border-radius: 6px; background: #071f2b66; }
+@media(max-width: 760px) {
+  .hospital-object-panel { top: 8px; left: 8px; max-height: calc(100% - 75px); width: min(235px, calc(100% - 16px)); padding: 8px 10px; }
+  .hospital-object-panel button { min-height: 40px; }
+}

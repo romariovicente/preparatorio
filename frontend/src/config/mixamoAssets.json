@@ -1,0 +1,39 @@
+[
+  {
+    "id": "CHR_Remy_Mixamo_20261005",
+    "sourceId": "CHR_Remy_Mixamo_20261005",
+    "libraryCharacter": "Remy",
+    "sourceKind": "Mixamo library humanoid",
+    "sourceUrl": "https://www.mixamo.com/",
+    "name": "Remy · Mixamo",
+    "category": "Personagens",
+    "url": "/assets/characters/CHR_Remy_Mixamo_20261005.glb",
+    "bytes": 35079156,
+    "sha256": "4d1caf2e917b0496438460e61a496ca0bd4342f52735651dea77a68a545f3d0e",
+    "bones": 55,
+    "clips": [
+      "Idle",
+      "Walk",
+      "Dance",
+      "Interact"
+    ],
+    "animations": [
+      "Idle",
+      "Walk",
+      "Dance",
+      "Interact"
+    ],
+    "idleClip": "Idle",
+    "walkClip": "Walk",
+    "rigged": true,
+    "animated": true,
+    "playable": true,
+    "quality": "Mixamo library human with genuine skeletal clips; realism art review remains required",
+    "visualStyle": "realistic",
+    "reimportValidated": true,
+    "weightCoverage": 1,
+    "maxInfluences": 4,
+    "validationReport": "reports/prep_mixamo_validation/remy_20261005.json",
+    "actualMixamoDownloads": true
+  }
+]

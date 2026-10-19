@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "researchedAt": "2026-10-05",
+  "city": "Arapiraca",
+  "state": "AL",
+  "country": "BR",
+  "purpose": "Referência de localização e sinalização para uma recriação fictícia low-poly cyberpunk.",
+  "legacyWorldPreserved": "Maceió / PREP_CAMPUS",
+  "hospital": {
+    "id": "hea_arapiraca",
+    "name": "Hospital de Emergência do Agreste",
+    "aliases": ["HEA", "Hospital de Emergência Dr. Daniel Houly", "Unidade de Emergência do Agreste Dr. Daniel Houly"],
+    "selectionStatus": "confirmed_by_user",
+    "address": {
+      "road": "AL-220",
+      "kilometre": 5,
+      "number": "s/n",
+      "neighbourhood": "Senador Arnon de Melo",
+      "city": "Arapiraca",
+      "postcode": "57315-745",
+      "sourceStatus": "official_address_verified",
+      "sourceIds": ["sesau_hospitals", "sesau_citizen_hea", "sesau_2020_address"]
+    },
+    "referenceCoordinate": {
+      "latitude": -9.7348704,
+      "longitude": -36.6498059,
+      "datum": "WGS84",
+      "sourceStatus": "google_maps_place_view_approximate",
+      "precision": "Aproximada: coordenada do enquadramento @URL da página do hospital; não é levantamento do terreno nem limite cadastral.",
+      "sourceIds": ["google_maps_hea"]
+    },
+    "layoutStatus": "external_map_inspiration_only",
+    "interiorFloorPlanVerified": false,
+    "realBuildingReplica": false,
+    "confirmedServicesForReference": ["Urgência e emergência", "Unidade especializada em pré-natal de alto risco anexa"],
+    "serviceSourceIds": ["sesau_hospitals", "sesau_uepnar_2026"],
+    "previousAmbiguousName": "Centro Hospitalar do Nordeste em Arapiraca",
+    "previousAmbiguousNameStatus": "not_confirmed_as_local_institution; user_selected_HEA",
+    "distinctNearbyInstitution": {
+      "name": "Complexo Hospitalar Manoel André (CHAMA)",
+      "address": "Rodovia AL-220, km4, s/n",
+      "status": "distinct_institution_not_selected",
+      "sourceIds": ["chama_contact"]
+    }
+  },
+  "mapObservation": {
+    "status": "visually_verified",
+    "observedAt": "2026-10-05",
+    "method": "Google Maps aberto no navegador pelo agente principal; captura local inspecionada pelo agente de referências.",
+    "evidencePath": "reports/maps_HEA_layout_20261005.png",
+    "viewScaleMetres": 500,
+    "additionalCloseViewScaleMetres": 100,
+    "sourceIds": ["google_maps_hea"],
+    "roadNamingDiscrepancy": "Endereço oficial e cadastro do lugar: AL-220 km5. O eixo diagonal na captura está rotulado AL-115. A concorrência ou mudança de denominação não foi confirmada.",
+    "observedFeatures": [
+      {"id": "main_road", "labelObserved": "AL-115", "officialAddressRoad": "AL-220", "orientation": "noroeste-sudeste", "sourceStatus": "map_observed", "surveyedCoordinates": null},
+      {"id": "hospital_campus", "labelObserved": "Hospital de Emergência do Agreste", "relativePosition": "lado norte do eixo principal", "shape": "quadra/campus amplo aproximadamente retangular", "sourceStatus": "root_close_map_observation", "surveyedCoordinates": null},
+      {"id": "manoel_pereira", "labelObserved": "R. Manoel Pereira dos Santos", "orientation": "aproximadamente norte-sul", "relativePosition": "oeste/noroeste do hospital", "sourceStatus": "map_observed", "surveyedCoordinates": null},
+      {"id": "ver_nunes", "labelObserved": "R. Ver. Nunes de Albuquerque", "orientation": "aproximadamente norte-sul", "relativePosition": "oeste do hospital", "sourceStatus": "map_observed", "surveyedCoordinates": null},
+      {"id": "lino_roberto", "labelObserved": "R. Lino Roberto", "orientation": "ramal diagonal ao sul do eixo principal", "sourceStatus": "map_observed", "surveyedCoordinates": null},
+      {"id": "santa_esmeralda_green", "labelObserved": "Área Verde Santa Esmeralda", "relativePosition": "sul/sudeste do hospital", "sourceStatus": "map_observed", "surveyedCoordinates": null},
+      {"id": "bosque_arapiracas", "labelObserved": "Bosque das Arapiracas", "relativePosition": "sudoeste do hospital", "sourceStatus": "map_observed", "surveyedCoordinates": null},
+      {"id": "residential_blocks", "labelObserved": "Santa Esmeralda / Jardim de Maria", "shape": "quadras menores com ruas aproximadamente ortogonais ao sul do eixo", "sourceStatus": "map_observed", "surveyedCoordinates": null},
+      {"id": "northeast_green", "labelObserved": null, "relativePosition": "áreas abertas verdes no nordeste do enquadramento", "sourceStatus": "map_observed_no_landuse_verification", "surveyedCoordinates": null}
+    ],
+    "notVerified": ["Contagem real de faixas de tráfego", "Velocidade regulamentada no local", "Ciclovia existente junto ao hospital", "Ciclo e tempos dos semáforos reais", "Alturas e dimensões dos edifícios", "Planta dos interiores", "Localização exata de portas, elevadores e entrada de ambulâncias"]
+  },
+  "fictionalProjectionMetres": {
+    "status": "design_reference_not_surveyed_not_runtime_manifest",
+    "unit": "metre",
+    "georeferenced": false,
+    "geographicToGameScale": null,
+    "blenderAxes": {"x": "leste", "y": "norte", "z": "cima"},
+    "frontendAxes": {"x": "leste", "y": "cima", "z": "sul"},
+    "frontendToBlender": "(x, y, z) -> (x, -z, y)",
+    "originDescription": "Centro de um corredor viário de inspiração AL-220, com hospital ao norte. Coordenadas são escolhas de composição do jogo.",
+    "exampleBounds": {"minX": -300, "maxX": 300, "minZ": -220, "maxZ": 220},
+    "referenceFeatures": [
+      {"id": "hospital_campus", "frontendPosition": [0, 0, -65], "footprintMetres": [100, 70], "status": "fictional_dimensions"},
+      {"id": "main_road", "frontendPolyline": [[-280, 0, -110], [280, 0, 110]], "status": "fictional_geometry_preserving_observed_orientation"},
+      {"id": "north_south_connector", "frontendPolyline": [[-70, 0, -180], [-70, 0, 145]], "status": "fictional_connector_inspired_by_local_street_pattern"},
+      {"id": "santa_esmeralda_green", "frontendPosition": [30, 0, 50], "status": "fictional_distance"},
+      {"id": "residential_blocks", "frontendPosition": [0, 0, 115], "status": "fictional_distance"},
+      {"id": "bosque_arapiracas", "frontendPosition": [-155, 0, 155], "status": "fictional_distance"},
+      {"id": "northeast_green", "frontendPosition": [160, 0, -140], "status": "fictional_distance"}
+    ],
+    "coastalBiomePolicy": "Praia, pesca marinha e fauna oceânica pertencem a um bioma/portal fictício separado; não representam litoral de Arapiraca.",
+    "runtimeManifestNote": "A montagem efetivamente gerada deve usar seu próprio manifesto; este arquivo registra a referência, não comprova objetos construídos."
+  },
+  "trafficReference": {
+    "status": "official_sources_consulted_for_game_design",
+    "certifiedForRoadEngineering": false,
+    "authority": "CTB / CONTRAN / SENATRAN",
+    "manualBaseEdition": 2022,
+    "officialIndexCheckedAt": "2026-10-05",
+    "amendmentsListedForResolution973": ["986/2022", "1012/2024", "1013/2024"],
+    "sourceIds": ["ctb", "contran_index", "contran_973", "mbst_index", "mbst_i", "mbst_ii", "mbst_iv", "mbst_v", "mbst_viii"],
+    "verticalSigns": [
+      {"code": "R-1", "label": "Parada obrigatória", "appearance": "octógono vermelho com inscrição branca", "sourceId": "mbst_i"},
+      {"code": "R-2", "label": "Dê a preferência", "appearance": "triângulo invertido branco com borda vermelha", "sourceId": "mbst_i"},
+      {"code": "R-19", "label": "Velocidade máxima regulamentada", "appearance": "círculo branco com borda vermelha e limite preto", "sourceId": "mbst_i", "gameSpeedLimitStatus": "fictional_not_measured_on_AL220"},
+      {"code": "R-34", "label": "Circulação exclusiva de bicicletas", "sourceId": "mbst_i"},
+      {"code": "A-30b", "label": "Passagem sinalizada de ciclistas", "appearance": "losango amarelo com pictograma preto", "application": "travessia cicloviária não semaforizada", "sourceId": "mbst_ii", "pdfPage": 107},
+      {"code": "A-32b", "label": "Passagem sinalizada de pedestres", "appearance": "losango amarelo com pictograma preto", "sourceId": "mbst_ii", "pdfPage": 110}
+    ],
+    "horizontalMarkings": [
+      {"code": "LFO", "colour": "amarela", "purpose": "separar fluxos opostos", "sourceId": "mbst_iv"},
+      {"code": "LMS", "colour": "branca", "purpose": "separar fluxos de mesmo sentido", "sourceId": "mbst_iv"},
+      {"code": "LRE", "colour": "branca", "purpose": "limite de parada", "sourceId": "mbst_iv"},
+      {"code": "FTP-1", "colour": "branca", "purpose": "travessia de pedestres zebrada", "sourceId": "mbst_iv"},
+      {"code": "MCC", "colour": "branca com contraste vermelho", "purpose": "cruzamento rodocicloviário", "sourceId": "mbst_viii"}
+    ],
+    "cycling": {
+      "cycleTrack": "Ciclovia possui separação física do tráfego comum.",
+      "cycleLane": "Ciclofaixa é delimitada por sinalização específica.",
+      "redTreatment": "Contraste vermelho acompanha bordos, símbolos e travessias conforme o projeto; pintura vermelha isolada não define toda a infraestrutura.",
+      "gameChoice": "Preferir ciclovia separada por canteiro no corredor principal e tratar as travessias explicitamente.",
+      "gameChoiceStatus": "fictional_infrastructure_not_verified_as_existing",
+      "sourceId": "mbst_viii"
+    },
+    "signalLogic": {
+      "vehicleSequence": ["green", "yellow", "red"],
+      "pedestrianSequence": ["green", "flashing_red", "red"],
+      "verticalVehicleLampOrderTopToBottom": ["red", "yellow", "green"],
+      "conflictingMovementsSimultaneousGreen": false,
+      "intergreenDesign": "Amarelo e intervalo de esvaziamento entre liberações conflitantes; cálculo real depende de condições de engenharia.",
+      "timingStatus": "game_durations_are_fictional_not_actual_HEA_timings",
+      "yellowBehaviour": "Encerrar direito de passagem e parar se possível com segurança.",
+      "crossingBehaviour": "Preservar a conclusão da travessia de pedestre já iniciada antes de liberar conflito.",
+      "sourceIds": ["mbst_v", "ctb"],
+      "ctbArticles": [70, 89, 208]
+    },
+    "artDirection": "Neon e painéis publicitários podem decorar o cenário; não mudar cores, forma ou pictogramas da sinalização usada para orientar o tráfego."
+  },
+  "mixamo": {
+    "checkedAt": "2026-10-05",
+    "status": "adobe_sign_in_required_no_authenticated_session",
+    "inspectionMethod": "Página oficial inspecionada no navegador pelo agente principal.",
+    "uploadPerformed": false,
+    "autoRigPerformed": false,
+    "sourceIds": ["mixamo_site", "adobe_mixamo_rigging", "adobe_mixamo_faq"],
+    "documentedInputFormats": ["FBX", "OBJ", "ZIP"],
+    "autoRiggerScope": "Humanoides bípedes; adequação do personagem precisa ser conferida.",
+    "documentationNote": "FBX com mídia incorporada; OBJ com MTL e texturas pode ser enviado em ZIP. GLB não é formato de upload listado pela Adobe."
+  },
+  "sources": [
+    {"id": "sesau_hospitals", "title": "Saúde Alagoas - Unidades e serviços", "url": "https://www.saude.al.gov.br/unidades-e-servicos/", "type": "primary_official", "status": "content_verified", "accessedAt": "2026-10-05"},
+    {"id": "sesau_citizen_hea", "title": "Saúde Alagoas - Hospital de Emergência Dr. Daniel Houly", "url": "https://cidadao.saude.al.gov.br/unidades/hospitais/unid-de-emerg-do-agreste/", "type": "primary_official", "status": "indexed_content_verified_direct_open_intermittent", "accessedAt": "2026-10-05"},
+    {"id": "sesau_2020_address", "title": "SESAU - Termo de Referência 24417/2020", "url": "https://www.saude.al.gov.br/wp-content/uploads/2021/01/Termo-de-Referencia-24417-2020.pdf", "type": "primary_official_historical", "status": "address_verified_historical_crosscheck", "accessedAt": "2026-10-05"},
+    {"id": "sesau_uepnar_2026", "title": "SESAU - Unidade especializada em pré-natal de alto risco, 30/01/2026", "url": "https://www.saude.al.gov.br/unidade-especializada-em-pre-natal-de-alto-risco-amplia-cuidado-com-a-saude-mental-de-gestantes/", "type": "primary_official", "status": "content_verified", "accessedAt": "2026-10-05"},
+    {"id": "chama_contact", "title": "Hospital CHAMA - Contato", "url": "https://hospitalchama.com.br/contato/", "type": "primary_institution", "status": "content_verified_distinct_hospital", "accessedAt": "2026-10-05"},
+    {"id": "google_maps_hea", "title": "Google Maps - Hospital de Emergência do Agreste", "url": "https://www.google.com/maps/place/Hospital+de+Emerg%C3%AAncia+do+Agreste/@-9.7348704,-36.6498059,17z/", "type": "map_reference", "status": "visually_verified_approximate_geography", "accessedAt": "2026-10-05"},
+    {"id": "ctb", "title": "Código de Trânsito Brasileiro - Lei 9.503/1997, texto compilado", "url": "https://www.planalto.gov.br/ccivil_03/leis/l9503compilado.htm", "type": "primary_official", "status": "content_verified", "accessedAt": "2026-10-05"},
+    {"id": "contran_index", "title": "SENATRAN - Resoluções CONTRAN", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/conteudo-Senatran/resolucoes-contran", "type": "primary_official", "status": "current_index_consulted", "accessedAt": "2026-10-05"},
+    {"id": "contran_973", "title": "Resolução CONTRAN 973/2022", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/conteudo-contran/resolucoes/Resolucao9732022.pdf", "type": "primary_official", "status": "content_verified_amendments_listed_separately", "accessedAt": "2026-10-05"},
+    {"id": "mbst_index", "title": "SENATRAN - Manuais Brasileiros de Sinalização de Trânsito", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/senatran/manuais-brasileiros-de-sinalizacao-de-transito", "type": "primary_official", "status": "current_index_consulted", "accessedAt": "2026-10-05"},
+    {"id": "mbst_i", "title": "MBST Volume I - Sinalização Vertical de Regulamentação (2022)", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/docs/copy_of___01___MBST_Vol._I___Sin._Vert._Regulamentacao_F.pdf", "type": "primary_official", "status": "relevant_sections_verified", "accessedAt": "2026-10-05"},
+    {"id": "mbst_ii", "title": "MBST Volume II - Sinalização Vertical de Advertência (2022)", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/docs/copy_of___02___MBST_Vol._II___Sin._Vert._Advertencia.pdf", "type": "primary_official", "status": "official_pdf_downloaded_text_and_visual_pages_verified", "accessedAt": "2026-10-05"},
+    {"id": "mbst_iv", "title": "MBST Volume IV - Sinalização Horizontal (2022)", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/docs/copy_of___04___MBST_Vol._IV___Sinalizacao_Horizontal.pdf", "type": "primary_official", "status": "relevant_sections_verified", "accessedAt": "2026-10-05"},
+    {"id": "mbst_v", "title": "MBST Volume V - Sinalização Semafórica (2022)", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/docs/copy_of___05___MBST_Vol._V___Sinalizacao_Semaforica.pdf", "type": "primary_official", "status": "relevant_sections_verified", "accessedAt": "2026-10-05"},
+    {"id": "mbst_viii", "title": "MBST Volume VIII - Sinalização Cicloviária (2022)", "url": "https://www.gov.br/transportes/pt-br/assuntos/transito/arquivos-senatran/docs/copy_of___08___MBST_Vol._VIII___Sinalizacao_Cicloviaria.pdf", "type": "primary_official", "status": "relevant_sections_verified", "accessedAt": "2026-10-05"},
+    {"id": "mixamo_site", "title": "Adobe Mixamo", "url": "https://www.mixamo.com/", "type": "primary_product", "status": "browser_sign_in_gate_observed_by_root", "accessedAt": "2026-10-05"},
+    {"id": "adobe_mixamo_rigging", "title": "Adobe - Upload and rig 3D characters with Mixamo", "url": "https://helpx.adobe.com/creative-cloud/help/mixamo-rigging-animation.html", "type": "primary_documentation", "status": "documentation_verified_page_updated_2021", "accessedAt": "2026-10-05"},
+    {"id": "adobe_mixamo_faq", "title": "Adobe - Mixamo FAQ", "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html", "type": "primary_documentation", "status": "documentation_verified_page_updated_2021", "accessedAt": "2026-10-05"}
+  ]
+}

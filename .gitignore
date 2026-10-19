@@ -1,10 +1,49 @@
-node_modules/
-dist/
-build/
-target/
-.idea/
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-*.log
-.env
+frontend/node_modules/
+frontend/dist/
+__pycache__/
+*.pyc
+*.blend1
+*.blend2
+*.blend@
+art/source/*.glb
+art/source/exports_before_scene_filter/
+art/source/rejected_supplied/
+reports/batch_*.log
+reports/batch_error_*.txt
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+art/rigging/rejected_repose_v1/
+art/source/preserved_full_morphs/
+art/source/extracted/
+# Intermediate Blender snapshots remain on disk; the final editable master and
+# category files are versioned. Previously tracked checkpoints stay tracked.
+art/blender/checkpoints/
+art/blender/PREPARATORIO_RIG_WORK.blend
+# Repairs retain their original files locally; final deliverables and validation
+# reports are committed separately from these redundant intermediate copies.
+reports/new_delivery_20261006/checkpoint_*/
+reports/new_delivery_20261006/*before*
+# Live service logs continue to change while the local game is running.
+reports/server_20261008_*.log
+reports/vite_20261008_*.log
+reports/runtime_*.stdout.log
+reports/runtime_*.stderr.log
+# Service logs and redundant safety copies are preserved locally.
+runtime/
+checkpoints/PREPARATORIO_BEFORE_TRANSITO_20261009_*.blend
+# Daily intermediate masters stay intact on disk; the reviewed Oct15 master is
+# included in the Git checkpoint instead of duplicating these earlier copies.
+art/blender/PREPARATORIO_PROJETO_20261013.blend
+art/blender/PREPARATORIO_PROJETO_20261014.blend
+# Verified rail staging copies stay on disk; public deliveries and QA reports
+# are versioned once, without duplicating their intermediate byte copies.
+reports/rail_assets_20261016/*.pending.glb
+reports/rail_assets_20261016/*.pending.jpg
+
+# Deployment checkout: editable art and private backups are stored separately.
+/art/
+/reports/
+/runtime/
+frontend/public/assets/

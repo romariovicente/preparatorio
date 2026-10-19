@@ -1,24 +1,12 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {relativeApplicationPath} from './config/deploymentConfig.js';
+import { lazy, Suspense } from 'react';
+import WorldShell from './world/WorldShell.jsx';
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Device from "./pages/Device";
-import Profile from "./pages/Profile";
-import World from "./game/world/World";
+const HospitalPreview = lazy(() => import('./hospital/HospitalPreview.jsx'));
 
 export default function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/device" element={<Device />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/game" element={<World />} />
-                <Route path="/world" element={<World />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  if ((relativeApplicationPath(window.location.pathname).replace(/\/+$/, '') === '/hospital-preview'||new URLSearchParams(window.location.search).get('view')==='hospital')) {
+    return <Suspense fallback={<div role="status" style={{ padding: 32 }}>Abrindo a prévia do módulo hospitalar…</div>}><HospitalPreview /></Suspense>;
+  }
+  return <WorldShell />;
 }
