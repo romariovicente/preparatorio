@@ -1,8 +1,9 @@
-import {clockSourceLabel,sharedServiceLabel} from '../config/serviceStatus.js';
+import CityAssetBoundary from './CityAssetBoundary.js';
+import {clockSourceLabel,sharedServiceLabel,cityLoadLabel} from '../config/serviceStatus.js';
 import {deployment,resolveAssetReferences} from '../config/deploymentConfig.js';
 import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Bounds, Html, Line, OrbitControls, useGLTF } from '@react-three/drei';
+import { Bounds, Html, Line, OrbitControls, useGLTF, useProgress } from '@react-three/drei';
 import { PCFShadowMap, Raycaster, Vector3 } from 'three';
 import { playableCharacters as catalogCharacters } from '../config/runtimeAssets.js';
 import manifestRaw from '../config/cyberWorldManifest.json';
@@ -100,6 +101,7 @@ function PlayerNameForm({value,onChange,onSubmit}) {
 class CityBoundary extends Component {
   state={failed:false};
   static getDerivedStateFromError(){return {failed:true};}
+  componentDidCatch(){this.props.onError?.();}
   render(){return this.state.failed?<div className="cyber-loading" role="status">Não foi possível abrir este modelo 3D. As ações e os terminais continuam disponíveis.</div>:this.props.children;}
 }
 function Environment({onReady,simulation}) {
@@ -135,7 +137,7 @@ function SunLight({simulation,night}) {
 function AssetProp({id,height,...props}) {
   const asset=prop(id);
   if(!asset)return null;
-  return <group {...props}><ShadowedModel asset={asset} height={height}/></group>;
+  return <group {...props}><CityAssetBoundary label={id}><ShadowedModel asset={asset} height={height}/></CityAssetBoundary></group>;
 }
 function ShadowedModel({asset,height}) {
   const group=useRef(null);
@@ -149,7 +151,8 @@ function SeatedModel({asset}) {
   const {scene}=useGLTF(asset.url),pose=useMemo(()=>{const copy=createSeatedClone(scene);setWorldShadows(copy.group);return copy;},[scene]);
   return <group position={[0,pose.offset,0]}><primitive object={pose.group} dispose={null}/></group>;
 }
-function Actor({asset,snapshot,simulation,tractorRef,held,displayName}) {
+function Actor({asset,snapshot,simulation,tractorRef,held,displayName,onReady}) {
+  useEffect(()=>{onReady?.();},[onReady]);
   const group=useRef(null);
   const {scene}=useThree(),floorSurfaces=useRef([]),lastGroundScan=useRef(-Infinity);
   const ray=useMemo(()=>new Raycaster(),[]);
@@ -332,8 +335,11 @@ export default function CyberCity() {
   const classroomRuntime=useRef(createClassroomRuntime());
   const [character,setCharacter]=useState(initialCharacter);
   const [playerName,setPlayerName]=useState(()=>readPlayerName(globalThis.sessionStorage)),[nameDraft,setNameDraft]=useState(()=>readPlayerName(globalThis.sessionStorage));
-  const [tab,setTab]=useState('actions'),[phoneOpen,setPhoneOpen]=useState(false),[ready,setReady]=useState(false),[spaceView,setSpaceView]=useState(false),[notice,setNotice]=useState('Clique em Jogar agora para ativar o teclado. WASD ou setas para caminhar.');
+  const [tab,setTab]=useState('actions'),[phoneOpen,setPhoneOpen]=useState(false),[coreLoaded,setCoreLoaded]=useState({environment:false,characterId:null}),[spaceView,setSpaceView]=useState(false),[notice,setNotice]=useState('Clique em Jogar agora para ativar o teclado. WASD ou setas para caminhar.');
   const [gameActive,setGameActive]=useState(false);
+  const [sceneFailed,setSceneFailed]=useState(false),[loadingSlow,setLoadingSlow]=useState(false);
+  const download=useProgress();
+  useEffect(()=>{const timer=window.setTimeout(()=>setLoadingSlow(true),30000);return()=>window.clearTimeout(timer);},[]);
   const [selectedObjectId,setSelectedObjectId]=useState(null),[objectBusy,setObjectBusy]=useState(false),[placement,setPlacement]=useState(null);
   const [driveId,setDriveId]=useState('mototaxi');
   const [garageCarId,setGarageCarId]=useState('car');
@@ -351,7 +357,9 @@ export default function CyberCity() {
   const clockConfig=serverClock.getClockConfig();
   const clock=sampleWorldClock(snapshot.elapsed,clockConfig);
   const bus=sampleLiveBus(snapshot,'bus'),brt=sampleLiveBus(snapshot,'bus-brt'),train=sampleTransit(TRANSIT_ROUTES.train,snapshot.elapsed);
-  const onReady=useCallback(()=>setReady(true),[]);
+  const ready=coreLoaded.environment&&coreLoaded.characterId===character.id;
+  const onReady=useCallback(()=>setCoreLoaded(previous=>({...previous,environment:true})),[]);
+  const onCharacterReady=useCallback(()=>setCoreLoaded(previous=>({...previous,characterId:character.id})),[character.id]);
   const farm=near(snapshot.position,[0,0,100],25),beach=near(snapshot.position,[100,0,0],20),elevatorNear=near(snapshot.position,[ELEVATOR_POSITION.x,0,ELEVATOR_POSITION.z],9);
   const closestFlower=FLOWER_BASES.reduce((best,flower)=>Math.hypot(snapshot.position.x-flower.position.x,snapshot.position.z-flower.position.z)<Math.hypot(snapshot.position.x-best.position.x,snapshot.position.z-best.position.z)?flower:best,FLOWER_BASES[0]);
   const closestBench=benches.reduce((best,bench)=>Math.hypot(snapshot.position.x-bench.position.x,snapshot.position.z-bench.position.z)<Math.hypot(snapshot.position.x-best.position.x,snapshot.position.z-best.position.z)?bench:best,benches[0]);
@@ -578,29 +586,33 @@ export default function CyberCity() {
   if(!character)return <p>Carregando personagens do acervo.</p>;
 
   return <section ref={gameSurface} className="cyber-city" tabIndex={0} onFocus={event=>setGameActive(event.target===event.currentTarget)} onBlur={()=>{setGameActive(false);directionKeys.current.clear();input.current={};}} onPointerDown={event=>{if(event.target.tagName==='CANVAS')focusGame();}} aria-label="Arapiraca PREP · cidade futurista em desenvolvimento" data-game-active={gameActive&&!spaceView&&!privateUrl} data-cyber-ready={ready} data-cyber-character={character.id} data-cyber-view={spaceView?'planetarium':'city'} data-cyber-mode={snapshot.mode} data-cyber-x={snapshot.position.x.toFixed(2)} data-cyber-y={snapshot.position.y.toFixed(2)} data-cyber-z={snapshot.position.z.toFixed(2)} data-cyber-jump={Number(snapshot.jumpHeight??0).toFixed(3)} data-cyber-jumps={snapshot.jumpCount??0} data-car-steering={snapshot.personalVehicles.car?.steeringAngle??0} data-car-wheel-angle={snapshot.personalVehicles.car?.wheelAngle??0} data-moto-steering={snapshot.personalVehicles.mototaxi?.steeringAngle??0} data-moto-wheel-angle={snapshot.personalVehicles.mototaxi?.wheelAngle??0} data-personal-vehicle-count={Object.keys(snapshot.personalVehicles).length} data-selected-item={selectedObjectId??''} data-cyber-clock={clock.text} data-cyber-flowers={snapshot.inventory.flowers}>
-    <CityBoundary><Canvas shadows={shadowSettings} dpr={1} camera={{position:[CITY_START.x+3.5,2.6,CITY_START.z+5.5],fov:50,far:450}}>
+    <CityBoundary onError={()=>setSceneFailed(true)}><Canvas shadows={shadowSettings} dpr={1} camera={{position:[CITY_START.x+3.5,2.6,CITY_START.z+5.5],fov:50,far:450}}>
       <color attach="background" args={[spaceView?'#010207':clock.night?'#080f1c':'#b5d3e1']}/>{!spaceView&&<fog attach="fog" args={[clock.night?'#080f1c':'#c3d9df',110,330]}/>}
       <ambientLight intensity={clock.night?.08:.1}/><hemisphereLight args={[clock.night?'#6380aa':'#dbeeff',clock.night?'#262a2c':'#64614f',clock.night?.22:.65]}/>
       <SunLight simulation={simulation} night={clock.night}/>
       <Suspense fallback={<Html center zIndexRange={[1,0]}><span className="cyber-loading">Abrindo Arapiraca PREP…</span></Html>}>
         <Environment onReady={onReady} simulation={simulation}/>
+      </Suspense>
+      <Suspense fallback={null}>
+        <Actor asset={character} snapshot={snapshot} simulation={simulation} tractorRef={tractorRef} held={held} displayName={playerName} onReady={onCharacterReady}/>
+      </Suspense>
+      {ready&&<CityAssetBoundary label="demais objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>
         <FuturisticClassroom simulation={simulation} runtime={classroomRuntime} onDoorState={()=>audio.play('DOOR')} onInspect={()=>{setNpc({id:'jarvis',name:'Professor JARVIS · Anatomia'});setQuestion('Como estudar ossos e camadas do corpo humano?');setTab('jarvis');setPhoneOpen(true);}}/>
         <BuildingDoors doors={shared.state.doors} simulation={simulation} onToggle={toggleDoor}/>
-        <Actor asset={character} snapshot={snapshot} simulation={simulation} tractorRef={tractorRef} held={held} displayName={playerName}/>
-        <Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/><Vehicle id="train" simulation={simulation} onAsk={converse}/>
-        {Object.keys(DRIVE_VEHICLES).filter(id=>!snapshot.personalVehicles[id]).map(id=><Vehicle key={`base-${id}`} id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/>)}
-        {Object.keys(snapshot.personalVehicles).map(id=><Vehicle key={`personal-${id}`} id={id} personal simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/>)}
+        <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
+        {Object.keys(DRIVE_VEHICLES).filter(id=>!snapshot.personalVehicles[id]).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/></CityAssetBoundary>)}
+        {Object.keys(snapshot.personalVehicles).map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/></CityAssetBoundary>)}
         {benches.filter(bench=>bench.id!=='bench-west').map(bench=><AssetProp key={bench.id} id="bench" height={1} position={[bench.position.x,0,bench.position.z]} onClick={()=>commit({type:'SIT',benchId:bench.id})}/>)}
         {shared.state.objects.filter(object=>object.position).map(object=><SharedProp key={object.id} object={object} template={interactionRooms.cyber.templates.find(t=>t.id===object.templateId)} selected={object.id===selectedObjectId} onSelect={selectObject}/>)}
         {others.map(([id,player])=><RemoteActor key={id} player={player} actorId={id} world={shared.state}/>)}
         {FLOWER_BASES.map(flower=><AssetProp key={flower.id} id="flower" height={.6} position={[flower.position.x,0,flower.position.z]} onClick={event=>{event.stopPropagation();commit({type:'FLOWER',flowerId:flower.id});}}/>)}
         {FARM_PLOTS.map(plot=><GrowthPlot key={plot.id} plot={plot} planted={snapshot.plots[plot.id]} elapsed={snapshot.elapsed} onSelect={id=>{setPlotId(id);setTab('actions');setPhoneOpen(true);}}/>)}
         <AssetProp id="elevator" height={3.2} position={[ELEVATOR_POSITION.x,snapshot.elevator?snapshot.position.y:elevatorNear?snapshot.position.y:0,ELEVATOR_POSITION.z]}/>
-        <NPC id="nurse" position={[43,0,-20]} name="Tutora hospitalar PREP" onAsk={converse}/><NPC id="guide" position={[-7,0,2]} name="Guia de Arapiraca PREP" onAsk={converse}/>
+        <CityAssetBoundary label="tutora"><NPC id="nurse" position={[43,0,-20]} name="Tutora hospitalar PREP" onAsk={converse}/></CityAssetBoundary><CityAssetBoundary label="guia"><NPC id="guide" position={[-7,0,2]} name="Guia de Arapiraca PREP" onAsk={converse}/></CityAssetBoundary>
         <AssetProp id="fish-blue" height={.4} position={[108,.5,-6]}/><AssetProp id="fish-yellow" height={.35} position={[111,.45,4]}/><AssetProp id="fish-red" height={.35} position={[105,.45,8]}/><AssetProp id="shark" height={.7} position={[115,.45,16]}/>
-      </Suspense>
+      </CityAssetBoundary>}
       <SolarSky simulation={simulation} clockConfig={clockConfig} planetarium={spaceView}/>
       <Html position={[0,7,-5]} center distanceFactor={16} zIndexRange={[1,0]}><div className="cyber-billboard"><strong>ARAPIRACA · PREP</strong><span>{clock.text} · {clock.phase}</span><small>CHRONOVITAE · conhecimento em movimento</small></div></Html>
       {snapshot.fishing&&<Line points={[[snapshot.position.x+.4,1.7,snapshot.position.z+.3],[107,.2,0]]} color="#b9dce7" lineWidth={1}/>}
@@ -613,7 +625,7 @@ export default function CyberCity() {
     <div className="cyber-audio" data-audio-unlocked={audio.status.unlocked}><button onClick={()=>{void audio.unlock();audio.toggleMute();}} aria-pressed={audio.muted}>{audio.muted?'Ativar som':'Silenciar som'}</button><label>Volume<input aria-label="Volume do jogo" type="range" min="0" max="1" step=".05" value={audio.volume} onChange={event=>audio.setVolume(event.target.value)}/></label></div>
     <div className="cyber-time"><strong>{clock.text}</strong><span>{clock.phase}</span><small>{clock.dateText} · horário de Brasília</small></div>
     <button className="cyber-planetarium" aria-pressed={spaceView} onClick={togglePlanetarium}>{spaceView?'Voltar à cidade':'Ver planetário'}</button>
-    <div className="cyber-play-control"><button disabled={!ready||Boolean(privateUrl)} onClick={resumeGame}>{ready?'Jogar agora':'Carregando cidade…'}</button><small>{gameActive&&!spaceView&&!privateUrl?'Teclado ativo':'Clique para ativar o teclado'}</small></div>
+    <div className="cyber-play-control"><button disabled={(!ready&&!sceneFailed)||Boolean(privateUrl)} onClick={sceneFailed?()=>window.location.reload():resumeGame}>{sceneFailed?'Recarregar cidade':ready?'Jogar agora':'Carregando cidade…'}</button><small role="status">{!ready||sceneFailed?cityLoadLabel({environment:coreLoaded.environment,character:coreLoaded.characterId===character.id,loaded:download.loaded,total:download.total,progress:download.progress,failed:sceneFailed,slow:loadingSlow}):gameActive&&!spaceView&&!privateUrl?'Teclado ativo':'Clique para ativar o teclado'}</small></div>
     <button className="cyber-character-view" onClick={viewCharacter}>Ver personagem</button>
     <button className="cyber-phone-toggle" aria-expanded={phoneOpen} onClick={()=>{if(phoneOpen)closePhone();else{input.current={};setPhoneOpen(true);}}}>{phoneOpen?'Fechar smartphone':'Abrir smartphone'}</button>
     {showBusContext&&!spaceView&&!privateUrl&&<BusControls bus={contextBus} occupied={BUS_IDS.includes(snapshot.mode)} role={snapshot.busControls?.role} nearby={busNearby} onBoard={()=>boardBus(contextBus.id)} onAction={operateBus} onClear={()=>setSelectedBusId(null)}/>}

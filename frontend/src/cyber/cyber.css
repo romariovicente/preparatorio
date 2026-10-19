@@ -20,7 +20,7 @@
 .cyber-planetarium { position:absolute; left:24px; top:220px; z-index:7; font-size:11px!important; background:#253860e0!important; }
 .cyber-play-control { position:absolute; left:24px; top:268px; z-index:7; display:flex; flex-direction:column; gap:4px; align-items:flex-start; }
 .cyber-play-control button { background:#91e7df; color:#102e36; border-color:#b3fff5; font-size:12px; font-weight:700; min-width:126px; }
-.cyber-play-control small { font-size:9px; padding:3px 6px; border-radius:4px; background:#102b3be8; color:#d9fff8; }
+.cyber-play-control small { max-width:min(360px,calc(100vw - 48px)); line-height:1.45; font-size:11px; padding:3px 6px; border-radius:4px; background:#102b3be8; color:#d9fff8; }
 .cyber-character-view { position:absolute; left:24px; top:344px; z-index:7; font-size:11px!important; background:#253860e0!important; }
 .cyber-phone-toggle { position:absolute; right:18px; top:90px; z-index:8; font-size:11px!important; background:#264761!important; border-color:#73bfc9!important; }
 .cyber-phone { position:absolute; z-index:8; top:140px; right:18px; width:min(320px,calc(100% - 36px)); max-height:calc(100% - 204px); display:flex; flex-direction:column; border:1px solid #768faa; border-radius:20px; padding:12px 8px 8px; background:linear-gradient(160deg,#16294cf2,#111a32f5); box-shadow:0 12px 40px #03091d99; }
@@ -53,7 +53,7 @@
   .cyber-city { min-height:650px; }.cyber-heading { left:12px; top:56px; max-width:280px; }.cyber-heading h2 { font-size:24px; }.cyber-heading p { font-size:9px; max-width:230px; }.cyber-time { left:12px; top:153px; gap:6px; padding:5px 8px; }.cyber-time strong { font-size:20px; }.cyber-time small { display:none; }
   .cyber-phone-toggle { right:12px; top:152px; font-size:10px!important; max-width:135px; }.cyber-phone { top:205px; right:10px; width:245px; max-height:calc(100% - 285px); border-radius:16px; }.cyber-phone>header { padding:0 5px 8px; }.cyber-phone header small { font-size:8px; }.cyber-phone header strong { font-size:17px; }
   .cyber-planetarium { top:205px; left:12px; max-width:110px; font-size:10px!important; }
-  .cyber-play-control { top:256px; left:12px; }.cyber-play-control button { min-width:110px; max-width:130px; font-size:11px; }.cyber-play-control small { max-width:130px; font-size:8px; }
+  .cyber-play-control { top:256px; left:12px; }.cyber-play-control button { min-width:110px; max-width:130px; font-size:11px; }.cyber-play-control small { max-width:min(230px,calc(100vw - 24px)); font-size:10px; }
   .cyber-character-view { top:332px; left:12px; max-width:110px; font-size:10px!important; }
   .cyber-phone-body { padding:6px; }.cyber-phone nav button { min-height:34px; font-size:10px; }.cyber-phone-body h3 { font-size:16px; }.cyber-phone-body button { min-height:42px; }
   .cyber-pad { left:10px; bottom:57px; grid-template-columns:repeat(3,36px); gap:4px; }.cyber-pad button { height:40px; }.cyber-notice { left:132px; right:10px; bottom:59px; font-size:9px; padding:7px 9px; }.cyber-orbit-note { left:10px; right:10px; bottom:10px; font-size:8px; padding:6px; }.cyber-private { inset:78px 8px 8px; padding:10px; }.cyber-private h3 { font-size:13px; }.cyber-private button { font-size:10px; }
