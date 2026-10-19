@@ -157,7 +157,7 @@ export default function HospitalPreview() {
 
     <section className="hospital-heading" aria-labelledby="hospital-title">
       <div><span className="hospital-eyebrow">ARQUITETURA · AMBIENTE DE APRENDIZAGEM</span><h1 id="hospital-title">Recepção hospitalar<span>.</span></h1></div>
-      <p className="hospital-status"><span />Prévia do módulo · ainda separado da cidade</p>
+      <p className="hospital-status"><span />Inspeção do módulo · disponível na cidade</p>
     </section>
 
     <div className="hospital-workspace">

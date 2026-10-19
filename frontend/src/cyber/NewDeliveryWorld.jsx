@@ -27,7 +27,7 @@ function DeliveryPlacement({record,onInspect}){
   const asset=getDeliveryAsset(record.assetId);if(!asset)return null;
   const pedestal=record.pedestal;
   return <group name={'DELIVERY_'+record.id} userData={{worldPlacementId:record.id,assetId:asset.id,nonPlayable:true}}>
-    {pedestal&&<RoundedBox position={[record.position[0],pedestal.height/2,record.position[2]]}
+    {pedestal&&<RoundedBox position={[record.position[0],(pedestal.baseY??0)+pedestal.height/2,record.position[2]]}
       args={[pedestal.width,pedestal.height,pedestal.depth]} radius={.035} smoothness={3} castShadow receiveShadow>
       <meshStandardMaterial color="#78868c" metalness={.55} roughness={.4}/>
     </RoundedBox>}

@@ -1,3 +1,5 @@
+import {changeLocalDoor} from './localDoors.js';
+import {createHospitalRuntime,hospitalColliders,hospitalGroundSurfaces} from './hospitalReception.js';
 import CityAssetBoundary from './CityAssetBoundary.js';
 import {clockSourceLabel,sharedServiceLabel,cityLoadLabel} from '../config/serviceStatus.js';
 import {deployment,resolveAssetReferences} from '../config/deploymentConfig.js';
@@ -162,7 +164,7 @@ function Actor({asset,snapshot,simulation,tractorRef,held,displayName,onReady}) 
     if(current.elapsed-lastGroundScan.current>1.5){floorSurfaces.current=collectGroundSurfaces(scene);lastGroundScan.current=current.elapsed;}
     let floor=current.position.y;
     if(['foot','mototaxi'].includes(current.mode)&&!current.elevator){
-      floor=sampleGroundHeight(ray,floorSurfaces.current,current.position,{radius:current.mode==='foot'?.32:0})+.01;
+      floor=sampleGroundHeight(ray,hospitalGroundSurfaces(floorSurfaces.current,current.position),current.position,{radius:current.mode==='foot'?.32:0})+.01;
     }
     if(BUS_IDS.includes(current.mode)){
       const bus=sampleLiveBus(current,current.mode);
@@ -209,7 +211,7 @@ function GrowthPlot({plot,planted,elapsed,onSelect}) {
     </group>))}
   </group>;
 }
-function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,tractorRef,spaceView,doors,worldObjects,classroomRuntime}) {
+function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,tractorRef,spaceView,doors,worldObjects,classroomRuntime,hospitalRuntime}) {
   const accumulator=useRef(0);
   const {scene}=useThree(),solids=useRef([]),lastIndex=useRef(-Infinity);
   const detailed=useMemo(()=>realisticWorld.environmentReplacements.filter(r=>r.position[1]<1).map(r=>{const box=footprintCollider(r,suppliedCatalog);return box?{...box,id:r.id}:null;}).filter(Boolean),[]);
@@ -221,7 +223,7 @@ function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,
       const p=jumping.personalVehicles[id]??definition.position;
       return {id,x:p.x,z:p.z,w:id==='mototaxi'?1:2.8,d:id==='truck'?7:4};
     });
-    const transitObstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...detailed,...parked];
+    const transitObstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...detailed,...parked];
     let next=tickCyberState(jumping,delta,{obstacles:transitObstacles});
     const keys=inputRef.current;
     if(next.elapsed-lastIndex.current>1.5){solids.current=createSolidIndex(scene);lastIndex.current=next.elapsed;}
@@ -252,7 +254,7 @@ function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,
         const train=sampleTransit(TRANSIT_ROUTES.train,next.elapsed);
         moving.push({x:train.x,z:train.z,w:Math.abs(Math.cos(train.heading))*3+Math.abs(Math.sin(train.heading))*12,d:Math.abs(Math.sin(train.heading))*3+Math.abs(Math.cos(train.heading))*12});
         for(const o of worldObjects??[])if(o.position&&interactionRooms.cyber.templates.find(t=>t.id===o.templateId)?.kind==='bench')moving.push({x:o.position.x,z:o.position.z,w:2,d:.8});
-        const obstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...detailed.filter(r=>r.id!==next.personalVehicles.car?.sourceId&&r.id!==next.personalVehicles.mototaxi?.sourceId),...moving];
+        const obstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...detailed.filter(r=>r.id!==next.personalVehicles.car?.sourceId&&r.id!==next.personalVehicles.mototaxi?.sourceId),...moving];
         let position=advanceCityPosition(next.position,direction,delta,motion?motion.speed:drive?drive.speed:keys.shift?9:5,obstacles,drive&&drive.id!=='mototaxi'?next.mode==='car'?2.35:1.3:.4);
         position=solidMovement(solids.current,next.position,position,next.mode==='mototaxi'?.42:drive?1.1:.38);
         if(drive?.farmOnly)position={...position,x:Math.max(-22,Math.min(22,position.x)),z:Math.max(86,Math.min(114,position.z))};
@@ -332,7 +334,9 @@ export default function CyberCity() {
   const {publishPosition}=shared;
   const [snapshot,setSnapshot]=useState(()=>{try{return restoreCyberState(window.localStorage);}catch{return restoreCyberState({getItem:()=>null});}});
   const simulation=useRef(snapshot),input=useRef({}),controls=useRef(null),tractorRef=useRef({...initialTractor}),keyboardActions=useRef({}),gameSurface=useRef(null),directionKeys=useRef(new Set());
-  const classroomRuntime=useRef(createClassroomRuntime());
+  const classroomRuntime=useRef(createClassroomRuntime()),hospitalRuntime=useRef(createHospitalRuntime());
+  const [offlineDoorState,setOfflineDoorState]=useState({base:null,doors:{}});
+  const cityDoors=shared.status==='connected'?(shared.state.doors??{}):offlineDoorState.base===shared.state?offlineDoorState.doors:(shared.state.doors??{});
   const [character,setCharacter]=useState(initialCharacter);
   const [playerName,setPlayerName]=useState(()=>readPlayerName(globalThis.sessionStorage)),[nameDraft,setNameDraft]=useState(()=>readPlayerName(globalThis.sessionStorage));
   const [tab,setTab]=useState('actions'),[phoneOpen,setPhoneOpen]=useState(false),[coreLoaded,setCoreLoaded]=useState({environment:false,characterId:null}),[spaceView,setSpaceView]=useState(false),[notice,setNotice]=useState('Clique em Jogar agora para ativar o teclado. WASD ou setas para caminhar.');
@@ -420,7 +424,7 @@ export default function CyberCity() {
     const parkingZones=parkingPlaces.map(p=>({id:p.id,label:p.label,position:[p.position[0]+3,0,p.position[2]+2]}));
     const drives=Object.entries(DRIVE_VEHICLES).map(([id,vehicle])=>{const point=simulation.current.personalVehicles[id]??vehicle.position;return{id:`drive-${id}`,label:vehicle.label,position:[point.x+3,0,point.z+2]};});
     const actualBenches=[...benches,...shared.state.objects.filter(object=>object.position&&interactionRooms.cyber.templates.find(t=>t.id===object.templateId)?.kind==='bench').map(object=>({id:object.id,position:object.position}))];
-    const obstacles=[...cityColliders(manifest.colliders??[],buildings,shared.state.doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...realisticWorld.environmentReplacements.filter(r=>r.position[1]<1).map(r=>footprintCollider(r,suppliedCatalog)).filter(Boolean)];
+    const obstacles=[...cityColliders(manifest.colliders??[],buildings,cityDoors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...realisticWorld.environmentReplacements.filter(r=>r.position[1]<1).map(r=>footprintCollider(r,suppliedCatalog)).filter(Boolean)];
     if(BUS_IDS.includes(simulation.current.mode)||action.type==='BOARD'&&BUS_IDS.includes(action.vehicle)){
       obstacles.push(...BUS_IDS.map(id=>busFootprint(sampleLiveBus(simulation.current,id))));
       for(const [id,definition]of Object.entries(DRIVE_VEHICLES)){
@@ -537,7 +541,7 @@ export default function CyberCity() {
     setNotice(`Entrada de ${building.label}. Abra a porta e use os controles para entrar.`);
   }
   function enterBuilding(building){
-    if(!shared.state.doors?.[building.id]?.open){setNotice('Abra a porta antes de entrar.');return;}
+    if(!cityDoors?.[building.id]?.open){setNotice('Abra a porta antes de entrar.');return;}
     const entry=doorPosition(building),p=simulation.current.position;
     if(simulation.current.mode!=='foot'||Math.hypot(p.x-entry[0],p.z-entry[2])>5){setNotice('Visite a entrada primeiro.');return;}
     setPhoneOpen(false);focusGame();input.current={target:{x:entry[0],z:entry[2]-3.5}};setNotice('Entrando pelo vão aberto. Use os controles para explorar o interior.');
@@ -545,8 +549,13 @@ export default function CyberCity() {
   async function toggleDoor(building){
     const p=simulation.current.position,entry=doorPosition(building);
     if(simulation.current.mode!=='foot'||Math.hypot(p.x-entry[0],p.z-entry[2])>5){setNotice('Aproxime-se da porta a pé para abrir ou fechar.');return;}
+    if(shared.status!=='connected'){
+      const result=changeLocalDoor(cityDoors,building,{position:p,mode:simulation.current.mode,players:shared.state.players});
+      if(result.ok)setOfflineDoorState({base:shared.state,doors:result.doors});
+      setNotice(result.message);return;
+    }
     await shared.publishPosition(p,{heading:simulation.current.heading,animation:simulation.current.action,characterId:character.id});
-    const result=await shared.door(building.id,!shared.state.doors?.[building.id]?.open);
+    const result=await shared.door(building.id,!cityDoors?.[building.id]?.open);
     setNotice(result?.message??'O serviço compartilhado precisa estar conectado.');
   }
   function togglePlanetarium(){
@@ -600,7 +609,7 @@ export default function CyberCity() {
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>
         <FuturisticClassroom simulation={simulation} runtime={classroomRuntime} onDoorState={()=>audio.play('DOOR')} onInspect={()=>{setNpc({id:'jarvis',name:'Professor JARVIS · Anatomia'});setQuestion('Como estudar ossos e camadas do corpo humano?');setTab('jarvis');setPhoneOpen(true);}}/>
-        <BuildingDoors doors={shared.state.doors} simulation={simulation} onToggle={toggleDoor}/>
+        <BuildingDoors doors={cityDoors} simulation={simulation} onToggle={toggleDoor} hospitalRuntime={hospitalRuntime} onNotice={setNotice} players={shared.state.players}/>
         <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
         {Object.keys(DRIVE_VEHICLES).filter(id=>!snapshot.personalVehicles[id]).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/></CityAssetBoundary>)}
         {Object.keys(snapshot.personalVehicles).map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/></CityAssetBoundary>)}
@@ -617,8 +626,8 @@ export default function CyberCity() {
       <Html position={[0,7,-5]} center distanceFactor={16} zIndexRange={[1,0]}><div className="cyber-billboard"><strong>ARAPIRACA · PREP</strong><span>{clock.text} · {clock.phase}</span><small>CHRONOVITAE · conhecimento em movimento</small></div></Html>
       {snapshot.fishing&&<Line points={[[snapshot.position.x+.4,1.7,snapshot.position.z+.3],[107,.2,0]]} color="#b9dce7" lineWidth={1}/>}
       {placement&&<mesh position={[0,snapshot.position.y+.015,0]} rotation={[-Math.PI/2,0,0]} onClick={event=>{event.stopPropagation();objectAction(placement,placement==='DROP'?held:selectedObject,{x:event.point.x,y:snapshot.position.y,z:event.point.z});}}><planeGeometry args={[236,236]}/><meshBasicMaterial color="#6ce5cc" transparent opacity={.08} depthWrite={false}/></mesh>}
-      <RuntimeLoop simulationRef={simulation} input={input} controls={controls} onSnapshot={setSnapshot} onNotice={setNotice} tractorRef={tractorRef} spaceView={spaceView||Boolean(privateUrl)} doors={shared.state.doors} worldObjects={shared.state.objects} classroomRuntime={classroomRuntime}/>
-      <GameAudioLoop audioRef={audio.audioRef} simulation={simulation} doors={shared.state.doors} onStatus={audio.syncStatus}/>
+      <RuntimeLoop simulationRef={simulation} input={input} controls={controls} onSnapshot={setSnapshot} onNotice={setNotice} tractorRef={tractorRef} spaceView={spaceView||Boolean(privateUrl)} doors={cityDoors} worldObjects={shared.state.objects} classroomRuntime={classroomRuntime} hospitalRuntime={hospitalRuntime}/>
+      <GameAudioLoop audioRef={audio.audioRef} simulation={simulation} doors={cityDoors} onStatus={audio.syncStatus}/>
       <OrbitControls ref={controls} makeDefault target={[CITY_START.x,1,CITY_START.z]} minDistance={3} maxDistance={spaceView?120:65} maxPolarAngle={Math.PI/2.1}/>
     </Canvas></CityBoundary>
     <div className="cyber-heading"><span>ARAPIRACA · ALAGOAS · VISÃO CONCEITUAL</span><h2>Seu futuro é agora.</h2><p>WASD ou setas · Shift: correr · Espaço: pular · F: entrar/sair · Q/E: itens</p></div>
@@ -655,7 +664,7 @@ export default function CyberCity() {
           <h4>Pesca educativa virtual</h4><div className="cyber-action-grid"><button disabled={!beach||!!snapshot.fishing} onClick={()=>commit({type:'CAST'})}>Lançar linha</button><button disabled={!snapshot.fishing||snapshot.elapsed<snapshot.fishing.readyAt} onClick={()=>commit({type:'REEL'})}>Recolher linha</button></div>{snapshot.fishing&&<p>{snapshot.elapsed<snapshot.fishing.readyAt?`Aguarde ${Math.ceil(snapshot.fishing.readyAt-snapshot.elapsed)} s`:'Pronto para recolher.'}</p>}
         </>}
         {tab==='buildings'&&<><h3>Portas e estabelecimentos</h3><p>Visite a entrada, abra a porta e caminhe para dentro. A abertura é compartilhada pelos jogadores da sala.</p>{buildings.map(b=>{
-          const open=shared.state.doors?.[b.id]?.open,p=doorPosition(b),nearby=Math.hypot(snapshot.position.x-p[0],snapshot.position.z-p[2])<=5;
+          const open=cityDoors?.[b.id]?.open,p=doorPosition(b),nearby=Math.hypot(snapshot.position.x-p[0],snapshot.position.z-p[2])<=5;
           return <article className="cyber-route" key={b.id}><h4>{b.label}</h4><div className="cyber-action-grid"><button onClick={()=>visitEntrance(b)}>Ir à entrada · {b.label}</button><button disabled={!nearby||shared.status!=='connected'} onClick={()=>toggleDoor(b)}>{open?'Fechar':'Abrir'} porta · {b.label}</button><button disabled={!nearby||!open} onClick={()=>enterBuilding(b)}>Entrar · {b.label}</button></div><p>{open?'Aberta · passagem livre':'Fechada'} · abertura animada</p></article>;
         })}</>}
         {tab==='routes'&&<>

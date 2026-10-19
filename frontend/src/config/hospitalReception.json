@@ -1,0 +1,609 @@
+{
+  "version": 1,
+  "sourceScene": "PREP_HOSPITAL_RECEPTION_20261015",
+  "asset": "/assets/environments/ENV_Hospital_Reception_Module_20261015.glb",
+  "position": [
+    48,
+    0.26,
+    -38
+  ],
+  "width": 36,
+  "depth": 24,
+  "height": 4.2,
+  "opening": 2.4,
+  "floorY": 0.012,
+  "floorPrefixes": [
+    "HSP15_FLOOR_TILES",
+    "HSP15_SLAB"
+  ],
+  "staticColliders": [
+    {
+      "id": "HSP15_REAR_WALL",
+      "x": 0.0,
+      "z": -12.0,
+      "w": 36.0,
+      "d": 0.200001,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_SIDE_APRON_-1",
+      "x": -18.0,
+      "z": -0.0,
+      "w": 0.200001,
+      "d": 24.0,
+      "minY": 0.0,
+      "maxY": 0.64
+    },
+    {
+      "id": "HSP15_SIDE_GLASS_-1",
+      "x": -18.0,
+      "z": -0.0,
+      "w": 0.060001,
+      "d": 24.0,
+      "minY": 0.65,
+      "maxY": 3.61
+    },
+    {
+      "id": "HSP15_SIDE_APRON_1",
+      "x": 18.0,
+      "z": -0.0,
+      "w": 0.200001,
+      "d": 24.0,
+      "minY": 0.0,
+      "maxY": 0.64
+    },
+    {
+      "id": "HSP15_SIDE_GLASS_1",
+      "x": 18.0,
+      "z": -0.0,
+      "w": 0.060001,
+      "d": 24.0,
+      "minY": 0.65,
+      "maxY": 3.61
+    },
+    {
+      "id": "HSP15_FRONT_APRON_-1",
+      "x": -9.6,
+      "z": 12.0,
+      "w": 16.799999,
+      "d": 0.200001,
+      "minY": 0.0,
+      "maxY": 0.64
+    },
+    {
+      "id": "HSP15_FRONT_GLASS_-1",
+      "x": -9.6,
+      "z": 12.0,
+      "w": 16.799999,
+      "d": 0.059999,
+      "minY": 0.65,
+      "maxY": 3.55
+    },
+    {
+      "id": "HSP15_FRONT_APRON_1",
+      "x": 9.6,
+      "z": 12.0,
+      "w": 16.799999,
+      "d": 0.200001,
+      "minY": 0.0,
+      "maxY": 0.64
+    },
+    {
+      "id": "HSP15_FRONT_GLASS_1",
+      "x": 9.6,
+      "z": 12.0,
+      "w": 16.799999,
+      "d": 0.059999,
+      "minY": 0.65,
+      "maxY": 3.55
+    },
+    {
+      "id": "HSP15_CORRIDOR_WALL_-1A",
+      "x": -1.7,
+      "z": 2.4,
+      "w": 0.2,
+      "d": 3.2,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_CORRIDOR_WALL_-1B",
+      "x": -1.7,
+      "z": -4.0,
+      "w": 0.2,
+      "d": 6.4,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_CORRIDOR_WALL_-1C",
+      "x": -1.7,
+      "z": -10.4,
+      "w": 0.2,
+      "d": 3.200001,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_ROOM_OUTER_-1",
+      "x": -9.9,
+      "z": -4.0,
+      "w": 0.200001,
+      "d": 16.0,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_ROOM_TRANSVERSE_-1-4",
+      "x": -5.8,
+      "z": 4.0,
+      "w": 8.199999,
+      "d": 0.2,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_ROOM_TRANSVERSE_-14",
+      "x": -5.8,
+      "z": -4.0,
+      "w": 8.199999,
+      "d": 0.2,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_CORRIDOR_WALL_1A",
+      "x": 1.7,
+      "z": 2.4,
+      "w": 0.2,
+      "d": 3.2,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_CORRIDOR_WALL_1B",
+      "x": 1.7,
+      "z": -4.0,
+      "w": 0.2,
+      "d": 6.4,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_CORRIDOR_WALL_1C",
+      "x": 1.7,
+      "z": -10.4,
+      "w": 0.2,
+      "d": 3.200001,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_ROOM_OUTER_1",
+      "x": 9.9,
+      "z": -4.0,
+      "w": 0.200001,
+      "d": 16.0,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_ROOM_TRANSVERSE_1-4",
+      "x": 5.8,
+      "z": 4.0,
+      "w": 8.199999,
+      "d": 0.2,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_ROOM_TRANSVERSE_14",
+      "x": 5.8,
+      "z": -4.0,
+      "w": 8.199999,
+      "d": 0.2,
+      "minY": 0.0,
+      "maxY": 4.2
+    },
+    {
+      "id": "HSP15_RECEPTION_BASE",
+      "x": -7.0,
+      "z": 6.25,
+      "w": 6.0,
+      "d": 1.5,
+      "minY": 0.0,
+      "maxY": 1.02
+    },
+    {
+      "id": "HSP15_DESK_01",
+      "x": -5.8,
+      "z": -2.25,
+      "w": 2.3,
+      "d": 0.8,
+      "minY": 0.72,
+      "maxY": 0.82
+    },
+    {
+      "id": "HSP15_EXAM_BASE_01",
+      "x": -7.8,
+      "z": 0.7,
+      "w": 1.0,
+      "d": 2.0,
+      "minY": 0.125,
+      "maxY": 0.675
+    },
+    {
+      "id": "HSP15_DESK_02",
+      "x": 5.8,
+      "z": -2.25,
+      "w": 2.3,
+      "d": 0.8,
+      "minY": 0.72,
+      "maxY": 0.82
+    },
+    {
+      "id": "HSP15_EXAM_BASE_02",
+      "x": 7.8,
+      "z": 0.7,
+      "w": 1.0,
+      "d": 2.0,
+      "minY": 0.125,
+      "maxY": 0.675
+    },
+    {
+      "id": "HSP15_DESK_03",
+      "x": -5.8,
+      "z": -10.25,
+      "w": 2.3,
+      "d": 0.799999,
+      "minY": 0.72,
+      "maxY": 0.82
+    },
+    {
+      "id": "HSP15_DESK_04",
+      "x": 5.8,
+      "z": -10.25,
+      "w": 2.3,
+      "d": 0.799999,
+      "minY": 0.72,
+      "maxY": 0.82
+    },
+    {
+      "id": "HSP15_PLANTER_-15.5",
+      "x": -15.5,
+      "z": 10.2,
+      "w": 1.0,
+      "d": 1.0,
+      "minY": 0.0,
+      "maxY": 0.8
+    },
+    {
+      "id": "HSP15_PLANTER_15.5",
+      "x": 15.5,
+      "z": 10.2,
+      "w": 1.0,
+      "d": 1.0,
+      "minY": 0.0,
+      "maxY": 0.8
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_0_0",
+      "x": 5.0,
+      "z": 10.5,
+      "w": 0.76,
+      "d": 0.719999,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_0_1",
+      "x": 7.2,
+      "z": 10.5,
+      "w": 0.76,
+      "d": 0.719999,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_0_2",
+      "x": 9.4,
+      "z": 10.5,
+      "w": 0.76,
+      "d": 0.719999,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_0_3",
+      "x": 11.6,
+      "z": 10.5,
+      "w": 0.76,
+      "d": 0.719999,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_0_4",
+      "x": 13.8,
+      "z": 10.5,
+      "w": 0.76,
+      "d": 0.719999,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_1_0",
+      "x": 5.0,
+      "z": 5.3,
+      "w": 0.76,
+      "d": 0.72,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_1_1",
+      "x": 7.2,
+      "z": 5.3,
+      "w": 0.76,
+      "d": 0.72,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_1_2",
+      "x": 9.4,
+      "z": 5.3,
+      "w": 0.76,
+      "d": 0.72,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_1_3",
+      "x": 11.6,
+      "z": 5.3,
+      "w": 0.76,
+      "d": 0.72,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_1_4",
+      "x": 13.8,
+      "z": 5.3,
+      "w": 0.76,
+      "d": 0.72,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_ROOM_01",
+      "x": -5.8,
+      "z": -3.0,
+      "w": 0.76,
+      "d": 0.72,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_ROOM_02",
+      "x": 5.8,
+      "z": -3.0,
+      "w": 0.76,
+      "d": 0.72,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_ROOM_03",
+      "x": -5.8,
+      "z": -11.0,
+      "w": 0.76,
+      "d": 0.719999,
+      "minY": 0.01,
+      "maxY": 0.87
+    },
+    {
+      "id": "HSP15_CHAIR_COLLIDER_ROOM_04",
+      "x": 5.8,
+      "z": -11.0,
+      "w": 0.76,
+      "d": 0.719999,
+      "minY": 0.01,
+      "maxY": 0.87
+    }
+  ],
+  "publicDoor": {
+    "z": 12.15,
+    "duration": 1.0,
+    "opening": 2.4,
+    "leaves": [
+      {
+        "name": "HSP15_DOOR_PUBLIC_Left",
+        "closedCollider": {
+          "id": "HSP15_DOOR_PUBLIC_Left",
+          "x": -0.6,
+          "z": 12.15,
+          "w": 1.2,
+          "d": 0.049999,
+          "minY": 0.02,
+          "maxY": 2.42
+        },
+        "openCollider": {
+          "id": "HSP15_DOOR_PUBLIC_Left",
+          "x": -1.85,
+          "z": 12.15,
+          "w": 1.2,
+          "d": 0.049999,
+          "minY": 0.02,
+          "maxY": 2.42
+        }
+      },
+      {
+        "name": "HSP15_DOOR_PUBLIC_Right",
+        "closedCollider": {
+          "id": "HSP15_DOOR_PUBLIC_Right",
+          "x": 0.6,
+          "z": 12.15,
+          "w": 1.2,
+          "d": 0.049999,
+          "minY": 0.02,
+          "maxY": 2.42
+        },
+        "openCollider": {
+          "id": "HSP15_DOOR_PUBLIC_Right",
+          "x": 1.85,
+          "z": 12.15,
+          "w": 1.2,
+          "d": 0.049999,
+          "minY": 0.02,
+          "maxY": 2.42
+        }
+      }
+    ]
+  },
+  "roomDoors": [
+    {
+      "id": "01",
+      "label": "Triagem 01",
+      "leafName": "HSP15_DOOR_ROOM_01_LEAF",
+      "hingeName": "HSP15_DOOR_ROOM_01_HINGE",
+      "hingePosition": [
+        -1.8,
+        0.0,
+        0.8
+      ],
+      "closedAngle": 0.0,
+      "side": -1,
+      "openAngle": 1.570796,
+      "closedCollider": {
+        "id": "HSP15_DOOR_ROOM_01_LEAF",
+        "x": -1.8,
+        "z": -0.0,
+        "w": 0.06,
+        "d": 1.6,
+        "minY": 0.02,
+        "maxY": 2.42
+      },
+      "openCollider": {
+        "id": "HSP15_DOOR_ROOM_01_LEAF",
+        "x": -2.6,
+        "z": 0.8,
+        "w": 1.6,
+        "d": 0.06,
+        "minY": 0.02,
+        "maxY": 2.42
+      }
+    },
+    {
+      "id": "02",
+      "label": "Triagem 02",
+      "leafName": "HSP15_DOOR_ROOM_02_LEAF",
+      "hingeName": "HSP15_DOOR_ROOM_02_HINGE",
+      "hingePosition": [
+        1.8,
+        0.0,
+        0.8
+      ],
+      "closedAngle": 0.0,
+      "side": 1,
+      "openAngle": -1.570796,
+      "closedCollider": {
+        "id": "HSP15_DOOR_ROOM_02_LEAF",
+        "x": 1.8,
+        "z": -0.0,
+        "w": 0.06,
+        "d": 1.6,
+        "minY": 0.02,
+        "maxY": 2.42
+      },
+      "openCollider": {
+        "id": "HSP15_DOOR_ROOM_02_LEAF",
+        "x": 2.6,
+        "z": 0.8,
+        "w": 1.6,
+        "d": 0.06,
+        "minY": 0.02,
+        "maxY": 2.42
+      }
+    },
+    {
+      "id": "03",
+      "label": "Entrevista",
+      "leafName": "HSP15_DOOR_ROOM_03_LEAF",
+      "hingeName": "HSP15_DOOR_ROOM_03_HINGE",
+      "hingePosition": [
+        -1.8,
+        0.0,
+        -7.2
+      ],
+      "closedAngle": 0.0,
+      "side": -1,
+      "openAngle": 1.570796,
+      "closedCollider": {
+        "id": "HSP15_DOOR_ROOM_03_LEAF",
+        "x": -1.8,
+        "z": -8.0,
+        "w": 0.06,
+        "d": 1.6,
+        "minY": 0.02,
+        "maxY": 2.42
+      },
+      "openCollider": {
+        "id": "HSP15_DOOR_ROOM_03_LEAF",
+        "x": -2.6,
+        "z": -7.2,
+        "w": 1.6,
+        "d": 0.06,
+        "minY": 0.02,
+        "maxY": 2.42
+      }
+    },
+    {
+      "id": "04",
+      "label": "Enfermagem",
+      "leafName": "HSP15_DOOR_ROOM_04_LEAF",
+      "hingeName": "HSP15_DOOR_ROOM_04_HINGE",
+      "hingePosition": [
+        1.8,
+        0.0,
+        -7.2
+      ],
+      "closedAngle": 0.0,
+      "side": 1,
+      "openAngle": -1.570796,
+      "closedCollider": {
+        "id": "HSP15_DOOR_ROOM_04_LEAF",
+        "x": 1.8,
+        "z": -8.0,
+        "w": 0.06,
+        "d": 1.6,
+        "minY": 0.02,
+        "maxY": 2.42
+      },
+      "openCollider": {
+        "id": "HSP15_DOOR_ROOM_04_LEAF",
+        "x": 2.6,
+        "z": -7.2,
+        "w": 1.6,
+        "d": 0.06,
+        "minY": 0.02,
+        "maxY": 2.42
+      }
+    }
+  ],
+  "provenance": "Derived from evaluated Blender mesh bounds in metres; glTF Y-up, Z=-BlenderY",
+  "certifiedClinicalOrArchitectural": false,
+  "entrancePlatform": {
+    "asset": "/assets/environments/ENV_Hospital_Entrance_Platform_20261019.glb",
+    "rampWidth": 3.2,
+    "rampLength": 4,
+    "innerZ": 12.1,
+    "outerZ": 16.1,
+    "innerTopY": 0.012,
+    "outerTopY": -0.25,
+    "foundationTopY": -0.012,
+    "reason": "Raised foundation covers legacy road surfaces up to 0.23m; ramp joins base ground at 0.01m"
+  }
+}

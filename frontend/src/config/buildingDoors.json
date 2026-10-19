@@ -1,5 +1,5 @@
 [
-  {"id":"hospital","label":"Hospital PREP","center":[48,0,-38],"width":36,"depth":27,"height":4.2,"opening":3.2,"style":"slide","color":"#d8e1e2","hidePrefixes":["BLD_PREP_Emergency_HEA_Concept_","BLD_HEA_Accent","HEA_RedCross"],"interior":"hospital"},
+  {"id":"hospital","label":"Hospital PREP","center":[48,0.26,-38],"width":36,"depth":24,"height":4.2,"opening":2.4,"style":"slide","color":"#d8e1e2","hidePrefixes":["BLD_PREP_Emergency_HEA_Concept_","BLD_HEA_Accent","HEA_RedCross"],"interior":"hospital"},
   {"id":"laboratory","label":"Laboratório PREP","center":[80,0,-38],"width":23,"depth":24,"height":4.2,"opening":3.2,"style":"slide","color":"#98acb4","hidePrefixes":["BLD_PREP_Laboratory_"],"interior":"laboratory"},
   {"id":"store","label":"Loja de itens","center":[-45,0,25],"width":20,"depth":15,"height":3.8,"opening":2.8,"style":"swing","color":"#c3bcb0","hidePrefixes":["BLD_ItemShop_"],"interior":"store"},
   {"id":"moto-dealer","label":"Concessionária de motocicletas","center":[-46,0,53],"width":21,"depth":17,"height":3.8,"opening":3.2,"style":"slide","color":"#bcc7ca","hidePrefixes":["BLD_MotoDealer_"],"interior":"moto"},
