@@ -1,5 +1,6 @@
 import CityAssetBoundary from './CityAssetBoundary.js';
 import HospitalReception from './HospitalReception.jsx';
+import {HOSPITAL_ASSET_URL} from '../hospital/hospitalModel.js';
 import {resolveAssetReferences} from '../config/deploymentConfig.js';
 import {useRef} from 'react';
 import {useFrame} from '@react-three/fiber';
@@ -66,4 +67,4 @@ function Building({building,door,simulation,onToggle}){
     </group>
   </group>;
 }
-export default function BuildingDoors({doors,simulation,onToggle,hospitalRuntime,onNotice,players}){return <group>{buildings.map(b=>b.id==='hospital'?<CityAssetBoundary key={b.id} label={b.label}><HospitalReception building={b} door={doors?.[b.id]} simulation={simulation} runtime={hospitalRuntime} onToggle={onToggle} onNotice={onNotice} players={players}/></CityAssetBoundary>:<Building key={b.id} building={b} door={doors?.[b.id]} simulation={simulation} onToggle={onToggle}/>)}</group>;}
+export default function BuildingDoors({doors,simulation,onToggle,hospitalRuntime,onNotice,players}){return <group>{buildings.map(b=>b.id==='hospital'?<CityAssetBoundary key={b.id} label={b.label} assetUrls={[HOSPITAL_ASSET_URL]}><HospitalReception building={b} door={doors?.[b.id]} simulation={simulation} runtime={hospitalRuntime} onToggle={onToggle} onNotice={onNotice} players={players}/></CityAssetBoundary>:<Building key={b.id} building={b} door={doors?.[b.id]} simulation={simulation} onToggle={onToggle}/>)}</group>;}

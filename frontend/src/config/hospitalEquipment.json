@@ -1,0 +1,46 @@
+{
+  "id": "PROP_Ambient_Monitor_20261020",
+  "label": "Monitor de temperatura e umidade",
+  "ready": true,
+  "asset": "/assets/additions20261020/PROP_Ambient_Monitor_20261020.glb",
+  "localPosition": [
+    -6.6,
+    1.112,
+    6.0
+  ],
+  "localRotation": [
+    0,
+    0,
+    0
+  ],
+  "worldPosition": [
+    41.4,
+    1.372,
+    -32.0
+  ],
+  "worldLabel": [
+    41.4,
+    1.66,
+    -32.0
+  ],
+  "height": 0.14333336792812812,
+  "dimensions": [
+    0.1433333307504654,
+    0.14333336792812812,
+    0.04026673920452595
+  ],
+  "loadRadius": 16,
+  "labelRadius": 3.4,
+  "triangles": 13002,
+  "bytes": 439940,
+  "sha256": "a0422e1119976bd535ef7dfac043cd5eeb2650c43988d25e0faca870239dc7ce",
+  "sourceSha256": "648242dea0d5cc07a956be28fd5d0b87b6e50a07d13d1cc29524a49f80e5dbdd",
+  "credits": {
+    "author": "SeitVerivel (https://sketchfab.com/SeitVerivel)",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+    "source": "https://sketchfab.com/3d-models/thermometer-e72a392f9fa94fbba0ed8356f29b5cec",
+    "title": "Thermometer"
+  },
+  "notice": "Este monitor é uma peça de demonstração. Os números do visor fazem parte da imagem do modelo; ainda não medem o ambiente do jogo.",
+  "liveMeasurement": false
+}

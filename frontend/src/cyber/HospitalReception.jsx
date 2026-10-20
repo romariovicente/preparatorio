@@ -7,7 +7,8 @@ import {insideBuilding} from './doorGeometry.js';
 import CityAssetBoundary from './CityAssetBoundary.js';
 import hospitalChairPlan from '../config/hospitalChairs.json';
 import HospitalChairs from './HospitalChairs.jsx';
-import {hideHospitalChairRoots,restoreHospitalChairRoots} from './hospitalChairs.js';
+import HospitalEquipment from './HospitalEquipment.jsx';
+import {hideHospitalChairRoots,restoreHospitalChairRoots,hospitalChairAssetUrl} from './hospitalChairs.js';
 
 function HospitalPlatform(){
   const {scene}=useGLTF(HOSPITAL_PLATFORM_URL);
@@ -58,7 +59,7 @@ export default function HospitalReception({building,door,simulation,runtime,onTo
   }
   return <group name="PREP_HOSPITAL_RECEPTION_PLAYABLE" position={hospitalReception.position} userData={{dynamicCollider:true,hospitalModule:true}}>
     <CityAssetBoundary label="entrada do hospital"><HospitalPlatform/></CityAssetBoundary>
-    {hospitalChairPlan.ready&&<CityAssetBoundary label="cadeiras do hospital"><HospitalChairs plan={hospitalChairPlan} onReady={setChairsReady}/></CityAssetBoundary>}
+    {hospitalChairPlan.ready&&<CityAssetBoundary label="cadeiras do hospital" assetUrls={[hospitalChairAssetUrl(hospitalChairPlan)]}><HospitalChairs plan={hospitalChairPlan} onReady={setChairsReady}/></CityAssetBoundary>}
     <primitive object={prepared.scene} dispose={null} onClick={event=>{
       if(hasNamedAncestor(event.object,PUBLIC_DOOR_PREFIX)){event.stopPropagation();onToggle(building);return;}
       const room=hospitalReception.roomDoors.find(record=>hasNamedAncestor(event.object,record.hingeName));
@@ -66,6 +67,7 @@ export default function HospitalReception({building,door,simulation,runtime,onTo
     }}/>
     <Html position={[0,3.45,hospitalReception.publicDoor.z+.3]} center distanceFactor={10} zIndexRange={[2,0]}><button className="cyber-world-label" onClick={()=>onToggle(building)}>{door?.open?'Fechar porta':'Abrir porta'}<br/>{building.label}</button></Html>
     {hospitalReception.roomDoors.map(room=><Html key={room.id} position={[room.hingePosition[0],2.65,room.closedCollider.z]} center distanceFactor={8} zIndexRange={[2,0]}><button className="cyber-world-label" onClick={()=>toggleRoom(room)}>{rooms[room.id]?'Fechar':'Abrir'} · {room.label}</button></Html>)}
+    <HospitalEquipment simulation={simulation} onInspect={onNotice}/>
     <pointLight position={[0,3.3,3]} color="#fff5e5" intensity={32} distance={24} decay={2}/>
   </group>;
 }

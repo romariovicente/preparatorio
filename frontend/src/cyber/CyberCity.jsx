@@ -12,6 +12,7 @@ import WarpEngine from './WarpEngine.jsx';
 import {warpEngineColliders,warpEngineZones} from './warpEngineWorld.js';
 import {createHospitalRuntime,hospitalColliders,hospitalGroundSurfaces} from './hospitalReception.js';
 import CityAssetBoundary from './CityAssetBoundary.js';
+import AssetRetryButton from './AssetRetryButton.js';
 import {clockSourceLabel,sharedServiceLabel,cityLoadLabel} from '../config/serviceStatus.js';
 import {deployment,resolveAssetReferences} from '../config/deploymentConfig.js';
 import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -670,6 +671,7 @@ export default function CyberCity() {
       <nav aria-label="Aplicativos do smartphone">{tabs.map(([id,label])=><button key={id} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</button>)}<button onClick={()=>openAssetCatalog()}>Acervo 3D</button></nav>
       <div className="cyber-phone-body">
         {tab==='actions'&&<>
+          <AssetRetryButton/>
           <PlayerNameForm value={nameDraft} onChange={setNameDraft} onSubmit={saveUniformName}/>
           <h3>Personagem e ações</h3><label>Personagem<select value={character.id} onChange={event=>changeCharacter(event.target.value)}>{characterOptions.map(option=><option key={option.id} value={option.id} disabled={option.disabled}>{option.label}</option>)}</select></label>
           <p className="cyber-tip">{character.characterControlMode==='fixed-pose'?'Este personagem se desloca em pose fixa; a animação de passos ainda precisa ser ajustada.':'Animações nativas do modelo selecionado.'}</p>
