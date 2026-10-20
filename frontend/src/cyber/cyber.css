@@ -5,6 +5,10 @@
 .cyber-city :focus-visible { outline:3px solid #f3b651; outline-offset:3px; }
 .cyber-car-context {position:absolute;z-index:7;left:174px;bottom:128px;width:270px;max-width:calc(100% - 195px);padding:13px;border:1px solid #81cbd1;border-radius:12px;background:#102b3bf2;box-shadow:0 5px 20px #0005;}
 .cyber-car-context>div:first-child {display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.cyber-nearby-vehicles {position:absolute;z-index:8;right:18px;bottom:128px;width:280px;max-width:calc(100% - 36px);max-height:180px;overflow:auto;background:#102b3bf2;border:1px solid #81cbd1;border-radius:12px;padding:10px;}
+.cyber-nearby-vehicles strong {display:block;margin-bottom:8px;font-size:12px;}
+.cyber-nearby-vehicles button {font-size:10px;min-height:36px;}
+@media(max-width:760px) {.cyber-nearby-vehicles {right:10px;bottom:128px;width:210px;max-height:130px;}}
 .cyber-car-context>div:first-child button {padding:0;width:28px;min-height:28px;}
 .cyber-car-context strong {font-size:13px;}.cyber-car-context>button {width:100%;margin:10px 0 7px;background:#84e5dc;color:#112e35;font-weight:700;}
 .cyber-car-context small,.cyber-car-context p {display:block;font-size:10px;line-height:1.5;color:#c5e4e5;}.cyber-car-context .cyber-action-grid button {font-size:11px;}

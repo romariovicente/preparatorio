@@ -1,0 +1,40 @@
+[
+  {
+    "id": "CHR_Remy_Mixamo_20261005",
+    "sha256": "4d1caf2e917b0496438460e61a496ca0bd4342f52735651dea77a68a545f3d0e",
+    "controlMode": "native",
+    "locomotionValidated": true,
+    "poseReviewed": true,
+    "idleClip": "Idle",
+    "walkClip": "Walk",
+    "allowedActions": ["Idle", "Walk", "Dance", "Interact"],
+    "report": "reports/prep_mixamo_validation/remy_20261005.json",
+    "notes": "Rig Mixamo de 55 ossos; uniforme e nomes individuais preservados. Revisão artística de realismo final permanece pendente."
+  },
+  {
+    "id": "SUP_lowpoly_anime_character_cyberstyle",
+    "sha256": "d470f6653b7407f5324c6df1500f7ada05fd8e6df2e4709d9d7aa3bbfc27dba8",
+    "controlMode": "native",
+    "locomotionValidated": true,
+    "poseReviewed": true,
+    "idleClip": "Armature|Idle",
+    "walkClip": "Armature|Walk",
+    "allowedActions": ["Idle", "Walk"],
+    "standingPose": { "clip": "Armature|Idle", "time": 0 },
+    "visualStyle": "stylized",
+    "report": "reports/CHARACTER_NATIVE_MOTION_20261019.json",
+    "notes": "145 ossos originais, Idle/Walk nativos; 10 amostras de malha real finitas, altura variando menos de 4%. Estilo anime, não declarado fotorealista."
+  },
+  {
+    "id": "SUP_character_cyberpunk_free_3d_by_oscar_cre",
+    "sha256": "604b0a811d7a47ec00ad250370bd0a45b3a0ece1bfc03cd632d14aa302e3e550",
+    "controlMode": "fixed-pose",
+    "locomotionValidated": false,
+    "poseReviewed": true,
+    "allowedActions": [],
+    "standingPose": { "clip": "motion", "time": 0 },
+    "visualStyle": "realistic",
+    "report": "reports/CHARACTER_NATIVE_MOTION_20261019.json",
+    "notes": "107 ossos originais e pose em pé estável. O clip motion não é caminhada: controle desloca a pose fixa, sem animação de passos, dança ou sentado. Modelo pesado, cerca de 103 MB."
+  }
+]

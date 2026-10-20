@@ -1,12 +1,13 @@
 import {resolveAssetReferences} from '../config/deploymentConfig.js';
 import {resolveCarSource,safeVehicleCopy,canEnterCar} from './carInteraction.js';
 import {resolveMotorcycle,nearestMotorcycle} from './motorcycleInteraction.js';
+import {playableCityBounds} from '../config/cityBounds.js';
 import deliveryConfigRaw from '../config/newDeliveryWorld.json' with {type:'json'};
 const deliveryConfig=resolveAssetReferences(deliveryConfigRaw);
 import {BUS_IDS,BUS_BRT_ROUTE,BUS_DEFINITIONS,createLiveBuses,sampleLiveBus,canBoardBus,busSeatPosition,busExitPosition,busMotion,busPositionBlocked,moveLiveBus,returnBusToRoute,tickLiveBuses} from './busInteraction.js';
 export {BUS_IDS,BUS_BRT_ROUTE,BUS_DEFINITIONS,sampleLiveBus,nearestBus,busSeatPosition,busDoorPosition,busFootprint} from './busInteraction.js';
 export const CYBER_STORAGE_KEY = 'prep.cyber.local.v1';
-export const CYBER_BOUNDS = { minX: -118, maxX: 118, minZ: -118, maxZ: 118 };
+export const CYBER_BOUNDS = playableCityBounds;
 // Clear approach south of the plaza's outer 20 m ring and its monuments.
 export const CITY_START = { x: 0, y: 0, z: 25 };
 export const JUMP_PHYSICS={velocity:6.2,gravity:18};

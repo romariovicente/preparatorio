@@ -34,6 +34,17 @@ test('only lateral glass lowers and reverses while windshield stays fixed',()=>{
   assert.equal(rig.windows[0].node.position.y,.8);assert.equal(rig.doors[0].angle,0);
 });
 
+test('AMG visibility adapts body instances while retaining original transparent glass and source materials',()=>{
+  const source=new Group(),paint=new MeshStandardMaterial({transparent:true,opacity:.1}),glass=new MeshStandardMaterial({transparent:true,opacity:.4});
+  paint.name='amgprojone_paint';glass.name='amgprojone_clearglass';
+  source.add(new Mesh(new BoxGeometry(2,1,4),paint),new Mesh(new BoxGeometry(1,.2,1),glass));
+  const rig=createCarRig(source,1.26,{sourceId:'SUP_transparency_mercedes_amg_one'}),materials=[];
+  rig.outer.traverse(node=>{if(node.isMesh)materials.push(node.material);});
+  assert.equal(materials[0].opacity,1);assert.equal(materials[0].transparent,false);
+  assert.notEqual(materials[0],paint);assert.equal(paint.opacity,.1);assert.equal(paint.transparent,true);
+  assert.equal(materials[1],glass);assert.equal(glass.opacity,.4);
+});
+
 test('saved GLBs contain nonempty wheels, lateral glass and door metadata, preserving all faces',()=>{
   for(const [sourceId,file,expectedTriangles,windowCount] of [
     ['SUP_2010_mercedes_sls_amg','VEH_SLS_Interactive_20261005',159999,2],

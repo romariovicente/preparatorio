@@ -10,8 +10,9 @@ import {createUprightPosture} from './posture.js';
 import {createCharacterClone,findCharacterAction,startCharacterAction} from '../world/characterModel.js';
 import {createUniformNameTexture} from './uniformName.js';
 import {applyUniformName,applyUniformOutfit,cloneUniformMaterials} from './uniformMaterials.js';
+import {createFrozenCharacterClone} from '../world/frozenCharacter.js';
 
-function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playing, clip, holding, sitting, riding, displayName}) {
+function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playing, clip, holding, sitting, riding, displayName,standingPose}) {
   const gltf = useGLTF(url);
   const prepared = useMemo(() => {
     let group;
@@ -20,7 +21,7 @@ function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playi
       group = pose.group;
       group.position.y = pose.offset;
     } else {
-      group = createCharacterClone(gltf.scene,height).group;
+      group = standingPose?createFrozenCharacterClone(gltf.scene,height,gltf.animations,standingPose).group:createCharacterClone(gltf.scene,height).group;
     }
     group.traverse(object => {
       if (!object.isMesh) return;
@@ -32,7 +33,7 @@ function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playi
     // shared. Give recolorable clothing its own materials before any changes.
     const materials = costumed ? cloneUniformMaterials(group) : [];
     return {group, materials};
-  }, [gltf.scene, costumed, height, sitting, riding]);
+  }, [gltf.scene, gltf.animations, costumed, height, sitting, riding,standingPose]);
   const carry = useMemo(() => createCarryAnimations(gltf.animations), [gltf.animations]);
   const {actions,mixer} = useAnimations(carry.clips, prepared.group);
   const upright=useMemo(()=>createUprightPosture(prepared.group),[prepared.group]);
@@ -78,12 +79,19 @@ function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playi
   return <primitive object={prepared.group} dispose={null}/>;
 }
 
+function FixedPoseCharacter({asset,height}){
+  const gltf=useGLTF(asset.url);
+  const prepared=useMemo(()=>createFrozenCharacterClone(gltf.scene,height,gltf.animations,asset.characterStandingPose),[gltf.scene,gltf.animations,height,asset.characterStandingPose]);
+  return <primitive object={prepared.group} dispose={null}/>;
+}
+
 // Only independently reimported derivatives can receive fitted clothing.
 export default function CostumedCharacter({asset, height=1.7, outfit, playing=false, clip='Idle', holding=false, sitting=false, riding=false, displayName}) {
+  if(asset.characterControlMode==='fixed-pose')return <FixedPoseCharacter asset={asset} height={height}/>;
   const costume = costumes.find(record => record.baseId === asset.id && record.reimportValidated);
   const costumed = Boolean(costume && outfit && (outfit.scrubs !== false || outfit.coat));
   const url = costumed ? costume.url : asset.url;
   return <AnimatedCharacter key={`${url}:${sitting ? 'seated' : 'standing'}`} url={url}
     costumed={costumed} replacedMeshes={costume?.replacedMeshes} height={height} outfit={outfit} playing={playing} clip={clip}
-    holding={holding} sitting={sitting} riding={riding} displayName={displayName}/>;
+    holding={holding} sitting={sitting} riding={riding} displayName={displayName} standingPose={asset.characterStandingPose}/>;
 }

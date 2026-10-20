@@ -2,11 +2,12 @@ import {resolveAssetReferences} from '../config/deploymentConfig.js';
 import worldRaw from '../config/realisticWorldManifest.json' with {type:'json'};
 const world=resolveAssetReferences(worldRaw);
 import catalogRaw from '../config/suppliedAssets.json' with {type:'json'};
+import amgOne from '../config/amgOneVehicle.json' with {type:'json'};
+import {playableCityBounds} from '../config/cityBounds.js';
 const catalog=resolveAssetReferences(catalogRaw);
 
 const SLS='SUP_2010_mercedes_sls_amg';
-const APPROVED_SOURCES=new Set([SLS,'SUP_volkswagen_atlas_teramont_cross_sport_2025']);
-const LIMIT=118;
+const APPROVED_SOURCES=new Set([SLS,'SUP_volkswagen_atlas_teramont_cross_sport_2025',amgOne.sourceId]);
 const finitePoint=point=>point&&[point.x,point.y??0,point.z].every(Number.isFinite);
 const copyCar=car=>car?{...car,asset:structuredClone(car.asset),position:{...car.position}}:null;
 
@@ -26,7 +27,7 @@ function makeCar(id,label,asset,position,heading=0){
 const cars=[
   makeCar('car','Carro esportivo',world.dynamicReplacements.car,{x:20,y:0,z:44}),
   ...world.environmentReplacements.filter(record=>APPROVED_SOURCES.has(record.sourceId)).map(record=>
-    makeCar(record.id,record.sourceId===SLS?'Carro esportivo':'Carro utilitário',record,
+    makeCar(record.id,record.sourceId===amgOne.sourceId?amgOne.label:record.sourceId===SLS?'Carro esportivo':'Carro utilitário',record,
       {x:record.position[0],y:record.position[1],z:record.position[2]},record.rotation?.[1]??0)),
 ].filter(Boolean);
 
@@ -44,15 +45,17 @@ function personalDefinition(personalCar){
   return makeCar('personal-car',`Seu ${base.label.toLowerCase()}`,base.asset,point,personalCar.heading??base.heading);
 }
 
-export function nearestInteractiveCar(position,personalCar,maxRange=7){
-  if(!finitePoint(position)||!Number.isFinite(maxRange)||maxRange<0)return null;
+export function nearbyInteractiveCars(position,personalCar,maxRange=7){
+  if(!finitePoint(position)||!Number.isFinite(maxRange)||maxRange<0)return [];
   // Prefer the player's copy if two sources are equally close.
   const candidates=[personalDefinition(personalCar),...cars.filter(car=>!personalCar||car.id!==personalCar.sourceId)].filter(Boolean)
     .map(car=>({...car,distance:Math.hypot(position.x-car.position.x,position.z-car.position.z)}))
     .filter(car=>car.distance<=maxRange&&Math.abs((position.y??0)-car.position.y)<=1.6)
     .sort((a,b)=>a.distance-b.distance);
-  return copyCar(candidates[0]);
+  return candidates.map(copyCar);
 }
+
+export function nearestInteractiveCar(position,personalCar,maxRange=7){return nearbyInteractiveCars(position,personalCar,maxRange)[0]??null;}
 
 export function canEnterCar(state,car){
   if(!state||state.mode!=='foot'||state.sitting||state.elevator||!finitePoint(state.position)||!car||!finitePoint(car.position))return false;
@@ -74,7 +77,8 @@ export function safeVehicleCopy(definition,obstacles=[],radius=1.3){
   if(!Number.isFinite(heading))return null;
   for(const step of [4,6,8])for(const [x,z]of [[step,0],[-step,0],[0,step],[0,-step],[step,step],[-step,step],[step,-step],[-step,-step]]){
     const candidate={x:source.x+x,z:source.z+z,w:source.w,d:source.d};
-    if(Math.abs(candidate.x)+candidate.w/2+radius>LIMIT||Math.abs(candidate.z)+candidate.d/2+radius>LIMIT)continue;
+    if(candidate.x-candidate.w/2-radius<playableCityBounds.minX||candidate.x+candidate.w/2+radius>playableCityBounds.maxX||
+      candidate.z-candidate.d/2-radius<playableCityBounds.minZ||candidate.z+candidate.d/2+radius>playableCityBounds.maxZ)continue;
     if(blocked.some(box=>overlaps(candidate,box,radius)))continue;
     return {x:candidate.x,y:definition.position.y??0,z:candidate.z,heading};
   }

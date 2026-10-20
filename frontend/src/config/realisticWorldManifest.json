@@ -246,6 +246,31 @@
         0
       ],
       "hidePrefixes": []
+    },
+    {
+      "id": "plaza-amg-one",
+      "sourceId": "SUP_transparency_mercedes_amg_one",
+      "url": "/assets/supplied/SUP_transparency_mercedes_amg_one.glb",
+      "bytes": 11493668,
+      "sha256": "c9fff3fd243802a5d1b553541a8fcc3e303c7a16c116dbb4e72fc7da470fda88",
+      "credits": {
+        "author": "Dave Love SketchFab (https://sketchfab.com/Tyler_Dave)",
+        "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+        "source": "https://sketchfab.com/3d-models/transparency-mercedes-amg-one-31e09c5fe7a04ef2b47f998485de9cf6",
+        "title": "Transparency Mercedes AMG One"
+      },
+      "licenseStatus": "attribution",
+      "height": 1.26,
+      "position": [
+        27,
+        0,
+        44
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
     }
   ],
   "dynamicReplacements": {

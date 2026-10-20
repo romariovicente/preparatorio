@@ -1,6 +1,7 @@
 import {assetUrl} from '../config/deploymentConfig.js';
 import {Box3,Group,Quaternion,Vector3} from 'three';
 import {setWorldShadows} from './modelLighting.js';
+import amgOne from '../config/amgOneVehicle.json' with {type:'json'};
 
 const INTERACTIVE_CARS={
   SUP_2010_mercedes_sls_amg:assetUrl('/assets/vehicles/VEH_SLS_Interactive_20261005.glb'),
@@ -12,11 +13,33 @@ const finite=value=>Number.isFinite(value)?value:0;
 const approach=(current,goal,delta,speed)=>current+Math.sign(goal-current)*Math.min(Math.abs(goal-current),Math.max(0,finite(delta))*speed);
 
 export function interactiveCarUrl(asset) {
+  if((asset.sourceId??asset.id)===amgOne.sourceId&&amgOne.interactiveDerivative.ready){
+    const derivative=amgOne.interactiveDerivative;
+    return assetUrl(['/assets',derivative.directory,derivative.fileName].join('/'));
+  }
   return INTERACTIVE_CARS[asset.sourceId??asset.id]??asset.url;
 }
 
-export function createCarRig(source,height) {
+export function createCarRig(source,height,asset={}) {
   const copy=source.clone(true);copy.updateMatrixWorld(true);
+  // The supplied transparency study intentionally has almost invisible paint.
+  // Adapt only this model's body material instances; keep source and glass intact.
+  if((asset.sourceId??asset.id)===amgOne.sourceId){
+    const opaque=new Map();
+    copy.traverse(node=>{
+      if(!node.isMesh)return;
+      const prepare=material=>{
+        if(!amgOne.opaqueMaterialNames.includes(material.name.replace(/\.\d+$/,'')))return material;
+        if(!opaque.has(material)){
+          const clone=material.clone();clone.opacity=1;clone.transparent=false;clone.depthWrite=true;
+          clone.roughness=material.name.startsWith('amgprojone_paint')?.23:.35;
+          opaque.set(material,clone);
+        }
+        return opaque.get(material);
+      };
+      node.material=Array.isArray(node.material)?node.material.map(prepare):prepare(node.material);
+    });
+  }
   const box=new Box3().setFromObject(copy),size=box.getSize(new Vector3()),center=box.getCenter(new Vector3());
   const normalizer=new Group();normalizer.add(copy);
   normalizer.position.set(-center.x,-box.min.y,-center.z);

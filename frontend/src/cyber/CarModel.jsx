@@ -5,7 +5,8 @@ import {animateCarRig,createCarRig,interactiveCarUrl} from './carArticulation.js
 
 export default function CarModel({asset,simulation,personal=false,open}) {
   const {scene}=useGLTF(interactiveCarUrl(asset));
-  const prepared=useMemo(()=>createCarRig(scene,asset.height),[scene,asset.height]);
+  const sourceId=asset.sourceId??asset.id;
+  const prepared=useMemo(()=>createCarRig(scene,asset.height,{sourceId}),[scene,asset.height,sourceId]);
   useFrame((_,delta)=>{
     const state=simulation?.current;
     const car=personal?state?.personalVehicles?.car:null;

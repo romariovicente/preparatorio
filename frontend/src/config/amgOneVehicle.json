@@ -1,0 +1,15 @@
+{
+  "sourceId": "SUP_transparency_mercedes_amg_one",
+  "placementId": "plaza-amg-one",
+  "label": "Mercedes-AMG ONE",
+  "height": 1.26,
+  "position": [27, 0, 44],
+  "rotation": [0, 0, 0],
+  "frontDirection": "+Z",
+  "interactiveDerivative": {
+    "directory": "additions20261019",
+    "fileName": "VEH_Mercedes_AMG_One_Interactive_20261019.glb",
+    "ready": true
+  },
+  "opaqueMaterialNames": ["amgprojone_paint", "amgprojone_carbon"]
+}

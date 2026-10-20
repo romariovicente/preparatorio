@@ -1,4 +1,15 @@
-import {changeLocalDoor} from './localDoors.js';
+import {changeLocalDoor,publicDoorScopeLabel} from './localDoors.js';
+import PublicBuildingActions from './PublicBuildingActions.js';
+import NearbyVehiclePicker from './NearbyVehiclePicker.js';
+import {nearbyVehicleChoices,chooseNearbyVehicle} from './vehicleSelection.js';
+import {activeWorldPlacements,baseVehicleIsVisible} from './vehiclePlacements.js';
+import CharacterRosterNPCs from './CharacterRosterNPCs.jsx';
+import {characterRoster,characterOptions,rosterPlan,rosterObstacles,rosterZones} from '../config/characterCityPlan.js';
+import CityLivingWorld from './CityLivingWorld.jsx';
+import {livingWorldZones,livingWorldColliders,campusBenchLocations} from './cityLivingWorld.js';
+import {prepareLivingWorldDecorations} from './livingWorldDecorations.js';
+import WarpEngine from './WarpEngine.jsx';
+import {warpEngineColliders,warpEngineZones} from './warpEngineWorld.js';
 import {createHospitalRuntime,hospitalColliders,hospitalGroundSurfaces} from './hospitalReception.js';
 import CityAssetBoundary from './CityAssetBoundary.js';
 import {clockSourceLabel,sharedServiceLabel,cityLoadLabel} from '../config/serviceStatus.js';
@@ -7,7 +18,6 @@ import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState 
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Bounds, Html, Line, OrbitControls, useGLTF, useProgress } from '@react-three/drei';
 import { PCFShadowMap, Raycaster, Vector3 } from 'three';
-import { playableCharacters as catalogCharacters } from '../config/runtimeAssets.js';
 import manifestRaw from '../config/cyberWorldManifest.json';
 const manifest=resolveAssetReferences(manifestRaw);
 import costumesRaw from '../config/costumeAssets.json';
@@ -26,7 +36,7 @@ import {getDeliveryReplacement,newDeliveryColliders,newDeliveryZones,newDelivery
 import CarModel from './CarModel.jsx';
 import BusModel from './BusModel.jsx';
 import BusControls from './BusControls.jsx';
-import {BUS_IDS,BUS_DEFINITIONS,sampleLiveBus,nearestBus,busFootprint,busDoorPosition} from './busInteraction.js';
+import {BUS_IDS,BUS_DEFINITIONS,sampleLiveBus,nearestBus,busFootprint} from './busInteraction.js';
 import {nearestInteractiveCar,resolveCarSource,canEnterCar,listInteractiveCars} from './carInteraction.js';
 import {setDirectionKey,textEntryTarget} from './directionControls.js';
 import {carMotion,wheelRotation} from './vehicleMotion.js';
@@ -61,32 +71,17 @@ const initialTractor = {x:12,y:0,z:96};
 const prop = id => manifest.props.find(item => item.id === id);
 const near = (position,target,radius=12) => Math.hypot(position.x-target[0],position.z-target[2]) <= radius;
 const shadowSettings = {type:PCFShadowMap};
-const zones = manifest.zones;
+const additionalColliders=[...livingWorldColliders,...warpEngineColliders,...rosterObstacles];
+const zones = [...manifest.zones,...livingWorldZones,...warpEngineZones,...rosterZones];
 const parkingPlaces=resolveDeliveryParking(manifest.parking??DEFAULT_PARKING).map(p=>({...p,label:p.label??p.id.replace(/-/g,' · ')}));
 const costumeFor = asset => costumes.find(item=>item.baseId===asset?.id&&item.reimportValidated);
-const realismDirectionKey = 'prep.realism.direction.v1';
-const currentDirection = '20261005';
-const isRealisticHuman = asset => asset?.reimportValidated&&
-  (asset.id==='CHR_Remy_Mixamo_20261005'||asset.visualStyle==='realistic');
-const realisticHumans=catalogCharacters.filter(isRealisticHuman);
-// The old FK and stylized assets remain in the separate Acervo 3D viewer.
-// Once real human motion capture is validated, only those bodies enter gameplay.
-const playableCharacters=realisticHumans.length?realisticHumans:catalogCharacters;
+const playableCharacters=characterRoster.filter(entry=>entry.controllable).map(entry=>entry.playerAsset);
 const uniformCharacters=playableCharacters.filter(costumeFor);
-// Prefer a verified human motion-capture asset when it becomes available. The
-// complete supplied catalog remains selectable and its originals are untouched.
-const preferredCharacter = playableCharacters.find(isRealisticHuman)
-  ??playableCharacters.find(asset=>asset.id==='SUP_doctor_horror_hospital')
-  ??playableCharacters.find(asset=>asset.id==='SUP_woman_standing_v16')??playableCharacters[0];
+const preferredCharacter = playableCharacters.find(asset=>asset.id==='CHR_Remy_Mixamo_20261005')
+  ??playableCharacters.find(asset=>asset.characterControlMode==='native')??playableCharacters[0];
 function initialCharacter() {
   try {
-    if(isRealisticHuman(preferredCharacter)&&localStorage.getItem(realismDirectionKey)!==currentDirection) {
-      // A single migration establishes the new art direction, then deliberate
-      // catalog-preview selections continue to persist normally.
-      localStorage.setItem(realismDirectionKey,currentDirection);
-      localStorage.setItem('prep.character.v1',preferredCharacter.id);
-      return preferredCharacter;
-    }
+    // Respect an existing valid choice; only new profiles use the preferred actor.
     return playableCharacters.find(asset=>asset.id===localStorage.getItem('prep.character.v1'))??preferredCharacter;
   } catch { return preferredCharacter; }
 }
@@ -112,6 +107,7 @@ function Environment({onReady,simulation}) {
     const copy=setWorldShadows(scene.clone(true));
     const prefixes=[...buildings.flatMap(b=>b.hidePrefixes),...realisticWorld.environmentReplacements.flatMap(r=>r.hidePrefixes),...monuments.flatMap(r=>r.hidePrefixes),...newDeliveryHidePrefixes,'NPC_','CLOCK_','CYCLE_'];
     copy.traverse(object=>{if(prefixes.some(p=>object.name.startsWith(p)))object.visible=false;});
+    prepareLivingWorldDecorations(copy,manifest.sceneUrl);
     return copy;
   },[scene]);
   const traffic=useMemo(()=>createTrafficLightController(model),[model]);
@@ -195,7 +191,7 @@ function Vehicle({id,simulation,personal=false,onAsk,onSelect}) {
   });
   const driver=preferredCharacter;
   const liveBus=BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):null;
-  return asset?<group ref={group} userData={{dynamicCollider:true}} onClick={['car','mototaxi',...BUS_IDS].includes(id)?event=>{event.stopPropagation();onSelect?.(personal?id==='car'?'personal-car':'personal-moto':id);}:undefined}>
+  return asset?<group ref={group} userData={{dynamicCollider:true}} onClick={onSelect?event=>{event.stopPropagation();onSelect(personal&&id==='car'?'personal-car':personal&&id==='mototaxi'?'personal-moto':id);}:undefined}>
     {id==='car'?<CarModel asset={asset} simulation={simulation} personal={personal} open={personal&&simulation.current.carControls?.doorOpen}/>:id==='mototaxi'?<MotorcycleModel asset={asset} simulation={simulation} personal={personal}/>:liveBus?<BusModel asset={asset} simulation={simulation} id={id}/>:<ShadowedModel asset={asset} height={asset.height??(id==='tractor'?2.2:id==='harvester'?3.5:3.2)}/>}
     {personal&&id==='truck'&&<AssetProp id={`truck-trailer-${simulation.current.trailer}`} height={simulation.current.trailer==='flatbed'?1.6:3} position={[0,0,-7.5]}/>}
     {TRANSIT_ROUTES[id]&&driver&&liveBus?.control!=='player'&&<group position={liveBus?BUS_DEFINITIONS[id].driverSeat:[.6,1.1,6]}><SeatedModel asset={driver}/><Html position={[0,1.8,0]} center distanceFactor={12} zIndexRange={[1,0]}><button className="cyber-world-label" onClick={event=>{event.stopPropagation();onAsk('guide',liveBus?'Motorista do ônibus':'Maquinista do trem');}}>Conversar com {liveBus?'motorista':'maquinista'}</button></Html></group>}
@@ -223,7 +219,8 @@ function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,
       const p=jumping.personalVehicles[id]??definition.position;
       return {id,x:p.x,z:p.z,w:id==='mototaxi'?1:2.8,d:id==='truck'?7:4};
     });
-    const transitObstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...detailed,...parked];
+    const activeDetailed=detailed.filter(record=>record.id!==jumping.personalVehicles.car?.sourceId&&record.id!==jumping.personalVehicles.mototaxi?.sourceId);
+    const transitObstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...additionalColliders,...activeDetailed,...parked];
     let next=tickCyberState(jumping,delta,{obstacles:transitObstacles});
     const keys=inputRef.current;
     if(next.elapsed-lastIndex.current>1.5){solids.current=createSolidIndex(scene);lastIndex.current=next.elapsed;}
@@ -247,14 +244,14 @@ function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,
         if(motion)direction=new Vector3(motion.direction.x,0,motion.direction.z);
         const moving=[];
         for(const [id,definition]of Object.entries(DRIVE_VEHICLES))for(const [personal,p]of [[false,definition.position],[true,next.personalVehicles[id]]]){
-          if(!p||personal&&next.mode===id||!personal&&next.personalVehicles[id])continue;
+          if(!p||personal&&next.mode===id||!personal&&!baseVehicleIsVisible(id,next.personalVehicles))continue;
           const source=id==='car'&&personal?resolveCarSource(p.sourceId??'car')?.asset:realisticWorld.dynamicReplacements[id],shape=source?footprintCollider({...source,position:[p.x,0,p.z],rotation:[0,p.heading??0,0]},suppliedCatalog):{x:p.x,z:p.z,w:id==='mototaxi'?1:2.8,d:id==='truck'?7:4};if(shape)moving.push(shape);
         }
         for(const id of BUS_IDS)moving.push(busFootprint(sampleLiveBus(next,id)));
         const train=sampleTransit(TRANSIT_ROUTES.train,next.elapsed);
         moving.push({x:train.x,z:train.z,w:Math.abs(Math.cos(train.heading))*3+Math.abs(Math.sin(train.heading))*12,d:Math.abs(Math.sin(train.heading))*3+Math.abs(Math.cos(train.heading))*12});
         for(const o of worldObjects??[])if(o.position&&interactionRooms.cyber.templates.find(t=>t.id===o.templateId)?.kind==='bench')moving.push({x:o.position.x,z:o.position.z,w:2,d:.8});
-        const obstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...detailed.filter(r=>r.id!==next.personalVehicles.car?.sourceId&&r.id!==next.personalVehicles.mototaxi?.sourceId),...moving];
+        const obstacles=[...cityColliders(manifest.colliders??[],buildings,doors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...additionalColliders,...detailed.filter(r=>r.id!==next.personalVehicles.car?.sourceId&&r.id!==next.personalVehicles.mototaxi?.sourceId),...moving];
         let position=advanceCityPosition(next.position,direction,delta,motion?motion.speed:drive?drive.speed:keys.shift?9:5,obstacles,drive&&drive.id!=='mototaxi'?next.mode==='car'?2.35:1.3:.4);
         position=solidMovement(solids.current,next.position,position,next.mode==='mototaxi'?.42:drive?1.1:.38);
         if(drive?.farmOnly)position={...position,x:Math.max(-22,Math.min(22,position.x)),z:Math.max(86,Math.min(114,position.z))};
@@ -352,6 +349,7 @@ export default function CyberCity() {
   const [selectedMotoId,setSelectedMotoId]=useState(null);
   const [selectedCarId,setSelectedCarId]=useState(null);
   const [selectedBusId,setSelectedBusId]=useState(null);
+  const [selectedDriveId,setSelectedDriveId]=useState(null);
   const [plotId,setPlotId]=useState('plot-1'),[destination,setDestination]=useState('hospital'),[npc,setNpc]=useState({id:'jarvis',name:'JARVIS · consulta de fontes'});
   const [question,setQuestion]=useState('Como estudar anatomia?'),[answer,setAnswer]=useState(null),[asking,setAsking]=useState(false);
   const [password,setPassword]=useState(''),[homeBusy,setHomeBusy]=useState(false),[privateUrl,setPrivateUrl]=useState(null);
@@ -366,23 +364,31 @@ export default function CyberCity() {
   const onCharacterReady=useCallback(()=>setCoreLoaded(previous=>({...previous,characterId:character.id})),[character.id]);
   const farm=near(snapshot.position,[0,0,100],25),beach=near(snapshot.position,[100,0,0],20),elevatorNear=near(snapshot.position,[ELEVATOR_POSITION.x,0,ELEVATOR_POSITION.z],9);
   const closestFlower=FLOWER_BASES.reduce((best,flower)=>Math.hypot(snapshot.position.x-flower.position.x,snapshot.position.z-flower.position.z)<Math.hypot(snapshot.position.x-best.position.x,snapshot.position.z-best.position.z)?flower:best,FLOWER_BASES[0]);
-  const closestBench=benches.reduce((best,bench)=>Math.hypot(snapshot.position.x-bench.position.x,snapshot.position.z-bench.position.z)<Math.hypot(snapshot.position.x-best.position.x,snapshot.position.z-best.position.z)?bench:best,benches[0]);
+  const allBenches=[...benches,...campusBenchLocations.map(bench=>({...bench,position:{x:bench.position[0],y:bench.position[1],z:bench.position[2]}}))];
+  const closestBench=allBenches.reduce((best,bench)=>Math.hypot(snapshot.position.x-bench.position.x,snapshot.position.z-bench.position.z)<Math.hypot(snapshot.position.x-best.position.x,snapshot.position.z-best.position.z)?bench:best,benches[0]);
   const planted=snapshot.plots[plotId],growth=planted?Math.min(100,Math.floor((snapshot.elapsed-planted.plantedAt)/20*100)):0;
   const selectedObject=shared.state.objects.find(object=>object.id===selectedObjectId),held=carriedObject(shared.state,shared.actorId);
   const selectedTemplate=interactionRooms.cyber.templates.find(template=>template.id===selectedObject?.templateId);
   const objectOwned=selectedObject&&(selectedObject.kind==='base'||selectedObject.ownerId===shared.actorId);
   const objectNear=selectedObject&&(selectedObject.carriedBy===shared.actorId||selectedObject.position&&Math.hypot(snapshot.position.x-selectedObject.position.x,snapshot.position.z-selectedObject.position.z)<=2.25&&Math.abs(snapshot.position.y-(selectedObject.position.y??0))<=1.6);
   const others=Object.entries(shared.state.players).filter(([id,player])=>id!==shared.actorId&&player.online);
+  const selectedVehicle=selectedCarId?{kind:'car',id:selectedCarId}:selectedMotoId?{kind:'moto',id:selectedMotoId}:selectedBusId?{kind:'bus',id:selectedBusId}:selectedDriveId?{kind:'drive',id:selectedDriveId}:null;
+  const nearbyChoices=nearbyVehicleChoices(snapshot,7,DRIVE_VEHICLES);
+  const vehicleContext=selectedVehicle??nearbyChoices[0];
   const closestCar=nearestInteractiveCar(snapshot.position,snapshot.personalVehicles.car);
   const selectedCar=selectedCarId==='personal-car'&&snapshot.personalVehicles.car?{...resolveCarSource(snapshot.personalVehicles.car.sourceId??'car'),id:'personal-car',position:snapshot.personalVehicles.car}:resolveCarSource(selectedCarId);
   const contextCar=snapshot.mode==='car'?{...resolveCarSource(snapshot.personalVehicles.car?.sourceId??'car'),id:'personal-car',position:snapshot.personalVehicles.car}:selectedCar??closestCar;
   const closestMoto=nearestMotorcycle(snapshot.position,snapshot.personalVehicles.mototaxi);
-  const contextMoto=snapshot.mode==='mototaxi'?nearestMotorcycle(snapshot.position,snapshot.personalVehicles.mototaxi):selectedMotoId==='personal-moto'?nearestMotorcycle(snapshot.position,snapshot.personalVehicles.mototaxi):resolveMotorcycle(selectedMotoId)??closestMoto;
-  const showMotoContext=Boolean(contextMoto&&(snapshot.mode==='mototaxi'||snapshot.mode==='foot'&&(selectedMotoId||!selectedCarId&&(!contextCar||Math.hypot(snapshot.position.x-contextMoto.position.x,snapshot.position.z-contextMoto.position.z)<Math.hypot(snapshot.position.x-contextCar.position.x,snapshot.position.z-contextCar.position.z)))));
+  const personalMoto=snapshot.personalVehicles.mototaxi?{...resolveMotorcycle(snapshot.personalVehicles.mototaxi.sourceId??'mototaxi'),id:'personal-moto',position:snapshot.personalVehicles.mototaxi}:null;
+  const contextMoto=snapshot.mode==='mototaxi'?personalMoto:selectedMotoId==='personal-moto'?personalMoto:resolveMotorcycle(selectedMotoId)??closestMoto;
+  const showMotoContext=Boolean(contextMoto&&(snapshot.mode==='mototaxi'||snapshot.mode==='foot'&&vehicleContext?.kind==='moto'));
   const closestBus=nearestBus(snapshot);
   const contextBus=BUS_IDS.includes(snapshot.mode)?sampleLiveBus(snapshot,snapshot.mode):selectedBusId?sampleLiveBus(snapshot,selectedBusId):closestBus;
-  const busNearby=contextBus&&Math.hypot(snapshot.position.x-busDoorPosition(contextBus).x,snapshot.position.z-busDoorPosition(contextBus).z)<=7;
-  const showBusContext=Boolean(contextBus&&(BUS_IDS.includes(snapshot.mode)||snapshot.mode==='foot'&&(selectedBusId||!selectedCarId&&!selectedMotoId)));
+  const busNearby=Boolean(nearbyChoices.find(choice=>choice.kind==='bus'&&choice.id===contextBus?.id)?.canEnter);
+  const showBusContext=Boolean(contextBus&&(BUS_IDS.includes(snapshot.mode)||snapshot.mode==='foot'&&vehicleContext?.kind==='bus'));
+  const canEnterContextCar=canEnterCar(snapshot,contextCar)&&!snapshot.jump&&!snapshot.carEntry;
+  const canEnterContextMoto=Boolean(nearbyChoices.find(choice=>choice.kind==='moto'&&choice.id===contextMoto?.id)?.canEnter)&&character.characterCapabilities?.riding!==false;
+  const contextDrive=vehicleContext?.kind==='drive'?(nearbyChoices.find(choice=>choice.kind==='drive'&&choice.id===vehicleContext.id)??(DRIVE_VEHICLES[vehicleContext.id]?{...DRIVE_VEHICLES[vehicleContext.id],canEnter:false}:null)):null;
 
   useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;if(homeUrlRef.current)URL.revokeObjectURL(homeUrlRef.current);};},[]);
   useEffect(()=>{try{saveCyberState(localStorage,{inventory:snapshot.inventory,outfit:snapshot.outfit,garage:snapshot.garage});}catch{/* local demo works without storage */}},[snapshot.inventory,snapshot.outfit,snapshot.garage]);
@@ -421,10 +427,12 @@ export default function CyberCity() {
     setNotice('Controles ativos: WASD ou setas para caminhar, Espaço para pular e F para entrar ou sair de veículos.');
   }
   function commit(action) {
+    if(action.type==='SIT'&&character.characterCapabilities?.sitting===false){setNotice('Este personagem ainda não tem pose sentada ajustada. Escolha Remy para sentar.');return {ok:false};}
+    if((action.type==='MOTO_ENTER'||action.type==='DRIVE'&&action.vehicle==='mototaxi')&&character.characterCapabilities?.riding===false){setNotice('Este personagem ainda não tem postura ajustada para moto. Escolha Remy para pilotar.');return {ok:false};}
     const parkingZones=parkingPlaces.map(p=>({id:p.id,label:p.label,position:[p.position[0]+3,0,p.position[2]+2]}));
     const drives=Object.entries(DRIVE_VEHICLES).map(([id,vehicle])=>{const point=simulation.current.personalVehicles[id]??vehicle.position;return{id:`drive-${id}`,label:vehicle.label,position:[point.x+3,0,point.z+2]};});
-    const actualBenches=[...benches,...shared.state.objects.filter(object=>object.position&&interactionRooms.cyber.templates.find(t=>t.id===object.templateId)?.kind==='bench').map(object=>({id:object.id,position:object.position}))];
-    const obstacles=[...cityColliders(manifest.colliders??[],buildings,cityDoors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...realisticWorld.environmentReplacements.filter(r=>r.position[1]<1).map(r=>footprintCollider(r,suppliedCatalog)).filter(Boolean)];
+    const actualBenches=[...allBenches,...shared.state.objects.filter(object=>object.position&&interactionRooms.cyber.templates.find(t=>t.id===object.templateId)?.kind==='bench').map(object=>({id:object.id,position:object.position}))];
+    const obstacles=[...cityColliders(manifest.colliders??[],buildings,cityDoors),...newDeliveryColliders,...classroomColliders(classroomRuntime),...hospitalColliders(hospitalRuntime),...additionalColliders,...activeWorldPlacements(realisticWorld.environmentReplacements,simulation.current.personalVehicles).filter(r=>r.position[1]<1).map(r=>footprintCollider(r,suppliedCatalog)).filter(Boolean)];
     if(BUS_IDS.includes(simulation.current.mode)||action.type==='BOARD'&&BUS_IDS.includes(action.vehicle)){
       obstacles.push(...BUS_IDS.map(id=>busFootprint(sampleLiveBus(simulation.current,id))));
       for(const [id,definition]of Object.entries(DRIVE_VEHICLES)){
@@ -456,15 +464,16 @@ export default function CyberCity() {
     current=simulation.current;
     if(current.mode!=='foot'||current.elevator){setNotice('Aguarde até estar a pé para trocar de personagem.');return;}
     input.current={};
-    const position={...current.position,y:current.position.y<-.1?-6:0,z:current.position.z+(current.sitting?1:0)};
+    const position={...current.position,z:current.position.z+(current.sitting?1:0)};
     const reset={...current,position,sitting:false,action:'Idle',actionUntil:null,fishing:null};
     if(!spaceView)controls.current?.object.position.add(new Vector3(0,position.y-current.position.y,position.z-current.position.z));
     simulation.current=reset;setSnapshot(reset);
     setCharacter(next);try{localStorage.setItem('prep.character.v1',id);window.dispatchEvent(new CustomEvent('prep:character',{detail:id}));}catch{/* session remains active */}
   }
   function converse(id,name) {setNpc({id,name});setTab('jarvis');setPhoneOpen(true);input.current={};}
-  function selectCar(id){setSelectedCarId(id);setSelectedMotoId(null);setSelectedBusId(null);setPhoneOpen(false);input.current={};setNotice('Carro selecionado. Aproxime-se e escolha Entrar no carro.');}
-  function selectBus(id){setSelectedBusId(id);setSelectedCarId(null);setSelectedMotoId(null);setPhoneOpen(false);input.current={};setNotice('Ônibus selecionado. Aproxime-se da porta na parada para embarcar.');}
+  function selectCar(id){setSelectedCarId(id);setSelectedMotoId(null);setSelectedBusId(null);setSelectedDriveId(null);setPhoneOpen(false);input.current={};setNotice('Carro selecionado. Aproxime-se e escolha Entrar no carro.');}
+  function selectBus(id){setSelectedBusId(id);setSelectedCarId(null);setSelectedMotoId(null);setSelectedDriveId(null);setPhoneOpen(false);input.current={};setNotice('Ônibus selecionado. Aproxime-se da porta na parada para embarcar.');}
+  function selectDrive(id){setSelectedDriveId(id);setSelectedCarId(null);setSelectedMotoId(null);setSelectedBusId(null);setPhoneOpen(false);input.current={};setNotice('Veículo selecionado. Aproxime-se e pressione F para dirigir.');}
   function boardBus(id){input.current={};setPhoneOpen(false);const result=commit({type:'BOARD',vehicle:id});if(result.ok){setSelectedBusId(id);focusGame();}}
   function operateBus(type){input.current={};commit({type});}
   function enterCar(id){input.current={};setPhoneOpen(false);const result=commit({type:'CAR_ENTER',carId:id});if(result.ok){setSelectedCarId('personal-car');focusGame();}}
@@ -475,18 +484,20 @@ export default function CyberCity() {
     if(current.mode==='car'){input.current={};commit({type:'CAR_EXIT'});return;}
     if(current.mode==='mototaxi'){input.current={};commit({type:'MOTO_EXIT'});return;}
     if(DRIVE_VEHICLES[current.mode]){input.current={};commit({type:'EXIT'});return;}
-    const car=nearestInteractiveCar(current.position,current.personalVehicles.car);
-    const moto=nearestMotorcycle(current.position,current.personalVehicles.mototaxi);
-    const nearbyBus=nearestBus(current);
-    if(nearbyBus&&(selectedBusId===nearbyBus.id||nearbyBus.distance<=Math.min(car?.distance??Infinity,moto?.distance??Infinity)))boardBus(nearbyBus.id);
-    else if(moto&&(!car||moto.distance<car.distance))enterMoto(moto.id);else if(car)enterCar(car.id);else setNotice('Aproxime-se de um veículo para entrar com F.');
+    const choice=chooseNearbyVehicle(current,selectedVehicle,7,DRIVE_VEHICLES);
+    if(!choice){setNotice(selectedVehicle?'Aproxime-se do veículo selecionado ou desmarque-o para escolher outro.':'Aproxime-se de um veículo para entrar com F.');return;}
+    if(!choice.canEnter){setNotice(choice.kind==='bus'?'Aguarde o ônibus parar e abrir as portas para embarcar.':'Aguarde terminar a ação atual antes de entrar no veículo.');return;}
+    if(choice.kind==='bus')boardBus(choice.id);
+    else if(choice.kind==='moto')enterMoto(choice.id);
+    else if(choice.kind==='car')enterCar(choice.id);
+    else commit({type:'DRIVE',vehicle:choice.id});
   }
-  function selectMoto(id){setSelectedMotoId(id);setSelectedCarId(null);setSelectedBusId(null);setPhoneOpen(false);input.current={};setNotice('Moto selecionada. Aproxime-se e escolha Pilotar moto ou pressione F.');}
+  function selectMoto(id){setSelectedMotoId(id);setSelectedCarId(null);setSelectedBusId(null);setSelectedDriveId(null);setPhoneOpen(false);input.current={};setNotice('Moto selecionada. Aproxime-se e escolha Pilotar moto ou pressione F.');}
   function enterMoto(id){input.current={};setPhoneOpen(false);const result=commit({type:'MOTO_ENTER',motoId:id});if(result.ok){setSelectedMotoId('personal-moto');setSelectedCarId(null);focusGame();}}
   function summonVehicle(){
     input.current={};
     const result=commit({type:'SUMMON_VEHICLE',vehicle:driveId,sourceId:driveId==='car'?garageCarId:driveId});
-    if(result.ok){setSelectedCarId(driveId==='car'?'personal-car':null);setSelectedMotoId(driveId==='mototaxi'?'personal-moto':null);}
+    if(result.ok){setSelectedCarId(driveId==='car'?'personal-car':null);setSelectedMotoId(driveId==='mototaxi'?'personal-moto':null);setSelectedBusId(null);setSelectedDriveId(['car','mototaxi'].includes(driveId)?null:driveId);}
   }
   function enterPersonalVehicle(){
     if(snapshot.personalVehicles.car)enterCar('personal-car');
@@ -609,10 +620,13 @@ export default function CyberCity() {
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>
         <FuturisticClassroom simulation={simulation} runtime={classroomRuntime} onDoorState={()=>audio.play('DOOR')} onInspect={()=>{setNpc({id:'jarvis',name:'Professor JARVIS · Anatomia'});setQuestion('Como estudar ossos e camadas do corpo humano?');setTab('jarvis');setPhoneOpen(true);}}/>
+        <CityLivingWorld simulation={simulation} onInspect={({asset,placement})=>setNotice(placement?.label??asset?.name??'Campus PREPARATÓRIO')}/>
+        <WarpEngine simulation={simulation} onInspect={setNotice}/>
+        <CharacterRosterNPCs placements={rosterPlan.placements} simulation={simulation} onSelect={asset=>changeCharacter(asset.id)} onInspect={entry=>setNotice(`${entry.name} · Animações deste personagem ainda em revisão.`)}/>
         <BuildingDoors doors={cityDoors} simulation={simulation} onToggle={toggleDoor} hospitalRuntime={hospitalRuntime} onNotice={setNotice} players={shared.state.players}/>
         <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
-        {Object.keys(DRIVE_VEHICLES).filter(id=>!snapshot.personalVehicles[id]).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/></CityAssetBoundary>)}
-        {Object.keys(snapshot.personalVehicles).map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal simulation={simulation} onSelect={id==='mototaxi'?selectMoto:selectCar}/></CityAssetBoundary>)}
+        {Object.keys(DRIVE_VEHICLES).filter(id=>baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
+        {Object.keys(snapshot.personalVehicles).map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
         {benches.filter(bench=>bench.id!=='bench-west').map(bench=><AssetProp key={bench.id} id="bench" height={1} position={[bench.position.x,0,bench.position.z]} onClick={()=>commit({type:'SIT',benchId:bench.id})}/>)}
         {shared.state.objects.filter(object=>object.position).map(object=><SharedProp key={object.id} object={object} template={interactionRooms.cyber.templates.find(t=>t.id===object.templateId)} selected={object.id===selectedObjectId} onSelect={selectObject}/>)}
         {others.map(([id,player])=><RemoteActor key={id} player={player} actorId={id} world={shared.state}/>)}
@@ -637,14 +651,19 @@ export default function CyberCity() {
     <div className="cyber-play-control"><button disabled={(!ready&&!sceneFailed)||Boolean(privateUrl)} onClick={sceneFailed?()=>window.location.reload():resumeGame}>{sceneFailed?'Recarregar cidade':ready?'Jogar agora':'Carregando cidade…'}</button><small role="status">{!ready||sceneFailed?cityLoadLabel({environment:coreLoaded.environment,character:coreLoaded.characterId===character.id,loaded:download.loaded,total:download.total,progress:download.progress,failed:sceneFailed,slow:loadingSlow}):gameActive&&!spaceView&&!privateUrl?'Teclado ativo':'Clique para ativar o teclado'}</small></div>
     <button className="cyber-character-view" onClick={viewCharacter}>Ver personagem</button>
     <button className="cyber-phone-toggle" aria-expanded={phoneOpen} onClick={()=>{if(phoneOpen)closePhone();else{input.current={};setPhoneOpen(true);}}}>{phoneOpen?'Fechar smartphone':'Abrir smartphone'}</button>
+    {!spaceView&&!privateUrl&&snapshot.mode==='foot'&&!phoneOpen&&<NearbyVehiclePicker choices={nearbyChoices} selectedKey={selectedVehicle?`${selectedVehicle.kind}:${selectedVehicle.id}`:null} onSelect={choice=>choice.kind==='car'?selectCar(choice.id):choice.kind==='moto'?selectMoto(choice.id):choice.kind==='bus'?selectBus(choice.id):selectDrive(choice.id)}/>}
     {showBusContext&&!spaceView&&!privateUrl&&<BusControls bus={contextBus} occupied={BUS_IDS.includes(snapshot.mode)} role={snapshot.busControls?.role} nearby={busNearby} onBoard={()=>boardBus(contextBus.id)} onAction={operateBus} onClear={()=>setSelectedBusId(null)}/>}
-    {contextCar&&!showBusContext&&!showMotoContext&&snapshot.mode!=='mototaxi'&&!spaceView&&!privateUrl&&<aside className="cyber-car-context" aria-label="Interação com o carro" data-car-id={contextCar.id}>
+    {contextCar&&(snapshot.mode==='car'||snapshot.mode==='foot'&&vehicleContext?.kind==='car')&&!spaceView&&!privateUrl&&<aside className="cyber-car-context" aria-label="Interação com o carro" data-car-id={contextCar.id}>
       <div><strong>{contextCar.label}</strong>{selectedCarId&&snapshot.mode==='foot'&&<button aria-label="Desmarcar carro" onClick={()=>setSelectedCarId(null)}>×</button>}</div>
-      {snapshot.mode==='foot'?<><button disabled={!canEnterCar(snapshot,contextCar)||Boolean(snapshot.carEntry)} onClick={()=>enterCar(contextCar.id)}>{snapshot.carEntry?'Abrindo a porta…':'Entrar no carro · F'}</button><small>{canEnterCar(snapshot,contextCar)?'F também abre a porta e inicia a entrada.':'Aproxime-se do carro para entrar.'}</small></>:snapshot.mode==='car'?<><p>Motor {snapshot.carControls?.engineOn?'ligado':'desligado'} · porta {snapshot.carControls?.doorOpen?'aberta':'fechada'}</p><div className="cyber-action-grid"><button disabled={snapshot.carControls?.doorOpen} onClick={()=>commit({type:'CAR_ENGINE'})}>{snapshot.carControls?.engineOn?'Desligar':'Ligar'} motor</button><button disabled={snapshot.carControls?.engineOn} onClick={()=>commit({type:'CAR_DOOR'})}>{snapshot.carControls?.doorOpen?'Fechar':'Abrir'} porta</button><button onClick={()=>commit({type:'CAR_WINDOWS'})}>{snapshot.carControls?.windowsOpen?'Fechar':'Baixar'} vidros laterais</button><button disabled={Boolean(snapshot.carExit)} onClick={()=>commit({type:'CAR_EXIT'})}>{snapshot.carExit?'Abrindo a porta…':'Sair do carro · F'}</button></div></>:<small>Saia do veículo atual para entrar neste carro.</small>}
+      {snapshot.mode==='foot'?<><button disabled={!canEnterContextCar} onClick={()=>enterCar(contextCar.id)}>{snapshot.carEntry?'Abrindo a porta…':'Entrar no carro · F'}</button><small>{canEnterContextCar?'F também abre a porta e inicia a entrada.':'Aproxime-se do carro e aguarde terminar a ação atual para entrar.'}</small></>:snapshot.mode==='car'?<><p>Motor {snapshot.carControls?.engineOn?'ligado':'desligado'} · porta {snapshot.carControls?.doorOpen?'aberta':'fechada'}</p><div className="cyber-action-grid"><button disabled={snapshot.carControls?.doorOpen} onClick={()=>commit({type:'CAR_ENGINE'})}>{snapshot.carControls?.engineOn?'Desligar':'Ligar'} motor</button><button disabled={snapshot.carControls?.engineOn} onClick={()=>commit({type:'CAR_DOOR'})}>{snapshot.carControls?.doorOpen?'Fechar':'Abrir'} porta</button><button onClick={()=>commit({type:'CAR_WINDOWS'})}>{snapshot.carControls?.windowsOpen?'Fechar':'Baixar'} vidros laterais</button><button disabled={Boolean(snapshot.carExit)} onClick={()=>commit({type:'CAR_EXIT'})}>{snapshot.carExit?'Abrindo a porta…':'Sair do carro · F'}</button></div></>:<small>Saia do veículo atual para entrar neste carro.</small>}
     </aside>}
     {showMotoContext&&!showBusContext&&!spaceView&&!privateUrl&&snapshot.mode!=='car'&&<aside className="cyber-car-context cyber-moto-context" aria-label="Interação com a moto" data-moto-id={contextMoto.id}>
       <div><strong>{contextMoto.label}</strong><button aria-label="Desmarcar moto" onClick={()=>setSelectedMotoId(null)}>×</button></div>
-      {snapshot.mode==='mototaxi'?<><p>Motor {snapshot.motorcycleControls?.engineOn?'ligado':'desligado'}</p><div className="cyber-action-grid"><button onClick={()=>commit({type:'MOTO_ENGINE'})}>{snapshot.motorcycleControls?.engineOn?'Desligar':'Ligar'} motor da moto</button><button onClick={()=>commit({type:'MOTO_EXIT'})}>Descer da moto · F</button></div></>:<><button disabled={snapshot.mode!=='foot'||Math.hypot(snapshot.position.x-contextMoto.position.x,snapshot.position.z-contextMoto.position.z)>7} onClick={()=>enterMoto(contextMoto.id)}>Pilotar moto · F</button><small>Clique na moto ou aproxime-se. F para subir e descer; WASD ou setas para pilotar.</small></>}
+      {snapshot.mode==='mototaxi'?<><p>Motor {snapshot.motorcycleControls?.engineOn?'ligado':'desligado'}</p><div className="cyber-action-grid"><button onClick={()=>commit({type:'MOTO_ENGINE'})}>{snapshot.motorcycleControls?.engineOn?'Desligar':'Ligar'} motor da moto</button><button onClick={()=>commit({type:'MOTO_EXIT'})}>Descer da moto · F</button></div></>:<><button disabled={!canEnterContextMoto} onClick={()=>enterMoto(contextMoto.id)}>Pilotar moto · F</button><small>{character.characterCapabilities?.riding===false?'A postura de pilotagem deste personagem está em ajuste. Escolha Remy para pilotar.':'Clique na moto ou aproxime-se. F para subir e descer; WASD ou setas para pilotar.'}</small></>}
+    </aside>}
+    {contextDrive&&!spaceView&&!privateUrl&&snapshot.mode==='foot'&&<aside className="cyber-car-context" aria-label="Interação com o veículo" data-drive-id={contextDrive.id}>
+      <div><strong>{contextDrive.label}</strong>{selectedDriveId&&<button aria-label="Desmarcar veículo" onClick={()=>setSelectedDriveId(null)}>×</button>}</div>
+      <button disabled={!contextDrive.canEnter} onClick={()=>commit({type:'DRIVE',vehicle:contextDrive.id})}>Dirigir · F</button>
     </aside>}
     {phoneOpen&&<aside className="cyber-phone" aria-label="Smartphone CHRONOVITAE">
       <header><div><small>CHRONOVITAE OS · JARVIS</small><strong>{clock.text} <span>{clock.phase}</span></strong></div><button aria-label="Fechar smartphone" onClick={closePhone}>×</button></header>
@@ -652,20 +671,21 @@ export default function CyberCity() {
       <div className="cyber-phone-body">
         {tab==='actions'&&<>
           <PlayerNameForm value={nameDraft} onChange={setNameDraft} onSubmit={saveUniformName}/>
-          <h3>Personagem e ações</h3><label>Personagem<select value={character.id} onChange={event=>changeCharacter(event.target.value)}>{playableCharacters.map(asset=><option key={asset.id} value={asset.id}>{asset.name}{isRealisticHuman(asset)?' · humano':' · acervo anterior'}</option>)}</select></label>{!isRealisticHuman(character)&&<p className="cyber-tip">Prévia do acervo anterior. Este modelo ainda precisa ser adaptado à nova direção realista.</p>}
-          <button onClick={()=>openAssetCatalog('Personagens')}>Ver personagens no Acervo 3D</button>
+          <h3>Personagem e ações</h3><label>Personagem<select value={character.id} onChange={event=>changeCharacter(event.target.value)}>{characterOptions.map(option=><option key={option.id} value={option.id} disabled={option.disabled}>{option.label}</option>)}</select></label>
+          <p className="cyber-tip">{character.characterControlMode==='fixed-pose'?'Este personagem se desloca em pose fixa; a animação de passos ainda precisa ser ajustada.':'Animações nativas do modelo selecionado.'}</p>
+          <details><summary>Encontrar os {characterRoster.length} personagens na cidade</summary><p>Moradores e exposições permanecem no mapa. Os modelos carregam quando você se aproxima.</p>{rosterZones.map(zone=><button key={zone.id} onClick={()=>commit({type:'TELEPORT',zoneId:zone.id})}>Visitar · {zone.label}</button>)}</details>
           <div className="cyber-action-grid"><button onClick={()=>commit({type:'DANCE'})} disabled={!character.animations.includes('Dance')||Boolean(held)}>{snapshot.action==='Dance'?'Parar dança':'Dançar'}</button><button onClick={()=>commit({type:snapshot.sitting&&snapshot.mode==='foot'?'STAND':'SIT',benchId:closestBench.id})}>{snapshot.sitting&&snapshot.mode==='foot'?'Levantar':'Sentar no banco'}</button></div>
           <button disabled={snapshot.mode!=='foot'||snapshot.sitting||Boolean(snapshot.jump)||Boolean(snapshot.elevator)} onClick={()=>commit({type:'JUMP'})}>Pular · Espaço</button>
-          <p className="cyber-tip">As poses de sentar e pilotar foram ajustadas. O caimento das roupas continua em aprimoramento.</p>
+          <p className="cyber-tip">Posturas e caimento das roupas continuam em revisão. As ações disponíveis dependem do modelo.</p>
           <h4>Sala de aula futurista</h4><button onClick={visitClassroom}>Visitar sala de aula</button>
           <h4>Jardim da praça</h4><button onClick={()=>commit({type:'FLOWER',flowerId:closestFlower.id})}>Colher cópia de uma flor</button><p>O jardim base permanece. Suas cópias vão para a bolsa.</p>
           <h4>Galeria subterrânea</h4><div className="cyber-action-grid"><button onClick={()=>commit({type:'TELEPORT',zoneId:'elevator-entry'})}>Visitar elevador</button><button disabled={!elevatorNear} onClick={()=>commit({type:'ELEVATOR',floor:-1})}>Descer ao subsolo</button><button disabled={!elevatorNear} onClick={()=>commit({type:'ELEVATOR',floor:0})}>Voltar ao térreo</button></div><h4>Hospital · inspiração no HEA</h4><button onClick={()=>window.dispatchEvent(new Event('prep:open-clinical'))}>Atividade SBAR/SOAP</button>
           <h4>Fazenda · crescimento acelerado</h4><label>Canteiro<select value={plotId} onChange={event=>setPlotId(event.target.value)}>{FARM_PLOTS.map(plot=><option key={plot.id} value={plot.id}>{plot.id.replace('plot-','Canteiro ')}</option>)}</select></label><div className="cyber-action-grid"><button disabled={!farm} onClick={()=>commit({type:'PLANT',plotId})}>Plantar</button><button disabled={!farm||growth<100} onClick={()=>commit({type:'HARVEST',plotId})}>Colher</button><button disabled={!farm} onClick={()=>commit({type:'SEEDS'})}>Receber sementes</button><button disabled={!farm&&snapshot.mode!=='tractor'} onClick={()=>commit({type:snapshot.mode==='tractor'?'EXIT':'TRACTOR'})}>{snapshot.mode==='tractor'?'Sair do trator':'Dirigir trator'}</button></div>{planted&&<p>Crescimento: {growth}% · 20 s neste protótipo</p>}
           <h4>Pesca educativa virtual</h4><div className="cyber-action-grid"><button disabled={!beach||!!snapshot.fishing} onClick={()=>commit({type:'CAST'})}>Lançar linha</button><button disabled={!snapshot.fishing||snapshot.elapsed<snapshot.fishing.readyAt} onClick={()=>commit({type:'REEL'})}>Recolher linha</button></div>{snapshot.fishing&&<p>{snapshot.elapsed<snapshot.fishing.readyAt?`Aguarde ${Math.ceil(snapshot.fishing.readyAt-snapshot.elapsed)} s`:'Pronto para recolher.'}</p>}
         </>}
-        {tab==='buildings'&&<><h3>Portas e estabelecimentos</h3><p>Visite a entrada, abra a porta e caminhe para dentro. A abertura é compartilhada pelos jogadores da sala.</p>{buildings.map(b=>{
-          const open=cityDoors?.[b.id]?.open,p=doorPosition(b),nearby=Math.hypot(snapshot.position.x-p[0],snapshot.position.z-p[2])<=5;
-          return <article className="cyber-route" key={b.id}><h4>{b.label}</h4><div className="cyber-action-grid"><button onClick={()=>visitEntrance(b)}>Ir à entrada · {b.label}</button><button disabled={!nearby||shared.status!=='connected'} onClick={()=>toggleDoor(b)}>{open?'Fechar':'Abrir'} porta · {b.label}</button><button disabled={!nearby||!open} onClick={()=>enterBuilding(b)}>Entrar · {b.label}</button></div><p>{open?'Aberta · passagem livre':'Fechada'} · abertura animada</p></article>;
+        {tab==='buildings'&&<><h3>Portas e estabelecimentos</h3><p>Visite a entrada, abra a porta e caminhe para dentro. {publicDoorScopeLabel(shared.status==='connected')}</p>{buildings.map(b=>{
+          const open=cityDoors?.[b.id]?.open;
+          return <article className="cyber-route" key={b.id}><h4>{b.label}</h4><PublicBuildingActions building={b} position={snapshot.position} mode={snapshot.mode} connected={shared.status==='connected'} open={open} onVisit={visitEntrance} onToggle={toggleDoor} onEnter={enterBuilding}/><p>{open?'Aberta · passagem livre':'Fechada'} · abertura animada</p></article>;
         })}</>}
         {tab==='routes'&&<>
           <h3>Mobilidade da cidade</h3><p>Veículos percorrem rotas automáticas. Embarque e desembarque somente nas paradas.</p>
@@ -674,7 +694,7 @@ export default function CyberCity() {
           <h4>Sua garagem</h4><p>Apenas um veículo pessoal por vez. Chamar outro recolhe o anterior.</p>
           <label>Veículo<select value={driveId} onChange={event=>setDriveId(event.target.value)}>{Object.values(DRIVE_VEHICLES).map(vehicle=><option value={vehicle.id} key={vehicle.id}>{vehicle.label}</option>)}</select></label>
           {driveId==='car'&&<label>Modelo do carro<select value={garageCarId} onChange={event=>setGarageCarId(event.target.value)}>{listInteractiveCars().filter((car,index,all)=>all.findIndex(c=>c.asset.sourceId===car.asset.sourceId)===index).map(car=><option key={car.id} value={car.id}>{car.label}</option>)}</select></label>}
-          <div className="cyber-action-grid"><button onClick={summonVehicle} disabled={snapshot.mode!=='foot'||Boolean(snapshot.carEntry)}>Chamar veículo</button><button onClick={enterPersonalVehicle} disabled={snapshot.mode!=='foot'||!Object.keys(snapshot.personalVehicles).length}>Entrar no veículo · F</button><button onClick={toggleVehicle} disabled={!DRIVE_VEHICLES[snapshot.mode]}>Sair do veículo · F</button><button onClick={()=>{const result=commit({type:'STORE_VEHICLE'});if(result.ok){setSelectedCarId(null);setSelectedMotoId(null);}}} disabled={!Object.keys(snapshot.personalVehicles).length}>Guardar no estacionamento</button></div>
+          <div className="cyber-action-grid"><button onClick={summonVehicle} disabled={snapshot.mode!=='foot'||Boolean(snapshot.carEntry)}>Chamar veículo</button><button onClick={enterPersonalVehicle} disabled={snapshot.mode!=='foot'||!Object.keys(snapshot.personalVehicles).length}>Entrar no veículo · F</button><button onClick={toggleVehicle} disabled={!DRIVE_VEHICLES[snapshot.mode]}>Sair do veículo · F</button><button onClick={()=>{const result=commit({type:'STORE_VEHICLE'});if(result.ok){setSelectedCarId(null);setSelectedMotoId(null);setSelectedDriveId(null);}}} disabled={!Object.keys(snapshot.personalVehicles).length}>Guardar no estacionamento</button></div>
           <p>Veículo pessoal no mapa: {Object.keys(snapshot.personalVehicles).length ? DRIVE_VEHICLES[Object.keys(snapshot.personalVehicles)[0]].label : 'nenhum'}.</p>
           {snapshot.mode==='car'&&<><div className="cyber-action-grid"><button disabled={snapshot.carControls?.engineOn} onClick={()=>commit({type:'CAR_DOOR'})}>{snapshot.carControls?.doorOpen?'Fechar':'Abrir'} porta do carro</button><button disabled={snapshot.carControls?.doorOpen} onClick={()=>commit({type:'CAR_ENGINE'})}>{snapshot.carControls?.engineOn?'Desligar':'Ligar'} motor</button><button onClick={()=>commit({type:'CAR_WINDOWS'})}>{snapshot.carControls?.windowsOpen?'Fechar':'Baixar'} vidros laterais</button></div></>}
           {snapshot.mode==='mototaxi'&&<button onClick={()=>commit({type:'MOTO_ENGINE'})}>{snapshot.motorcycleControls?.engineOn?'Desligar':'Ligar'} motor da moto</button>}

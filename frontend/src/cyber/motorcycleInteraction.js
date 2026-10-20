@@ -12,8 +12,12 @@ function record(id,asset,position,heading=0){
 const bikes=[record('mototaxi',world.dynamicReplacements.mototaxi,{x:-40,y:0,z:40}),...world.environmentReplacements.filter(a=>a.sourceId===sourceId).map(a=>record(a.id,a,{x:a.position[0],y:a.position[1],z:a.position[2]},a.rotation?.[1]??0))];
 export function resolveMotorcycle(id){const bike=bikes.find(b=>b.id===id);return bike?structuredClone(bike):null;}
 export function listMotorcycles(){return structuredClone(bikes);}
-export function nearestMotorcycle(position,personal,maxRange=7){
-  const own=personal?{...resolveMotorcycle(personal.sourceId??'mototaxi'),id:'personal-moto',position:{x:personal.x,y:0,z:personal.z},heading:personal.heading??0}:null;
-  const found=[own,...bikes.filter(b=>!personal||b.id!==personal.sourceId)].filter(b=>b&&Math.abs((position.y??0)-b.position.y)<=1.6).map(b=>({...b,distance:Math.hypot(position.x-b.position.x,position.z-b.position.z)})).filter(b=>b.distance<=maxRange).sort((a,b)=>a.distance-b.distance)[0];
-  return found?structuredClone(found):null;
+const finitePoint=point=>point&&[point.x,point.y??0,point.z].every(Number.isFinite);
+export function nearbyMotorcycles(position,personal,maxRange=7){
+  if(!finitePoint(position)||!Number.isFinite(maxRange)||maxRange<0)return [];
+  const base=personal&&resolveMotorcycle(personal.sourceId??'mototaxi');
+  const point=personal?.position??personal;
+  const own=base&&finitePoint(point)?{...base,id:'personal-moto',position:{x:point.x,y:point.y??0,z:point.z},heading:personal.heading??0}:null;
+  return structuredClone([own,...bikes.filter(b=>!own||b.id!==personal.sourceId)].filter(b=>b&&Math.abs((position.y??0)-b.position.y)<=1.6).map(b=>({...b,distance:Math.hypot(position.x-b.position.x,position.z-b.position.z)})).filter(b=>b.distance<=maxRange).sort((a,b)=>a.distance-b.distance));
 }
+export function nearestMotorcycle(position,personal,maxRange=7){return nearbyMotorcycles(position,personal,maxRange)[0]??null;}

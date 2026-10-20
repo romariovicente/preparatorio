@@ -2,13 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import world from '../config/realisticWorldManifest.json' with {type:'json'};
 import catalog from '../config/suppliedAssets.json' with {type:'json'};
-import {canEnterCar,listInteractiveCars,nearestInteractiveCar,resolveCarSource,safeVehicleCopy} from './carInteraction.js';
+import {canEnterCar,listInteractiveCars,nearbyInteractiveCars,nearestInteractiveCar,resolveCarSource,safeVehicleCopy} from './carInteraction.js';
 
-test('only the validated sports car and SUV placements enter the interaction list; originals are preserved',()=>{
+test('only approved validated vehicle placements enter the interaction list; originals are preserved',()=>{
   const original=JSON.stringify(world),cars=listInteractiveCars();
-  assert.equal(cars.length,6);
+  assert.equal(cars.length,7);
   assert.deepEqual(resolveCarSource('car').position,{x:20,y:0,z:44});
-  assert.ok(cars.every(car=>['SUP_2010_mercedes_sls_amg','SUP_volkswagen_atlas_teramont_cross_sport_2025'].includes(car.asset.sourceId)));
+  assert.ok(cars.every(car=>['SUP_2010_mercedes_sls_amg','SUP_volkswagen_atlas_teramont_cross_sport_2025','SUP_transparency_mercedes_amg_one'].includes(car.asset.sourceId)));
   cars[0].position.x=500;cars[0].asset.height=900;
   assert.equal(resolveCarSource('car').position.x,20);
   assert.equal(resolveCarSource('car').asset.height,1.26);
@@ -16,12 +16,22 @@ test('only the validated sports car and SUV placements enter the interaction lis
   assert.equal(resolveCarSource('invented'),null);
 });
 
+test('all reachable car choices remain available, including AMG beside an existing car',()=>{
+  const choices=nearbyInteractiveCars({x:23.5,y:0,z:44},null);
+  assert.deepEqual(choices.map(car=>car.id),['car','plaza-amg-one']);
+  assert.equal(choices[1].label,'Mercedes-AMG ONE');
+  assert.equal(choices[1].asset.sourceId,'SUP_transparency_mercedes_amg_one');
+  choices[1].asset.height=999;
+  assert.equal(resolveCarSource('plaza-amg-one').asset.height,1.26);
+  assert.deepEqual(nearbyInteractiveCars({x:NaN,z:44}),[]);
+});
+
 test('click eligibility and nearby prompt stop outside seven metres or on another floor',()=>{
-  const car=resolveCarSource('car'),state={mode:'foot',position:{x:27,y:0,z:44}};
+  const car=resolveCarSource('car'),state={mode:'foot',position:{x:13,y:0,z:44}};
   assert.equal(canEnterCar(state,car),true);
   assert.equal(nearestInteractiveCar(state.position,null)?.id,'car');
-  assert.equal(canEnterCar({...state,position:{x:27.01,y:0,z:44}},car),false);
-  assert.equal(nearestInteractiveCar({x:27.01,y:0,z:44},null),null);
+  assert.equal(canEnterCar({...state,position:{x:12.99,y:0,z:44}},car),false);
+  assert.equal(nearestInteractiveCar({x:12.99,y:0,z:44},null),null);
   assert.equal(canEnterCar({...state,position:{x:20,y:1.61,z:44}},car),false);
   assert.equal(nearestInteractiveCar({x:20,y:6,z:44},null),null);
   assert.equal(canEnterCar({...state,sitting:true},car),false);

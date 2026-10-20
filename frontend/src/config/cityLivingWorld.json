@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "author": "Romario Vicente Amaro",
+  "coordinateSystem": "Frontend GLB Y-up in meters. Blender placement is [x,-z,y]. Same playable city; no macro scene or separate canvas.",
+  "district": {
+    "id": "campus-fauna-district",
+    "label": "Campus e centro de fauna PREPARATÓRIO",
+    "ground": {"center": [-48, 0, -150], "size": [90, 75], "thickness": 0.3, "topY": 0},
+    "access": {"from": [-49, 0.23, -111], "to": [-49, 0.23, -134], "width": 5},
+    "requiredPlayableBounds": {"minX": -118, "maxX": 118, "minZ": -190, "maxZ": 118},
+    "maxConcurrentAnimals": 3,
+    "updateIntervalSeconds": 0.35
+  },
+  "campus": {
+    "id": "city-campus-courtyard",
+    "label": "Campus PREPARATÓRIO · anatomia e estudos",
+    "assetId": "ENV_PREP_Campus_v2",
+    "url": "/assets/models/ENV_PREP_Campus_v2.glb",
+    "position": [-49, 0.04, -148],
+    "scale": 1,
+    "rotation": [0, 0, 0],
+    "size": [25, 3.75, 28],
+    "floorY": 0.02,
+    "approach": [-49, 0.23, -132],
+    "loadRadius": 46,
+    "unloadRadius": 64,
+    "hideNodes": ["Terreno", "Caminho_Hospital", "Faixa_Jardim", "Faixa_Jardim.001", "SUP_facultad_de_enfermeria_unal_colombia.001", "SUP_hospital_02.001"],
+    "walkableNodes": ["Patio"],
+    "benches": [
+      {"id": "campus-bench-west", "position": [-55, 0.04, -143], "heading": 3.141592653589793},
+      {"id": "campus-bench-east", "position": [-43, 0.04, -143], "heading": 3.141592653589793}
+    ],
+    "notes": "The supplied source remains unchanged. Retain its 25x28m courtyard, furniture, book, kit and anatomical exhibits at 1:1 scale. Hide its redundant terrain/hospital/faculty instead of overlapping the existing city buildings. All images and geometry buffers are embedded."
+  },
+  "habitats": [
+    {
+      "id": "habitat-fox", "label": "Raposa · recinto de manejo", "kind": "land", "assetId": "FAUNA_FOX_20261016",
+      "position": [-78, 0.23, -172], "size": [18, 14], "fenceHeight": 2.3,
+      "height": 0.65, "clip": "Fox|Fox_WalkFast_F", "anchorBone": "Pelvis_00",
+      "pathRadii": [3, 2], "periodSeconds": 34, "phase": 0.4, "loadRadius": 34, "unloadRadius": 49
+    },
+    {
+      "id": "habitat-lioness", "label": "Leoa · recinto de manejo", "kind": "land", "assetId": "FAUNA_LIONESS_20261016",
+      "position": [-18, 0.23, -146], "size": [20, 18], "fenceHeight": 3,
+      "height": 1.15, "clip": "Lioness|Lioness_Breathing", "anchorBone": "Pelvis_01",
+      "pathRadii": [0, 0], "periodSeconds": 36, "phase": 2, "loadRadius": 34, "unloadRadius": 49,
+      "notes": "Use the supplied breathing clip for a resting animal; no false walking translation."
+    },
+    {
+      "id": "habitat-wolf", "label": "Lobo · recinto de manejo", "kind": "land", "assetId": "FAUNA_WOLF_20261016",
+      "position": [-18, 0.23, -172], "size": [20, 16], "fenceHeight": 2.8,
+      "height": 0.95, "clip": "Wolf|Wolf_WalkFast_F", "anchorBone": "Pelvis_00",
+      "pathRadii": [3.4, 2.1], "periodSeconds": 28, "phase": 2.3, "loadRadius": 34, "unloadRadius": 49
+    },
+    {
+      "id": "habitat-horse", "label": "Cavalo · piquete de observação", "kind": "land", "assetId": "FAUNA_HORSE_20261016",
+      "position": [-79, 0.23, -145], "size": [20, 16], "fenceHeight": 1.8,
+      "height": 2.25, "clip": "Horse|Horse_Walk", "anchorBone": "pelvis_08",
+      "pathRadii": [4, 2.4], "periodSeconds": 36, "phase": 1.2, "loadRadius": 34, "unloadRadius": 49
+    },
+    {
+      "id": "habitat-rabbit", "label": "Coelho · jardim de observação", "kind": "land", "assetId": "FAUNA_RABBIT_20261016",
+      "position": [-78, 0.23, -122], "size": [12, 10], "fenceHeight": 1.25,
+      "height": 0.45, "clip": "Rabbit|Rabbit_WalkSlow_F", "anchorBone": "Pelvis_02",
+      "pathRadii": [1.5, 1.2], "periodSeconds": 24, "phase": 0.2, "loadRadius": 30, "unloadRadius": 44
+    },
+    {
+      "id": "habitat-megalodon", "label": "Megalodonte · aquário de paleontologia", "kind": "aquarium", "assetId": "FAUNA_MEGALODON_20261016",
+      "position": [-17, 0.23, -121], "size": [24, 16], "fenceHeight": 6.2,
+      "height": 2.94, "targetLengthMeters": 7.6, "maxLengthMeters": 8, "clip": "Animation", "anchorBone": null,
+      "pathRadii": [3.2, 0.8], "periodSeconds": 42, "phase": 0,
+      "swimBaseY": 0.9, "waterSurfaceY": 5.5, "loadRadius": 36, "unloadRadius": 51,
+      "notes": "Above-ground transparent tank keeps the shark visible above the opaque city ground. Target length7.6m; limit8m. Body and turning route stay inside the24x16m glass boundary and below the water surface."
+    }
+  ]
+}

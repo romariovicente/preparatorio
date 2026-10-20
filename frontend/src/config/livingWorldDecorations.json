@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "sourceSceneUrl": "/assets/cyber/ENV_Arapiraca_RealMaterials_v3_20261005.glb",
+  "sourceSha256": "cc422619eee36b065ea3d6de66b656980d9dac944007e8bee2654808e11af3f4",
+  "author": "Romario Vicente Amaro",
+  "reason": "Hide only audited legacy decorative vegetation intruding into the same-city campus/habitats. Source GLB remains unchanged.",
+  "hideNames": [
+    "TREE_Crown.004",
+    "TREE_Trunk.004"
+  ],
+  "regionsAffected": [
+    "habitat-megalodon"
+  ],
+  "protectedOrOtherIntrusionsRequiringLayoutReview": [],
+  "auditReport": "reports/LIVING_WORLD_DECORATION_AUDIT_20261020.json"
+}

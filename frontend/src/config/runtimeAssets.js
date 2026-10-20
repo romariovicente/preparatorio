@@ -1,14 +1,14 @@
 import {resolveAssetReferences} from './deploymentConfig.js';
-import originalsRaw from './suppliedAssets.json';
+import originalsRaw from './suppliedAssets.json' with {type:'json'};
 const originals=resolveAssetReferences(originalsRaw);
-import rigsRaw from './riggedAssets.json';
+import rigsRaw from './riggedAssets.json' with {type:'json'};
 const rigs=resolveAssetReferences(rigsRaw);
-import mixamoRaw from './mixamoAssets.json';
+import mixamoRaw from './mixamoAssets.json' with {type:'json'};
 const mixamo=resolveAssetReferences(mixamoRaw);
-import monumentsRaw from './monumentAssets.json';
+import monumentsRaw from './monumentAssets.json' with {type:'json'};
 const monuments=resolveAssetReferences(monumentsRaw);
 import {newDeliveryRuntimeAssets} from './newDeliveryRuntimeAssets.js';
-import additionsRaw from './suppliedAdditions20261016.json';
+import additionsRaw from './suppliedAdditions20261016.json' with {type:'json'};
 const additions=resolveAssetReferences(additionsRaw);
 import {mergeAssetCatalog,normalizeCatalogAddition} from './assetCatalog.js';
 const historicalAssets=[...originals.map(asset=>{

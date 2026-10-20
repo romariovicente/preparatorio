@@ -1,0 +1,10 @@
+{
+  "id": "laboratory-warp-engine",
+  "label": "Motor de dobra espacial · modelo conceitual",
+  "url": "/assets/additions20261019/PROP_Motor_Dobra_20261019.glb",
+  "ready": true,
+  "position": [76, 0.15, -43],
+  "footprint": [4.6, 4.6],
+  "approach": [76, 0, -39.5],
+  "loadRadius": 40
+}

@@ -3,12 +3,18 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {CYBER_BOUNDS} from './simulation.js';
+import livingPlan from '../config/cityLivingWorld.json' with {type:'json'};
 import {macroWorldPlan as plan,footprint,containedBy,footprintsOverlap,polylineLengthMeters,
   plannedJourney,roadSegments,roadIntersectsFootprint,roadNetwork,pointOnSegment,routeUsesRoadNetwork} from './macroWorldPlan.js';
 
 test('the macro plan stays inactive and preserves the real city and original character/classroom assets',()=>{
   assert.equal(plan.runtimeEnabled,false);assert.equal(plan.status,'planning-only');
-  assert.deepEqual(CYBER_BOUNDS,plan.legacy.runtimeBounds);
+  assert.deepEqual(CYBER_BOUNDS,livingPlan.district.requiredPlayableBounds);
+  assert.deepEqual(plan.legacy.runtimeBounds,{minX:-118,maxX:118,minZ:-118,maxZ:118});
+  assert.equal(CYBER_BOUNDS.minX,plan.legacy.runtimeBounds.minX);
+  assert.equal(CYBER_BOUNDS.maxX,plan.legacy.runtimeBounds.maxX);
+  assert.equal(CYBER_BOUNDS.maxZ,plan.legacy.runtimeBounds.maxZ);
+  assert.ok(CYBER_BOUNDS.minZ<=livingPlan.district.ground.center[2]-livingPlan.district.ground.size[1]/2);
   assert.deepEqual(plan.legacy.transform,{position:[0,0,0],rotation:[0,0,0],scale:[1,1,1]});
   const runtime=readFileSync(new URL('./CyberCity.jsx',import.meta.url),'utf8');
   assert.doesNotMatch(runtime,/import[^;]*macroWorldPlan/);
