@@ -1,0 +1,238 @@
+{
+  "version": 1,
+  "ready": true,
+  "asset": "/assets/additions20261020/PROP_Hospital_Lounge_Chair_20261020.glb",
+  "sourceScene": "PREP_HOSPITAL_CHAIRS_ASSET_20261020",
+  "dimensions": [
+    0.871824324131012,
+    0.9802674505335744,
+    0.8967083692550659
+  ],
+  "bounds": {
+    "min": [
+      -0.43592628836631775,
+      -0.0003132674319203943,
+      -0.4486026465892792
+    ],
+    "max": [
+      0.4358980357646942,
+      0.979954183101654,
+      0.44810572266578674
+    ]
+  },
+  "placements": [
+    {
+      "id": "0_0",
+      "originalRoot": "HSP15_CHAIR_0_0",
+      "position": [
+        5,
+        0.012,
+        10.5
+      ],
+      "rotation": [
+        0,
+        3.141592653589793,
+        0
+      ]
+    },
+    {
+      "id": "0_1",
+      "originalRoot": "HSP15_CHAIR_0_1",
+      "position": [
+        7.2,
+        0.012,
+        10.5
+      ],
+      "rotation": [
+        0,
+        3.141592653589793,
+        0
+      ]
+    },
+    {
+      "id": "0_2",
+      "originalRoot": "HSP15_CHAIR_0_2",
+      "position": [
+        9.4,
+        0.012,
+        10.5
+      ],
+      "rotation": [
+        0,
+        3.141592653589793,
+        0
+      ]
+    },
+    {
+      "id": "0_3",
+      "originalRoot": "HSP15_CHAIR_0_3",
+      "position": [
+        11.6,
+        0.012,
+        10.5
+      ],
+      "rotation": [
+        0,
+        3.141592653589793,
+        0
+      ]
+    },
+    {
+      "id": "0_4",
+      "originalRoot": "HSP15_CHAIR_0_4",
+      "position": [
+        13.8,
+        0.012,
+        10.5
+      ],
+      "rotation": [
+        0,
+        3.141592653589793,
+        0
+      ]
+    },
+    {
+      "id": "1_0",
+      "originalRoot": "HSP15_CHAIR_1_0",
+      "position": [
+        5,
+        0.012,
+        5.3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "1_1",
+      "originalRoot": "HSP15_CHAIR_1_1",
+      "position": [
+        7.2,
+        0.012,
+        5.3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "1_2",
+      "originalRoot": "HSP15_CHAIR_1_2",
+      "position": [
+        9.4,
+        0.012,
+        5.3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "1_3",
+      "originalRoot": "HSP15_CHAIR_1_3",
+      "position": [
+        11.6,
+        0.012,
+        5.3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "1_4",
+      "originalRoot": "HSP15_CHAIR_1_4",
+      "position": [
+        13.8,
+        0.012,
+        5.3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ROOM_01",
+      "originalRoot": "HSP15_CHAIR_ROOM_01",
+      "position": [
+        -5.8,
+        0.012,
+        -3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ROOM_02",
+      "originalRoot": "HSP15_CHAIR_ROOM_02",
+      "position": [
+        5.8,
+        0.012,
+        -3
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ROOM_03",
+      "originalRoot": "HSP15_CHAIR_ROOM_03",
+      "position": [
+        -5.8,
+        0.012,
+        -11
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "ROOM_04",
+      "originalRoot": "HSP15_CHAIR_ROOM_04",
+      "position": [
+        5.8,
+        0.012,
+        -11
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "triangles": 63700,
+  "bytes": 2963320,
+  "sha256": "612d63030a3d6e71a149b17785e240a1021d6f865e28f6c0ea76ccaec4db3dae",
+  "sourceSha256": "9bc7bea2d68dec1c5fc2ccb75cdd283664257e7bbcaf7be7688c3c81fc9b5681",
+  "changes": [
+    "Separated lounge chair from supplied ottoman",
+    "Uniform scale and upright yaw; ground origin",
+    "Browser mesh simplification and 1024px texture copies; original source retained",
+    "Waiting rows face the shared aisle; room chairs face desks"
+  ],
+  "certifiedClinicalOrArchitectural": false,
+  "credits": {
+    "author": "Théo Reigner 'BadAffe' (https://sketchfab.com/BadAffe)",
+    "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+    "source": "https://sketchfab.com/3d-models/eames-lounge-chair-f43af70c9a434519a4eb8751efa1764f",
+    "title": "Eames Lounge Chair"
+  }
+}

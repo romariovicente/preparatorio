@@ -1,0 +1,26 @@
+[
+  {
+    "id": "PROP_Hospital_Lounge_Chair_20261020",
+    "name": "Poltrona de espera do hospital",
+    "category": "Equipamentos",
+    "url": "/assets/additions20261020/PROP_Hospital_Lounge_Chair_20261020.glb",
+    "height": 0.9802674505335744,
+    "bytes": 2963320,
+    "triangles": 63700,
+    "sha256": "612d63030a3d6e71a149b17785e240a1021d6f865e28f6c0ea76ccaec4db3dae",
+    "sourceSha256": "9bc7bea2d68dec1c5fc2ccb75cdd283664257e7bbcaf7be7688c3c81fc9b5681",
+    "catalogAdded": "2026-10-20",
+    "status": "validated",
+    "rigged": false,
+    "playable": false,
+    "animations": [],
+    "credits": {
+      "author": "Théo Reigner 'BadAffe' (https://sketchfab.com/BadAffe)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/eames-lounge-chair-f43af70c9a434519a4eb8751efa1764f",
+      "title": "Eames Lounge Chair"
+    },
+    "licenseStatus": "attribution",
+    "description": "Poltrona preparada no Blender a partir do conjunto Eames recebido. Usada na espera e nos consultórios do hospital. O apoio de pés foi separado; escala, malha e cópias das texturas foram ajustadas para o jogo."
+  }
+]

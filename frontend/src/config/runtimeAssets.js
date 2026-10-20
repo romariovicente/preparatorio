@@ -10,6 +10,8 @@ const monuments=resolveAssetReferences(monumentsRaw);
 import {newDeliveryRuntimeAssets} from './newDeliveryRuntimeAssets.js';
 import additionsRaw from './suppliedAdditions20261016.json' with {type:'json'};
 const additions=resolveAssetReferences(additionsRaw);
+import furnitureRaw from './suppliedAdditions20261020.json' with {type:'json'};
+const furniture=resolveAssetReferences(furnitureRaw);
 import {mergeAssetCatalog,normalizeCatalogAddition} from './assetCatalog.js';
 const historicalAssets=[...originals.map(asset=>{
   const rig=rigs.find(r=>r.id===asset.id);
@@ -18,5 +20,5 @@ const historicalAssets=[...originals.map(asset=>{
   const walkClip=animations.find(n=>/walk/i.test(n)),idleClip=animations.find(n=>/idle/i.test(n));
   return {...asset,animations,rigged:Boolean(asset.originalRig),playable:asset.category==='Personagens'&&Boolean(asset.originalRig&&walkClip&&idleClip),walkClip,idleClip};
 }),...mixamo.filter(asset=>asset.reimportValidated&&asset.rigged&&asset.playable),...monuments.filter(asset=>asset.reimportValidated),...newDeliveryRuntimeAssets];
-export const runtimeAssets=mergeAssetCatalog(historicalAssets,additions.filter(asset=>asset.status==='validated').map(normalizeCatalogAddition));
+export const runtimeAssets=mergeAssetCatalog(historicalAssets,[...additions,...furniture].filter(asset=>asset.status==='validated').map(normalizeCatalogAddition));
 export const playableCharacters=runtimeAssets.filter(a=>a.rigged&&a.playable);

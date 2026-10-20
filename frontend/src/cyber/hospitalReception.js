@@ -1,11 +1,21 @@
 import {Box3} from 'three';
 import config from '../config/hospitalReception.json' with {type:'json'};
+import chairPlan from '../config/hospitalChairs.json' with {type:'json'};
 import {assetUrl} from '../config/deploymentConfig.js';
 
 export const hospitalReception=config;
 export const HOSPITAL_PLATFORM_URL=assetUrl('/assets/environments/ENV_Hospital_Entrance_Platform_20261019.glb');
 const worldCollider=box=>({...box,x:box.x+config.position[0],z:box.z+config.position[2],minY:box.minY+config.position[1],maxY:box.maxY+config.position[1]});
-export const hospitalStaticColliders=config.staticColliders.filter(box=>box.maxY>.4&&box.minY<1.85).map(worldCollider);
+// Keep original door/architecture physics; furniture bounds follow the new
+// Blender chair at each existing seat, including its wider curved arms.
+const chairByCollider=new Map(chairPlan.ready?chairPlan.placements.map(chair=>['HSP15_CHAIR_COLLIDER_'+chair.id,chair]):[]);
+export const hospitalStaticColliders=config.staticColliders.filter(box=>box.maxY>.4&&box.minY<1.85).map(box=>{
+  const chair=chairByCollider.get(box.id);
+  if(!chair)return worldCollider(box);
+  const [width,height,depth]=chairPlan.dimensions;
+  const quarterTurn=Math.abs(Math.sin(chair.rotation[1]));
+  return worldCollider({...box,x:chair.position[0],z:chair.position[2],w:width*(1-quarterTurn)+depth*quarterTurn+.02,d:depth*(1-quarterTurn)+width*quarterTurn+.02,minY:chair.position[1],maxY:chair.position[1]+height});
+});
 export function createHospitalRuntime(){
   return {dynamicColliders:[...config.publicDoor.leaves,...config.roomDoors].map(door=>worldCollider(door.closedCollider))};
 }

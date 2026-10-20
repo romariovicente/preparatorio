@@ -5,6 +5,9 @@ import {HOSPITAL_ASSET_URL,createDoorController,hasNamedAncestor,inspectHospital
 import {hospitalReception,HOSPITAL_PLATFORM_URL,markHospitalFloors,markHospitalPlatformFloors,readHospitalDoorColliders,roomDoorwayOccupied} from './hospitalReception.js';
 import {insideBuilding} from './doorGeometry.js';
 import CityAssetBoundary from './CityAssetBoundary.js';
+import hospitalChairPlan from '../config/hospitalChairs.json';
+import HospitalChairs from './HospitalChairs.jsx';
+import {hideHospitalChairRoots,restoreHospitalChairRoots} from './hospitalChairs.js';
 
 function HospitalPlatform(){
   const {scene}=useGLTF(HOSPITAL_PLATFORM_URL);
@@ -24,6 +27,12 @@ export default function HospitalReception({building,door,simulation,runtime,onTo
   },[gltf.scene,gltf.animations]);
   const controllers=useRef({public:null,rooms:{}});
   const [rooms,setRooms]=useState({});
+  const [chairsReady,setChairsReady]=useState(false);
+  useEffect(()=>{
+    const names=hospitalChairPlan.placements.map(placement=>placement.originalRoot);
+    if(chairsReady)hideHospitalChairRoots(prepared.scene,names);
+    else restoreHospitalChairRoots(prepared.scene,names);
+  },[prepared.scene,chairsReady]);
   useEffect(()=>{
     controllers.current={public:createDoorController(prepared.scene,prepared.info.doorClips),rooms:Object.fromEntries(hospitalReception.roomDoors.map(room=>[room.id,createDoorController(prepared.scene,prepared.info.roomClips.filter(clip=>clip.name===`Room_Open_${room.id}`))]))};
     return()=>{controllers.current.public?.dispose();Object.values(controllers.current.rooms).forEach(controller=>controller?.dispose());controllers.current={public:null,rooms:{}};};
@@ -49,6 +58,7 @@ export default function HospitalReception({building,door,simulation,runtime,onTo
   }
   return <group name="PREP_HOSPITAL_RECEPTION_PLAYABLE" position={hospitalReception.position} userData={{dynamicCollider:true,hospitalModule:true}}>
     <CityAssetBoundary label="entrada do hospital"><HospitalPlatform/></CityAssetBoundary>
+    {hospitalChairPlan.ready&&<CityAssetBoundary label="cadeiras do hospital"><HospitalChairs plan={hospitalChairPlan} onReady={setChairsReady}/></CityAssetBoundary>}
     <primitive object={prepared.scene} dispose={null} onClick={event=>{
       if(hasNamedAncestor(event.object,PUBLIC_DOOR_PREFIX)){event.stopPropagation();onToggle(building);return;}
       const room=hospitalReception.roomDoors.find(record=>hasNamedAncestor(event.object,record.hingeName));

@@ -107,3 +107,17 @@ test('room doors refuse closing on their swept space and the preserved anatomy e
   const fixed=hospitalColliders(createHospitalRuntime()).filter(record=>!record.id.includes('DOOR_'));
   assert.deepEqual(fixed.filter(record=>overlaps(exhibit,record)).map(record=>record.id),[]);
 });
+test('new lounge chairs block their actual curved arms while hospital passages stay clear',()=>{
+  const chairs=hospitalColliders(createHospitalRuntime()).filter(box=>box.id.startsWith('HSP15_CHAIR_COLLIDER_'));
+  assert.equal(chairs.length,14);assert.equal(new Set(chairs.map(box=>box.id)).size,14);
+  for(const chair of chairs){
+    assert.ok(chair.w>.87&&chair.w<1.05);
+    assert.ok(chair.d>.89&&chair.d<1.05);
+    assert.ok(chair.minY>.26&&chair.maxY<1.3);
+    assert.ok(Math.abs(chair.x-48)>4,'the central corridor remains clear');
+  }
+  const chair=chairs.find(box=>box.id==='HSP15_CHAIR_COLLIDER_0_0');
+  const from={x:chair.x+.6,y:chair.minY,z:chair.z};
+  const next=advanceCityPosition(from,{x:-1,z:0},.1,5,chairs);
+  assert.equal(next.x,from.x,'the wider arm is solid');
+});
