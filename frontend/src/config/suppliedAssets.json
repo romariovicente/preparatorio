@@ -758,25 +758,25 @@
       "title": "Character Cyberpunk FREE 3d By Oscar Creativo"
     },
     "status": "validated",
-    "url": "/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_BodyRig.glb",
-    "triangles": 355050,
-    "bytes": 102809004,
-    "sha256": "604b0a811d7a47ec00ad250370bd0a45b3a0ece1bfc03cd632d14aa302e3e550",
-    "meshes": 39,
+    "url": "/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_Civilian_v1.glb",
+    "triangles": 240758,
+    "bytes": 95840736,
+    "sha256": "4aacf549b4e78361ad2a4d61bfd598760ac9db72774c0457b59f8c6bbf27e79c",
+    "meshes": 35,
     "dimensions": [
       1.0826541185379028,
       0.80812668800354,
       3.142308473587036
     ],
     "animated": true,
-    "preparedTriangles": 355050,
-    "meshPrimitiveTriangles": 355050,
+    "preparedTriangles": 240758,
+    "meshPrimitiveTriangles": 240758,
     "animations": [
       "motion"
     ],
-    "modifications": "Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained. Removed only morph targets unused by both default weights and every animation sample from runtime derivative; full morph GLB preserved in art/source/preserved_full_morphs. Active facial and skeletal animation retained.",
-    "validation": "Blender reimport; finite vertices; matching triangle count; rig check when present; optimized active-morph derivative reimported with triangle count and armature verified",
-    "preview": "/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre.jpg",
+    "modifications": "Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained. Removed only morph targets unused by both default weights and every animation sample from runtime derivative; full morph GLB preserved in art/source/preserved_full_morphs. Active facial and skeletal animation retained. Civilian derivative removes the four visible SMG meshes while preserving the character rig and motion clip.",
+    "validation": "Fresh Blender reimport; finite vertices; 35 civilian meshes; one skin and motion animation retained; no weapon mesh or weapon material remains",
+    "preview": "/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_Civilian_v1.jpg",
     "tags": [
       "rig original"
     ],
@@ -1847,42 +1847,6 @@
     "heavyAsset": false,
     "name": "EAS Omega Babylon 5",
     "licenseStatus": "attribution"
-  },
-  {
-    "id": "SUP_es_niper",
-    "category": "Equipamentos",
-    "sourceRelative": "Armas\\es_niper.glb",
-    "sourceSha256": "5eb04659ac4043741552f8d86b6cc24b07199f9b5f42ac1b23e8a8f934838a84",
-    "originalTriangles": 31134,
-    "credits": {
-      "author": "yraabvf4 (https://sketchfab.com/yraabvf4)",
-      "license": "CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)",
-      "source": "https://sketchfab.com/3d-models/es-niper-bd3e5ada34a74c6fa810c4cdf92cfa8e",
-      "title": "Es Niper"
-    },
-    "status": "validated",
-    "url": "/assets/supplied/SUP_es_niper.glb",
-    "triangles": 31134,
-    "bytes": 2145836,
-    "sha256": "36b694fb5197891b284987971bad75a96a18e11a86790d063cc654b7a60aabca",
-    "meshes": 1,
-    "dimensions": [
-      970.3637084960938,
-      94.1162109375,
-      257.9827880859375
-    ],
-    "animated": false,
-    "preparedTriangles": 31134,
-    "meshPrimitiveTriangles": 31134,
-    "animations": [],
-    "modifications": "Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained.",
-    "validation": "Blender reimport; finite vertices; matching triangle count; rig check when present",
-    "preview": "/assets/supplied/SUP_es_niper.jpg",
-    "tags": [],
-    "originalRig": false,
-    "heavyAsset": false,
-    "name": "Es Niper",
-    "licenseStatus": "noncommercial"
   },
   {
     "id": "SUP_esqueleto",

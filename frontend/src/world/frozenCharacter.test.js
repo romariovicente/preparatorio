@@ -58,8 +58,8 @@ test('actual anime native Idle/Walk keep finite skinned vertices, upright torso 
 });
 
 test('actual cyberpunk fixed pose is grounded, upright and cannot modify cached source bones',async()=>{
-  const {gltf,hash}=await loadGeometry('/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_BodyRig.glb');
-  assert.equal(hash,'604b0a811d7a47ec00ad250370bd0a45b3a0ece1bfc03cd632d14aa302e3e550');
+  const {gltf,hash}=await loadGeometry('/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_Civilian_v1.glb');
+  assert.equal(hash,'4aacf549b4e78361ad2a4d61bfd598760ac9db72774c0457b59f8c6bbf27e79c');
   const sourceState=gltf.scene.toJSON().object;
   const prepared=createFrozenCharacterClone(gltf.scene,1.7,gltf.animations,{clip:'motion',time:0}),box=bounds(prepared.group);
   assert.ok(Math.abs(box.min.y)<1e-5);assert.ok(Math.abs(box.getSize(new Vector3()).y-1.7)<1e-5);

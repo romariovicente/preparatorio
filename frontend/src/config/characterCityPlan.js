@@ -5,7 +5,7 @@ import manifestRaw from './cyberWorldManifest.json' with {type:'json'};
 import realisticWorldRaw from './realisticWorldManifest.json' with {type:'json'};
 import characterReviews from './characterMotionReviews.json' with {type:'json'};
 import warpEngine from './warpEngine.json' with {type:'json'};
-import {buildCharacterRoster,characterSelectionOptions,createCharacterRosterPlacements,characterRosterColliders} from './characterRoster.js';
+import {buildCharacterRoster,characterSelectionOptions,createCharacterRosterPlacements,characterRosterColliders,hospitalPatientCharacters as selectHospitalPatients} from './characterRoster.js';
 import {newDeliveryColliders} from '../cyber/newDeliveryWorld.js';
 import {classroomColliders,createClassroomRuntime} from '../cyber/classroomWorld.js';
 import {livingWorldColliders} from '../cyber/cityLivingWorld.js';
@@ -17,6 +17,7 @@ const realisticWorld=resolveAssetReferences(realisticWorldRaw);
 
 export const characterRoster=buildCharacterRoster(runtimeAssets,suppliedCatalog,characterReviews);
 export const characterOptions=characterSelectionOptions(characterRoster);
+export const hospitalPatientCharacters=selectHospitalPatients(characterRoster);
 export const rosterPlacementExclusions=[
   ...manifest.colliders,...newDeliveryColliders,...classroomColliders(createClassroomRuntime()),
   ...livingWorldColliders,

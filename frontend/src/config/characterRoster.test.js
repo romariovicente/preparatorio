@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {buildCharacterRoster,characterSelectionOptions,resolveRosterCharacter,createCharacterRosterPlacements,characterRosterColliders,nearbyCharacterPlacements} from './characterRoster.js';
+import {buildCharacterRoster,characterSelectionOptions,resolveRosterCharacter,createCharacterRosterPlacements,characterRosterColliders,nearbyCharacterPlacements,hospitalPatientCharacters} from './characterRoster.js';
 
 const read=name=>JSON.parse(readFileSync(new URL(name,import.meta.url),'utf8'));
 const originals=read('./suppliedAssets.json'),rigs=read('./riggedAssets.json'),reviews=read('./characterMotionReviews.json');
@@ -14,8 +14,10 @@ const roster=buildCharacterRoster(assets,originals,reviews);
 test('all twenty character assets and twenty-one figures remain represented without an art-style exclusion',()=>{
   assert.equal(roster.length,20);assert.equal(roster.reduce((sum,entry)=>sum+entry.figures,0),21);
   const players=roster.filter(entry=>entry.controllable);
-  assert.deepEqual(players.map(entry=>entry.id).sort(),['CHR_Remy_Mixamo_20261005','SUP_character_cyberpunk_free_3d_by_oscar_cre','SUP_lowpoly_anime_character_cyberstyle'].sort());
+  assert.equal(players.length,20);assert.ok(players.every(entry=>entry.playerAsset?.playable));
   assert.equal(players.filter(entry=>entry.locomotionValidated).length,2);
+  assert.equal(players.filter(entry=>entry.controlMode==='prototype-motion').length,11);
+  assert.equal(players.filter(entry=>entry.controlMode==='static-pose').length,6);
   assert.equal(players.find(entry=>entry.id==='SUP_lowpoly_anime_character_cyberstyle').visualStyle,'stylized');
   assert.equal(players.find(entry=>entry.controlMode==='fixed-pose').playerAsset.allowedCharacterActions.length,0);
   assert.equal(players.find(entry=>entry.id==='SUP_lowpoly_anime_character_cyberstyle').playerAsset.characterCapabilities.sitting,false);
@@ -23,26 +25,38 @@ test('all twenty character assets and twenty-one figures remain represented with
   assert.equal(characterSelectionOptions(roster).length,20);
 });
 
-test('legacy fitted FK derivatives never gain locomotion from old playable:true metadata',()=>{
+test('legacy fitted FK derivatives are selectable but only reviewed standing rigs gain preliminary walking',()=>{
   const legacy=roster.filter(entry=>entry.asset.quality==='prototype');assert.equal(legacy.length,16);
-  assert.ok(legacy.every(entry=>!entry.controllable&&!entry.locomotionValidated&&entry.controlMode==='npc-static'));
+  assert.ok(legacy.every(entry=>entry.controllable&&!entry.locomotionValidated));
+  assert.equal(legacy.filter(entry=>entry.controlMode==='prototype-motion').length,11);
+  assert.equal(legacy.filter(entry=>entry.controlMode==='static-pose').length,5);
   const seated=roster.find(entry=>entry.id==='SUP_woman_seated_v15');
   assert.equal(seated.pose,'seated');assert.equal(seated.height,1.22);assert.match(seated.context,/Leitura/);
   for(const entry of legacy.filter(entry=>entry.asset.needsRepose)){
     assert.equal(entry.displayUrl,originals.find(original=>original.id===entry.id).url);
     assert.equal(entry.standingPose,null);
+    assert.equal(entry.playerAsset.characterStandingPose.clip,'Idle');
   }
 });
 
-test('hash changes, missing files and incomplete native clips fail closed but do not erase a roster entry',()=>{
+test('hash changes and incomplete clips disable native walking while keeping available characters selectable',()=>{
   const remy=assets.find(asset=>asset.id==='CHR_Remy_Mixamo_20261005');
-  for(const altered of [{...remy,sha256:'new-file'}, {...remy,url:null}, {...remy,animations:['Idle']}, {...remy,needsRepose:true}]){
+  for(const altered of [{...remy,sha256:'new-file'}, {...remy,animations:['Idle']}, {...remy,needsRepose:true}]){
     const entry=buildCharacterRoster([altered],[],reviews)[0];
-    assert.equal(entry.controllable,false);assert.equal(entry.playerAsset,null);
+    assert.equal(entry.controllable,true);assert.equal(entry.locomotionValidated,false);
+    assert.equal(entry.playerAsset.characterCapabilities.animatedLocomotion,false);
   }
-  assert.equal(resolveRosterCharacter(roster,'SUP_woman_seated_v15'),null);
+  const missing=buildCharacterRoster([{...remy,url:null}],[],reviews)[0];
+  assert.equal(missing.controllable,false);assert.equal(missing.playerAsset,null);
+  assert.equal(resolveRosterCharacter(roster,'SUP_woman_seated_v15').id,'SUP_woman_seated_v15');
   assert.equal(resolveRosterCharacter(roster,'missing'),null);
   const source=JSON.stringify(assets);buildCharacterRoster(assets,originals,reviews);assert.equal(JSON.stringify(assets),source);
+});
+
+test('only characters with native validated walking enter the autonomous hospital patient flow',()=>{
+  const patients=hospitalPatientCharacters(roster,8);
+  assert.deepEqual(patients.map(entry=>entry.id).sort(),['CHR_Remy_Mixamo_20261005','SUP_lowpoly_anime_character_cyberstyle'].sort());
+  assert.ok(patients.every(entry=>entry.patientEligible&&entry.locomotionValidated&&entry.playerAsset.walkClip&&entry.playerAsset.idleClip));
 });
 
 test('every actor gets a deterministic non-overlapping city position outside supplied obstacles',()=>{

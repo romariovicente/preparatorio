@@ -12,11 +12,11 @@ function straighten(bone,tip,maxAngle,strength){
   bone.quaternion.premultiply(local);bone.updateWorldMatrix(false,true);
 }
 export function createUprightPosture(group){
-  const named={};group.traverse(o=>{if(o.isBone)named[o.name.replace(/^mixamorig\d*[:_]?/i,'')]=o;});
+  const named={};group.traverse(o=>{if(o.isBone){const key=o.name.replace(/^mixamorig\d*[:_]?/i,'');named[key]=o;named[key.toLowerCase()]=o;}});
   return clip=>{
     if(clip!=='Idle'&&clip!=='Walk')return;
     group.updateMatrixWorld(true);
-    straighten(named.Spine1??named.Spine,named.Neck,8*Math.PI/180,clip==='Idle'?.8:.35);
-    straighten(named.Neck,named.Head,5*Math.PI/180,clip==='Idle'?.7:.25);
+    straighten(named.Spine1??named.Spine??named.spine1??named.spine,named.Neck??named.neck,8*Math.PI/180,clip==='Idle'?.8:.35);
+    straighten(named.Neck??named.neck,named.Head??named.head,5*Math.PI/180,clip==='Idle'?.7:.25);
   };
 }

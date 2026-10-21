@@ -4,8 +4,9 @@ import NearbyVehiclePicker from './NearbyVehiclePicker.js';
 import {nearbyVehicleChoices,chooseNearbyVehicle} from './vehicleSelection.js';
 import {activeWorldPlacements,baseVehicleIsVisible} from './vehiclePlacements.js';
 import CharacterRosterNPCs from './CharacterRosterNPCs.jsx';
-import {characterRoster,characterOptions,rosterPlan,rosterObstacles,rosterZones} from '../config/characterCityPlan.js';
+import {characterRoster,characterOptions,hospitalPatientCharacters,rosterPlan,rosterObstacles,rosterZones} from '../config/characterCityPlan.js';
 import CityLivingWorld from './CityLivingWorld.jsx';
+import HospitalPatientFlow from './HospitalPatientFlow.jsx';
 import {livingWorldZones,livingWorldColliders,campusBenchLocations} from './cityLivingWorld.js';
 import {prepareLivingWorldDecorations} from './livingWorldDecorations.js';
 import WarpEngine from './WarpEngine.jsx';
@@ -624,6 +625,7 @@ export default function CyberCity() {
         <CityLivingWorld simulation={simulation} onInspect={({asset,placement})=>setNotice(placement?.label??asset?.name??'Campus PREPARATÓRIO')}/>
         <WarpEngine simulation={simulation} onInspect={setNotice}/>
         <CharacterRosterNPCs placements={rosterPlan.placements} simulation={simulation} onSelect={asset=>changeCharacter(asset.id)} onInspect={entry=>setNotice(`${entry.name} · Animações deste personagem ainda em revisão.`)}/>
+        <HospitalPatientFlow entries={hospitalPatientCharacters} onInspect={setNotice}/>
         <BuildingDoors doors={cityDoors} simulation={simulation} onToggle={toggleDoor} hospitalRuntime={hospitalRuntime} onNotice={setNotice} players={shared.state.players}/>
         <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
         {Object.keys(DRIVE_VEHICLES).filter(id=>baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
@@ -674,7 +676,7 @@ export default function CyberCity() {
           <AssetRetryButton/>
           <PlayerNameForm value={nameDraft} onChange={setNameDraft} onSubmit={saveUniformName}/>
           <h3>Personagem e ações</h3><label>Personagem<select value={character.id} onChange={event=>changeCharacter(event.target.value)}>{characterOptions.map(option=><option key={option.id} value={option.id} disabled={option.disabled}>{option.label}</option>)}</select></label>
-          <p className="cyber-tip">{character.characterControlMode==='fixed-pose'?'Este personagem se desloca em pose fixa; a animação de passos ainda precisa ser ajustada.':'Animações nativas do modelo selecionado.'}</p>
+          <p className="cyber-tip">{character.characterControlMode==='native'?'Animações nativas validadas.':character.characterControlMode==='prototype-motion'?'Caminhada preliminar com correção de postura.':'Este personagem preserva a pose original enquanto a caminhada é preparada.'}</p>
           <details><summary>Encontrar os {characterRoster.length} personagens na cidade</summary><p>Moradores e exposições permanecem no mapa. Os modelos carregam quando você se aproxima.</p>{rosterZones.map(zone=><button key={zone.id} onClick={()=>commit({type:'TELEPORT',zoneId:zone.id})}>Visitar · {zone.label}</button>)}</details>
           <div className="cyber-action-grid"><button onClick={()=>commit({type:'DANCE'})} disabled={!character.animations.includes('Dance')||Boolean(held)}>{snapshot.action==='Dance'?'Parar dança':'Dançar'}</button><button onClick={()=>commit({type:snapshot.sitting&&snapshot.mode==='foot'?'STAND':'SIT',benchId:closestBench.id})}>{snapshot.sitting&&snapshot.mode==='foot'?'Levantar':'Sentar no banco'}</button></div>
           <button disabled={snapshot.mode!=='foot'||snapshot.sitting||Boolean(snapshot.jump)||Boolean(snapshot.elevator)} onClick={()=>commit({type:'JUMP'})}>Pular · Espaço</button>

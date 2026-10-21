@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 const assets=JSON.parse(readFileSync(new URL('./suppliedAssets.json',import.meta.url),'utf8'));
 test('every supplied catalog entry matches delivered GLB bytes and triangle primitives',()=>{
-  assert.equal(assets.length,151);
+  assert.equal(assets.length,150);
   assert.equal(new Set(assets.map(a=>a.sourceSha256)).size,assets.length);
   for(const a of assets){
     const bytes=readFileSync(new URL('../../public'+a.url,import.meta.url));

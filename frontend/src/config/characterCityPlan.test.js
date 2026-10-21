@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {characterRoster,characterOptions,rosterPlan,rosterObstacles,rosterZones,rosterPlacementExclusions} from './characterCityPlan.js';
+import {characterRoster,characterOptions,hospitalPatientCharacters,rosterPlan,rosterObstacles,rosterZones,rosterPlacementExclusions} from './characterCityPlan.js';
 
 const overlap=(a,b)=>Math.abs(a.x-b.x)<(a.w+b.w)/2-1e-6&&Math.abs(a.z-b.z)<(a.d+b.d)/2-1e-6;
 
@@ -10,7 +10,9 @@ test('actual city roster represents twenty assets and twenty-one figures with ho
   assert.equal(rosterPlan.placements.length,20);assert.equal(rosterZones.length,20);assert.equal(rosterObstacles.length,20);
   assert.equal(characterRoster.filter(entry=>entry.controlMode==='native').length,2);
   assert.equal(characterRoster.filter(entry=>entry.controlMode==='fixed-pose').length,1);
-  assert.ok(characterRoster.filter(entry=>entry.asset.quality==='prototype').every(entry=>!entry.controllable));
+  assert.equal(characterRoster.filter(entry=>entry.controlMode==='prototype-motion').length,11);
+  assert.ok(characterRoster.every(entry=>entry.controllable));
+  assert.equal(hospitalPatientCharacters.length,2);
 });
 
 test('actual NPC footprints avoid roads, buildings, classroom, habitats, engine and each other',()=>{

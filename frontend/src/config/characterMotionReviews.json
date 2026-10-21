@@ -27,14 +27,14 @@
   },
   {
     "id": "SUP_character_cyberpunk_free_3d_by_oscar_cre",
-    "sha256": "604b0a811d7a47ec00ad250370bd0a45b3a0ece1bfc03cd632d14aa302e3e550",
+    "sha256": "4aacf549b4e78361ad2a4d61bfd598760ac9db72774c0457b59f8c6bbf27e79c",
     "controlMode": "fixed-pose",
     "locomotionValidated": false,
     "poseReviewed": true,
     "allowedActions": [],
     "standingPose": { "clip": "motion", "time": 0 },
     "visualStyle": "realistic",
-    "report": "reports/CHARACTER_NATIVE_MOTION_20261019.json",
-    "notes": "107 ossos originais e pose em pé estável. O clip motion não é caminhada: controle desloca a pose fixa, sem animação de passos, dança ou sentado. Modelo pesado, cerca de 103 MB."
+    "report": "reports/CHARACTER_CYBERPUNK_CIVILIAN_20261021.json",
+    "notes": "Versão civil reimportada no Blender: quatro malhas visíveis da submetralhadora foram removidas, enquanto o rig e o clip motion foram preservados. O clip motion não é caminhada: o controle mantém a pose original."
   }
 ]

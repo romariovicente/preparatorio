@@ -1,12 +1,14 @@
 import {Component,useEffect,useMemo,useRef,useState} from 'react';
 import {Html} from '@react-three/drei';
 import {useFrame,useThree} from '@react-three/fiber';
-import {Raycaster} from 'three';
+import {AnimationMixer,Raycaster} from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {nearbyCharacterPlacements} from '../config/characterRoster.js';
 import {createFrozenCharacterClone} from '../world/frozenCharacter.js';
 import {disposeAssetPreview} from '../world/assetPreviewResources.js';
 import {collectGroundSurfaces,sampleGroundHeight} from './groundSupport.js';
+import {createUprightPosture} from './posture.js';
+import {characterNpcMotionSample} from './characterNpcMotion.js';
 
 class NPCBoundary extends Component{
   state={failed:false};
@@ -17,6 +19,12 @@ class NPCBoundary extends Component{
 function PrivateNPCModel({entry}){
   const [model,setModel]=useState(null);
   const [failed,setFailed]=useState(false);
+  const motion=useRef(null);
+  useFrame((_,delta)=>{
+    const current=motion.current;if(!current)return;
+    current.mixer.update(Math.min(.05,Math.max(0,delta)));
+    current.upright('Walk');
+  });
   useEffect(()=>{
     let active=true,prepared=null,loadedScene=null;
     const abort=new AbortController();
@@ -28,8 +36,16 @@ function PrivateNPCModel({entry}){
         const base=new URL('./',new URL(entry.displayUrl,globalThis.location.href)).href;
         const gltf=await new GLTFLoader().parseAsync(buffer,base);loadedScene=gltf.scene;
         if(!active){disposeAssetPreview(loadedScene);loadedScene=null;return;}
-        const pose=entry.standingPose??(entry.controlMode==='native'?{clip:entry.asset.idleClip??'Idle',time:0}:null);
+        const pose=entry.standingPose??(entry.walkingAnimationAvailable?{clip:entry.playerAsset?.idleClip??entry.asset.idleClip??'Idle',time:0}:null);
         prepared=createFrozenCharacterClone(gltf.scene,entry.height,gltf.animations,pose);
+        if(entry.walkingAnimationAvailable){
+          const clipName=entry.playerAsset?.walkClip??entry.asset.walkClip??'Walk';
+          const clip=gltf.animations.find(candidate=>candidate.name===clipName);
+          if(clip){
+            const mixer=new AnimationMixer(prepared.group),action=mixer.clipAction(clip).play();
+            motion.current={mixer,action,upright:createUprightPosture(prepared.group)};
+          }
+        }
         setModel(prepared.group);
       }catch(error){
         if(active&&error.name!=='AbortError'){setModel(null);setFailed(true);}
@@ -38,11 +54,14 @@ function PrivateNPCModel({entry}){
     load();
     return()=>{
       active=false;abort.abort();
+      motion.current?.action.stop();motion.current?.mixer.stopAllAction();
+      if(prepared?.group)motion.current?.mixer.uncacheRoot(prepared.group);
+      motion.current=null;
       if(prepared?.poseMixer){prepared.poseMixer.stopAllAction();prepared.poseMixer.uncacheRoot(prepared.group);}
       if(loadedScene)disposeAssetPreview([loadedScene,prepared?.group]);
       prepared=null;loadedScene=null;
     };
-  },[entry.displayUrl,entry.height,entry.standingPose,entry.controlMode,entry.asset.idleClip]);
+  },[entry.displayUrl,entry.height,entry.standingPose,entry.walkingAnimationAvailable,entry.playerAsset?.idleClip,entry.playerAsset?.walkClip,entry.asset.idleClip,entry.asset.walkClip]);
   return model?<primitive object={model} dispose={null}/>:failed?<Html position={[0,.5,0]} center><span style={{font:'10px system-ui',color:'#fff',background:'#612d2dcc',padding:4}}>Modelo indisponível · aproxime-se novamente para tentar</span></Html>:null;
 }
 
@@ -53,13 +72,20 @@ export default function CharacterRosterNPCs({placements,simulation,onSelect,onIn
   const [nearby,setNearby]=useState([]);
   const group=useRef(null),lastScan=useRef(-Infinity),{scene}=useThree();
   const ray=useMemo(()=>new Raycaster(),[]);
+  const placementByActor=useMemo(()=>new Map(placements.map(entry=>[entry.actorId,entry])),[placements]);
   useFrame(({clock})=>{
-    if(!group.current||clock.elapsedTime-lastScan.current<1.5)return;
+    if(!group.current)return;
+    for(const child of group.current.children){
+      const entry=placementByActor.get(child.name);if(!entry)continue;
+      const sample=characterNpcMotionSample(entry,clock.elapsedTime);
+      child.position.set(...sample.position);child.rotation.y=sample.heading;
+    }
+    if(clock.elapsedTime-lastScan.current<1.5)return;
     lastScan.current=clock.elapsedTime;
     const surfaces=collectGroundSurfaces(scene);
     for(const child of group.current.children){
-      const baseline=placements.find(entry=>entry.actorId===child.name)?.position;
-      if(baseline)child.position.y=sampleGroundHeight(ray,surfaces,{x:baseline[0],y:baseline[1],z:baseline[2]},{radius:.32})+.01;
+      const entry=placementByActor.get(child.name);
+      if(entry)child.position.y=sampleGroundHeight(ray,surfaces,{x:child.position.x,y:entry.position[1],z:child.position.z},{radius:.32})+.01;
     }
   });
   useEffect(()=>{

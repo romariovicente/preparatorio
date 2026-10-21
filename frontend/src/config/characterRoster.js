@@ -20,8 +20,9 @@ export function characterRosterCategory(asset){
   return ['personagens','personagem','character','characters'].includes(fold(asset?.category??asset?.sourceCategory));
 }
 
-// Style is a sorting preference, never a filter. A legacy playable:true flag
-// alone does not validate a fitted FK derivative's locomotion or garment fit.
+// Style is a sorting preference, never a filter. Every available character can
+// be chosen by the player, while the control mode still states honestly whether
+// the model has validated, preliminary or no locomotion animation.
 export function buildCharacterRoster(assets,originals=[],reviews=[]){
   const originalById=new Map(originals.map(asset=>[asset.id,asset]));
   const reviewById=new Map(reviews.map(review=>[review.id,review]));
@@ -35,31 +36,37 @@ export function buildCharacterRoster(assets,originals=[],reviews=[]){
       asset.rigged===true&&asset.needsRepose!==true&&hasClip(asset,review.idleClip)&&hasClip(asset,review.walkClip);
     const fixed=trusted&&review.controlMode==='fixed-pose'&&Boolean(review.standingPose?.clip)&&hasClip(asset,review.standingPose.clip);
     const available=typeof asset.url==='string'&&asset.url.length>0;
-    const controllable=available&&(native||fixed);
+    const prototype=available&&asset.quality==='prototype'&&asset.reimportValidated===true&&asset.rigged===true;
+    const prototypeWalk=prototype&&asset.needsRepose!==true&&hasClip(asset,'Idle')&&hasClip(asset,'Walk');
+    const controllable=available;
     const pose=seatedIds.has(asset.id)?'seated':relaxedIds.has(asset.id)?'authored-relaxed':asset.needsRepose?'authored-review':'standing';
     const staticSource=asset.needsRepose&&original?.url?original:asset;
-    const displayUrl=trusted?asset.url:staticSource.url;
+    const displayUrl=native||fixed||prototypeWalk?asset.url:staticSource.url;
     const name=displayNames[asset.id]??asset.name??asset.label??asset.id;
-    const controlMode=controllable?(native?'native':'fixed-pose'):'npc-static';
+    const controlMode=!controllable?'unavailable':native?'native':prototypeWalk?'prototype-motion':fixed?'fixed-pose':'static-pose';
     const reasons=[];
     if(!available)reasons.push('Arquivo indisponível nesta distribuição.');
     if(asset.needsRepose)reasons.push('Pose de origem preservada; exige nova pose/retopologia antes de caminhar.');
-    if(asset.quality==='prototype')reasons.push('Rig FK de protótipo: movimentos procedurais não habilitados.');
+    if(prototypeWalk)reasons.push('Rig FK preliminar com Idle e Walk; postura vertical corrigida durante o movimento.');
+    else if(asset.quality==='prototype')reasons.push('Rig FK de protótipo preservado somente para pose e ações seguras.');
     if(!trusted)reasons.push('Sem revisão de postura e locomoção vinculada ao hash atual.');
     if(fixed)reasons.push('Deslocamento em pose fixa; não contém caminhada validada.');
     if(native)reasons.push('Idle e caminhada nativos verificados neste arquivo.');
-    const standingPose=trusted?review.standingPose:null;
-    const playerAsset=controllable?{...asset,name,characterControlMode:controlMode,characterStandingPose:standingPose,
-      allowedCharacterActions:review.allowedActions??[],idleClip:review.idleClip??null,walkClip:review.walkClip??null,
-      characterCapabilities:{animatedLocomotion:Boolean(native),sitting:asset.id==='CHR_Remy_Mixamo_20261005',riding:asset.id==='CHR_Remy_Mixamo_20261005',driving:true},
+    const standingPose=trusted?review.standingPose:prototype&&asset.needsRepose!==true&&hasClip(asset,'Idle')?{clip:'Idle',time:0}:null;
+    const playerStandingPose=native||prototypeWalk?null:prototype&&hasClip(asset,'Idle')?{clip:'Idle',time:0}:standingPose;
+    const actionClips=native?(review.allowedActions??[]):prototypeWalk?clipsOf(asset):[];
+    const playerAsset=controllable?{...asset,name,characterControlMode:controlMode,characterStandingPose:playerStandingPose,
+      allowedCharacterActions:actionClips,idleClip:review?.idleClip??(hasClip(asset,'Idle')?'Idle':null),walkClip:review?.walkClip??(prototypeWalk?'Walk':null),
+      characterCapabilities:{animatedLocomotion:Boolean(native||prototypeWalk),sitting:asset.id==='CHR_Remy_Mixamo_20261005',riding:asset.id==='CHR_Remy_Mixamo_20261005',driving:true},
       rigged:asset.rigged===true||Boolean(asset.originalRig),playable:true,reimportValidated:true,
-      visualStyle:review.visualStyle??asset.visualStyle,characterControlLabel:native?'animações nativas':'pose fixa · sem animação de passos'}:null;
+      visualStyle:review?.visualStyle??asset.visualStyle,characterControlLabel:native?'animações nativas':prototypeWalk?'caminhada preliminar com correção de postura':'pose original · sem passos'}:null;
     roster.push({id:asset.id,name,asset,playerAsset,controlMode,controllable,locomotionValidated:Boolean(native),
+      walkingAnimationAvailable:Boolean(native||prototypeWalk),patientEligible:Boolean(native),
       pose,height:pose==='seated'?1.22:pose==='authored-relaxed'?1.48:1.7,
       figures:Math.max(1,Number(asset.figures)||1),available:Boolean(displayUrl),displayUrl,
       displayBytes:staticSource.bytes??asset.bytes??0,standingPose,reviewReport:trusted?review.report:null,
       visualStyle:review?.visualStyle??asset.visualStyle??'authored',reasons,
-      statusLabel:native?'Escolher personagem':fixed?'Postura em ajuste':'Morador',
+      statusLabel:native?'Escolher · caminhada validada':prototypeWalk?'Escolher · caminhada preliminar':'Escolher · pose original',
       context:pose==='seated'?'Leitura e descanso':pose==='authored-relaxed'||pose==='authored-review'?'Exposição cultural':'Praça e acolhimento',
     });
   }
@@ -69,8 +76,12 @@ export function buildCharacterRoster(assets,originals=[],reviews=[]){
 }
 
 export function characterSelectionOptions(roster){
-  return roster.map(entry=>({id:entry.id,label:`${entry.name}${!entry.controllable?' · animações em revisão':entry.controlMode==='fixed-pose'?' · postura em ajuste':''}`,disabled:!entry.controllable,
-    controlMode:entry.controlMode,reason:entry.controllable?entry.controlMode==='fixed-pose'?'Postura em ajuste.':'Disponível para jogar.':'Animações deste personagem ainda em revisão.',asset:entry.playerAsset}));
+  return roster.map(entry=>({id:entry.id,label:`${entry.name}${entry.controlMode==='prototype-motion'?' · caminhada preliminar':entry.walkingAnimationAvailable?'':' · pose original'}`,disabled:!entry.controllable,
+    controlMode:entry.controlMode,reason:entry.walkingAnimationAvailable?'Disponível para jogar com animação de caminhada.':'Disponível para jogar na pose original.',asset:entry.playerAsset}));
+}
+
+export function hospitalPatientCharacters(roster,limit=2){
+  return roster.filter(entry=>entry.patientEligible&&entry.playerAsset?.walkClip&&entry.playerAsset?.idleClip).slice(0,Math.max(0,limit));
 }
 
 export function resolveRosterCharacter(roster,id){
@@ -98,7 +109,7 @@ export function createCharacterRosterPlacements(roster,{anchors=[],colliders=[],
       used.every(other=>Math.hypot(point[0]-other[0],point[2]-other[2])>=spacing));
     if(position)used.push(position);else unplaced.push(entry.id);
     return {...entry,position:position?[...position]:null,heading:position?Math.atan2(-position[0],-position[2]):0,
-      actorId:`roster:${entry.id}`,staticNpc:true};
+      actorId:`roster:${entry.id}`,staticNpc:!entry.walkingAnimationAvailable,autonomousNpc:Boolean(entry.walkingAnimationAvailable)};
   });
   return {placements,unplaced,allRepresented:unplaced.length===0};
 }

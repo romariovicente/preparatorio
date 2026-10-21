@@ -87,7 +87,7 @@ function FixedPoseCharacter({asset,height}){
 
 // Only independently reimported derivatives can receive fitted clothing.
 export default function CostumedCharacter({asset, height=1.7, outfit, playing=false, clip='Idle', holding=false, sitting=false, riding=false, displayName}) {
-  if(asset.characterControlMode==='fixed-pose')return <FixedPoseCharacter asset={asset} height={height}/>;
+  if(asset.characterControlMode==='fixed-pose'||asset.characterControlMode==='static-pose')return <FixedPoseCharacter asset={asset} height={height}/>;
   const costume = costumes.find(record => record.baseId === asset.id && record.reimportValidated);
   const costumed = Boolean(costume && outfit && (outfit.scrubs !== false || outfit.coat));
   const url = costumed ? costume.url : asset.url;
