@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
 import {Group,Mesh,BoxGeometry,MeshBasicMaterial,Bone,AnimationClip,VectorKeyframeTrack,Vector3} from 'three';
 import {cityLivingWorldPlan as plan,livingWorldColliders,livingWorldZones,campusBenchLocations,habitatAsset,habitatPath,campusIsNear,selectLivingWorldResidents,livingWorldBlenderPoint,prepareCityCampusScene,prepareCityCampusShadows} from './cityLivingWorld.js';
 import {createLivingAnimal} from './livingAnimalModel.js';
@@ -15,6 +17,17 @@ test('campus remains full scale in a connected northern district with disjoint h
   for(let i=0;i<rectangles.length;i++)for(let j=i+1;j<rectangles.length;j++)assert.equal(overlap(rectangles[i],rectangles[j]),false,`${i}/${j}`);
   for(const r of rectangles){assert.ok(r.x-r.w/2>=-93&&r.x+r.w/2<=-3);assert.ok(r.z-r.d/2>=-187.5&&r.z+r.d/2<=-112.5);}
   assert.equal(plan.campus.hideNodes.includes('Patio'),false);assert.ok(plan.campus.hideNodes.includes('Terreno'));
+});
+test('the audited oak grove uses one compact real GLB and keeps all eight trunks outside campus and habitat footprints',()=>{
+  const asset=plan.vegetation.asset,bytes=readFileSync(new URL('../../public'+asset.url,import.meta.url));
+  assert.equal(bytes.length,asset.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),asset.sha256);
+  assert.equal(asset.triangles,1217);assert.equal(plan.vegetation.placements.length,8);
+  const rectangles=[rectangle({...plan.campus,size:[25,28]}),...plan.habitats.map(rectangle)];
+  for(const tree of plan.vegetation.placements){
+    const box={x:tree.position[0],z:tree.position[2],w:4.1,d:4.1};
+    assert.ok(box.x-box.w/2>=-93&&box.x+box.w/2<=-3&&box.z-box.d/2>=-187.5&&box.z+box.d/2<=-112.5,tree.id);
+    for(const occupied of rectangles)assert.equal(overlap(box,occupied),false,`${tree.id} overlaps an occupied lot`);
+  }
 });
 test('each resident uses an existing animated source, unique ID and original animation',()=>{
   assert.equal(new Set(plan.habitats.map(h=>h.id)).size,6);

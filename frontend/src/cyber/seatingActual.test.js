@@ -5,12 +5,14 @@ import {readFileSync} from 'node:fs';
 import {createSeatedClone} from './seating.js';
 import {finiteDeformedVertices,joint,loadTexturelessGLB,localTransformSnapshot,synchronizeSkinnedBounds} from '../../../scripts/actual_asset_inspection.mjs';
 
-const remyUrl=new URL('../../public/assets/characters/CHR_Remy_Mixamo_20261005.glb',import.meta.url);
+const remyUrl=new URL('../../public/assets/characters/runtime/CHR_Remy_Mixamo_Web_20261021.glb',import.meta.url);
+const originalRemyUrl=new URL('../../public/assets/characters/CHR_Remy_Mixamo_20261005.glb',import.meta.url);
 
 test('real Remy seated clone retains all skinned meshes and leaves every original transform untouched',async()=>{
   const catalog=JSON.parse(readFileSync(new URL('../../src/config/mixamoAssets.json',import.meta.url)));
   const record=catalog.find(asset=>asset.id==='CHR_Remy_Mixamo_20261005');
-  assert.equal(createHash('sha256').update(readFileSync(remyUrl)).digest('hex'),record.sha256,'the validated original Remy GLB is preserved');
+  assert.equal(createHash('sha256').update(readFileSync(remyUrl)).digest('hex'),record.sha256,'the validated runtime Remy GLB is selected');
+  assert.equal(createHash('sha256').update(readFileSync(originalRemyUrl)).digest('hex'),record.sourceAssetSha256,'the original Remy GLB is preserved');
   const {scene}=await loadTexturelessGLB(remyUrl),original=localTransformSnapshot(scene);
   const sourceBones=new Set(),sourceSkins=[];
   scene.traverse(object=>{if(object.isBone)sourceBones.add(object);if(object.isSkinnedMesh)sourceSkins.push(object);});

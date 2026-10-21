@@ -1,7 +1,7 @@
-import {useCallback,useEffect,useRef,useState} from 'react';
+import {useCallback,useEffect,useMemo,useRef,useState} from 'react';
 import {Html} from '@react-three/drei';
 import {useFrame} from '@react-three/fiber';
-import {DoubleSide} from 'three';
+import {DoubleSide,Group} from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {disposeAssetPreview} from '../world/assetPreviewResources.js';
 import {cityLivingWorldPlan as plan,campusIsNear,habitatAsset,habitatPath,selectLivingWorldResidents,prepareCityCampusScene,prepareCityCampusShadows} from './cityLivingWorld.js';
@@ -45,6 +45,22 @@ function CampusModel({onInspect}){
   return object?<group position={plan.campus.position} name="CITY_CAMPUS_COURTYARD" onClick={inspect}>
     <primitive object={object} dispose={null}/>
   </group>:null;
+}
+function prepareOak(gltf){setWorldShadows(gltf.scene);return {object:gltf.scene};}
+function OakGrove({onInspect}){
+  const {object}=usePrivateModel(plan.vegetation.asset.url,prepareOak);
+  const grove=useMemo(()=>{
+    if(!object)return null;
+    const group=new Group();group.name='CITY_CAMPUS_OAK_GROVE';
+    for(const placement of plan.vegetation.placements){
+      const tree=object.clone(true);tree.name=`CITY_${placement.id}`;
+      tree.position.fromArray(placement.position);tree.rotation.y=placement.rotationY;tree.userData.vegetationAsset=plan.vegetation.asset.id;
+      group.add(tree);
+    }
+    return group;
+  },[object]);
+  const inspect=event=>{event.stopPropagation();onInspect?.({asset:plan.vegetation.asset,placement:{id:'campus-oak-grove',label:'Bosque de carvalhos do campus'}});};
+  return grove?<primitive object={grove} dispose={null} onClick={inspect}/>:null;
 }
 function Resident({habitat,onInspect}){
   const asset=habitatAsset(habitat);
@@ -123,7 +139,7 @@ export default function CityLivingWorld({simulation,onInspect,includeGround=true
     <Html position={[plan.campus.approach[0],2.4,plan.campus.approach[2]]} center distanceFactor={12} zIndexRange={[1,0]} style={{pointerEvents:'none'}}>
       <span className="cyber-world-label">Campus PREPARATÓRIO<br/><small>Anatomia · estudos · observação da fauna</small></span>
     </Html>
-    {visible.campus&&<CampusModel onInspect={onInspect}/>}
+    {visible.campus&&<><CampusModel onInspect={onInspect}/><OakGrove onInspect={onInspect}/></>}
     {plan.habitats.map(h=><HabitatStructure key={h.id} habitat={h}/>)}
     {plan.habitats.filter(h=>visible.ids.includes(h.id)).map(h=><Resident key={h.id} habitat={h} onInspect={onInspect}/>)}
   </group>;

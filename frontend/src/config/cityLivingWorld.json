@@ -32,6 +32,31 @@
     ],
     "notes": "The supplied source remains unchanged. Retain its 25x28m courtyard, furniture, book, kit and anatomical exhibits at 1:1 scale. Hide its redundant terrain/hospital/faculty instead of overlapping the existing city buildings. All images and geometry buffers are embedded."
   },
+  "vegetation": {
+    "asset": {
+      "id": "ENV_Oak_Small_001_LOD0_20261021",
+      "name": "Carvalho · bosque do campus",
+      "url": "/assets/environment/runtime/ENV_Oak_Small_001_LOD0_20261021.glb",
+      "bytes": 6395464,
+      "sha256": "a4107ec692c57549fdb1429b9edb988124571ac5d0d6fcdf9eed6fa7184b3dba",
+      "triangles": 1217,
+      "sourceBytes": 153215532,
+      "sourceSha256": "b24755bc42d54361d7af0e9096c74e4a65c6d695e12e55dd97ee10d0c8682ec7",
+      "license": "CC-BY-4.0",
+      "author": "LOLIPOP"
+    },
+    "placements": [
+      {"id": "oak-northwest", "position": [-90.8, 0, -185], "rotationY": 0.2},
+      {"id": "oak-north-fox", "position": [-64, 0, -184], "rotationY": 1.1},
+      {"id": "oak-north-campus", "position": [-46, 0, -184], "rotationY": 2.2},
+      {"id": "oak-north-wolf", "position": [-31, 0, -185], "rotationY": 0.7},
+      {"id": "oak-northeast", "position": [-5.2, 0, -185], "rotationY": 2.8},
+      {"id": "oak-west", "position": [-90.8, 0, -160], "rotationY": 1.8},
+      {"id": "oak-rabbit-campus", "position": [-65, 0, -130], "rotationY": 0.4},
+      {"id": "oak-aquarium-campus", "position": [-34, 0, -130], "rotationY": 2.5}
+    ],
+    "loadPolicy": "Loaded with the campus proximity boundary; eight clones share one geometry and material set."
+  },
   "habitats": [
     {
       "id": "habitat-fox", "label": "Raposa · recinto de manejo", "kind": "land", "assetId": "FAUNA_FOX_20261016",

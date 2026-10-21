@@ -1060,3 +1060,10 @@ Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesm
 - Origem: https://sketchfab.com/3d-models/yas-marina-circuit-abu-dhabi-2021-layout-c41b4e19912b4d79886bcd8d7d2536af
 - Licença: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 - Alterações: Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained.
+
+## Oak trees pack (17var, LODs, seasons, gameready)
+- Arquivo derivado: `/assets/environment/runtime/ENV_Oak_Small_001_LOD0_20261021.glb`
+- Autor: LOLIPOP (https://sketchfab.com/lolipop_1707)
+- Origem: https://sketchfab.com/3d-models/oak-trees-pack-17var-lods-seasons-gameready-a5e4e64f9f1d4089bdcc6170a9333393
+- Licença: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+- Alterações: foi extraída somente a hierarquia `Small_oak_tree__001_LOD0`; o objeto foi centralizado e apoiado em Z=0; texturas incorporadas foram limitadas a 1024 px. O arquivo-fonte permanece intacto fora da distribuição pública.

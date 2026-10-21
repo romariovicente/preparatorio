@@ -1,15 +1,15 @@
 [
   {
     "id": "CHR_Remy_Mixamo_20261005",
-    "sha256": "4d1caf2e917b0496438460e61a496ca0bd4342f52735651dea77a68a545f3d0e",
+    "sha256": "8bbc351f7bbeb9086ee0d753406d08dd245c9274508e27ad834b7f79bd340b95",
     "controlMode": "native",
     "locomotionValidated": true,
     "poseReviewed": true,
     "idleClip": "Idle",
     "walkClip": "Walk",
     "allowedActions": ["Idle", "Walk", "Dance", "Interact"],
-    "report": "reports/prep_mixamo_validation/remy_20261005.json",
-    "notes": "Rig Mixamo de 55 ossos; uniforme e nomes individuais preservados. Revisão artística de realismo final permanece pendente."
+    "report": "reports/AVATAR_RUNTIME_VALIDATION_20261021.json",
+    "notes": "Rig Mixamo de 55 ossos, quatro clipes e geometria preservados exatamente; cópia Web reduz apenas as texturas incorporadas. Uniforme e nomes individuais preservados. Revisão artística de realismo final permanece pendente."
   },
   {
     "id": "SUP_lowpoly_anime_character_cyberstyle",

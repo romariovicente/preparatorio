@@ -7,9 +7,12 @@
     "sourceUrl": "https://www.mixamo.com/",
     "name": "Remy · Mixamo",
     "category": "Personagens",
-    "url": "/assets/characters/CHR_Remy_Mixamo_20261005.glb",
-    "bytes": 35079156,
-    "sha256": "4d1caf2e917b0496438460e61a496ca0bd4342f52735651dea77a68a545f3d0e",
+    "url": "/assets/characters/runtime/CHR_Remy_Mixamo_Web_20261021.glb",
+    "bytes": 12837376,
+    "sha256": "8bbc351f7bbeb9086ee0d753406d08dd245c9274508e27ad834b7f79bd340b95",
+    "sourceAssetUrl": "/assets/characters/CHR_Remy_Mixamo_20261005.glb",
+    "sourceAssetBytes": 35079156,
+    "sourceAssetSha256": "4d1caf2e917b0496438460e61a496ca0bd4342f52735651dea77a68a545f3d0e",
     "bones": 55,
     "clips": [
       "Idle",
@@ -33,7 +36,8 @@
     "reimportValidated": true,
     "weightCoverage": 1,
     "maxInfluences": 4,
-    "validationReport": "reports/prep_mixamo_validation/remy_20261005.json",
+    "validationReport": "reports/AVATAR_RUNTIME_VALIDATION_20261021.json",
+    "runtimeOptimizationReport": "reports/AVATAR_RUNTIME_OPTIMIZATION_20261021.json",
     "actualMixamoDownloads": true
   }
 ]

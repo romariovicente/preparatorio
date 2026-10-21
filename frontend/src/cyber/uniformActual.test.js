@@ -12,6 +12,6 @@ test('actual fitted Remy uniform preserves both source files, original logos and
  const catalog=JSON.parse(readFileSync(new URL('../config/costumeAssets.json',import.meta.url)));
  const costume=catalog.find(item=>item.baseId==='CHR_Remy_Mixamo_20261005');
  assert.ok(costume?.reimportValidated&&costume.cpuValidated);
- assert.equal(costume.url,record.url);assert.equal(costume.sha256,record.sha256);
- assert.equal(costume.bytes,record.bytes);
+ assert.equal(costume.sourceUrl,record.url);assert.equal(costume.sourceSha256,record.sha256);
+ assert.equal(costume.sourceBytes,record.bytes);
 });
