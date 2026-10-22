@@ -70,7 +70,7 @@ function PrivateNPCModel({entry}){
 // No procedural FK motion is run, including for NPCs with a legacy rig flag.
 export default function CharacterRosterNPCs({placements,simulation,onSelect,onInspect,distance=18,maxVisible=4}){
   const [nearby,setNearby]=useState([]);
-  const group=useRef(null),lastScan=useRef(-Infinity),{scene}=useThree();
+  const group=useRef(null),lastScan=useRef(-Infinity),groundYByActor=useRef(new Map()),{scene}=useThree();
   const ray=useMemo(()=>new Raycaster(),[]);
   const placementByActor=useMemo(()=>new Map(placements.map(entry=>[entry.actorId,entry])),[placements]);
   useFrame(({clock})=>{
@@ -78,14 +78,20 @@ export default function CharacterRosterNPCs({placements,simulation,onSelect,onIn
     for(const child of group.current.children){
       const entry=placementByActor.get(child.name);if(!entry)continue;
       const sample=characterNpcMotionSample(entry,clock.elapsedTime);
-      child.position.set(...sample.position);child.rotation.y=sample.heading;
+      // Keep the last raycast result between scans. Re-applying the authored Y
+      // here made animated residents jump back into the air every frame.
+      const groundedY=groundYByActor.current.get(entry.actorId)??sample.position[1];
+      child.position.set(sample.position[0],groundedY,sample.position[2]);child.rotation.y=sample.heading;
     }
     if(clock.elapsedTime-lastScan.current<1.5)return;
     lastScan.current=clock.elapsedTime;
     const surfaces=collectGroundSurfaces(scene);
     for(const child of group.current.children){
       const entry=placementByActor.get(child.name);
-      if(entry)child.position.y=sampleGroundHeight(ray,surfaces,{x:child.position.x,y:entry.position[1],z:child.position.z},{radius:.32})+.01;
+      if(entry){
+        const groundedY=sampleGroundHeight(ray,surfaces,{x:child.position.x,y:entry.position[1],z:child.position.z},{radius:.32})+.01;
+        groundYByActor.current.set(entry.actorId,groundedY);child.position.y=groundedY;
+      }
     }
   });
   useEffect(()=>{

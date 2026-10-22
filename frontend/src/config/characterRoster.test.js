@@ -31,7 +31,8 @@ test('legacy fitted FK derivatives are selectable but only reviewed standing rig
   assert.equal(legacy.filter(entry=>entry.controlMode==='prototype-motion').length,11);
   assert.equal(legacy.filter(entry=>entry.controlMode==='static-pose').length,5);
   const seated=roster.find(entry=>entry.id==='SUP_woman_seated_v15');
-  assert.equal(seated.pose,'seated');assert.equal(seated.height,1.22);assert.match(seated.context,/Leitura/);
+  assert.equal(seated.pose,'seated');assert.equal(seated.height,1.7);assert.match(seated.context,/Leitura/);
+  assert.ok(roster.every(entry=>entry.height===1.7),'every character wrapper must match Remy height');
   for(const entry of legacy.filter(entry=>entry.asset.needsRepose)){
     assert.equal(entry.displayUrl,originals.find(original=>original.id===entry.id).url);
     assert.equal(entry.standingPose,null);

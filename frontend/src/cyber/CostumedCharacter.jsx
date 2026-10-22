@@ -2,6 +2,7 @@ import {resolveAssetReferences} from '../config/deploymentConfig.js';
 import {useEffect, useMemo} from 'react';
 import {useAnimations, useGLTF} from '@react-three/drei';
 import {useFrame} from '@react-three/fiber';
+import {Box3,Vector3} from 'three';
 import costumesRaw from '../config/costumeAssets.json';
 const costumes=resolveAssetReferences(costumesRaw);
 import {createCarryAnimations} from '../world/carryAnimation.js';
@@ -12,7 +13,7 @@ import {createUniformNameTexture} from './uniformName.js';
 import {applyUniformName,applyUniformOutfit,cloneUniformMaterials} from './uniformMaterials.js';
 import {createFrozenCharacterClone} from '../world/frozenCharacter.js';
 
-function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playing, clip, holding, sitting, riding, displayName,standingPose}) {
+function AnimatedCharacter({assetId,url, costumed, replacedMeshes, height, outfit, playing, clip, idleClip, holding, sitting, riding, displayName,standingPose}) {
   const gltf = useGLTF(url);
   const prepared = useMemo(() => {
     let group;
@@ -21,7 +22,17 @@ function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playi
       group = pose.group;
       group.position.y = pose.offset;
     } else {
-      group = standingPose?createFrozenCharacterClone(gltf.scene,height,gltf.animations,standingPose).group:createCharacterClone(gltf.scene,height).group;
+      // Several supplied rigs have a very different bind pose from their real
+      // Idle/Walk. Normalize them from the authored Idle sample; otherwise the
+      // Anime CyberStyle becomes ~8 m tall as soon as its clip starts. Remy's
+      // verified Mixamo derivative keeps its already-correct preparation.
+      const normalizationPose=standingPose??(assetId!=='CHR_Remy_Mixamo_20261005'&&idleClip?{clip:idleClip,time:0}:null);
+      if(normalizationPose){
+        const normalized=createFrozenCharacterClone(gltf.scene,height,gltf.animations,normalizationPose);
+        group=normalized.group;
+        normalized.poseMixer?.stopAllAction();
+        normalized.poseMixer?.uncacheRoot(group);
+      }else group=createCharacterClone(gltf.scene,height).group;
     }
     group.traverse(object => {
       if (!object.isMesh) return;
@@ -32,12 +43,29 @@ function AnimatedCharacter({url, costumed, replacedMeshes, height, outfit, playi
     // SkeletonUtils copies the skeleton, while the loader's materials remain
     // shared. Give recolorable clothing its own materials before any changes.
     const materials = costumed ? cloneUniformMaterials(group) : [];
-    return {group, materials};
-  }, [gltf.scene, gltf.animations, costumed, height, sitting, riding,standingPose]);
+    return {group, materials,groundBounds:new Box3(),parentOrigin:new Vector3(),parentScale:new Vector3()};
+  }, [gltf.scene, gltf.animations, assetId, idleClip, costumed, height, sitting, riding,standingPose]);
   const carry = useMemo(() => createCarryAnimations(gltf.animations), [gltf.animations]);
   const {actions,mixer} = useAnimations(carry.clips, prepared.group);
   const upright=useMemo(()=>createUprightPosture(prepared.group),[prepared.group]);
-  useFrame(()=>{if(!sitting&&playing)upright(clip);});
+  useFrame(()=>{
+    if(sitting)return;
+    if(playing)upright(clip);
+    // Remy already has a verified ground-preserving Mixamo export. Other
+    // animated sources may contain vertical root motion; pin their visible
+    // shoes to the actor parent's floor after the animation sample is applied.
+    if(!playing||assetId==='CHR_Remy_Mixamo_20261005')return;
+    const bounds=prepared.groundBounds.makeEmpty();prepared.group.updateMatrixWorld(true);
+    prepared.group.traverse(object=>{if(object.isMesh&&object.visible!==false)bounds.expandByObject(object,true);});
+    if(bounds.isEmpty()||!Number.isFinite(bounds.min.y))return;
+    const parent=prepared.group.parent;
+    const floorY=parent?parent.getWorldPosition(prepared.parentOrigin).y:0;
+    const scaleY=parent?Math.abs(parent.getWorldScale(prepared.parentScale).y)||1:1;
+    const correction=(floorY-bounds.min.y)/scaleY;
+    /* eslint-disable react-hooks/immutability -- Three.js scene nodes are imperative render objects updated per frame. */
+    if(Number.isFinite(correction)&&Math.abs(correction)>.0005)prepared.group.position.y+=correction;
+    /* eslint-enable react-hooks/immutability */
+  });
   const coat = Boolean(outfit?.coat), scrubs = outfit?.scrubs !== false;
   const color = /^#[\da-f]{6}$/i.test(outfit?.color ?? '') ? outfit.color : null;
 
@@ -91,7 +119,7 @@ export default function CostumedCharacter({asset, height=1.7, outfit, playing=fa
   const costume = costumes.find(record => record.baseId === asset.id && record.reimportValidated);
   const costumed = Boolean(costume && outfit && (outfit.scrubs !== false || outfit.coat));
   const url = costumed ? costume.url : asset.url;
-  return <AnimatedCharacter key={`${url}:${sitting ? 'seated' : 'standing'}`} url={url}
-    costumed={costumed} replacedMeshes={costume?.replacedMeshes} height={height} outfit={outfit} playing={playing} clip={clip}
+  return <AnimatedCharacter key={`${url}:${sitting ? 'seated' : 'standing'}`} assetId={asset.id} url={url}
+    costumed={costumed} replacedMeshes={costume?.replacedMeshes} height={height} outfit={outfit} playing={playing} clip={clip} idleClip={asset.idleClip}
     holding={holding} sitting={sitting} riding={riding} displayName={displayName} standingPose={asset.characterStandingPose}/>;
 }

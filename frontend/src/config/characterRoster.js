@@ -62,7 +62,10 @@ export function buildCharacterRoster(assets,originals=[],reviews=[]){
       visualStyle:review?.visualStyle??asset.visualStyle,characterControlLabel:native?'animações nativas':prototypeWalk?'caminhada preliminar com correção de postura':'pose original · sem passos'}:null;
     roster.push({id:asset.id,name,asset,playerAsset,controlMode,controllable,locomotionValidated:Boolean(native),
       walkingAnimationAvailable:Boolean(native||prototypeWalk),patientEligible:Boolean(native),
-      pose,height:pose==='seated'?1.22:pose==='authored-relaxed'?1.48:1.7,
+      // Every playable/resident wrapper uses the same adult reference height as
+      // Remy. The authored pose can be seated or relaxed without shrinking the
+      // body itself; pose height and character height are separate concerns.
+      pose,height:1.7,
       figures:Math.max(1,Number(asset.figures)||1),available:Boolean(displayUrl),displayUrl,
       displayBytes:staticSource.bytes??asset.bytes??0,standingPose,reviewReport:trusted?review.report:null,
       visualStyle:review?.visualStyle??asset.visualStyle??'authored',reasons,
