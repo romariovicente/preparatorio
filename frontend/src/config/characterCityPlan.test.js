@@ -9,7 +9,8 @@ test('actual city roster represents twenty assets and twenty-one figures with ho
   assert.equal(characterOptions.length,20);assert.equal(rosterPlan.allRepresented,true);assert.deepEqual(rosterPlan.unplaced,[]);
   assert.equal(rosterPlan.placements.length,20);assert.equal(rosterZones.length,20);assert.equal(rosterObstacles.length,20);
   assert.equal(characterRoster.filter(entry=>entry.controlMode==='native').length,2);
-  assert.equal(characterRoster.filter(entry=>entry.controlMode==='fixed-pose').length,1);
+  assert.equal(characterRoster.filter(entry=>entry.controlMode==='fixed-pose').length,0);
+  assert.equal(characterRoster.filter(entry=>entry.controlMode==='retargeted-motion').length,1);
   assert.equal(characterRoster.filter(entry=>entry.controlMode==='prototype-motion').length,11);
   assert.ok(characterRoster.every(entry=>entry.controllable));
   assert.equal(hospitalPatientCharacters.length,2);

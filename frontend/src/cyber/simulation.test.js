@@ -42,8 +42,8 @@ test('movement, lift, teleport and restoration reject invalid state safely', () 
   for(let i=0;i<8;i++)state=tickCyberState(state,.5);
   assert.equal(state.position.y,-6);assert.equal(state.elevator,null);
   assert.equal(applyCyberAction(state,{type:'TELEPORT',zoneId:'unknown'},{zones:[]}).ok,false);
-  const restored=restoreCyberState({getItem:()=>JSON.stringify({version:1,inventory:{seeds:-10,flowers:3,fish:Infinity},outfit:{coat:true,color:'url(fake)'}})});
-  assert.equal(restored.inventory.seeds,6);assert.equal(restored.inventory.flowers,3);assert.equal(restored.outfit.coat,true);assert.equal(restored.outfit.color,'#247fba');
+  const restored=restoreCyberState({getItem:()=>JSON.stringify({version:1,inventory:{seeds:-10,flowers:3,fish:Infinity},outfit:{scrubs:false,coat:true,color:'#247fba'}})});
+  assert.equal(restored.inventory.seeds,6);assert.equal(restored.inventory.flowers,3);assert.equal(restored.outfit.coat,true);assert.equal(restored.outfit.scrubs,false);assert.equal(restored.outfit.color,'#ffffff');
 });
 test('driving and parking affect a personal vehicle copy while authored models remain unchanged',()=>{
   const original=JSON.stringify(DRIVE_VEHICLES);

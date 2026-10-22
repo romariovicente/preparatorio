@@ -27,14 +27,16 @@
   },
   {
     "id": "SUP_character_cyberpunk_free_3d_by_oscar_cre",
-    "sha256": "4aacf549b4e78361ad2a4d61bfd598760ac9db72774c0457b59f8c6bbf27e79c",
-    "controlMode": "fixed-pose",
-    "locomotionValidated": false,
+    "sha256": "ad3aa0b0ac66f6f8cc47c749dd24890f517b3e2d78ebd228ec8ee2782f4d3fc5",
+    "controlMode": "retargeted",
+    "locomotionValidated": true,
     "poseReviewed": true,
-    "allowedActions": [],
-    "standingPose": { "clip": "motion", "time": 0 },
+    "idleClip": "Idle",
+    "walkClip": "Walk",
+    "allowedActions": ["Idle", "Walk"],
+    "standingPose": { "clip": "Idle", "time": 0 },
     "visualStyle": "realistic",
-    "report": "reports/CHARACTER_CYBERPUNK_CIVILIAN_20261021.json",
-    "notes": "Versão civil reimportada no Blender: quatro malhas visíveis da submetralhadora foram removidas, enquanto o rig e o clip motion foram preservados. O clip motion não é caminhada: o controle mantém a pose original."
+    "report": "reports/CHARACTER_CYBERPUNK_REMY_REIMPORT_20261022_v5.json",
+    "notes": "Rig civil de 107 ossos, sem malha ou material de arma. Cabeça/pescoço centralizados, dedos direitos relaxados como os esquerdos, quadris e pernas adaptados aos vetores anatômicos do Remy a cada quadro. Reimportação conferiu pesos, 1,70 m em pé e contato dos pés dentro de 4,1 mm inclusive entre quadros. Animação adaptada Idle/Walk; fontes preservadas. Sentar, pilotar moto, vestuário ajustado e realismo final mantêm revisões próprias."
   }
 ]

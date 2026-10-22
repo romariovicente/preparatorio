@@ -17,7 +17,7 @@ test('each user session persists its own coat name, even if storage is unavailab
   const blocked={getItem(){throw Error('blocked');},setItem(){throw Error('blocked');}};
   assert.equal(readPlayerName(blocked),'Jogador');assert.equal(savePlayerName(blocked,'Maria'),'Maria');
 });
-test('remote coat state cannot inject unknown colors or omit valid defaults',()=>{
-  assert.deepEqual(normalizePlayerOutfit({coat:true,color:'#37664b'}),{scrubs:true,coat:true,color:'#37664b'});
-  assert.deepEqual(normalizePlayerOutfit({scrubs:false,coat:false,color:'url(evil)'}),{scrubs:false,coat:false,color:'#247fba'});
+test('remote coat state preserves garment choices and migrates every scrub color to white',()=>{
+  assert.deepEqual(normalizePlayerOutfit({coat:true,color:'#37664b'}),{scrubs:true,coat:true,color:'#ffffff'});
+  assert.deepEqual(normalizePlayerOutfit({scrubs:false,coat:false,color:'url(evil)'}),{scrubs:false,coat:false,color:'#ffffff'});
 });

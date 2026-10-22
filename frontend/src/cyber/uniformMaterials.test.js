@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Group,Mesh,MeshStandardMaterial,PlaneGeometry,Texture} from 'three';
-import {applyUniformName,applyUniformOutfit,cloneUniformMaterials} from './uniformMaterials.js';
+import {ClampToEdgeWrapping,Group,Mesh,MeshStandardMaterial,PlaneGeometry,RepeatWrapping,Texture} from 'three';
+import {applyUniformName,applyUniformOutfit,cloneUniformMaterials,prepareUniformSurfaceAttachment} from './uniformMaterials.js';
 import {uniformDisplayName,createUniformNameTexture} from './uniformName.js';
 
 function fixture(){
@@ -34,7 +34,7 @@ test('independent users own name materials and cannot tint the supplied crest',(
   }
   assert.equal(originalMaterial.opacity,0);assert.equal(originalMaterial.map,null);
   applyUniformOutfit(alice,{scrubs:true,coat:false,color:'#37664b'},['Tops001','Bottoms001']);
-  assert.equal(alice.getObjectByName('SCRUB_Remy_Shirt').material.color.getHexString(),'37664b');
+  assert.equal(alice.getObjectByName('SCRUB_Remy_Shirt').material.color.getHexString(),'ffffff');
   assert.equal(alice.getObjectByName('SCRUB_BRAND_Remy_Crest').material.color.getHexString(),'ffffff');
   ownedA.concat(ownedB).forEach(material=>material.dispose());
 });
@@ -62,4 +62,37 @@ test('runtime lettering draws only the current user name, without a reference na
     assert.deepEqual(labels,['Técnico de Enfermagem','Beatriz Ação']);
     assert.equal(texture.flipY,false);texture.dispose();
   }finally{globalThis.document=originalDocument;}
+});
+
+test('new surface-attached embroidery clips outside UV bounds and keeps each player material private',()=>{
+  const source=fixture();
+  for(const name of ['COAT_NAME_Remy_Player','SCRUB_NAME_Remy_Player','SCRUB_BRAND_Remy_Crest']){
+    const mesh=source.getObjectByName(name);
+    mesh.userData={uniformSurfaceAttachment:true,uniformSurfaceMesh:name.startsWith('COAT_')?'COAT_Remy_FittedShell':'SCRUB_Remy_Shirt',uniformSurfaceVertexMap:[0,1,2,3]};
+    mesh.castShadow=true;
+  }
+  const legacy=new Mesh(new PlaneGeometry(),new MeshStandardMaterial());legacy.name='COAT_Legacy_NameBadge';source.add(legacy);
+  const originalNameMaterial=source.getObjectByName('COAT_NAME_Remy_Player').material;
+  const alice=source.clone(),bruno=source.clone();
+  cloneUniformMaterials(alice);cloneUniformMaterials(bruno);
+  const aliceName=alice.getObjectByName('COAT_NAME_Remy_Player'),brunoName=bruno.getObjectByName('COAT_NAME_Remy_Player');
+  assert.notEqual(aliceName.material,originalNameMaterial);assert.notEqual(aliceName.material,brunoName.material);
+  assert.equal(originalNameMaterial.polygonOffset,false);assert.equal(source.getObjectByName('COAT_NAME_Remy_Player').castShadow,true);
+  for(const mesh of [aliceName,alice.getObjectByName('SCRUB_NAME_Remy_Player'),alice.getObjectByName('SCRUB_BRAND_Remy_Crest')]){
+    assert.equal(mesh.castShadow,false);assert.equal(mesh.material.polygonOffset,true);
+    assert.equal(mesh.material.polygonOffsetFactor,-1);assert.equal(mesh.material.polygonOffsetUnits,-1);
+    assert.equal(mesh.material.customProgramCacheKey(),aliceName.material.customProgramCacheKey());
+  }
+  assert.equal(prepareUniformSurfaceAttachment(alice.getObjectByName('COAT_Legacy_NameBadge')),false);
+  assert.equal(alice.getObjectByName('COAT_Legacy_NameBadge').material.polygonOffset,false);
+  const shader={fragmentShader:'void main() {\n#include <map_fragment>\n}'};
+  aliceName.material.onBeforeCompile(shader,{});
+  assert.match(shader.fragmentShader,/PREP_UNIFORM_SURFACE_UV_CLIP_V1/);
+  assert.match(shader.fragmentShader,/USE_MAP[\s\S]*vMapUv[\s\S]*discard/);
+  const textureA=new Texture(),textureB=new Texture();
+  textureA.wrapS=RepeatWrapping;textureA.wrapT=RepeatWrapping;
+  applyUniformName(alice,textureA);applyUniformName(bruno,textureB);
+  assert.equal(textureA.wrapS,ClampToEdgeWrapping);assert.equal(textureA.wrapT,ClampToEdgeWrapping);
+  assert.equal(aliceName.material.map,textureA);assert.equal(brunoName.material.map,textureB);
+  assert.equal(originalNameMaterial.map,null);
 });

@@ -152,11 +152,13 @@ Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesm
 - Alterações: Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained.
 
 ## Character Cyberpunk FREE 3d By Oscar Creativo
-- Arquivo: `/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_BodyRig.glb`
+- Fonte preservada: `art/source/SUP_character_cyberpunk_free_3d_by_oscar_cre_BodyRig_armed_archived.glb`
+- Derivado civil preservado: `/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_Civilian_v1.glb`
+- Derivado jogável: `/assets/characters/CHR_Cyberpunk_Remy_Retarget_20261022_v2.glb`
 - Autor: OSCAR CREATIVO (https://sketchfab.com/oscar_creativo)
 - Origem: https://sketchfab.com/3d-models/character-cyberpunk-free-3d-by-oscar-creativo-45469e72f0e04bd5bfbca71696dda0aa
 - Licença: CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
-- Alterações: Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained. Removed only morph targets unused by both default weights and every animation sample from runtime derivative; full morph GLB preserved in art/source/preserved_full_morphs. Active facial and skeletal animation retained.
+- Alterações: rig original preservado; malhas da arma removidas no derivado civil; braço direito abaixado por espelhamento matricial da pose esquerda; escala de 1,70 m; Idle e Walk adaptados dos clipes Mixamo do Remy no Blender; contato dos pés corrigido e reimportado; morphs faciais congelados na amostra inicial. Fontes e movimentos anteriores preservados separadamente. A licença CC-BY-NC-4.0 permanece aplicável aos derivados.
 
 ## Charité University Hospital - Operating Room
 - Arquivo: `/assets/supplied/SUP_charite_university_hospital___operating_room.glb`

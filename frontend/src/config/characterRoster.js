@@ -34,34 +34,38 @@ export function buildCharacterRoster(assets,originals=[],reviews=[]){
     const trusted=review?.sha256===asset.sha256&&review.poseReviewed===true;
     const native=trusted&&review.controlMode==='native'&&review.locomotionValidated===true&&
       asset.rigged===true&&asset.needsRepose!==true&&hasClip(asset,review.idleClip)&&hasClip(asset,review.walkClip);
+    const retargeted=trusted&&review.controlMode==='retargeted'&&review.locomotionValidated===true&&
+      asset.rigged===true&&asset.reimportValidated===true&&asset.needsRepose!==true&&hasClip(asset,review.idleClip)&&hasClip(asset,review.walkClip);
+    const validatedMotion=native||retargeted;
     const fixed=trusted&&review.controlMode==='fixed-pose'&&Boolean(review.standingPose?.clip)&&hasClip(asset,review.standingPose.clip);
     const available=typeof asset.url==='string'&&asset.url.length>0;
     const prototype=available&&asset.quality==='prototype'&&asset.reimportValidated===true&&asset.rigged===true;
-    const prototypeWalk=prototype&&asset.needsRepose!==true&&hasClip(asset,'Idle')&&hasClip(asset,'Walk');
+    const prototypeWalk=!validatedMotion&&prototype&&asset.needsRepose!==true&&hasClip(asset,'Idle')&&hasClip(asset,'Walk');
     const controllable=available;
     const pose=seatedIds.has(asset.id)?'seated':relaxedIds.has(asset.id)?'authored-relaxed':asset.needsRepose?'authored-review':'standing';
     const staticSource=asset.needsRepose&&original?.url?original:asset;
-    const displayUrl=native||fixed||prototypeWalk?asset.url:staticSource.url;
+    const displayUrl=validatedMotion||fixed||prototypeWalk?asset.url:staticSource.url;
     const name=displayNames[asset.id]??asset.name??asset.label??asset.id;
-    const controlMode=!controllable?'unavailable':native?'native':prototypeWalk?'prototype-motion':fixed?'fixed-pose':'static-pose';
+    const controlMode=!controllable?'unavailable':native?'native':retargeted?'retargeted-motion':prototypeWalk?'prototype-motion':fixed?'fixed-pose':'static-pose';
     const reasons=[];
     if(!available)reasons.push('Arquivo indisponível nesta distribuição.');
     if(asset.needsRepose)reasons.push('Pose de origem preservada; exige nova pose/retopologia antes de caminhar.');
     if(prototypeWalk)reasons.push('Rig FK preliminar com Idle e Walk; postura vertical corrigida durante o movimento.');
-    else if(asset.quality==='prototype')reasons.push('Rig FK de protótipo preservado somente para pose e ações seguras.');
+    else if(asset.quality==='prototype'&&!validatedMotion)reasons.push('Rig FK de protótipo preservado somente para pose e ações seguras.');
     if(!trusted)reasons.push('Sem revisão de postura e locomoção vinculada ao hash atual.');
     if(fixed)reasons.push('Deslocamento em pose fixa; não contém caminhada validada.');
     if(native)reasons.push('Idle e caminhada nativos verificados neste arquivo.');
+    if(retargeted)reasons.push('Idle e caminhada adaptados de outro esqueleto e validados neste arquivo.');
     const standingPose=trusted?review.standingPose:prototype&&asset.needsRepose!==true&&hasClip(asset,'Idle')?{clip:'Idle',time:0}:null;
-    const playerStandingPose=native||prototypeWalk?null:prototype&&hasClip(asset,'Idle')?{clip:'Idle',time:0}:standingPose;
-    const actionClips=native?(review.allowedActions??[]):prototypeWalk?clipsOf(asset):[];
+    const playerStandingPose=validatedMotion||prototypeWalk?null:prototype&&hasClip(asset,'Idle')?{clip:'Idle',time:0}:standingPose;
+    const actionClips=validatedMotion?(review.allowedActions??[]):prototypeWalk?clipsOf(asset):[];
     const playerAsset=controllable?{...asset,name,characterControlMode:controlMode,characterStandingPose:playerStandingPose,
       allowedCharacterActions:actionClips,idleClip:review?.idleClip??(hasClip(asset,'Idle')?'Idle':null),walkClip:review?.walkClip??(prototypeWalk?'Walk':null),
-      characterCapabilities:{animatedLocomotion:Boolean(native||prototypeWalk),sitting:asset.id==='CHR_Remy_Mixamo_20261005',riding:asset.id==='CHR_Remy_Mixamo_20261005',driving:true},
+      characterCapabilities:{animatedLocomotion:Boolean(validatedMotion||prototypeWalk),sitting:asset.id==='CHR_Remy_Mixamo_20261005',riding:asset.id==='CHR_Remy_Mixamo_20261005',driving:true},
       rigged:asset.rigged===true||Boolean(asset.originalRig),playable:true,reimportValidated:true,
-      visualStyle:review?.visualStyle??asset.visualStyle,characterControlLabel:native?'animações nativas':prototypeWalk?'caminhada preliminar com correção de postura':'pose original · sem passos'}:null;
-    roster.push({id:asset.id,name,asset,playerAsset,controlMode,controllable,locomotionValidated:Boolean(native),
-      walkingAnimationAvailable:Boolean(native||prototypeWalk),patientEligible:Boolean(native),
+      visualStyle:review?.visualStyle??asset.visualStyle,characterControlLabel:native?'animações nativas':retargeted?'animações adaptadas validadas':prototypeWalk?'caminhada preliminar com correção de postura':'pose original · sem passos'}:null;
+    roster.push({id:asset.id,name,asset,playerAsset,controlMode,controllable,locomotionValidated:Boolean(validatedMotion),
+      walkingAnimationAvailable:Boolean(validatedMotion||prototypeWalk),patientEligible:Boolean(validatedMotion),
       // Every playable/resident wrapper uses the same adult reference height as
       // Remy. The authored pose can be seated or relaxed without shrinking the
       // body itself; pose height and character height are separate concerns.
@@ -69,7 +73,7 @@ export function buildCharacterRoster(assets,originals=[],reviews=[]){
       figures:Math.max(1,Number(asset.figures)||1),available:Boolean(displayUrl),displayUrl,
       displayBytes:staticSource.bytes??asset.bytes??0,standingPose,reviewReport:trusted?review.report:null,
       visualStyle:review?.visualStyle??asset.visualStyle??'authored',reasons,
-      statusLabel:native?'Escolher · caminhada validada':prototypeWalk?'Escolher · caminhada preliminar':'Escolher · pose original',
+      statusLabel:retargeted?'Escolher · caminhada adaptada validada':native?'Escolher · caminhada validada':prototypeWalk?'Escolher · caminhada preliminar':'Escolher · pose original',
       context:pose==='seated'?'Leitura e descanso':pose==='authored-relaxed'||pose==='authored-review'?'Exposição cultural':'Praça e acolhimento',
     });
   }
@@ -79,7 +83,7 @@ export function buildCharacterRoster(assets,originals=[],reviews=[]){
 }
 
 export function characterSelectionOptions(roster){
-  return roster.map(entry=>({id:entry.id,label:`${entry.name}${entry.controlMode==='prototype-motion'?' · caminhada preliminar':entry.walkingAnimationAvailable?'':' · pose original'}`,disabled:!entry.controllable,
+  return roster.map(entry=>({id:entry.id,label:`${entry.name}${entry.controlMode==='retargeted-motion'?' · caminhada adaptada':entry.controlMode==='prototype-motion'?' · caminhada preliminar':entry.walkingAnimationAvailable?'':' · pose original'}`,disabled:!entry.controllable,
     controlMode:entry.controlMode,reason:entry.walkingAnimationAvailable?'Disponível para jogar com animação de caminhada.':'Disponível para jogar na pose original.',asset:entry.playerAsset}));
 }
 

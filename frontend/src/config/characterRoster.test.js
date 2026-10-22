@@ -15,11 +15,13 @@ test('all twenty character assets and twenty-one figures remain represented with
   assert.equal(roster.length,20);assert.equal(roster.reduce((sum,entry)=>sum+entry.figures,0),21);
   const players=roster.filter(entry=>entry.controllable);
   assert.equal(players.length,20);assert.ok(players.every(entry=>entry.playerAsset?.playable));
-  assert.equal(players.filter(entry=>entry.locomotionValidated).length,2);
+  assert.equal(players.filter(entry=>entry.locomotionValidated).length,3);
   assert.equal(players.filter(entry=>entry.controlMode==='prototype-motion').length,11);
   assert.equal(players.filter(entry=>entry.controlMode==='static-pose').length,6);
   assert.equal(players.find(entry=>entry.id==='SUP_lowpoly_anime_character_cyberstyle').visualStyle,'stylized');
-  assert.equal(players.find(entry=>entry.controlMode==='fixed-pose').playerAsset.allowedCharacterActions.length,0);
+  const cyberpunk=players.find(entry=>entry.id==='SUP_character_cyberpunk_free_3d_by_oscar_cre');
+  assert.equal(cyberpunk.controlMode,'retargeted-motion');
+  assert.deepEqual(cyberpunk.playerAsset.allowedCharacterActions,['Idle','Walk']);
   assert.equal(players.find(entry=>entry.id==='SUP_lowpoly_anime_character_cyberstyle').playerAsset.characterCapabilities.sitting,false);
   assert.equal(players.find(entry=>entry.id==='CHR_Remy_Mixamo_20261005').playerAsset.characterCapabilities.riding,true);
   assert.equal(characterSelectionOptions(roster).length,20);
@@ -54,10 +56,43 @@ test('hash changes and incomplete clips disable native walking while keeping ava
   const source=JSON.stringify(assets);buildCharacterRoster(assets,originals,reviews);assert.equal(JSON.stringify(assets),source);
 });
 
-test('only characters with native validated walking enter the autonomous hospital patient flow',()=>{
+test('only characters with validated walking enter the autonomous hospital patient flow',()=>{
   const patients=hospitalPatientCharacters(roster,8);
-  assert.deepEqual(patients.map(entry=>entry.id).sort(),['CHR_Remy_Mixamo_20261005','SUP_lowpoly_anime_character_cyberstyle'].sort());
+  assert.deepEqual(patients.map(entry=>entry.id).sort(),['CHR_Remy_Mixamo_20261005','SUP_lowpoly_anime_character_cyberstyle','SUP_character_cyberpunk_free_3d_by_oscar_cre'].sort());
   assert.ok(patients.every(entry=>entry.patientEligible&&entry.locomotionValidated&&entry.playerAsset.walkClip&&entry.playerAsset.idleClip));
+});
+
+test('reviewed retargeted walking is explicitly adapted and requires the reviewed imported file',()=>{
+  const asset={id:'retargeted-character',category:'Personagens',url:'/assets/characters/retargeted.glb',
+    sha256:'reviewed-retarget-hash',rigged:true,reimportValidated:true,quality:'retargeted',animations:['Idle','Walk']};
+  const review={id:asset.id,sha256:asset.sha256,controlMode:'retargeted',poseReviewed:true,locomotionValidated:true,
+    idleClip:'Idle',walkClip:'Walk',allowedActions:['Idle','Walk'],report:'reports/retargeted.json'};
+  const entry=buildCharacterRoster([asset],[],[review])[0];
+  assert.equal(entry.controlMode,'retargeted-motion');
+  assert.equal(entry.playerAsset.characterControlMode,'retargeted-motion');
+  assert.equal(entry.locomotionValidated,true);assert.equal(entry.walkingAnimationAvailable,true);
+  assert.equal(entry.playerAsset.characterCapabilities.animatedLocomotion,true);
+  assert.equal(entry.playerAsset.characterStandingPose,null);
+  assert.deepEqual(entry.playerAsset.allowedCharacterActions,['Idle','Walk']);
+  assert.match(entry.playerAsset.characterControlLabel,/adaptadas validadas/);
+  assert.match(characterSelectionOptions([entry])[0].label,/caminhada adaptada/);
+  assert.ok(entry.reasons.some(reason=>/adaptados de outro esqueleto/.test(reason)));
+  assert.ok(entry.reasons.every(reason=>!/nativ|preliminar/i.test(reason)));
+  assert.deepEqual(hospitalPatientCharacters([entry],1),[entry]);
+  const promoted=buildCharacterRoster([{...asset,quality:'prototype'}],[],[review])[0];
+  assert.equal(promoted.controlMode,'retargeted-motion');
+  assert.ok(promoted.reasons.every(reason=>!/nativ|preliminar|protótipo/i.test(reason)));
+  for(const altered of [{...asset,sha256:'changed-export'}, {...asset,reimportValidated:false},
+    {...asset,rigged:false}, {...asset,needsRepose:true}, {...asset,animations:['Idle']}, {...asset,animations:['Walk']}]){
+    const rejected=buildCharacterRoster([altered],[],[review])[0];
+    assert.equal(rejected.controlMode,'static-pose');assert.equal(rejected.locomotionValidated,false);
+    assert.equal(rejected.walkingAnimationAvailable,false);assert.equal(rejected.patientEligible,false);
+    assert.equal(rejected.playerAsset.characterCapabilities.animatedLocomotion,false);
+    assert.deepEqual(rejected.playerAsset.allowedCharacterActions,[]);
+  }
+  for(const altered of [{...review,poseReviewed:false},{...review,locomotionValidated:false}]){
+    assert.equal(buildCharacterRoster([asset],[],[altered])[0].controlMode,'static-pose');
+  }
 });
 
 test('every actor gets a deterministic non-overlapping city position outside supplied obstacles',()=>{

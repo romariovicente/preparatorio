@@ -27,14 +27,33 @@ async function compare(sourcePath,targetPath){
  assert.deepEqual(stableTransforms(target.scene),stableTransforms(source.scene));
  assert.deepEqual(target.animations.map(clip=>({name:clip.name,duration:clip.duration,tracks:clip.tracks.length})),
   source.animations.map(clip=>({name:clip.name,duration:clip.duration,tracks:clip.tracks.length})));
+ return {source:source.scene,target:target.scene};
 }
 
-test('optimized Remy runtime files preserve the exact articulated character and animations while selecting smaller textures',async()=>{
+function scrubColors(scene){
+ const colors=[];
+ scene.traverse(object=>{
+  if(!object.isMesh||!/^SCRUB_/.test(object.name)||/^SCRUB_(BRAND|NAME)_/.test(object.name))return;
+  for(const material of Array.isArray(object.material)?object.material:[object.material])colors.push({mesh:object.name,material:material.name,color:material.color?.getHexString()});
+ });
+ return colors;
+}
+
+test('optimized Remy runtime files preserve articulation while the active uniform is white and earlier assets remain registered',async()=>{
  const validation=readJson(new URL('../../../reports/AVATAR_RUNTIME_VALIDATION_20261021.json',import.meta.url));
  const optimization=readJson(new URL('../../../reports/AVATAR_RUNTIME_OPTIMIZATION_20261021.json',import.meta.url));
+ const reimport=readJson(new URL('../../../reports/costumes/REMY_WHITE_UNIFORM_SURFACE_REIMPORT_20261022.json',import.meta.url));
+ const packageReport=readJson(new URL('../../../reports/costumes/REMY_WHITE_UNIFORM_SURFACE_PACKAGE_20261022.json',import.meta.url));
  assert.equal(validation.passed,true);assert.equal(optimization.passed,true);
+ assert.equal(reimport.status,'reimport-passed');assert.equal(Object.values(reimport.checks).every(Boolean),true);
+ assert.equal(packageReport.whiteScrubs,true);assert.equal(packageReport.imageBytesUnchangedFromApprovedWeb,true);
  const character=readJson(new URL('../config/mixamoAssets.json',import.meta.url)).find(asset=>asset.id==='CHR_Remy_Mixamo_20261005');
- const costume=readJson(new URL('../config/costumeAssets.json',import.meta.url)).find(asset=>asset.baseId===character.id);
+ const costume=readJson(new URL('../config/costumeAssets.json',import.meta.url)).find(asset=>asset.id==='COSTUME_Remy_White_Uniform_Surface_20261022');
+ assert.equal(costume.baseId,character.id);assert.equal(costume.scrubColorPolicy,'fixed-white');
+ assert.equal(packageReport.webSha256,costume.sha256);assert.equal(packageReport.webBytes,costume.bytes);
+ assert.equal(packageReport.fullSha256,costume.sourceSha256);assert.equal(packageReport.fullBytes,costume.sourceBytes);
+ assert.equal(reimport.sha256,costume.sha256);assert.equal(reimport.bytes,costume.bytes);
+ assert.ok(reimport.maxGapMeters<=costume.uniformSurfaceAttachment.toleranceMeters);
  for(const record of [character,costume]){
   assert.equal(digest(fileUrl(record.url)),record.sha256);
   assert.equal(readFileSync(fileUrl(record.url)).length,record.bytes);
@@ -42,5 +61,15 @@ test('optimized Remy runtime files preserve the exact articulated character and 
   assert.ok(record.bytes<(record.sourceAssetBytes??record.sourceBytes));
  }
  await compare(character.sourceAssetUrl,character.url);
- await compare(costume.sourceUrl,costume.url);
+ const current=await compare(costume.sourceUrl,costume.url);
+ for(const [kind,scene] of Object.entries(current)){
+  const colors=scrubColors(scene);
+  assert.ok(colors.length>=3,`${kind} scrub materials`);
+  assert.equal(colors.every(material=>material.color==='ffffff'),true,`${kind} scrub fabrics must be white`);
+ }
+ const historical=costume.history.find(item=>item.id==='COSTUME_Remy_Senac_20261013');
+ assert.equal(digest(fileUrl(historical.url)),historical.sha256);
+ assert.equal(digest(fileUrl(historical.sourceUrl)),historical.sourceSha256);
+ const old=await loadTexturelessGLB(fileUrl(historical.sourceUrl));
+ assert.equal(scrubColors(old.scene).some(material=>material.color!=='ffffff'),true,'the archived blue uniform must not be relabeled as white');
 });

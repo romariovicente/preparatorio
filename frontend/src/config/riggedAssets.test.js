@@ -21,13 +21,16 @@ test('all 18 supplied characters retain or receive real weighted armatures',()=>
   }
   if(rig){
    assert.ok(rig.reimportValidated&&rig.actionsReimportValidated);
-   assert.ok(doc.animations.some(a=>a.name==='Dance')&&doc.animations.some(a=>a.name==='Interact'));
+   assert.ok(rig.clips.every(name=>doc.animations.some(animation=>animation.name===name)),original.id+' declared clips');
+   if(rig.quality==='prototype')assert.ok(rig.clips.includes('Dance')&&rig.clips.includes('Interact'));
    assert.equal(rig.weightCoverage,1);assert.equal(rig.maxInfluences,4);
   }
  }
 });
 test('limited poses cannot enter the playable walking selection',()=>{
- assert.equal(rigs.length,16);assert.equal(rigs.filter(r=>r.playable).length,11);
+ assert.equal(rigs.length,17);assert.equal(rigs.filter(r=>r.playable).length,12);
+ assert.equal(rigs.filter(r=>r.quality==='prototype').length,16);
+ assert.equal(rigs.filter(r=>r.quality==='retargeted').length,1);
  assert.equal(rigs.filter(r=>r.needsRepose).length,5);
  assert.ok(rigs.filter(r=>r.needsRepose).every(r=>!r.playable&&!r.clips.includes('Walk')));
 });

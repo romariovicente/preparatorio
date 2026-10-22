@@ -367,5 +367,28 @@
     "needsRepose": true,
     "notes": "Editable fitted FK rig. Original pose preserved except the approved doctor T-pose conversion. Procedural clips; limited-pose characters need retopology/repose before locomotion. Dance and Interact are procedural prototype clips; limited-pose rigs use smaller upper-body motion.",
     "actionsReimportValidated": true
+  },
+  {
+    "id": "SUP_character_cyberpunk_free_3d_by_oscar_cre",
+    "url": "/assets/characters/CHR_Cyberpunk_Remy_Retarget_20261022_v5.glb",
+    "bones": 107,
+    "skinnedVertices": 148244,
+    "weightCoverage": 1,
+    "maxInfluences": 4,
+    "clips": ["Idle", "Walk"],
+    "maxWalkDeformation": 0.5691095590591431,
+    "reimportValidated": true,
+    "actionsReimportValidated": true,
+    "sha256": "ad3aa0b0ac66f6f8cc47c749dd24890f517b3e2d78ebd228ec8ee2782f4d3fc5",
+    "bytes": 95675464,
+    "dimensions": [0.533881, 0.361951, 1.699999],
+    "quality": "retargeted",
+    "playable": true,
+    "needsRepose": false,
+    "sourceAssetUrl": "/assets/supplied/SUP_character_cyberpunk_free_3d_by_oscar_cre_Civilian_v1.glb",
+    "sourceAssetSha256": "4aacf549b4e78361ad2a4d61bfd598760ac9db72774c0457b59f8c6bbf27e79c",
+    "retargetSourceId": "CHR_Remy_Mixamo_20261005",
+    "verificationReport": "reports/CHARACTER_CYBERPUNK_REMY_REIMPORT_20261022_v5.json",
+    "notes": "Civilian Cyberpunk corrected in Blender: centered cervical/head chain, relaxed mirrored fingers, anatomical hip anchors and leg directions transferred from Remy per frame. Fresh GLB reimport verified normalized weights, four influences, 1.70m Idle height and supporting-foot contact within 4.1mm including interpolated frames. Adapted Idle/Walk animation. Sitting, motorcycle posture, fitted clothing and final realism remain separate reviews."
   }
 ]

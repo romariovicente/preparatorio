@@ -18,7 +18,8 @@ test('two authenticated local sessions retain distinct names, coats and seated p
   const snapshot=await (await fetch(base+'/snapshot?room=cyber',{headers:{Authorization:`Bearer ${a.token}`}})).json();
   assert.equal(snapshot.state.players[a.actorId].displayName,'Ana Luísa');
   assert.equal(snapshot.state.players[b.actorId].displayName,'Bruno');
-  assert.equal(snapshot.state.players[a.actorId].outfit.color,'#37664b');
+  assert.equal(snapshot.state.players[a.actorId].outfit.color,'#ffffff');
+  assert.equal(snapshot.state.players[b.actorId].outfit.color,'#ffffff');
   assert.equal(snapshot.state.players[b.actorId].sitting,true);
   assert.equal(snapshot.state.players[b.actorId].mode,'bus-brt');
   assert.equal((await post('/position',{room:'cyber',position:{x:999,y:0,z:0},displayName:'Intruso'},b)).status,400);

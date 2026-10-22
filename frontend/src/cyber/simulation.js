@@ -1,4 +1,5 @@
 import {resolveAssetReferences} from '../config/deploymentConfig.js';
+import {HOSPITAL_SCRUB_COLOR} from '../network/playerIdentity.js';
 import {resolveCarSource,safeVehicleCopy,canEnterCar} from './carInteraction.js';
 import {resolveMotorcycle,nearestMotorcycle} from './motorcycleInteraction.js';
 import {playableCityBounds} from '../config/cityBounds.js';
@@ -130,7 +131,7 @@ export function advanceCityPosition(position, direction, delta, speed = 5, obsta
 
 export function createCyberState() {
   return { version:1, elapsed:0, position:{...CITY_START}, heading:0, mode:'foot', sitting:false, action:'Idle',
-    outfit:{ scrubs:true, coat:false, color:'#247fba' }, inventory:{ flowers:0, fish:0, seeds:6, harvest:0 },
+    outfit:{ scrubs:true, coat:false, color:HOSPITAL_SCRUB_COLOR }, inventory:{ flowers:0, fish:0, seeds:6, harvest:0 },
     plots:Object.fromEntries(FARM_PLOTS.map(plot => [plot.id,null])), flowerCooldowns:{}, fishing:null, fishingAttempts:0, elevator:null, jump:null,jumpHeight:0,jumpCount:0, personalVehicles:{}, garage:{}, liveBuses:createLiveBuses(),busControls:{vehicleId:null,role:null},motorcycleControls:{engineOn:false}, carControls:{doorOpen:false,engineOn:false,windowsOpen:false}, trailer:'flatbed', lastMessage:'Bem-vindo a Arapiraca PREP.' };
 }
 
@@ -272,8 +273,7 @@ export function applyCyberAction(state, action, context = {}) {
     return update({action:'Interact'},'Interagindo com o objeto.');
   }
   if (action.type === 'OUTFIT') {
-    const color = ['#247fba','#37664b','#783874','#c85e26'].includes(action.color)?action.color:state.outfit.color;
-    return update({outfit:{scrubs:true,coat:Boolean(action.coat),color}},'Roupa aplicada no provador 3D de demonstração.');
+    return update({outfit:{scrubs:action.scrubs!==false,coat:Boolean(action.coat),color:HOSPITAL_SCRUB_COLOR}},'Roupa aplicada no provador 3D de demonstração.');
   }
   if (action.type === 'FLOWER') {
     const flower = FLOWER_BASES.find(f => f.id === action.flowerId);

@@ -58,7 +58,7 @@ import {useServerClock} from './useServerClock.js';
 import {setWorldShadows} from './modelLighting.js';
 import { carriedObject } from '../world/interactionState.js';
 import { useSharedObjects } from '../network/useSharedObjects.js';
-import {readPlayerName,savePlayerName} from '../network/playerIdentity.js';
+import {HOSPITAL_SCRUB_COLOR,readPlayerName,savePlayerName} from '../network/playerIdentity.js';
 import { interactionRooms } from '../network/roomConfig.js';
 import { rewardBalance, readProgress } from '../world/progress.js';
 import { locationIds } from '../world/locations.js';
@@ -282,7 +282,7 @@ function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,
 function NPC({id,position,name,onAsk}) {
   const asset=preferredCharacter;
   return <group position={position}>
-    {asset&&<CostumedCharacter asset={asset} height={1.7} outfit={{color:'#247fba',coat:true}} displayName={name} playing clip="Idle"/>}
+    {asset&&<CostumedCharacter asset={asset} height={1.7} outfit={{color:HOSPITAL_SCRUB_COLOR,coat:true}} displayName={name} playing clip="Idle"/>}
     <Html position={[0,2.1,0]} center distanceFactor={12} zIndexRange={[1,0]}><button className="cyber-world-label" onClick={()=>onAsk(id,name)}>{name} · conversar</button></Html>
   </group>;
 }
@@ -676,7 +676,7 @@ export default function CyberCity() {
           <AssetRetryButton/>
           <PlayerNameForm value={nameDraft} onChange={setNameDraft} onSubmit={saveUniformName}/>
           <h3>Personagem e ações</h3><label>Personagem<select value={character.id} onChange={event=>changeCharacter(event.target.value)}>{characterOptions.map(option=><option key={option.id} value={option.id} disabled={option.disabled}>{option.label}</option>)}</select></label>
-          <p className="cyber-tip">{character.characterControlMode==='native'?'Animações nativas validadas.':character.characterControlMode==='prototype-motion'?'Caminhada preliminar com correção de postura.':'Este personagem preserva a pose original enquanto a caminhada é preparada.'}</p>
+          <p className="cyber-tip">{character.characterControlMode==='native'?'Animações nativas validadas.':character.characterControlMode==='retargeted-motion'?'Animações adaptadas de outro esqueleto e validadas para este personagem.':character.characterControlMode==='prototype-motion'?'Caminhada preliminar com correção de postura.':'Este personagem preserva a pose original enquanto a caminhada é preparada.'}</p>
           <details><summary>Encontrar os {characterRoster.length} personagens na cidade</summary><p>Moradores e exposições permanecem no mapa. Os modelos carregam quando você se aproxima.</p>{rosterZones.map(zone=><button key={zone.id} onClick={()=>commit({type:'TELEPORT',zoneId:zone.id})}>Visitar · {zone.label}</button>)}</details>
           <div className="cyber-action-grid"><button onClick={()=>commit({type:'DANCE'})} disabled={!character.animations.includes('Dance')||Boolean(held)}>{snapshot.action==='Dance'?'Parar dança':'Dançar'}</button><button onClick={()=>commit({type:snapshot.sitting&&snapshot.mode==='foot'?'STAND':'SIT',benchId:closestBench.id})}>{snapshot.sitting&&snapshot.mode==='foot'?'Levantar':'Sentar no banco'}</button></div>
           <button disabled={snapshot.mode!=='foot'||snapshot.sitting||Boolean(snapshot.jump)||Boolean(snapshot.elevator)} onClick={()=>commit({type:'JUMP'})}>Pular · Espaço</button>
@@ -726,7 +726,7 @@ export default function CyberCity() {
         {tab==='clothes'&&<>
           <PlayerNameForm value={nameDraft} onChange={setNameDraft} onSubmit={saveUniformName}/>
           <p>Nome bordado: <strong>{playerName}</strong>. Cada jogador usa o nome do próprio usuário.</p>
-          <h3>Provador de uniformes</h3><p>{uniformCharacters.length?'Experimente um jaleco sobre o pijama hospitalar nos personagens com uniforme preparado.':'Jalecos e pijamas para os novos personagens realistas estão em ajuste. O traje original do personagem foi mantido.'}</p>{uniformCharacters.length>0&&<label>Personagem com uniforme<select value={costumeFor(character)?character.id:''} onChange={event=>changeCharacter(event.target.value)}><option value="" disabled>Escolha um personagem</option>{uniformCharacters.map(asset=><option key={asset.id} value={asset.id}>{asset.name}</option>)}</select></label>}<label>Cor do pijama<select disabled={!costumeFor(character)} value={snapshot.outfit.color} onChange={event=>commit({type:'OUTFIT',coat:snapshot.outfit.coat,color:event.target.value})}><option value="#247fba">Azul</option><option value="#37664b">Verde</option><option value="#783874">Violeta</option><option value="#c85e26">Laranja</option></select></label><label className="cyber-check"><input type="checkbox" disabled={!costumeFor(character)} checked={snapshot.outfit.coat} onChange={event=>commit({type:'OUTFIT',coat:event.target.checked})}/>Jaleco sobre o pijama</label>{!costumeFor(character)&&uniformCharacters.length>0&&<p>Este personagem mantém seu traje original. Escolha um dos personagens acima para experimentar os uniformes.</p>}<p className="cyber-tip">O nome bordado acompanha o seu perfil. As cores disponíveis alteram somente o tecido do pijama.</p><button onClick={()=>commit({type:'TELEPORT',zoneId:'store'})}>Visitar loja</button>
+          <h3>Provador de uniformes</h3><p>{uniformCharacters.length?'Experimente um jaleco sobre o pijama hospitalar nos personagens com uniforme preparado.':'Jalecos e pijamas para os novos personagens realistas estão em ajuste. O traje original do personagem foi mantido.'}</p>{uniformCharacters.length>0&&<label>Personagem com uniforme<select value={costumeFor(character)?character.id:''} onChange={event=>changeCharacter(event.target.value)}><option value="" disabled>Escolha um personagem</option>{uniformCharacters.map(asset=><option key={asset.id} value={asset.id}>{asset.name}</option>)}</select></label>}<p><strong>Pijama hospitalar branco</strong></p><label className="cyber-check"><input type="checkbox" disabled={!costumeFor(character)} checked={snapshot.outfit.coat} onChange={event=>commit({type:'OUTFIT',coat:event.target.checked})}/>Jaleco sobre o pijama</label>{!costumeFor(character)&&uniformCharacters.length>0&&<p>Este personagem mantém seu traje original. Escolha um dos personagens acima para experimentar os uniformes.</p>}<p className="cyber-tip">O nome bordado acompanha o seu perfil. O tecido do pijama permanece branco.</p><button onClick={()=>commit({type:'TELEPORT',zoneId:'store'})}>Visitar loja</button>
         </>}
         {tab==='jarvis'&&<>
           <h3>{npc.name}</h3><p>{deployment.apiBaseUrl?'Consulta ao índice de aulas e títulos do Drive pelo serviço PREPARATÓRIO. IA online não conectada.':'Consulta de fontes indisponível nesta publicação. Explore o índice de aulas e os links do acervo. IA online não conectada.'}</p><form onSubmit={ask}><label>Pergunta<textarea value={question} maxLength={500} onChange={event=>setQuestion(event.target.value)} placeholder="O que você deseja estudar?"/></label><button type="submit" disabled={!deployment.apiBaseUrl||asking||question.trim().length<3}>{asking?'Consultando fontes…':'Consultar fontes'}</button></form>
