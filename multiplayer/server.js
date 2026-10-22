@@ -40,7 +40,10 @@ export function createDemoServer({rpgConfigPath,rpgNow}={}) {
   const snapshot = room => ({ state:room.state,revision:room.revision });
   const broadcast = room => {
     const text = `event: snapshot\ndata: ${JSON.stringify(snapshot(room))}\n\n`;
-    for (const response of room.subscribers) response.write(text);
+    for (const response of room.subscribers) {
+      if (response.destroyed || response.writableEnded) { room.subscribers.delete(response);continue; }
+      response.write(text);
+    }
   };
   const join = (room,session) => {
     if (!room.state.players[session.actorId]) {
@@ -162,9 +165,17 @@ export function createDemoServer({rpgConfigPath,rpgNow}={}) {
       send(404,{ok:false,message:'Rota indisponível.'});
     } catch (error) { send(400,{ok:false,message:error.message}); }
   });
-  server.on('close',() => { for (const room of rooms.values()) for (const response of room.subscribers) response.end(); });
+  const closeSubscribers = () => {
+    for (const room of rooms.values()) {
+      const responses=[...room.subscribers];
+      // Detach every feed before ending any: its close event broadcasts presence.
+      room.subscribers.clear();
+      for (const response of responses) if (!response.destroyed && !response.writableEnded) response.end();
+    }
+  };
+  server.on('close',closeSubscribers);
   server.closeDemo = async () => {
-    for (const room of rooms.values()) for (const response of room.subscribers) response.end();
+    closeSubscribers();
     const closing=new Promise((done,reject) => server.close(error => error ? reject(error) : done()));
     server.closeAllConnections();
     await closing;

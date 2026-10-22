@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { createDemoServer } from './server.js';
+import { playableCityBounds } from '../frontend/src/config/cityBounds.js';
 
 async function demo(t) {
   const server=createDemoServer({rpgConfigPath:null});
@@ -101,8 +102,10 @@ test('cyber presence supports underground lift and seated heights while other ro
   const d=await demo(t),a=await d.session(),b=await d.session();
   const feed=await d.events(b);await d.events(a);
   for(const y of [-6.5,-6,.52,1.1,2])assert.equal((await d.position(a,{x:0,y,z:35})).status,200);
+  const {minX,maxX,minZ,maxZ}=playableCityBounds;
+  for(const p of [{x:minX,y:0,z:35},{x:maxX,y:0,z:35},{x:0,y:0,z:minZ},{x:0,y:0,z:maxZ}])assert.equal((await d.position(a,p)).status,200);
   const stable=await d.snapshot(a);
-  for(const p of [{x:0,y:-6.501,z:35},{x:0,y:2.001,z:35},{x:118.001,y:0,z:35},{x:0,y:0,z:-118.001}])assert.equal((await d.position(a,p)).status,400);
+  for(const p of [{x:0,y:-6.501,z:35},{x:0,y:2.001,z:35},{x:minX-.001,y:0,z:35},{x:maxX+.001,y:0,z:35},{x:0,y:0,z:minZ-.001},{x:0,y:0,z:maxZ+.001}])assert.equal((await d.position(a,p)).status,400);
   assert.deepEqual((await d.snapshot(a)).state.players[a.actorId].position,stable.state.players[a.actorId].position);
   await d.position(a,{x:-17,y:-6,z:56});
   const underground=await d.snapshot(a);
@@ -130,4 +133,21 @@ test('cyber cannot pick surface objects or drop a carried item through undergrou
   assert.equal((await d.action(a,'DROP',pick.createdId,{position:{x:-10,y:0,z:17}})).ok,true);
   await d.position(a,{x:-3,y:0,z:4.5},'campus');
   assert.equal((await d.action(a,'PICKUP','base:campus_kit',{},'campus')).ok,true);
+});
+
+test('server shutdown closes two active SSE feeds without broadcasting into ended responses',async t=>{
+  const server=createDemoServer({rpgConfigPath:null});
+  await new Promise(done=>server.listen(0,'127.0.0.1',done));
+  t.after(async()=>{if(server.listening)await server.closeDemo();});
+  const base=`http://127.0.0.1:${server.address().port}`,feeds=[];
+  for(let index=0;index<2;index++){
+    const player=await fetch(base+'/session',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}).then(response=>response.json());
+    const response=await fetch(base+'/events?room=cyber',{headers:{Authorization:`Bearer ${player.token}`}});
+    assert.equal(response.status,200);feeds.push(response);
+  }
+  await server.closeDemo();
+  await Promise.all(feeds.map(response=>response.body.cancel()));
+  // Run queued close callbacks while this test still owns any resulting error.
+  await new Promise(setImmediate);
+  assert.equal(server.listening,false);
 });

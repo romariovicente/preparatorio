@@ -163,26 +163,54 @@
   },
   {
     "id": "SUP_plague_doctor_alchemist___glass_beak_mask",
-    "url": "/assets/characters/CHR_plague_doctor_alchemist___glass_beak_mask_Actions_v3.glb",
+    "url": "/assets/characters/CHR_Alchemist_Anime_Retarget_20261022.glb",
     "bones": 20,
     "skinnedVertices": 72967,
     "weightCoverage": 1,
     "maxInfluences": 4,
     "clips": [
-      "Walk",
       "Idle",
-      "Dance",
-      "Interact"
+      "Walk"
     ],
-    "maxWalkDeformation": 0.5919670203123123,
+    "maxWalkDeformation": 0.47013920545578003,
     "reimportValidated": true,
-    "sha256": "00f175ce2210df98d8ad4fa1fb3538ceabe6e9b62a5896e7f14ccdf9ac4e9265",
-    "bytes": 5766080,
-    "quality": "prototype",
+    "sha256": "4aa6a55dd0e3fff2f3ee507544988004177befc3b9b9fd0e26e3e4cc245378f0",
+    "bytes": 5828920,
+    "quality": "retargeted",
     "playable": true,
     "needsRepose": false,
-    "notes": "Editable fitted FK rig. Original pose preserved except the approved doctor T-pose conversion. Procedural clips; limited-pose characters need retopology/repose before locomotion. Dance and Interact are procedural prototype clips; limited-pose rigs use smaller upper-body motion.",
-    "actionsReimportValidated": true
+    "notes": "Idle/Walk nativos da Anime CyberStyle adaptados ao rig FK de 20 ossos no Blender. Altura Remy de 1,70 m e piso revisados por reimportação e CPU skinning. 2.057 vértices dos frascos do cinto foram presos ao quadril para preservar sua forma. Roupa original de fantasia preservada; dedos, simulação de tecido, sentar, conduzir e realismo final têm revisão própria. Calçados conservam a orientação neutra original; os dois pés parados foram conferidos separadamente.",
+    "actionsReimportValidated": true,
+    "retargetSourceId": "SUP_lowpoly_anime_character_cyberstyle",
+    "scaleReferenceId": "CHR_Remy_Mixamo_20261005",
+    "validationReport": "reports/CHARACTER_ALCHEMIST_REIMPORT_20261022.json",
+    "history": [
+      {
+        "id": "SUP_plague_doctor_alchemist___glass_beak_mask",
+        "url": "/assets/characters/CHR_plague_doctor_alchemist___glass_beak_mask_Actions_v3.glb",
+        "bones": 20,
+        "skinnedVertices": 72967,
+        "weightCoverage": 1,
+        "maxInfluences": 4,
+        "clips": [
+          "Walk",
+          "Idle",
+          "Dance",
+          "Interact"
+        ],
+        "maxWalkDeformation": 0.5919670203123123,
+        "reimportValidated": true,
+        "sha256": "00f175ce2210df98d8ad4fa1fb3538ceabe6e9b62a5896e7f14ccdf9ac4e9265",
+        "bytes": 5766080,
+        "quality": "prototype",
+        "playable": true,
+        "needsRepose": false,
+        "notes": "Editable fitted FK rig. Original pose preserved except the approved doctor T-pose conversion. Procedural clips; limited-pose characters need retopology/repose before locomotion. Dance and Interact are procedural prototype clips; limited-pose rigs use smaller upper-body motion.",
+        "actionsReimportValidated": true,
+        "preservedAt": "2026-10-22T22:32:46.974941+00:00",
+        "reason": "Procedural Actions_v3 preserved before native motion adaptation"
+      }
+    ]
   },
   {
     "id": "SUP_plague_doctor___bone_mask__warding_cane",
@@ -375,13 +403,20 @@
     "skinnedVertices": 148244,
     "weightCoverage": 1,
     "maxInfluences": 4,
-    "clips": ["Idle", "Walk"],
+    "clips": [
+      "Idle",
+      "Walk"
+    ],
     "maxWalkDeformation": 0.5691095590591431,
     "reimportValidated": true,
     "actionsReimportValidated": true,
     "sha256": "ad3aa0b0ac66f6f8cc47c749dd24890f517b3e2d78ebd228ec8ee2782f4d3fc5",
     "bytes": 95675464,
-    "dimensions": [0.533881, 0.361951, 1.699999],
+    "dimensions": [
+      0.533881,
+      0.361951,
+      1.699999
+    ],
     "quality": "retargeted",
     "playable": true,
     "needsRepose": false,

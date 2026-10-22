@@ -7,7 +7,12 @@
     "poseReviewed": true,
     "idleClip": "Idle",
     "walkClip": "Walk",
-    "allowedActions": ["Idle", "Walk", "Dance", "Interact"],
+    "allowedActions": [
+      "Idle",
+      "Walk",
+      "Dance",
+      "Interact"
+    ],
     "report": "reports/AVATAR_RUNTIME_VALIDATION_20261021.json",
     "notes": "Rig Mixamo de 55 ossos, quatro clipes e geometria preservados exatamente; cópia Web reduz apenas as texturas incorporadas. Uniforme e nomes individuais preservados. Revisão artística de realismo final permanece pendente."
   },
@@ -19,8 +24,14 @@
     "poseReviewed": true,
     "idleClip": "Armature|Idle",
     "walkClip": "Armature|Walk",
-    "allowedActions": ["Idle", "Walk"],
-    "standingPose": { "clip": "Armature|Idle", "time": 0 },
+    "allowedActions": [
+      "Idle",
+      "Walk"
+    ],
+    "standingPose": {
+      "clip": "Armature|Idle",
+      "time": 0
+    },
     "visualStyle": "stylized",
     "report": "reports/CHARACTER_NATIVE_MOTION_20261019.json",
     "notes": "145 ossos originais, Idle/Walk nativos; 10 amostras de malha real finitas, altura variando menos de 4%. Estilo anime, não declarado fotorealista."
@@ -33,10 +44,36 @@
     "poseReviewed": true,
     "idleClip": "Idle",
     "walkClip": "Walk",
-    "allowedActions": ["Idle", "Walk"],
-    "standingPose": { "clip": "Idle", "time": 0 },
+    "allowedActions": [
+      "Idle",
+      "Walk"
+    ],
+    "standingPose": {
+      "clip": "Idle",
+      "time": 0
+    },
     "visualStyle": "realistic",
     "report": "reports/CHARACTER_CYBERPUNK_REMY_REIMPORT_20261022_v5.json",
     "notes": "Rig civil de 107 ossos, sem malha ou material de arma. Cabeça/pescoço centralizados, dedos direitos relaxados como os esquerdos, quadris e pernas adaptados aos vetores anatômicos do Remy a cada quadro. Reimportação conferiu pesos, 1,70 m em pé e contato dos pés dentro de 4,1 mm inclusive entre quadros. Animação adaptada Idle/Walk; fontes preservadas. Sentar, pilotar moto, vestuário ajustado e realismo final mantêm revisões próprias."
+  },
+  {
+    "id": "SUP_plague_doctor_alchemist___glass_beak_mask",
+    "sha256": "4aa6a55dd0e3fff2f3ee507544988004177befc3b9b9fd0e26e3e4cc245378f0",
+    "controlMode": "retargeted",
+    "locomotionValidated": true,
+    "poseReviewed": true,
+    "idleClip": "Idle",
+    "walkClip": "Walk",
+    "allowedActions": [
+      "Idle",
+      "Walk"
+    ],
+    "standingPose": {
+      "clip": "Idle",
+      "time": 0
+    },
+    "visualStyle": "fantasy",
+    "report": "reports/CHARACTER_ALCHEMIST_REIMPORT_20261022.json",
+    "notes": "Idle/Walk nativos da Anime CyberStyle adaptados ao rig FK de 20 ossos no Blender. Altura Remy de 1,70 m e piso revisados por reimportação e CPU skinning. 2.057 vértices dos frascos do cinto foram presos ao quadril para preservar sua forma. Roupa original de fantasia preservada; dedos, simulação de tecido, sentar, conduzir e realismo final têm revisão própria. Calçados conservam a orientação neutra original; os dois pés parados foram conferidos separadamente."
   }
 ]

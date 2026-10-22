@@ -60,25 +60,85 @@
     "notes": "Additive low-poly garments weighted to the existing humanoid rig. Original geometry and procedural clips preserved; visual fitting review remains required."
   },
   {
-    "id": "COSTUME_Remy_Senac_20261013",
+    "id": "COSTUME_Remy_White_Uniform_Surface_20261022",
     "baseId": "CHR_Remy_Mixamo_20261005",
-    "url": "/assets/characters/runtime/CHR_Remy_Senac_Uniform_Web_20261021.glb",
-    "sourceUrl": "/assets/characters/CHR_Remy_Senac_Uniform_20261013.glb",
-    "clips": ["Idle", "Walk", "Dance", "Interact"],
-    "sha256": "4dd63fe6395a88ad502d87c6289d3c98d20eeccb76ce2de441a88d0d92997475",
-    "bytes": 13841868,
-    "sourceSha256": "2cff412ae103b9b7d996d264bd4908cf80bd4e4dc93447afb53bc671c9542bfc",
-    "sourceBytes": 38973072,
+    "url": "/assets/characters/runtime/CHR_Remy_White_Uniform_Surface_Web_20261022.glb",
+    "sourceUrl": "/assets/characters/CHR_Remy_White_Uniform_Surface_Source_20261022.glb",
+    "clips": [
+      "Idle",
+      "Walk",
+      "Dance",
+      "Interact"
+    ],
+    "sha256": "5458649922a05373c8de30bed73347d28343ed3b891ae982eb087fb45352a2ee",
+    "bytes": 13828192,
+    "sourceSha256": "59562fa88343496dc841980dd8c612fd9204dba00acd5b6df6abbb9ef739da5f",
+    "sourceBytes": 38959400,
     "bones": 55,
     "garmentMeshes": 20,
-    "replacedMeshes": ["Tops001", "Bottoms001"],
+    "replacedMeshes": [
+      "Tops001",
+      "Bottoms001"
+    ],
     "reimportValidated": true,
     "cpuValidated": true,
     "sourcePreserved": true,
-    "verificationReport": "reports/AVATAR_RUNTIME_VALIDATION_20261021.json",
-    "runtimeOptimizationReport": "reports/AVATAR_RUNTIME_OPTIMIZATION_20261021.json",
-    "cpuReport": "reports/costumes/remy_uniform_cpu_20261013.json",
+    "verificationReport": "reports/costumes/REMY_WHITE_UNIFORM_SURFACE_REIMPORT_20261022.json",
+    "runtimeOptimizationReport": "reports/costumes/REMY_WHITE_UNIFORM_SURFACE_PACKAGE_20261022.json",
+    "cpuReport": "reports/costumes/REMY_WHITE_UNIFORM_SURFACE_REIMPORT_20261022.json",
     "quality": "skinned fitted prototype",
-    "notes": "Complete scrub shirt and continuous trousers with anatomical lining, fitted coat with lapels/buttons/pockets and per-user runtime names. Original Remy, original clothes, Oct9 derivative, genuine clips and supplied identity PNG bytes are preserved. No cloth simulation; FK sitting and garment tailoring remain a visual prototype."
+    "notes": "White hospital scrubs; six crest/logo/name surfaces copy garment triangles, weights and bind so they follow the cloth. Individual profile names and original identity pixels preserved. Genuine Remy rig and four clips preserved. Existing tailoring, seated/riding fit and cloth simulation remain separate reviews.",
+    "meshCount": 27,
+    "scrubColorPolicy": "fixed-white",
+    "history": [
+      {
+        "id": "COSTUME_Remy_Senac_20261013",
+        "url": "/assets/characters/runtime/CHR_Remy_Senac_Uniform_Web_20261021.glb",
+        "sha256": "4dd63fe6395a88ad502d87c6289d3c98d20eeccb76ce2de441a88d0d92997475",
+        "bytes": 13841868,
+        "sourceUrl": "/assets/characters/CHR_Remy_Senac_Uniform_20261013.glb",
+        "sourceSha256": "2cff412ae103b9b7d996d264bd4908cf80bd4e4dc93447afb53bc671c9542bfc",
+        "sourceBytes": 38973072,
+        "verificationReport": "reports/AVATAR_RUNTIME_VALIDATION_20261021.json",
+        "runtimeOptimizationReport": "reports/AVATAR_RUNTIME_OPTIMIZATION_20261021.json",
+        "cpuReport": "reports/costumes/remy_uniform_cpu_20261013.json"
+      }
+    ],
+    "uniformSurfaceAttachment": {
+      "version": 1,
+      "toleranceMeters": 0.001,
+      "meshes": [
+        {
+          "name": "COAT_BRAND_Remy_Crest",
+          "surface": "COAT_Remy_FittedShell",
+          "vertices": 54
+        },
+        {
+          "name": "COAT_BRAND_Remy_Senac",
+          "surface": "COAT_Remy_FittedShell",
+          "vertices": 20
+        },
+        {
+          "name": "COAT_NAME_Remy_Player",
+          "surface": "COAT_Remy_FittedShell",
+          "vertices": 44
+        },
+        {
+          "name": "SCRUB_BRAND_Remy_Crest",
+          "surface": "SCRUB_Remy_Shirt",
+          "vertices": 63
+        },
+        {
+          "name": "SCRUB_BRAND_Remy_Senac",
+          "surface": "SCRUB_Remy_Shirt",
+          "vertices": 19
+        },
+        {
+          "name": "SCRUB_NAME_Remy_Player",
+          "surface": "SCRUB_Remy_Shirt",
+          "vertices": 42
+        }
+      ]
+    }
   }
 ]
