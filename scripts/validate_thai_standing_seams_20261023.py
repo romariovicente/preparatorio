@@ -1,8 +1,8 @@
 """Independent GLB reimport, then reconstruct the draft pose for seam evidence."""
-import bpy,json,hashlib
+import bpy,json,hashlib,math
 import numpy as np
 from pathlib import Path
-from mathutils import Matrix,Vector
+from mathutils import Matrix,Vector,Quaternion
 ROOT=Path(__file__).resolve().parents[1]
 WORK=Path(globals().get('PREP_WORK',ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_STANDING_V2_20261023.blend'))
 OUT=Path(globals().get('PREP_OUT',ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_STANDING_V2_PROBES_20261023.blend'))
@@ -81,13 +81,37 @@ renders=[]
 for label,offset in [('front',(0,-5,0)),('side',(5,0,0))]:
     center=Vector((0,0,.85));cam=scene.camera;cam.data.ortho_scale=1.95;cam.location=center+Vector(offset);cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler()
     out=FOLDER/('reimport_'+label+'.png');scene.render.filepath=str(out);bpy.ops.render.render(write_still=True);renders.append(str(out))
-scene['PREP_role']='seam-fix-evidence-standing-pose-not-accepted-for-game'
+head_turn=None
+if globals().get('PREP_EXTRA_HEAD_TURN',False):
+    def apply_imported_pose(matrices):
+        for bone in sorted(arm.pose.bones,key=depth):
+            kw={'parent_matrix':matrices[bone.parent.name],'parent_matrix_local':bone.parent.bone.matrix_local} if bone.parent else {}
+            bone.matrix_basis=bone.bone.convert_local_to_pose(matrices[bone.name],bone.bone.matrix_local,invert=True,**kw)
+        bpy.context.view_layer.update()
+    turn={name:matrix.copy() for name,matrix in desired.items()}
+    rotation=Quaternion((0,0,1),math.radians(15))@turn['head'].to_quaternion()
+    turn['head']=Matrix.LocRotScale(turn['head'].translation,rotation,turn['head'].to_scale())
+    apply_imported_pose(turn);turned=points(mesh);delta=np.linalg.norm(turned-posed,axis=1)
+    masks=np.load(ROOT/'reports/thai_upper_refit_20261023/head_hand_graph_masks.npz')
+    semantic=np.load(ROOT/'reports/thai_seam_v7_20261023/texture_region_candidates.npz')
+    hand_drift=float(delta[masks['rightHand153']].max());face_motion=float(delta[semantic['faceJawCandidate']].max())
+    assert hand_drift<1e-5 and face_motion>.005
+    turn_renders=[]
+    for label,offset in [('front',(0,-4,0)),('side',(4,0,0))]:
+        center=Vector((0,0,1.45));cam=scene.camera;cam.data.ortho_scale=.70
+        cam.location=center+Vector(offset);cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler()
+        image_path=FOLDER/('reimport_head_turn15_'+label+'.png');scene.render.filepath=str(image_path)
+        bpy.ops.render.render(write_still=True);turn_renders.append(str(image_path))
+    apply_imported_pose(desired);restore_error=float(np.linalg.norm(points(mesh)-posed,axis=1).max());assert restore_error<1e-5
+    head_turn={'degrees':15,'rightHandMaxDrift':hand_drift,'faceMaxMotion':face_motion,
+               'restoredStandingPoseMaxError':restore_error,'renders':turn_renders,'nativeWalkValidated':False}
+scene['PREP_role']=globals().get('PREP_SCOPE','seam-fix-evidence-standing-pose-not-accepted-for-game')
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT),compress=True)
 report={'status':'reimport-and-seam-preservation-passed-awaiting-visual-review','library':str(OUT),
  'sourceGlb':glb,'vertices':len(raw),'bones':len(arm.data.bones),'restGeometryMaxError':rest_error,'posedSurfaceMaxError':posed_error,
  'reimportVsActualGLBPredictionMaxError':reimport_cpu_error,'importedWeightAccessorMaxError':weight_error,
  'exportWeightPruningMaxSurfaceEffect':export_weight_effect,'pruningExplanation':'Exporter removes weights below1e-4. Authored surface differs by approximately35 micrometres; exact GLB reimport comparison remains below10 micrometres.',
  'coincidentUVSeamGroups':len(gaps),'maxCoincidentPoseGap':max(gaps),'groupsAbove1mm':sum(v>.001 for v in gaps),
- 'renders':renders,'runtimeChanged':False,'masterChanged':False,'neutralPoseValidated':False,'nativeWalkValidated':False}
+ 'renders':renders,'headTurn15':head_turn,'runtimeChanged':False,'masterChanged':False,'neutralPoseValidated':False,'nativeWalkValidated':False}
 Path(globals().get('PREP_REPORT',ROOT/'reports/CHARACTER_THAI_SEAM_V6_REIMPORT_20261023.json')).write_text(json.dumps(report,indent=2),encoding='utf-8')
 print(json.dumps(report))
