@@ -4,11 +4,11 @@ import numpy as np
 from pathlib import Path
 from mathutils import Matrix,Vector,Quaternion
 ROOT=Path(__file__).resolve().parents[1]
-WORK=ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_UPPER_REFIT_20261023.blend'
+WORK=Path(globals().get('PREP_WORK',ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_UPPER_REFIT_20261023.blend'))
 assert Path(bpy.data.filepath).resolve()==WORK.resolve() and not bpy.data.is_dirty
 input_scene=bpy.data.scenes['PREP_CHARACTER_THAI_REFIT_STAGING_20261023']
 old_mesh=next(o for o in input_scene.objects if o.type=='MESH')
-report=json.loads((ROOT/'reports/CHARACTER_THAI_UPPER_BIND_20261023.json').read_text())
+report=json.loads(Path(globals().get('PREP_BIND_REPORT',ROOT/'reports/CHARACTER_THAI_UPPER_BIND_20261023.json')).read_text())
 path=Path(report['glb']['path']);assert hashlib.sha256(path.read_bytes()).hexdigest()==report['glb']['sha256']
 before={s.name:set(o.name for o in s.objects) for s in bpy.data.scenes}
 scene=bpy.data.scenes.new('VALIDATE_THAI_UPPER_BIND_20261023');bpy.context.window.scene=scene
@@ -24,7 +24,9 @@ for obj in list(scene.objects):
         for col in list(obj.users_collection):col.objects.unlink(obj)
 arms=[o for o in scene.objects if o.type=='ARMATURE'];meshes=[o for o in scene.objects if o.type=='MESH']
 assert len(arms)==len(meshes)==1;arm=arms[0];mesh=meshes[0];assert len(arm.data.bones)==20
-folder=ROOT/'reports/thai_upper_refit_20261023';masks=np.load(folder/'head_hand_graph_masks.npz');base=np.load(folder/'baseline_mesh.npz')['vertices']
+BASE=ROOT/'reports/thai_upper_refit_20261023'
+folder=Path(globals().get('PREP_FOLDER',BASE));masks=np.load(BASE/'head_hand_graph_masks.npz');base=np.load(BASE/'baseline_mesh.npz')['vertices']
+semantic=np.load(folder/'texture_region_candidates.npz') if (folder/'texture_region_candidates.npz').exists() else None
 coords=np.empty(len(mesh.data.vertices)*3,dtype=np.float32);mesh.data.vertices.foreach_get('co',coords);coords=coords.reshape(-1,3)
 assert coords.shape==base.shape and np.max(np.linalg.norm(coords-base,axis=1))<1e-5,'Need remap masks before using this reimport'
 def depth(b):return 0 if not b.parent else depth(b.parent)+1
@@ -60,6 +62,8 @@ for sample in ['rest','head_turn_15','right_arm_lowered','both_arms_lowered']:
         if sample=='both_arms_lowered':lower_arm('L',desired)
     apply(desired);posed=points();delta=np.linalg.norm(posed-base,axis=1)
     evidence={k:float(delta[masks[k]].max()) for k in ['head','faceFrontCandidate','hairRearCandidate','rightHand153']}
+    if semantic is not None:
+        for name in ['faceJawCandidate','rigidHeadCandidate','lowerHairCollarReview']:evidence[name]=float(delta[semantic[name]].max())
     renders=[]
     for name,offset in [('front',(0,-5,0)),('side',(5,0,0))]:
         center=Vector((0,0,.85));cam.location=center+Vector(offset);cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler()
@@ -67,9 +71,9 @@ for sample in ['rest','head_turn_15','right_arm_lowered','both_arms_lowered']:
     records.append({'sample':sample,'protectedRegionDisplacements':evidence,'renders':renders,'acceptedAsGameAnimation':False})
 apply(ref)
 scene['PREP_role']='upper-binding-large-range-probes-not-neutral-or-runtime'
-out=ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_UPPER_PROBES_20261023.blend'
+out=Path(globals().get('PREP_OUT',ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_UPPER_PROBES_20261023.blend'))
 assert not out.exists();bpy.ops.wm.save_as_mainfile(filepath=str(out),compress=True)
 report={'status':'independent-reimport-probe-renders-written-awaiting-visual-review','library':str(out),'samples':records,'source':report['glb'],'reimportGeometryMaxError':float(np.max(np.linalg.norm(coords-base,axis=1))),
  'scene':scene.name,'runtimeChanged':False,'neutralPoseValidated':False,'nativeWalkValidated':False}
-(ROOT/'reports/CHARACTER_THAI_UPPER_VISUAL_PROBES_20261023.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+Path(globals().get('PREP_REPORT',ROOT/'reports/CHARACTER_THAI_UPPER_VISUAL_PROBES_20261023.json')).write_text(json.dumps(report,indent=2),encoding='utf-8')
 print(json.dumps({'status':report['status'],'samples':len(records),'library':str(out)}))

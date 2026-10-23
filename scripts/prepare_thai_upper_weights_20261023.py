@@ -8,10 +8,11 @@ import heapq,hashlib,json
 from pathlib import Path
 import numpy as np
 ROOT=Path(__file__).resolve().parents[1]
-FOLDER=ROOT/'reports/thai_upper_refit_20261023'
-base=np.load(FOLDER/'baseline_mesh.npz');P=base['vertices'].astype(float);T=base['triangles'];old=base['weights'];names=base['group_names'].tolist()
-info=json.loads((FOLDER/'baseline.json').read_text());bones=info['bones']
-mask=np.load(FOLDER/'head_hand_graph_masks.npz')
+INPUT=ROOT/'reports/thai_upper_refit_20261023'
+FOLDER=Path(globals().get('PREP_OUTPUT_FOLDER',INPUT));FOLDER.mkdir(exist_ok=True)
+base=np.load(INPUT/'baseline_mesh.npz');P=base['vertices'].astype(float);T=base['triangles'];old=base['weights'];names=base['group_names'].tolist()
+info=json.loads((INPUT/'baseline.json').read_text());bones=info['bones']
+mask=np.load(INPUT/'head_hand_graph_masks.npz')
 assert str(mask['sourceSha256'])=='01f46cfeef24dc77705e63780f27e1b4583040efc53c433ccbe7f6c5e27d4b02'
 head_ids=mask['head'];right_ids=mask['rightHand']
 # Surface measurements and front/side review guide these points. This is NOT a
@@ -19,6 +20,7 @@ head_ids=mask['head'];right_ids=mask['rightHand']
 landmarks={'hips':(0,.28,.84),'spine':(0,.20,1.04),'chest':(0,.085,1.25),'neck':(.01,.01,1.43),'head':(.03,-.035,1.51),'crown':(.055,-.07,1.67),
  'L_shoulder':(.22,.13,1.32),'L_elbow':(.27,.32,1.10),'L_wrist':(.36,.32,.91),'L_tip':(.41,.31,.83),
  'R_shoulder':(-.17,-.075,1.34),'R_elbow':(-.25,-.30,1.33),'R_wrist':(-.17,-.40,1.55),'R_tip':(-.16,-.43,1.65)}
+landmarks.update(globals().get('PREP_LANDMARK_OVERRIDES',{}))
 defs={n:{k:list(v) for k,v in row.items()} for n,row in bones.items()}
 for n,end in [('hips','spine'),('spine','chest'),('chest','neck'),('neck','head'),('head','crown')]:defs[n]={'head':list(landmarks[n]),'tail':list(landmarks[end])}
 defs['root']={'head':[0,0,0],'tail':[0,0,.12]}
@@ -37,14 +39,17 @@ for n in deform:
 distances=np.stack(distances,axis=1)
 allowed=np.ones_like(distances,dtype=bool)
 arm_names=[n for n in deform if any(n.endswith('_'+p) for p in ['clavicle','upper_arm','forearm','hand'])]
-for n in arm_names:allowed[head_ids,deform.index(n)]=False
+guard_ids=np.asarray(globals().get('PREP_HEAD_GUARD_IDS',head_ids),dtype=int)
+for n in arm_names:allowed[guard_ids,deform.index(n)]=False
 for n in deform:
     if n not in ['R_upper_arm','R_forearm','R_hand']:allowed[right_ids,deform.index(n)]=False
 central=(np.abs(P[:,0])<.10)&(P[:,2]>.76)&(P[:,2]<1.29)
 for n in arm_names:allowed[central,deform.index(n)]=False
 # Pin the actual upper head (including face/hair) as one rigid anatomical
 # region; the lower neck keeps gradual weights and its original topology.
-rigid_head=np.zeros(len(P),dtype=bool);rigid_head[head_ids]=P[head_ids,2]>1.48
+rigid_head=np.zeros(len(P),dtype=bool)
+rigid_ids=np.asarray(globals().get('PREP_RIGID_HEAD_IDS',head_ids[P[head_ids,2]>1.48]),dtype=int)
+rigid_head[rigid_ids]=True
 for n in deform:
     if n!='head':allowed[rigid_head,deform.index(n)]=False
 nearest=np.argmin(np.where(allowed,distances,np.inf),axis=1)
@@ -96,7 +101,7 @@ assert np.array_equal(limited[P[:,2]<=.66],old[P[:,2]<=.66])
 np.savez_compressed(FOLDER/'prepared_weights.npz',weights=limited.astype(np.float32),group_names=np.array(names),vertices=P.astype(np.float32))
 report={'status':'staged-guide-fit-and-surface-weights-awaiting-blender-review','landmarks':landmarks,'boneDefinitions':defs,
  'vertices':len(P),'graphVertices':len(U),'graphEdges':len(edge),'seedCounts':seed_counts,'fallbackBoneVertexPairs':int(fallback.sum()),
- 'headGraphVertices':len(head_ids),'raisedArmGraphVertices':len(right_ids),'rigidUpperHeadVertices':int(rigid_head.sum()),
+ 'headGraphVertices':len(head_ids),'headGuardVertices':len(guard_ids),'raisedArmGraphVertices':len(right_ids),'rigidUpperHeadVertices':int(rigid_head.sum()),
  'lowerWeightVerticesPreserved':int((P[:,2]<=.66).sum()),'changedWeightVertices':int(np.count_nonzero(np.max(np.abs(limited-old),axis=1)>1e-6)),
  'sourceGeometryPreserved':True,'nativeWalkValidated':False,'neutralPoseValidated':False,
  'limits':['Head/hand graph separation starts at Z>1.34m. Lower hair strands remain a later visual/weight review.','Hand has no individual finger bones.','Surface-derived landmarks require Blender deformation review before repose.']}

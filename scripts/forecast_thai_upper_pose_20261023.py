@@ -7,8 +7,8 @@ import json,math
 from pathlib import Path
 import numpy as np
 from PIL import Image,ImageDraw,ImageFont
-ROOT=Path(__file__).resolve().parents[1];F=ROOT/'reports/thai_upper_refit_20261023'
-base=np.load(F/'baseline_mesh.npz');prepared=np.load(F/'prepared_weights.npz');masks=np.load(F/'head_hand_graph_masks.npz')
+ROOT=Path(__file__).resolve().parents[1];BASE=ROOT/'reports/thai_upper_refit_20261023';F=Path(globals().get('PREP_FOLDER',BASE))
+base=np.load(BASE/'baseline_mesh.npz');prepared=np.load(F/'prepared_weights.npz');masks=np.load(BASE/'head_hand_graph_masks.npz')
 P=base['vertices'].astype(float);W=prepared['weights'].astype(float);names=prepared['group_names'].tolist();defs=json.loads((F/'prepared_weights.json').read_text())['boneDefinitions']
 def swing(a,b):
     a=a/np.linalg.norm(a);b=b/np.linalg.norm(b);v=np.cross(a,b);c=float(a@b);s=float(np.linalg.norm(v))
