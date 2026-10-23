@@ -112,6 +112,11 @@ renders=[]
 for label,offset in [('front',(0,-5,0)),('side',(5,0,0)),('back',(0,5,0)),('three_quarter',(3,-5,0))]:
     center=Vector((0,0,.85));cam.location=center+Vector(offset);cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler()
     path=F/('standing_'+label+'.png');scene.render.filepath=str(path);bpy.ops.render.render(write_still=True);renders.append(str(path))
+if globals().get('PREP_EXTRA_CLOSEUPS',False):
+    cam.data.ortho_scale=.70
+    for label,offset in [('head_front',(0,-4,0)),('head_side',(4,0,0)),('head_back',(0,4,0))]:
+        center=Vector((0,0,1.45));cam.location=center+Vector(offset);cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler()
+        path=F/('standing_'+label+'.png');scene.render.filepath=str(path);bpy.ops.render.render(write_still=True);renders.append(str(path))
 bpy.ops.wm.save_as_mainfile(filepath=str(WORK),compress=True)
 record={'status':'standing-pilot-saved-awaiting-visual-review','library':str(WORK),'librarySha256':hashlib.sha256(WORK.read_bytes()).hexdigest(),
  'source':globals().get('PREP_SOURCE_DESCRIPTION','PREP_CHARACTER_THAI_UPPER_V5_20261023.blend'),'height':float(np.ptp(co[:,2])),'soleMinimum':floors,

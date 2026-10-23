@@ -79,7 +79,7 @@ scene.camera=source.camera;scene.world=source.world
 scene.render.engine='BLENDER_EEVEE';scene.render.resolution_x=560;scene.render.resolution_y=720;scene.render.resolution_percentage=100;scene.render.image_settings.file_format='PNG';scene.view_settings.view_transform='AgX'
 renders=[]
 for label,offset in [('front',(0,-5,0)),('side',(5,0,0))]:
-    center=Vector((0,0,.85));cam=scene.camera;cam.location=center+Vector(offset);cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler()
+    center=Vector((0,0,.85));cam=scene.camera;cam.data.ortho_scale=1.95;cam.location=center+Vector(offset);cam.rotation_euler=(center-cam.location).to_track_quat('-Z','Y').to_euler()
     out=FOLDER/('reimport_'+label+'.png');scene.render.filepath=str(out);bpy.ops.render.render(write_still=True);renders.append(str(out))
 scene['PREP_role']='seam-fix-evidence-standing-pose-not-accepted-for-game'
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT),compress=True)
