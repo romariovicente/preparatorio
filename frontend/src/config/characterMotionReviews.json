@@ -75,5 +75,25 @@
     "visualStyle": "fantasy",
     "report": "reports/CHARACTER_ALCHEMIST_REIMPORT_20261022.json",
     "notes": "Idle/Walk nativos da Anime CyberStyle adaptados ao rig FK de 20 ossos no Blender. Altura Remy de 1,70 m e piso revisados por reimportação e CPU skinning. 2.057 vértices dos frascos do cinto foram presos ao quadril para preservar sua forma. Roupa original de fantasia preservada; dedos, simulação de tecido, sentar, conduzir e realismo final têm revisão própria. Calçados conservam a orientação neutra original; os dois pés parados foram conferidos separadamente."
+  },
+  {
+    "id": "SUP_bone_seraph_skeletal_angel",
+    "sha256": "d4e67090179cbbb167f0f67625b9ee564c3a172dbc4cec6b7bdf9d34192f9e6f",
+    "controlMode": "retargeted",
+    "locomotionValidated": true,
+    "poseReviewed": true,
+    "idleClip": "Idle",
+    "walkClip": "Walk",
+    "allowedActions": [
+      "Idle",
+      "Walk"
+    ],
+    "standingPose": {
+      "clip": "Idle",
+      "time": 0
+    },
+    "visualStyle": "fantasy",
+    "report": "reports/CHARACTER_SERAPH_REIMPORT_20261023.json",
+    "notes": "Idle/Walk nativos da Anime CyberStyle adaptados no Blender ao rig de 22 ossos. Altura total de 1,70 m inclui o halo; duas solas no Idle e apoio no Walk conferidos em malha deformada. 27.906 vértices das asas seguem seus ossos ligados ao peito, sem arraste pelos braços; 299 vértices do halo seguem a cabeça. Arte de fantasia original preservada. Voo, dedos, tecido final, sentar, pilotar e uniforme ajustado têm validação própria."
   }
 ]

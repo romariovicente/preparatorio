@@ -1,26 +1,54 @@
 [
   {
     "id": "SUP_bone_seraph_skeletal_angel",
-    "url": "/assets/characters/CHR_bone_seraph_skeletal_angel_Actions_v3.glb",
+    "url": "/assets/characters/CHR_Seraph_Anime_Retarget_20261023.glb",
     "bones": 22,
     "skinnedVertices": 62874,
     "weightCoverage": 1,
     "maxInfluences": 4,
     "clips": [
-      "Walk",
       "Idle",
-      "Dance",
-      "Interact"
+      "Walk"
     ],
-    "maxWalkDeformation": 0.5939984775321427,
+    "maxWalkDeformation": 0.5020334124565125,
     "reimportValidated": true,
-    "sha256": "d0a57f873ba09ee7efb90ee3ccf83a6fbd80d56e30cbaeb1e7943f3370966ff5",
-    "bytes": 5005024,
-    "quality": "prototype",
+    "sha256": "d4e67090179cbbb167f0f67625b9ee564c3a172dbc4cec6b7bdf9d34192f9e6f",
+    "bytes": 5065984,
+    "quality": "retargeted",
     "playable": true,
     "needsRepose": false,
-    "notes": "Editable fitted FK rig. Original pose preserved except the approved doctor T-pose conversion. Procedural clips; limited-pose characters need retopology/repose before locomotion. Dance and Interact are procedural prototype clips; limited-pose rigs use smaller upper-body motion.",
-    "actionsReimportValidated": true
+    "notes": "Idle/Walk nativos da Anime CyberStyle adaptados no Blender ao rig de 22 ossos. Altura total de 1,70 m inclui o halo; duas solas no Idle e apoio no Walk conferidos em malha deformada. 27.906 vértices das asas seguem seus ossos ligados ao peito, sem arraste pelos braços; 299 vértices do halo seguem a cabeça. Arte de fantasia original preservada. Voo, dedos, tecido final, sentar, pilotar e uniforme ajustado têm validação própria.",
+    "actionsReimportValidated": true,
+    "retargetSourceId": "SUP_lowpoly_anime_character_cyberstyle",
+    "scaleReferenceId": "CHR_Remy_Mixamo_20261005",
+    "validationReport": "reports/CHARACTER_SERAPH_REIMPORT_20261023.json",
+    "history": [
+      {
+        "id": "SUP_bone_seraph_skeletal_angel",
+        "url": "/assets/characters/CHR_bone_seraph_skeletal_angel_Actions_v3.glb",
+        "bones": 22,
+        "skinnedVertices": 62874,
+        "weightCoverage": 1,
+        "maxInfluences": 4,
+        "clips": [
+          "Walk",
+          "Idle",
+          "Dance",
+          "Interact"
+        ],
+        "maxWalkDeformation": 0.5939984775321427,
+        "reimportValidated": true,
+        "sha256": "d0a57f873ba09ee7efb90ee3ccf83a6fbd80d56e30cbaeb1e7943f3370966ff5",
+        "bytes": 5005024,
+        "quality": "prototype",
+        "playable": true,
+        "needsRepose": false,
+        "notes": "Editable fitted FK rig. Original pose preserved except the approved doctor T-pose conversion. Procedural clips; limited-pose characters need retopology/repose before locomotion. Dance and Interact are procedural prototype clips; limited-pose rigs use smaller upper-body motion.",
+        "actionsReimportValidated": true,
+        "preservedAt": "2026-10-23T13:24:18.671940+00:00",
+        "reason": "Procedural Actions_v3 preserved before native motion adaptation and wing weight correction"
+      }
+    ]
   },
   {
     "id": "SUP_corrupted_fallen_priest___dar",

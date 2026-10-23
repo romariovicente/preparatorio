@@ -29,8 +29,8 @@ test('all 18 supplied characters retain or receive real weighted armatures',()=>
 });
 test('limited poses cannot enter the playable walking selection',()=>{
  assert.equal(rigs.length,17);assert.equal(rigs.filter(r=>r.playable).length,12);
- assert.equal(rigs.filter(r=>r.quality==='prototype').length,15);
- assert.equal(rigs.filter(r=>r.quality==='retargeted').length,2);
+ assert.equal(rigs.filter(r=>r.quality==='prototype').length,14);
+ assert.equal(rigs.filter(r=>r.quality==='retargeted').length,3);
  assert.equal(rigs.filter(r=>r.needsRepose).length,5);
  assert.ok(rigs.filter(r=>r.needsRepose).every(r=>!r.playable&&!r.clips.includes('Walk')));
 });
