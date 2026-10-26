@@ -4,13 +4,14 @@ import numpy as np
 from pathlib import Path
 from mathutils import Quaternion,Matrix
 ROOT=Path(__file__).resolve().parents[1]
-INPUT=ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_GARMENT_V11_PROBES_20261026.blend'
-OUT=ROOT/'reports/thai_garment_v11_validation_20261026/near_seams_reimport_head15.json'
+INPUT=Path(globals().get('PREP_INPUT_LIBRARY',ROOT/'art/blender/libraries/PREP_CHARACTER_THAI_GARMENT_V11_PROBES_20261026.blend'))
+FOLDER=Path(globals().get('PREP_FOLDER',ROOT/'reports/thai_garment_v11_validation_20261026'))
+OUT=FOLDER/'near_seams_reimport_head15.json'
 assert Path(bpy.data.filepath).resolve()==INPUT.resolve() and not OUT.exists()
 digest=hashlib.sha256(INPUT.read_bytes()).hexdigest()
-scene=bpy.data.scenes['VALIDATE_THAI_GARMENT_BIND_V11_20261026'];bpy.context.window.scene=scene
+scene=bpy.data.scenes[globals().get('PREP_QA_SCENE','VALIDATE_THAI_GARMENT_BIND_V11_20261026')];bpy.context.window.scene=scene
 mesh=next(o for o in scene.objects if o.type=='MESH');arm=next(o for o in scene.objects if o.type=='ARMATURE')
-subset=json.loads((ROOT/'reports/thai_garment_v11_validation_20261026/white_seam_subset.json').read_text())['trustedPairs']
+subset=json.loads((FOLDER/'white_seam_subset.json').read_text())['trustedPairs']
 assert len(subset)==8 and len(mesh.data.vertices)==31726
 names=[g.name for g in mesh.vertex_groups];W=np.zeros((len(mesh.data.vertices),len(names)),dtype=np.float32)
 for v in mesh.data.vertices:
