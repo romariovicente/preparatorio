@@ -1,0 +1,983 @@
+{
+  "version": 1,
+  "date": "2026-11-03",
+  "normalized": true,
+  "units": "meters",
+  "vehicles": [
+    {
+      "id": "scania",
+      "label": "Scania 6×4",
+      "sourceId": "SUP_scania_truck",
+      "url": "/assets/vehicles/trucks/TRUCK_scania_interactive_20261103.glb",
+      "height": 3.631432056427002,
+      "width": 2.5500001907348633,
+      "length": 5.945363521575928,
+      "sourceYaw": 0,
+      "normalized": true,
+      "frontAxleZ": 1.7019061500000001,
+      "rearAxleZ": -1.5690169250000001,
+      "wheelbase": 3.2709230750000002,
+      "wheelRadius": 0.4909944385290146,
+      "wheels": [
+        {
+          "name": "Wheel_00_L",
+          "nativeName": "Wheel_00_L",
+          "center": [
+            -0.9173727,
+            0.4937501,
+            1.7017479
+          ],
+          "radius": 0.4912358224391937,
+          "rollingAxis": "X",
+          "steering": true,
+          "tyreBoundsMin": [
+            -1.0871705,
+            0.0025143,
+            1.2104877
+          ],
+          "tyreBoundsMax": [
+            -0.7558465,
+            0.9849859,
+            2.1930079
+          ]
+        },
+        {
+          "name": "Wheel_00_R",
+          "nativeName": "Wheel_00_R",
+          "center": [
+            0.9176533,
+            0.4937502,
+            1.7020644
+          ],
+          "radius": 0.4912359118461609,
+          "rollingAxis": "X",
+          "steering": true,
+          "tyreBoundsMin": [
+            0.7561271,
+            0.0025143,
+            1.2108042
+          ],
+          "tyreBoundsMax": [
+            1.087451,
+            0.9849861,
+            2.1933246
+          ]
+        },
+        {
+          "name": "Wheel_01_L",
+          "nativeName": "Wheel_01_L",
+          "center": [
+            -0.6658907,
+            0.4908738,
+            -0.9525446
+          ],
+          "radius": 0.4908737540245056,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -0.9520148,
+            0.0,
+            -1.4452522
+          ],
+          "tyreBoundsMax": [
+            -0.3797666,
+            0.9817475,
+            -0.459837
+          ]
+        },
+        {
+          "name": "Wheel_01_R",
+          "nativeName": "Wheel_01_R",
+          "center": [
+            0.6657429,
+            0.4908738,
+            -0.9523151
+          ],
+          "radius": 0.4908737540245056,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.3796195,
+            0.0,
+            -1.4450758
+          ],
+          "tyreBoundsMax": [
+            0.9518662,
+            0.9817475,
+            -0.4595544
+          ]
+        },
+        {
+          "name": "Wheel_02_L",
+          "nativeName": "Wheel_02_L",
+          "center": [
+            -0.6648942,
+            0.4908737,
+            -2.1857188
+          ],
+          "radius": 0.49087369441986084,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -0.9515882,
+            0.0,
+            -2.6766412
+          ],
+          "tyreBoundsMax": [
+            -0.3782003,
+            0.9817474,
+            -1.6947963
+          ]
+        },
+        {
+          "name": "Wheel_02_R",
+          "nativeName": "Wheel_02_R",
+          "center": [
+            0.6658517,
+            0.4908737,
+            -2.1854892
+          ],
+          "radius": 0.49087369441986084,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.3798337,
+            0.0,
+            -2.6764114
+          ],
+          "tyreBoundsMax": [
+            0.9518695,
+            0.9817474,
+            -1.694567
+          ]
+        }
+      ],
+      "wheelPivots": [
+        "Wheel_00_L",
+        "Wheel_00_R",
+        "Wheel_01_L",
+        "Wheel_01_R",
+        "Wheel_02_L",
+        "Wheel_02_R"
+      ],
+      "hitch": [
+        0.0005488,
+        1.0726871,
+        -1.7403567
+      ],
+      "trailerMode": "semitrailer",
+      "compatibleTrailers": [
+        "box",
+        "flatbed",
+        "tanker"
+      ],
+      "ready": true,
+      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "sha256": "efdebf33981223e661268a3355b1b49902caccac4205859a8b24cf7e89af7a9c",
+      "bytes": 26469644
+    },
+    {
+      "id": "volvo",
+      "label": "Volvo Concept rígido",
+      "sourceId": "SUP_volvo_concept_truck",
+      "url": "/assets/vehicles/trucks/TRUCK_volvo_concept_interactive_20261103.glb",
+      "height": 1.8882651329040527,
+      "width": 2.549999952316284,
+      "length": 7.690891265869141,
+      "sourceYaw": 0,
+      "normalized": true,
+      "frontAxleZ": 1.2570877,
+      "rearAxleZ": -2.2348657,
+      "wheelbase": 3.4919534,
+      "wheelRadius": 0.6325716028610865,
+      "wheels": [
+        {
+          "name": "Wheel_00_L",
+          "nativeName": "Wheel_00_L.001",
+          "center": [
+            -0.8825417,
+            0.6325718,
+            1.2570876
+          ],
+          "radius": 0.6325716078281403,
+          "rollingAxis": "X",
+          "steering": true,
+          "tyreBoundsMin": [
+            -1.2205197,
+            2e-07,
+            0.6244414
+          ],
+          "tyreBoundsMax": [
+            -0.5445637,
+            1.2651434,
+            1.8897338
+          ]
+        },
+        {
+          "name": "Wheel_00_R",
+          "nativeName": "Wheel_00_R.001",
+          "center": [
+            0.8825417,
+            0.6325716,
+            1.2570878
+          ],
+          "radius": 0.6325716376304626,
+          "rollingAxis": "X",
+          "steering": true,
+          "tyreBoundsMin": [
+            0.5445637,
+            0.0,
+            0.6244416
+          ],
+          "tyreBoundsMax": [
+            1.2205197,
+            1.2651433,
+            1.889734
+          ]
+        },
+        {
+          "name": "Wheel_01_L",
+          "nativeName": "Wheel_01_L.001",
+          "center": [
+            -0.8825414,
+            0.6325728,
+            -1.5852627
+          ],
+          "radius": 0.6325716376304626,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.2205193,
+            1.2e-06,
+            -2.2179081
+          ],
+          "tyreBoundsMax": [
+            -0.5445634,
+            1.2651445,
+            -0.9526172
+          ]
+        },
+        {
+          "name": "Wheel_01_R",
+          "nativeName": "Wheel_01_R.001",
+          "center": [
+            0.8825419,
+            0.6325727,
+            -1.5852625
+          ],
+          "radius": 0.6325715780258179,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.5445639,
+            1.1e-06,
+            -2.2179081
+          ],
+          "tyreBoundsMax": [
+            1.2205199,
+            1.2651442,
+            -0.952617
+          ]
+        },
+        {
+          "name": "Wheel_02_L",
+          "nativeName": "Wheel_02_L.001",
+          "center": [
+            -0.8825413,
+            0.6325732,
+            -2.8844688
+          ],
+          "radius": 0.6325715780258179,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.2205193,
+            1.7e-06,
+            -3.5171144
+          ],
+          "tyreBoundsMax": [
+            -0.5445633,
+            1.2651448,
+            -2.2518232
+          ]
+        },
+        {
+          "name": "Wheel_02_R",
+          "nativeName": "Wheel_02_R.001",
+          "center": [
+            0.882542,
+            0.6325731,
+            -2.8844688
+          ],
+          "radius": 0.6325715780258179,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.5445639,
+            1.5e-06,
+            -3.5171144
+          ],
+          "tyreBoundsMax": [
+            1.22052,
+            1.2651447,
+            -2.2518232
+          ]
+        }
+      ],
+      "wheelPivots": [
+        "Wheel_00_L",
+        "Wheel_00_R",
+        "Wheel_01_L",
+        "Wheel_01_R",
+        "Wheel_02_L",
+        "Wheel_02_R"
+      ],
+      "hitch": null,
+      "trailerMode": "none",
+      "compatibleTrailers": [],
+      "ready": true,
+      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "sha256": "0f761dba328a61c6acaa16c6a42080bb23f177e081e7b6bca9973c9ce83ba483",
+      "bytes": 7339292
+    }
+  ],
+  "trailers": [
+    {
+      "id": "box",
+      "label": "Baú",
+      "url": "/assets/vehicles/trailers/TRAILER_box_interactive_20261103.glb",
+      "height": 3.5385735034942627,
+      "width": 2.5199992656707764,
+      "length": 6.4556965827941895,
+      "normalized": true,
+      "sourceYaw": 0,
+      "hitch": [
+        0.0,
+        1.0726871,
+        2.5822785
+      ],
+      "axleZ": -1.45253165,
+      "wheelRadius": 0.48417729139328003,
+      "wheels": [
+        {
+          "name": "Wheel_00_L",
+          "nativeName": "Wheel_00_L.002",
+          "center": [
+            -0.9777792,
+            0.4841773,
+            -0.8876583
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.26,
+            0.0,
+            -1.3736444
+          ],
+          "tyreBoundsMax": [
+            -0.6955583,
+            0.9683546,
+            -0.4016722
+          ]
+        },
+        {
+          "name": "Wheel_00_R",
+          "nativeName": "Wheel_00_R.002",
+          "center": [
+            0.9777792,
+            0.4841773,
+            -0.8876583
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.6955591,
+            0.0,
+            -1.3736968
+          ],
+          "tyreBoundsMax": [
+            1.2599993,
+            0.9683546,
+            -0.4016199
+          ]
+        },
+        {
+          "name": "Wheel_01_L",
+          "nativeName": "Wheel_01_L.002",
+          "center": [
+            -0.9777792,
+            0.4841773,
+            -2.017405
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.26,
+            0.0,
+            -2.5033913
+          ],
+          "tyreBoundsMax": [
+            -0.6955583,
+            0.9683546,
+            -1.5314189
+          ]
+        },
+        {
+          "name": "Wheel_01_R",
+          "nativeName": "Wheel_01_R.002",
+          "center": [
+            0.9777792,
+            0.4841773,
+            -2.017405
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.6955591,
+            0.0,
+            -2.5034435
+          ],
+          "tyreBoundsMax": [
+            1.2599993,
+            0.9683546,
+            -1.5313666
+          ]
+        }
+      ],
+      "wheelPivots": [
+        "Wheel_00_L",
+        "Wheel_00_R",
+        "Wheel_01_L",
+        "Wheel_01_R"
+      ],
+      "landingLegs": [
+        "LandingLeg_L",
+        "LandingLeg_R"
+      ],
+      "compatibleVehicles": [
+        "scania"
+      ],
+      "ready": true,
+      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "construction": {
+        "asset": "box",
+        "removed": [
+          {
+            "name": "Trailer_Gooseneck_Frame",
+            "geometrySha": "0032d0333c8a712e63134f013479534eea89c3486ecca16eeb479f8ded7b8454",
+            "min": [
+              -1.0692247,
+              0.5245253,
+              -3.2278483
+            ],
+            "max": [
+              1.0692247,
+              1.3597757,
+              3.2278483
+            ]
+          },
+          {
+            "name": "Trailer_Body_CrossSupport",
+            "geometrySha": "2605988d10820692ef117cbe6ad1f060514fe8744270efe5f265930ea72b92de",
+            "min": [
+              -1.0087026,
+              0.766614,
+              -2.0874052
+            ],
+            "max": [
+              1.0087026,
+              1.3597758,
+              -1.9474052
+            ]
+          },
+          {
+            "name": "Trailer_Body_CrossSupport.001",
+            "geometrySha": "8f9e4c7e0f42a9d8d16b54bb179acb82e3b003a407a5441875702e83ed438395",
+            "min": [
+              -1.0087026,
+              0.766614,
+              -0.9576583
+            ],
+            "max": [
+              1.0087026,
+              1.3597758,
+              -0.8176583
+            ]
+          },
+          {
+            "name": "Trailer_Body_CrossSupport.002",
+            "geometrySha": "ccfb0b81bb5d07bf18d8373302575571c0bdc94b82859662848734fc1d81d6a2",
+            "min": [
+              -1.0087026,
+              0.766614,
+              0.4948735
+            ],
+            "max": [
+              1.0087026,
+              1.3597758,
+              0.6348734
+            ]
+          }
+        ],
+        "construction": "Two continuous raised central rails; cross-members outside measured tyre envelopes; real axles/hangers; body supports touch floor/cylinder",
+        "middleTyreGap": 0.1576697826385498,
+        "middleCrossMemberDepth": 0.08,
+        "flatbedRearDeckBottom": null,
+        "kingpinPositionUnchanged": true
+      },
+      "sha256": "e38d0bf046fcb049b178a4bc6c62239922226c1f920ed385a09f22b7f919fb23",
+      "bytes": 5931544,
+      "wheelDonor": {
+        "asset": "scania",
+        "pivots": [
+          "Wheel_01_L",
+          "Wheel_01_R"
+        ],
+        "sourceSha256": "c7d3a2b7cb562c035eee09c5f15d22bd61d668cc83e7faa7bd430f3ae0fe0e92",
+        "author": "PAndras",
+        "license": "CC-BY-4.0",
+        "source": "https://sketchfab.com/3d-models/scania-truck-59889032d0ad457c81d7e058c79eedf8",
+        "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained."
+      },
+      "credits": [
+        {
+          "author": "Romario Vicente Amaro",
+          "scope": "Procedural trailer body/chassis and integration"
+        },
+        {
+          "asset": "scania",
+          "pivots": [
+            "Wheel_01_L",
+            "Wheel_01_R"
+          ],
+          "sourceSha256": "c7d3a2b7cb562c035eee09c5f15d22bd61d668cc83e7faa7bd430f3ae0fe0e92",
+          "author": "PAndras",
+          "license": "CC-BY-4.0",
+          "source": "https://sketchfab.com/3d-models/scania-truck-59889032d0ad457c81d7e058c79eedf8",
+          "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained.",
+          "scope": "Derived wheel assemblies"
+        }
+      ]
+    },
+    {
+      "id": "flatbed",
+      "label": "Prancha com pescoço elevado",
+      "url": "/assets/vehicles/trailers/TRAILER_flatbed_interactive_20261103.glb",
+      "height": 1.5615161657333374,
+      "width": 2.5199992656707764,
+      "length": 6.4556965827941895,
+      "normalized": true,
+      "sourceYaw": 0,
+      "hitch": [
+        0.0,
+        1.0726871,
+        2.5822785
+      ],
+      "axleZ": -1.45253165,
+      "wheelRadius": 0.48417729139328003,
+      "wheels": [
+        {
+          "name": "Wheel_00_L",
+          "nativeName": "Wheel_00_L.003",
+          "center": [
+            -0.9777792,
+            0.4841773,
+            -0.8876583
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.26,
+            0.0,
+            -1.3736444
+          ],
+          "tyreBoundsMax": [
+            -0.6955583,
+            0.9683546,
+            -0.4016722
+          ]
+        },
+        {
+          "name": "Wheel_00_R",
+          "nativeName": "Wheel_00_R.003",
+          "center": [
+            0.9777792,
+            0.4841773,
+            -0.8876583
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.6955591,
+            0.0,
+            -1.3736968
+          ],
+          "tyreBoundsMax": [
+            1.2599993,
+            0.9683546,
+            -0.4016199
+          ]
+        },
+        {
+          "name": "Wheel_01_L",
+          "nativeName": "Wheel_01_L.003",
+          "center": [
+            -0.9777792,
+            0.4841773,
+            -2.017405
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.26,
+            0.0,
+            -2.5033913
+          ],
+          "tyreBoundsMax": [
+            -0.6955583,
+            0.9683546,
+            -1.5314189
+          ]
+        },
+        {
+          "name": "Wheel_01_R",
+          "nativeName": "Wheel_01_R.003",
+          "center": [
+            0.9777792,
+            0.4841773,
+            -2.017405
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.6955591,
+            0.0,
+            -2.5034435
+          ],
+          "tyreBoundsMax": [
+            1.2599993,
+            0.9683546,
+            -1.5313666
+          ]
+        }
+      ],
+      "wheelPivots": [
+        "Wheel_00_L",
+        "Wheel_00_R",
+        "Wheel_01_L",
+        "Wheel_01_R"
+      ],
+      "landingLegs": [
+        "LandingLeg_L",
+        "LandingLeg_R"
+      ],
+      "compatibleVehicles": [
+        "scania"
+      ],
+      "ready": true,
+      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "construction": {
+        "asset": "flatbed",
+        "removed": [
+          {
+            "name": "Trailer_Gooseneck_Frame.001",
+            "geometrySha": "0032d0333c8a712e63134f013479534eea89c3486ecca16eeb479f8ded7b8454",
+            "min": [
+              -1.0692247,
+              0.5245253,
+              -3.2278483
+            ],
+            "max": [
+              1.0692247,
+              1.3597757,
+              3.2278483
+            ]
+          },
+          {
+            "name": "Trailer_Flatbed_Continuous_Deck",
+            "geometrySha": "1158dcd34ea7fc212185e1041decc4dc5d707c67b8a5ec0d76d5ff4e8cc3800b",
+            "min": [
+              -1.0893987,
+              0.786788,
+              -3.2278483
+            ],
+            "max": [
+              1.0893987,
+              1.5816903,
+              3.2278483
+            ]
+          }
+        ],
+        "construction": "Two continuous raised central rails; cross-members outside measured tyre envelopes; real axles/hangers; body supports touch floor/cylinder",
+        "middleTyreGap": 0.1576697826385498,
+        "middleCrossMemberDepth": 0.08,
+        "flatbedRearDeckBottom": 1.00835458278656,
+        "kingpinPositionUnchanged": true
+      },
+      "sha256": "15b4da79fca843a61a6c896bd39f6ba9fb55e7b3f8316b7df1ed49acf36e3a00",
+      "bytes": 5935236,
+      "wheelDonor": {
+        "asset": "scania",
+        "pivots": [
+          "Wheel_01_L",
+          "Wheel_01_R"
+        ],
+        "sourceSha256": "c7d3a2b7cb562c035eee09c5f15d22bd61d668cc83e7faa7bd430f3ae0fe0e92",
+        "author": "PAndras",
+        "license": "CC-BY-4.0",
+        "source": "https://sketchfab.com/3d-models/scania-truck-59889032d0ad457c81d7e058c79eedf8",
+        "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained."
+      },
+      "credits": [
+        {
+          "author": "Romario Vicente Amaro",
+          "scope": "Procedural trailer body/chassis and integration"
+        },
+        {
+          "asset": "scania",
+          "pivots": [
+            "Wheel_01_L",
+            "Wheel_01_R"
+          ],
+          "sourceSha256": "c7d3a2b7cb562c035eee09c5f15d22bd61d668cc83e7faa7bd430f3ae0fe0e92",
+          "author": "PAndras",
+          "license": "CC-BY-4.0",
+          "source": "https://sketchfab.com/3d-models/scania-truck-59889032d0ad457c81d7e058c79eedf8",
+          "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained.",
+          "scope": "Derived wheel assemblies"
+        }
+      ]
+    },
+    {
+      "id": "tanker",
+      "label": "Tanque",
+      "url": "/assets/vehicles/trailers/TRAILER_tanker_interactive_20261103.glb",
+      "height": 3.3771815299987793,
+      "width": 2.5199992656707764,
+      "length": 6.4556965827941895,
+      "normalized": true,
+      "sourceYaw": 0,
+      "hitch": [
+        0.0,
+        1.0726871,
+        2.5822785
+      ],
+      "axleZ": -1.45253165,
+      "wheelRadius": 0.48417729139328003,
+      "wheels": [
+        {
+          "name": "Wheel_00_L",
+          "nativeName": "Wheel_00_L.004",
+          "center": [
+            -0.9777792,
+            0.4841773,
+            -0.8876583
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.26,
+            0.0,
+            -1.3736444
+          ],
+          "tyreBoundsMax": [
+            -0.6955583,
+            0.9683546,
+            -0.4016722
+          ]
+        },
+        {
+          "name": "Wheel_00_R",
+          "nativeName": "Wheel_00_R.004",
+          "center": [
+            0.9777792,
+            0.4841773,
+            -0.8876583
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.6955591,
+            0.0,
+            -1.3736968
+          ],
+          "tyreBoundsMax": [
+            1.2599993,
+            0.9683546,
+            -0.4016199
+          ]
+        },
+        {
+          "name": "Wheel_01_L",
+          "nativeName": "Wheel_01_L.004",
+          "center": [
+            -0.9777792,
+            0.4841773,
+            -2.017405
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            -1.26,
+            0.0,
+            -2.5033913
+          ],
+          "tyreBoundsMax": [
+            -0.6955583,
+            0.9683546,
+            -1.5314189
+          ]
+        },
+        {
+          "name": "Wheel_01_R",
+          "nativeName": "Wheel_01_R.004",
+          "center": [
+            0.9777792,
+            0.4841773,
+            -2.017405
+          ],
+          "radius": 0.48417729139328003,
+          "rollingAxis": "X",
+          "steering": false,
+          "tyreBoundsMin": [
+            0.6955591,
+            0.0,
+            -2.5034435
+          ],
+          "tyreBoundsMax": [
+            1.2599993,
+            0.9683546,
+            -1.5313666
+          ]
+        }
+      ],
+      "wheelPivots": [
+        "Wheel_00_L",
+        "Wheel_00_R",
+        "Wheel_01_L",
+        "Wheel_01_R"
+      ],
+      "landingLegs": [
+        "LandingLeg_L",
+        "LandingLeg_R"
+      ],
+      "compatibleVehicles": [
+        "scania"
+      ],
+      "ready": true,
+      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "construction": {
+        "asset": "tanker",
+        "removed": [
+          {
+            "name": "Trailer_Gooseneck_Frame.002",
+            "geometrySha": "0032d0333c8a712e63134f013479534eea89c3486ecca16eeb479f8ded7b8454",
+            "min": [
+              -1.0692247,
+              0.5245253,
+              -3.2278483
+            ],
+            "max": [
+              1.0692247,
+              1.3597757,
+              3.2278483
+            ]
+          },
+          {
+            "name": "Trailer_Body_CrossSupport.003",
+            "geometrySha": "2605988d10820692ef117cbe6ad1f060514fe8744270efe5f265930ea72b92de",
+            "min": [
+              -1.0087026,
+              0.766614,
+              -2.0874052
+            ],
+            "max": [
+              1.0087026,
+              1.3597758,
+              -1.9474052
+            ]
+          },
+          {
+            "name": "Trailer_Body_CrossSupport.004",
+            "geometrySha": "8f9e4c7e0f42a9d8d16b54bb179acb82e3b003a407a5441875702e83ed438395",
+            "min": [
+              -1.0087026,
+              0.766614,
+              -0.9576583
+            ],
+            "max": [
+              1.0087026,
+              1.3597758,
+              -0.8176583
+            ]
+          },
+          {
+            "name": "Trailer_Body_CrossSupport.005",
+            "geometrySha": "ccfb0b81bb5d07bf18d8373302575571c0bdc94b82859662848734fc1d81d6a2",
+            "min": [
+              -1.0087026,
+              0.766614,
+              0.4948735
+            ],
+            "max": [
+              1.0087026,
+              1.3597758,
+              0.6348734
+            ]
+          }
+        ],
+        "construction": "Two continuous raised central rails; cross-members outside measured tyre envelopes; real axles/hangers; body supports touch floor/cylinder",
+        "middleTyreGap": 0.1576697826385498,
+        "middleCrossMemberDepth": 0.08,
+        "flatbedRearDeckBottom": null,
+        "kingpinPositionUnchanged": true
+      },
+      "sha256": "2fe47fe9b76415fac9f29a052c3ab0cb72d4f132f86a4479379200f0e004d559",
+      "bytes": 5936916,
+      "wheelDonor": {
+        "asset": "scania",
+        "pivots": [
+          "Wheel_01_L",
+          "Wheel_01_R"
+        ],
+        "sourceSha256": "c7d3a2b7cb562c035eee09c5f15d22bd61d668cc83e7faa7bd430f3ae0fe0e92",
+        "author": "PAndras",
+        "license": "CC-BY-4.0",
+        "source": "https://sketchfab.com/3d-models/scania-truck-59889032d0ad457c81d7e058c79eedf8",
+        "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained."
+      },
+      "credits": [
+        {
+          "author": "Romario Vicente Amaro",
+          "scope": "Procedural trailer body/chassis and integration"
+        },
+        {
+          "asset": "scania",
+          "pivots": [
+            "Wheel_01_L",
+            "Wheel_01_R"
+          ],
+          "sourceSha256": "c7d3a2b7cb562c035eee09c5f15d22bd61d668cc83e7faa7bd430f3ae0fe0e92",
+          "author": "PAndras",
+          "license": "CC-BY-4.0",
+          "source": "https://sketchfab.com/3d-models/scania-truck-59889032d0ad457c81d7e058c79eedf8",
+          "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained.",
+          "scope": "Derived wheel assemblies"
+        }
+      ]
+    }
+  ],
+  "integratorVisualReviewRequired": false,
+  "reviewDate": "2026-11-03"
+}

@@ -755,6 +755,12 @@ Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesm
 - Licença: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 - Alterações: Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained.
 
+### Derivada interativa Scania — 03/11/2026
+- Arquivo: `/assets/vehicles/trucks/TRUCK_scania_interactive_20261103.glb`
+- Autor e licença: PAndras, CC-BY-4.0; mesma origem acima.
+- Alterações no Blender: cópia do GLB original preservado, orientação +Z, escala em metros, pneus/rodas separados em seis pivôs, eixo dianteiro direcionável e ponto de engate na quinta roda original. UVs, materiais e texturas incorporadas preservados.
+- Os três semirreboques derivados do projeto usam `/assets/vehicles/trailers/TRAILER_{box,flatbed,tanker}_interactive_20261103.glb`. Carrocerias procedurais: `PROP_truck-trailer-{box,flatbed,tanker}_scene_20261005.glb`, autoria do projeto Romario Vicente Amaro. As rodas traseiras detalhadas, seus aros, pneus duplos, UVs e texturas são derivados do Scania de PAndras, sob CC-BY-4.0, com origem e licença acima. Alterações: escala e eixos alinhados, quatro pivôs, suportes com folga para os pneus, chassi dianteiro elevado contínuo, pino-rei e apoios retráteis. O conjunto é uma montagem derivada do projeto; as carrocerias não foram fornecidas pelo autor do Scania.
+
 ## Estudante 01
 - Arquivo: `/assets/supplied/SUP_school_girl_v21.glb`
 - Autor: Fadly.W (https://sketchfab.com/Fadly.W)
@@ -992,6 +998,11 @@ Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesm
 - Origem: https://sketchfab.com/3d-models/volvo-concept-truck-6fc9043e43a74c9d9a2ebedf76bf5315
 - Licença: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 - Alterações: Static mesh batching/reduction where applicable; textures capped at 1024 px; JPEG export. Original pose/rig retained.
+
+### Derivada interativa Volvo Concept — 03/11/2026
+- Arquivo: `/assets/vehicles/trucks/TRUCK_volvo_concept_interactive_20261103.glb`
+- Autor e licença: s.probka, CC-BY-4.0; mesma origem acima.
+- Alterações no Blender: cópia do GLB original preservado, giro de 180° para frente +Z, escala em metros e separação das seis rodas com UVs/materiais preservados. O modelo é rígido e permanece sem semirreboque; não foi convertido artificialmente em cavalo mecânico.
 
 ## Volvo FH 460 - RICK MODDING
 - Arquivo: `/assets/supplied/SUP_volvo_fh_460___rick_modding.glb`

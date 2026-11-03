@@ -2,6 +2,7 @@ import {resolveAssetReferences} from '../config/deploymentConfig.js';
 import {HOSPITAL_SCRUB_COLOR} from '../network/playerIdentity.js';
 import {resolveCarSource,safeVehicleCopy,canEnterCar} from './carInteraction.js';
 import {resolveMotorcycle,nearestMotorcycle} from './motorcycleInteraction.js';
+import {resolveTruckProfile,TRAILER_DEFINITIONS,moveTruck,stopTruck,safeTruckCopy,truckColliders,truckPositionBlocked,truckExitPosition} from './truckInteraction.js';
 import {playableCityBounds} from '../config/cityBounds.js';
 import deliveryConfigRaw from '../config/newDeliveryWorld.json' with {type:'json'};
 const deliveryConfig=resolveAssetReferences(deliveryConfigRaw);
@@ -222,11 +223,18 @@ export function applyCyberAction(state, action, context = {}) {
     if(state.mode!=='foot'||state.sitting||state.elevator||state.carEntry||state.jump)return fail('O salto fica disponível quando você está em pé e no chão.');
     return update({jump:{startedAt:state.elapsed},jumpHeight:0,jumpCount:(state.jumpCount??0)+1,action:'Idle',fishing:null},'Salto · Espaço');
   }
+  if(action.type==='TRUCK_DRIVE'){
+    if(state.mode!=='truck'||!state.personalVehicles.truck)return fail('Entre no caminhão para dirigir.');
+    const truck=moveTruck(state.personalVehicles.truck,action.keys,action.delta,context.obstacles??[]);
+    return {ok:true,message:'',state:{...state,heading:truck.heading,position:{x:truck.x,y:DRIVE_VEHICLES.truck.seat,z:truck.z},
+      personalVehicles:{...state.personalVehicles,truck},action:'Idle'}};
+  }
   if (action.type === 'MOVE') {
     if (state.mode !== 'foot' && !DRIVE_VEHICLES[state.mode]) return fail('Saia do transporte antes de caminhar.');
     if ((state.sitting && !DRIVE_VEHICLES[state.mode]) || state.elevator) return fail('Levante-se ou aguarde o elevador.');
     if(state.mode==='car'&&(!state.carControls?.engineOn||state.carControls?.doorOpen))return fail('Feche a porta e ligue o motor para dirigir.');
     if(state.mode==='mototaxi'&&!state.motorcycleControls?.engineOn)return fail('Ligue o motor da moto para pilotar.');
+    if(state.mode==='truck')return fail('Use os controles do caminhão para preservar o engate e as colisões do reboque.');
     if (!finitePoint(action.position)) return fail('Posição inválida.');
     if(action.position.x<CYBER_BOUNDS.minX||action.position.x>CYBER_BOUNDS.maxX||action.position.z<CYBER_BOUNDS.minZ||action.position.z>CYBER_BOUNDS.maxZ)return fail('Posição fora da cidade.');
     const heading=action.heading??state.heading;
@@ -241,6 +249,11 @@ export function applyCyberAction(state, action, context = {}) {
   }
   if (action.type === 'EXIT') {
     if(state.mode==='mototaxi')return applyCyberAction(state,{type:'MOTO_EXIT'},context);
+    if(state.mode==='truck'&&state.personalVehicles.truck){
+      const truck=stopTruck(state.personalVehicles.truck),position=truckExitPosition(truck,context.obstacles??[]);
+      if(!position)return fail('A saída do caminhão está bloqueada. Procure uma passagem livre.');
+      return update({mode:'foot',position,personalVehicles:{...state.personalVehicles,truck},sitting:false,action:'Idle'},'Você saiu do caminhão. F para entrar novamente.');
+    }
     if(state.mode==='car'&&(state.carControls?.engineOn||!state.carControls?.doorOpen))return fail('Desligue o motor e abra a porta antes de sair do carro.');
     const route = TRANSIT_ROUTES[state.mode];
     if (!route) {
@@ -308,6 +321,15 @@ export function applyCyberAction(state, action, context = {}) {
     const definition=DRIVE_VEHICLES[action.vehicle],vehicle=state.personalVehicles[action.vehicle]??definition?.position;
     if(!definition||state.mode!=='foot'||state.elevator)return fail('Escolha um veículo parado e fique em pé.');
     if(distance(state.position,vehicle)>7)return fail('Aproxime-se do veículo para entrar na sua cópia.');
+    if(action.vehicle==='truck'){
+      if(state.sitting||state.jump||state.carEntry||context.carrying||Math.abs((state.position.y??0)-(vehicle.y??0))>1.6)return fail('Fique a pé, no chão e sem objetos nas mãos para entrar no caminhão.');
+      const own=state.personalVehicles.truck,profile=resolveTruckProfile(own?.sourceId??'truck');
+      if(!profile)return fail('O modelo do caminhão ainda não está disponível para condução.');
+      const sourceObstacles=own?[]:truckColliders({...vehicle,heading:0,sourceId:profile.id});
+      const truck=own?stopTruck(own):safeTruckCopy(vehicle,0,profile.id,state.trailer,[...sourceObstacles,...(context.obstacles??[])]);
+      if(!truck)return fail('Não há espaço livre para o caminhão e seu reboque.');
+      return update({mode:'truck',position:{x:truck.x,y:definition.seat,z:truck.z},personalVehicles:{truck},trailer:truck.trailer,heading:truck.heading,sitting:true,action:'Idle'},'Você entrou no caminhão. W avança, S dá ré e A/D viram o volante.');
+    }
     if(action.vehicle==='car'&&!state.carControls?.doorOpen)return fail('Abra a porta do carro antes de entrar.');
     const personal=state.personalVehicles[definition.id]??{...vehicle,x:vehicle.x+5};
     return update({mode:definition.id,position:{x:personal.x,y:definition.seat,z:personal.z},personalVehicles:{[definition.id]:{...personal,heading:personal.heading??0}},heading:personal.heading??0,sitting:true,action:'Idle'},`Você entrou: ${definition.label}.`);
@@ -348,6 +370,14 @@ export function applyCyberAction(state, action, context = {}) {
     const definition=DRIVE_VEHICLES[action.vehicle];if(!definition)return fail('Escolha um veículo da garagem.');
     if(definition.farmOnly&&(state.position.z<86||state.position.z>114||Math.abs(state.position.x)>22))return fail('Chame o equipamento agrícola na fazenda.');
     const chosen=action.vehicle==='car'?resolveCarSource(action.sourceId??'car'):action.vehicle==='mototaxi'?resolveMotorcycle(action.sourceId??'mototaxi'):null;
+    if(action.vehicle==='truck'){
+      const profile=resolveTruckProfile(action.sourceId??'truck');if(!profile)return fail('Escolha um modelo de caminhão disponível.');
+      const truck=safeTruckCopy(state.position,state.heading,action.sourceId??'truck',state.trailer,context.obstacles??[]);
+      if(!truck)return fail('Procure espaço livre para o caminhão e o comprimento completo do reboque.');
+      const previous=Object.entries(state.personalVehicles)[0],garage=previous?{...state.garage,[previous[0]]:{sourceId:previous[1].sourceId,parkingId:'garage'}}:state.garage;
+      return update({garage,personalVehicles:{truck},trailer:truck.trailer,carControls:{doorOpen:false,engineOn:false,windowsOpen:false},motorcycleControls:{engineOn:false}},
+        profile.compatibleTrailers.length?`${profile.label} chamado com espaço para o conjunto. F para entrar.`:`${profile.label} chamado sem reboque. Este caminhão não usa semirreboque. F para entrar.`);
+    }
     const template=chosen??{position:definition.position,heading:0,w:action.vehicle==='truck'?3:2.8,d:action.vehicle==='truck'?8:5};
     const point=safeVehicleCopy({...template,position:{...state.position,y:0},heading:state.heading},context.obstacles??[],action.vehicle==='mototaxi'?.6:1.3);
     if(!point)return fail('Procure um espaço aberto para chamar o veículo.');
@@ -361,7 +391,11 @@ export function applyCyberAction(state, action, context = {}) {
     const [id,vehicle]=active;
     const parking=context.parking??DEFAULT_PARKING,slot=parking.find(item=>distance(state.position,{x:item.position[0],z:item.position[2]})<=10||distance(vehicle,{x:item.position[0],z:item.position[2]})<=10);
     if(!slot)return fail('Leve seu veículo a um estacionamento para guardá-lo.');
-    const position=state.mode===id?{x:clamp(vehicle.x+3,CYBER_BOUNDS.minX,CYBER_BOUNDS.maxX),y:0,z:vehicle.z}:state.position;
+    let position=state.mode===id?{x:clamp(vehicle.x+3,CYBER_BOUNDS.minX,CYBER_BOUNDS.maxX),y:0,z:vehicle.z}:state.position;
+    if(state.mode==='truck'){
+      position=truckExitPosition(vehicle,context.obstacles??[]);
+      if(!position)return fail('A saída do caminhão está bloqueada. Libere a passagem antes de guardá-lo.');
+    }
     return update({garage:{...state.garage,[id]:{sourceId:vehicle.sourceId,parkingId:slot.id}},personalVehicles:{},mode:'foot',position,sitting:false,carEntry:null,carExit:null,carControls:{...state.carControls,engineOn:false,doorOpen:false},motorcycleControls:{engineOn:false},action:'Idle'},`${DRIVE_VEHICLES[id].label} guardado no estacionamento. Chame novamente pelo telefone.`);
   }
   if(action.type==='CAR_EXIT'){
@@ -391,8 +425,15 @@ export function applyCyberAction(state, action, context = {}) {
     return applyCyberAction(state,{type:'STORE_VEHICLE'},context);
   }
   if(action.type==='TRAILER'){
-    if(!['flatbed','tanker','box'].includes(action.trailer))return fail('Escolha uma carroceria disponível.');
-    return update({trailer:action.trailer},'Carroceria de demonstração acoplada à sua cópia do caminhão.');
+    if(action.trailer!=='none'&&!TRAILER_DEFINITIONS[action.trailer])return fail('Escolha um reboque disponível.');
+    const current=state.personalVehicles.truck;
+    if(!current)return update({trailer:action.trailer},'Reboque escolhido para o próximo caminhão chamado.');
+    if(action.trailer!=='none'&&!resolveTruckProfile(current.sourceId)?.compatibleTrailers.includes(action.trailer))return fail('Este caminhão não usa esse semirreboque. Escolha o cavalo mecânico na garagem.');
+    if(Math.abs(current.speed??0)>.05)return fail('Pare o caminhão antes de trocar ou recolher o reboque.');
+    if(state.mode!=='truck'&&(state.mode!=='foot'||distance(state.position,current)>7))return fail('Aproxime-se do caminhão parado para trocar o reboque.');
+    const truck={...current,trailer:action.trailer,articulationAngle:current.articulationAngle??0,trailerWheelAngle:0};
+    if(truckPositionBlocked(truck,context.obstacles??[]))return fail('Não há espaço livre para acoplar esse reboque.');
+    return update({trailer:action.trailer,personalVehicles:{...state.personalVehicles,truck}},action.trailer==='none'?'Reboque recolhido à garagem.':'Reboque acoplado ao caminhão parado.');
   }
   if (action.type === 'CAST') {
     if (distance(state.position,{x:100,z:0})>20 || state.mode!=='foot') return fail('Visite a margem da praia para pescar.');

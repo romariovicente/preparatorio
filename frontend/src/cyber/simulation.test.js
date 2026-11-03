@@ -50,8 +50,9 @@ test('driving and parking affect a personal vehicle copy while authored models r
   let state=createCyberState();assert.equal(applyCyberAction(state,{type:'DRIVE',vehicle:'truck'}).ok,false);
   state={...state,position:{x:90,y:0,z:50}};state=applyCyberAction(state,{type:'DRIVE',vehicle:'truck'}).state;
   assert.equal(state.mode,'truck');assert.equal(state.sitting,true);assert.equal(state.position.y,1.5);
-  state=applyCyberAction(state,{type:'MOVE',position:{x:90,y:1.5,z:52},heading:1}).state;
-  assert.equal(state.personalVehicles.truck.z,52);assert.equal(applyCyberAction(state,{type:'PARK'},{parking:[]}).ok,false);
+  const previousZ=state.personalVehicles.truck.z;
+  state=applyCyberAction(state,{type:'TRUCK_DRIVE',keys:{w:true},delta:.05}).state;
+  assert.ok(state.personalVehicles.truck.z>previousZ);assert.equal(applyCyberAction(state,{type:'PARK'},{parking:[]}).ok,false);
   const result=applyCyberAction(state,{type:'PARK'},{parking:[{id:'utility',position:[90,.1,50],size:[6,16]}]});
   assert.equal(result.ok,true);assert.equal(result.state.mode,'foot');assert.deepEqual(result.state.personalVehicles,{});
   assert.equal(result.state.garage.truck.parkingId,'utility');
