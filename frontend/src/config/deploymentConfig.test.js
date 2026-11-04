@@ -42,3 +42,22 @@ test('per-file mapping retains reader pages and query strings, including withhel
   assert.equal(config.assetUrl('/assets/book.pdf?v=2#page=22'),'https://cdn.example/book.pdf?v=2#page=22');
   assert.equal(config.assetUrl('/assets/private.pdf#page=22'),null);
 });
+test('verified asset SHA query survives resolution, nested references and caller suffixes',()=>{
+  const sha='a'.repeat(64),mapped=`https://cdn.example/trailer.glb?v=${sha}`;
+  const config=createDeploymentConfig({manifest:{'/assets/trailer.glb':mapped,'/assets/private.glb':null}});
+  assert.equal(config.assetUrl('/assets/trailer.glb'),mapped);
+  assert.equal(config.assetUrl('/assets/trailer.glb?mode=inspect#part=rear'),`${mapped}&mode=inspect#part=rear`);
+  assert.equal(config.assetUrl('/assets/trailer.glb?v=stale&mode=inspect#part=rear'),`${mapped}&mode=inspect#part=rear`);
+  assert.deepEqual(config.resolveAssetReferences({trailers:[{url:'/assets/trailer.glb'}]}),{trailers:[{url:mapped}]});
+  assert.equal(config.assetUrl('/assets/private.glb?v=stale'),null);
+});
+test('asset version support keeps service URLs and mapped asset credentials restricted',()=>{
+  const sha='a'.repeat(64);
+  for(const option of ['assetBaseUrl','apiBaseUrl'])assert.throws(()=>createDeploymentConfig({[option]:`https://cdn.example/?v=${sha}`}));
+  for(const mapped of [`http://cdn.example/a.glb?v=${sha}`,`https://localhost/a.glb?v=${sha}`,
+    `https://user:secret@cdn.example/a.glb?v=${sha}`,'https://cdn.example/a.glb?v=stale',
+    `https://cdn.example/a.glb?v=${sha}&token=extra`,`https://cdn.example/a.glb?v=${sha}#fragment`]) {
+    const config=createDeploymentConfig({manifest:{'/assets/a.glb':mapped}});
+    assert.throws(()=>config.assetUrl('/assets/a.glb'));
+  }
+});

@@ -12,6 +12,19 @@ function serviceBase(value,development) {
   if(!development&&loopback(url.hostname))throw new Error('O site público não pode usar um serviço localhost.');
   return url.href.replace(/\/$/,'');
 }
+function mappedAssetUrl(value,suffix) {
+  const url=new URL(value);
+  if(url.username||url.password||url.hash||url.protocol!=='https:'||loopback(url.hostname)||
+    (url.search&&!/^\?v=[a-f0-9]{64}$/.test(url.search)))throw new Error('O arquivo público requer uma URL HTTPS sem credenciais e uma versão SHA-256 válida.');
+  const source=new URL('https://asset.invalid/'+suffix);
+  for(const [key,item] of source.searchParams) {
+    // A caller query must not replace the version of the verified asset bytes.
+    if(key==='v'&&url.searchParams.has('v'))continue;
+    url.searchParams.append(key,item);
+  }
+  url.hash=source.hash;
+  return url.href;
+}
 
 export function createDeploymentConfig({basePath='/',assetBaseUrl='',apiBaseUrl='',development=false,hostname='',manifest={}}={}) {
   const base=pathBase(basePath),assets=assetBaseUrl?serviceBase(assetBaseUrl,development)+'/':base+'assets/';
@@ -24,7 +37,7 @@ export function createDeploymentConfig({basePath='/',assetBaseUrl='',apiBaseUrl=
     if(!development&&Object.hasOwn(manifest,path)) {
       const mapped=manifest[path];
       // null explicitly withholds a file whose public distribution is unapproved.
-      return mapped===null?null:serviceBase(mapped,false)+suffix;
+      return mapped===null?null:mappedAssetUrl(mapped,suffix);
     }
     return assets+value.slice('/assets/'.length);
   }

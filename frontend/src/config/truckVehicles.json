@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "date": "2026-11-03",
+  "date": "2026-11-04",
   "normalized": true,
   "units": "meters",
   "vehicles": [
@@ -462,7 +462,7 @@
         "scania"
       ],
       "ready": true,
-      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "qualityStatus": "Rear detail V2 accepted for static appearance, preserved geometry and runtime classification; functional lights and full dynamic physics not certified",
       "construction": {
         "asset": "box",
         "removed": [
@@ -529,8 +529,8 @@
         "flatbedRearDeckBottom": null,
         "kingpinPositionUnchanged": true
       },
-      "sha256": "e38d0bf046fcb049b178a4bc6c62239922226c1f920ed385a09f22b7f919fb23",
-      "bytes": 5931544,
+      "sha256": "df59e56788a63e018f8f6614fbe5947f27b663ecc1340164792d84a73bee842f",
+      "bytes": 5960436,
       "wheelDonor": {
         "asset": "scania",
         "pivots": [
@@ -561,7 +561,15 @@
           "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained.",
           "scope": "Derived wheel assemblies"
         }
-      ]
+      ],
+      "rearFinish": {
+        "increment": "truck_rear_finish_detail_v2",
+        "group": "RearFinish",
+        "newMeshCount": 21,
+        "lightControl": "Static non-emissive visual fittings; future channels tagged",
+        "technicalReady": true,
+        "integratorReviewed": true
+      }
     },
     {
       "id": "flatbed",
@@ -683,7 +691,7 @@
         "scania"
       ],
       "ready": true,
-      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "qualityStatus": "Rear detail V2 accepted for static appearance, preserved geometry and runtime classification; functional lights and full dynamic physics not certified",
       "construction": {
         "asset": "flatbed",
         "removed": [
@@ -722,8 +730,8 @@
         "flatbedRearDeckBottom": 1.00835458278656,
         "kingpinPositionUnchanged": true
       },
-      "sha256": "15b4da79fca843a61a6c896bd39f6ba9fb55e7b3f8316b7df1ed49acf36e3a00",
-      "bytes": 5935236,
+      "sha256": "f263eec2670e271b947cbdc98b583b46ed0961d66dc83b2767891c615d21deaa",
+      "bytes": 5964212,
       "wheelDonor": {
         "asset": "scania",
         "pivots": [
@@ -754,7 +762,15 @@
           "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained.",
           "scope": "Derived wheel assemblies"
         }
-      ]
+      ],
+      "rearFinish": {
+        "increment": "truck_rear_finish_detail_v2",
+        "group": "RearFinish",
+        "newMeshCount": 21,
+        "lightControl": "Static non-emissive visual fittings; future channels tagged",
+        "technicalReady": true,
+        "integratorReviewed": true
+      }
     },
     {
       "id": "tanker",
@@ -876,7 +892,7 @@
         "scania"
       ],
       "ready": true,
-      "qualityStatus": "Native geometry, export/reimport and visual inspection accepted for this incremental integration",
+      "qualityStatus": "Rear detail V2 accepted for static appearance, preserved geometry and runtime classification; functional lights and full dynamic physics not certified",
       "construction": {
         "asset": "tanker",
         "removed": [
@@ -943,8 +959,8 @@
         "flatbedRearDeckBottom": null,
         "kingpinPositionUnchanged": true
       },
-      "sha256": "2fe47fe9b76415fac9f29a052c3ab0cb72d4f132f86a4479379200f0e004d559",
-      "bytes": 5936916,
+      "sha256": "445e12f8c63dbca5cf423d9e472992a652486167db32feeb539c0fc8ff73c3f5",
+      "bytes": 5965892,
       "wheelDonor": {
         "asset": "scania",
         "pivots": [
@@ -975,9 +991,19 @@
           "modifications": "Uniformly scaled real dual-tyre/rim assemblies; original UVs, topology, textures and materials retained.",
           "scope": "Derived wheel assemblies"
         }
-      ]
+      ],
+      "rearFinish": {
+        "increment": "truck_rear_finish_detail_v2",
+        "group": "RearFinish",
+        "newMeshCount": 21,
+        "lightControl": "Static non-emissive visual fittings; future channels tagged",
+        "technicalReady": true,
+        "integratorReviewed": true
+      }
     }
   ],
   "integratorVisualReviewRequired": false,
-  "reviewDate": "2026-11-03"
+  "baselineReviewDate": "2026-11-03",
+  "reviewDate": "2026-11-04",
+  "nativeLibrary": "art/blender/libraries/PREPARATORIO_TRUCK_WORKSHOP_20261104_DETAIL_V2.blend"
 }
