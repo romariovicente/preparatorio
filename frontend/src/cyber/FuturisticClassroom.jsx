@@ -5,6 +5,7 @@ import {BoxGeometry,Group,Mesh} from 'three';
 import {clone} from 'three/addons/utils/SkeletonUtils.js';
 import {setWorldShadows} from './modelLighting.js';
 import {classroomWorld,createClassroomRuntime,stepClassroomDoor,toggleClassroomDoor} from './classroomWorld.js';
+import CityAssetBoundary from './CityAssetBoundary.js';
 
 function AnatomyHologram({onInspect}){
   const asset=classroomWorld.educational,gltf=useGLTF(asset.url);
@@ -76,7 +77,9 @@ function ClassroomModels({simulation,runtime,onDoorState,onInspect}){
         <button className="cyber-world-label" onClick={toggle} aria-label={`${doorLabel} · Sala de aula PREPARATÓRIO`}>{doorLabel}<br/>Sala de aula · PREPARATÓRIO</button>
       </Html>
     </group>
-    <AnatomyHologram onInspect={onInspect}/>
+    <CityAssetBoundary label="anatomia da sala de aula" assetUrls={[classroomWorld.educational.url]}>
+      <AnatomyHologram onInspect={onInspect}/>
+    </CityAssetBoundary>
     <pointLight position={[0,3.1,0]} color="#edf8ff" intensity={28} distance={16} decay={2}/>
   </>;
 }

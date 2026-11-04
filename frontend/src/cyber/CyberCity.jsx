@@ -12,7 +12,7 @@ import {prepareLivingWorldDecorations} from './livingWorldDecorations.js';
 import WarpEngine from './WarpEngine.jsx';
 import {warpEngineColliders,warpEngineZones} from './warpEngineWorld.js';
 import {createHospitalRuntime,hospitalColliders,hospitalGroundSurfaces} from './hospitalReception.js';
-import CityAssetBoundary from './CityAssetBoundary.js';
+import CityAssetBoundary,{CityAssetGroup} from './CityAssetBoundary.js';
 import AssetRetryButton from './AssetRetryButton.js';
 import {clockSourceLabel,sharedServiceLabel,cityLoadLabel} from '../config/serviceStatus.js';
 import {deployment,resolveAssetReferences} from '../config/deploymentConfig.js';
@@ -200,7 +200,7 @@ function Vehicle({id,simulation,personal=false,vehicleState,onAsk,onSelect}) {
   const liveBus=BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):null;
   return asset?<group ref={group} userData={{dynamicCollider:true}} onClick={onSelect?event=>{event.stopPropagation();onSelect(personal&&id==='car'?'personal-car':personal&&id==='mototaxi'?'personal-moto':id);}:undefined}>
     {id==='truck'?<TruckModel key={truckProfile.id} simulation={simulation} personal={personal} profile={truckProfile} trailerId={vehicleState?.trailer}/>:id==='car'?<CarModel asset={asset} simulation={simulation} personal={personal} open={personal&&simulation.current.carControls?.doorOpen}/>:id==='mototaxi'?<MotorcycleModel asset={asset} simulation={simulation} personal={personal}/>:liveBus?<BusModel asset={asset} simulation={simulation} id={id}/>:<ShadowedModel asset={asset} height={asset.height??(id==='tractor'?2.2:id==='harvester'?3.5:3.2)}/>}
-    {TRANSIT_ROUTES[id]&&driver&&liveBus?.control!=='player'&&<group position={liveBus?BUS_DEFINITIONS[id].driverSeat:[.6,1.1,6]}><SeatedModel asset={driver}/><Html position={[0,1.8,0]} center distanceFactor={12} zIndexRange={[1,0]}><button className="cyber-world-label" onClick={event=>{event.stopPropagation();onAsk('guide',liveBus?'Motorista do ônibus':'Maquinista do trem');}}>Conversar com {liveBus?'motorista':'maquinista'}</button></Html></group>}
+    {TRANSIT_ROUTES[id]&&driver&&liveBus?.control!=='player'&&<group position={liveBus?BUS_DEFINITIONS[id].driverSeat:[.6,1.1,6]}><CityAssetBoundary label="motorista" assetUrls={[driver.url]}><SeatedModel asset={driver}/></CityAssetBoundary><Html position={[0,1.8,0]} center distanceFactor={12} zIndexRange={[1,0]}><button className="cyber-world-label" onClick={event=>{event.stopPropagation();onAsk('guide',liveBus?'Motorista do ônibus':'Maquinista do trem');}}>Conversar com {liveBus?'motorista':'maquinista'}</button></Html></group>}
   </group>:null;
 }
 function GrowthPlot({plot,planted,elapsed,onSelect}) {
@@ -647,7 +647,7 @@ export default function CyberCity() {
       <Suspense fallback={null}>
         <Actor asset={character} snapshot={snapshot} simulation={simulation} tractorRef={tractorRef} held={held} displayName={playerName} onReady={onCharacterReady}/>
       </Suspense>
-      {ready&&<CityAssetBoundary label="demais objetos da cidade">
+      {ready&&<CityAssetGroup label="objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>
         <FuturisticClassroom simulation={simulation} runtime={classroomRuntime} onDoorState={()=>audio.play('DOOR')} onInspect={()=>{setNpc({id:'jarvis',name:'Professor JARVIS · Anatomia'});setQuestion('Como estudar ossos e camadas do corpo humano?');setTab('jarvis');setPhoneOpen(true);}}/>
@@ -667,7 +667,7 @@ export default function CyberCity() {
         <AssetProp id="elevator" height={3.2} position={[ELEVATOR_POSITION.x,snapshot.elevator?snapshot.position.y:elevatorNear?snapshot.position.y:0,ELEVATOR_POSITION.z]}/>
         <CityAssetBoundary label="tutora"><NPC id="nurse" position={[43,0,-20]} name="Tutora hospitalar PREP" onAsk={converse}/></CityAssetBoundary><CityAssetBoundary label="guia"><NPC id="guide" position={[-7,0,2]} name="Guia de Arapiraca PREP" onAsk={converse}/></CityAssetBoundary>
         <AssetProp id="fish-blue" height={.4} position={[108,.5,-6]}/><AssetProp id="fish-yellow" height={.35} position={[111,.45,4]}/><AssetProp id="fish-red" height={.35} position={[105,.45,8]}/><AssetProp id="shark" height={.7} position={[115,.45,16]}/>
-      </CityAssetBoundary>}
+      </CityAssetGroup>}
       <SolarSky simulation={simulation} clockConfig={clockConfig} planetarium={spaceView}/>
       <Html position={[0,7,-5]} center distanceFactor={16} zIndexRange={[1,0]}><div className="cyber-billboard"><strong>ARAPIRACA · PREP</strong><span>{clock.text} · {clock.phase}</span><small>CHRONOVITAE · conhecimento em movimento</small></div></Html>
       {snapshot.fishing&&<Line points={[[snapshot.position.x+.4,1.7,snapshot.position.z+.3],[107,.2,0]]} color="#b9dce7" lineWidth={1}/>}

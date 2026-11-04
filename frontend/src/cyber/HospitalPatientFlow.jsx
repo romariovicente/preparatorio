@@ -3,6 +3,7 @@ import {Html} from '@react-three/drei';
 import {useFrame} from '@react-three/fiber';
 import {sampleHospitalPatientRoute} from './hospitalPatientFlow.js';
 import CostumedCharacter from './CostumedCharacter.jsx';
+import CityAssetBoundary from './CityAssetBoundary.js';
 
 function Patient({entry,index,onInspect}){
   const root=useRef(null),phase=useRef('walking'),[waiting,setWaiting]=useState(false);
@@ -23,6 +24,8 @@ function Patient({entry,index,onInspect}){
 
 export default function HospitalPatientFlow({entries,onInspect}){
   return <group name="PREP_HOSPITAL_PATIENT_FLOW">
-    {entries.map((entry,index)=><Patient key={entry.id} entry={entry} index={index} onInspect={onInspect}/>)}
+    {entries.map((entry,index)=><CityAssetBoundary key={entry.id} label={`paciente · ${entry.name}`} assetUrls={[entry.playerAsset.url]}>
+      <Patient entry={entry} index={index} onInspect={onInspect}/>
+    </CityAssetBoundary>)}
   </group>;
 }

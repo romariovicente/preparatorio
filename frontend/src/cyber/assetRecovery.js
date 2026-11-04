@@ -4,9 +4,14 @@ import {assetUrl} from '../config/deploymentConfig.js';
 
 const modelPath=value=>typeof value==='string'&&/\.(?:glb|gltf)$/i.test(value);
 const safeModelUrl=value=>{
-  if(!modelPath(value)||/[\s?#]/.test(value))return false;
-  if(value.startsWith('/')&&!value.startsWith('//'))return true;
-  try{const url=new URL(value);return url.protocol==='https:'&&!url.username&&!url.password;}catch{return false;}
+  if(typeof value!=='string'||/[\s\\]/.test(value))return false;
+  const local=value.startsWith('/')&&!value.startsWith('//');
+  try{
+    const url=new URL(value,local?'https://asset.invalid':undefined);
+    return modelPath(url.pathname)&&!url.hash&&!url.username&&!url.password
+      &&(local||url.protocol==='https:'&&!['localhost','127.0.0.1','[::1]','::1'].includes(url.hostname))
+      &&(!url.search||/^\?v=[a-f0-9]{64}$/.test(url.search));
+  }catch{return false;}
 };
 export function createAssetRetryResolver({assetManifest=manifest,resolveUrl=assetUrl,locationHref=globalThis.location?.href}={}){
   const approvedKeys=new Map();

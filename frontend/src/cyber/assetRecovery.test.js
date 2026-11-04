@@ -81,3 +81,27 @@ test('unmounted boundaries unregister their failures and earlier cleanup cannot 
   current();assert.equal(store.getSnapshot(),0);assert.equal(store.retryFailed(),0);
   unsubscribe();store.register({key:'other',urls:[url],retry:()=>{}});assert.equal(notices,2);
 });
+
+test('a verified versioned GLB recovers the exact failed loader key and preserves its SHA',()=>{
+  const asset='/assets/trailer.glb',sha='a'.repeat(64),remote=`https://cdn.example/trailer.glb?v=${sha}`;
+  const resolve=createAssetRetryResolver({assetManifest:{[asset]:remote},resolveUrl:()=>remote,locationHref:'https://game.example/preparatorio/'});
+  assert.deepEqual(resolve([asset]),[remote]);
+  assert.deepEqual(resolve(undefined,new Error(`Could not load ${remote}: Failed to fetch`)),[remote]);
+  const cleared=[],store=createAssetRecoveryStore({resolveUrls:resolve,clearCache:url=>cleared.push(url)});let retries=0;
+  store.register({key:'trailer',urls:[asset],retry:()=>{retries++;}});
+  assert.equal(store.getSnapshot(),1);assert.equal(store.retryFailed(),1);
+  assert.deepEqual(cleared,[remote]);assert.equal(retries,1);
+});
+
+test('versioned recovery remains restricted to approved SHA URLs and safe catalog destinations',()=>{
+  const sha='a'.repeat(64),asset='/assets/model.glb';
+  for(const remote of [`http://cdn.example/model.glb?v=${sha}`,`https://localhost/model.glb?v=${sha}`,
+    `https://127.0.0.1/model.glb?v=${sha}`,`https://user:secret@cdn.example/model.glb?v=${sha}`,
+    'https://cdn.example/model.glb?v=stale',`https://cdn.example/model.glb?v=${sha}&token=extra`,
+    `https://cdn.example/model.glb?v=${sha}#fragment`,`https://cdn.example/model.glb?v=${sha.toUpperCase()}`]){
+    const resolve=createAssetRetryResolver({assetManifest:{[asset]:remote},resolveUrl:()=>remote});
+    assert.deepEqual(resolve([asset,remote]),[],remote);
+  }
+  const local=createAssetRetryResolver({assetManifest:{[asset]:`https://cdn.example/model.glb?v=${sha}`},resolveUrl:()=>asset});
+  assert.deepEqual(local([asset]),[asset],'development keeps its approved local loader key');
+});
