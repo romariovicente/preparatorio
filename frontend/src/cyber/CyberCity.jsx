@@ -44,6 +44,7 @@ import {BUS_IDS,BUS_DEFINITIONS,sampleLiveBus,nearestBus,busFootprint} from './b
 import {nearestInteractiveCar,resolveCarSource,canEnterCar,listInteractiveCars} from './carInteraction.js';
 import {setDirectionKey,textEntryTarget} from './directionControls.js';
 import {carMotion,wheelRotation} from './vehicleMotion.js';
+import {entryVehicleCamera} from './vehicleCamera.js';
 import {cycleItem} from './itemSelection.js';
 import {nearestMotorcycle,resolveMotorcycle} from './motorcycleInteraction.js';
 import MotorcycleModel from './MotorcycleModel.jsx';
@@ -285,8 +286,8 @@ function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,
     else if(TRANSIT_ROUTES[next.mode])next={...next,heading:sampleTransit(TRANSIT_ROUTES[next.mode],next.elapsed).heading};
     const dx=next.position.x-previous.position.x,dy=next.position.y-previous.position.y,dz=next.position.z-previous.position.z;
     if(!spaceView){camera.position.add(new Vector3(dx,dy,dz));if(next.position.y<-1)camera.position.y=Math.min(camera.position.y,next.position.y+2.8);controls.current?.target.set(next.position.x,next.position.y+1,next.position.z);}
-    if(!spaceView&&['car','mototaxi'].includes(next.mode)&&previous.mode!==next.mode){camera.position.set(next.position.x-Math.sin(next.heading)*9+Math.cos(next.heading)*4,3.6,next.position.z-Math.cos(next.heading)*9-Math.sin(next.heading)*4);controls.current?.update();}
-    if(!spaceView&&next.mode==='truck'&&previous.mode!==next.mode){camera.position.set(next.position.x-Math.sin(next.heading)*17+Math.cos(next.heading)*7,6.5,next.position.z-Math.cos(next.heading)*17-Math.sin(next.heading)*7);controls.current?.update();}
+    const entryCamera=!spaceView&&entryVehicleCamera(previous.mode,next);
+    if(entryCamera){camera.position.fromArray(entryCamera.position);controls.current?.target.fromArray(entryCamera.target);controls.current?.update();}
     if(['car','mototaxi'].includes(next.mode)&&next.personalVehicles[next.mode]){const motion=carMotion(next.heading,keys,delta);next={...next,personalVehicles:{...next.personalVehicles,[next.mode]:{...next.personalVehicles[next.mode],steeringAngle:motion.steeringAngle}}};}
     simulationRef.current=next;
     if(next.lastMessage!==previous.lastMessage)onNotice(next.lastMessage);
@@ -473,8 +474,12 @@ export default function CyberCity() {
     }
     const result=applyCyberAction(simulation.current,action,{zones:[...zones,...newDeliveryZones,...classroomZones,...transportDestinations,elevatorDestination,...drives,...parkingZones],benches:actualBenches,tractor:tractorRef.current,parking:parkingPlaces,obstacles,carrying:Boolean(held)});
     if(result.ok){
-      const from=simulation.current.position,to=result.state.position;
-      if(!spaceView)controls.current?.object.position.add(new Vector3(to.x-from.x,to.y-from.y,to.z-from.z));
+      const previousMode=simulation.current.mode,from=simulation.current.position,to=result.state.position;
+      if(!spaceView){
+        controls.current?.object.position.add(new Vector3(to.x-from.x,to.y-from.y,to.z-from.z));
+        const entryCamera=entryVehicleCamera(previousMode,result.state);
+        if(entryCamera&&controls.current){controls.current.object.position.fromArray(entryCamera.position);controls.current.target.fromArray(entryCamera.target);controls.current.update();}
+      }
       simulation.current=result.state;setSnapshot(result.state);
       audio.play(action.type,{...result.state.carControls,engineOn:BUS_IDS.includes(result.state.mode)?sampleLiveBus(result.state,result.state.mode).engineOn:result.state.mode==='mototaxi'?result.state.motorcycleControls?.engineOn:result.state.carControls?.engineOn});
       if(!phoneOpen)focusGame();
