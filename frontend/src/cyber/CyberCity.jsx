@@ -16,7 +16,7 @@ import CityAssetBoundary,{CityAssetGroup} from './CityAssetBoundary.js';
 import AssetRetryButton from './AssetRetryButton.js';
 import {clockSourceLabel,sharedServiceLabel,cityLoadLabel} from '../config/serviceStatus.js';
 import {deployment,resolveAssetReferences} from '../config/deploymentConfig.js';
-import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Component, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Bounds, Html, Line, OrbitControls, useGLTF, useProgress } from '@react-three/drei';
 import { PCFShadowMap, Raycaster, Vector3 } from 'three';
@@ -182,20 +182,35 @@ function Actor({asset,snapshot,simulation,tractorRef,held,displayName,onReady}) 
     {held&&<AssetProp id={interactionRooms.cyber.templates.find(t=>t.id===held.templateId)?.kind} height={held.templateId==='cyber_fishing_rod'?1.4:.45} position={[0,1,.4]}/>}
   </group>;
 }
-function Vehicle({id,simulation,personal=false,vehicleState,onAsk,onSelect}) {
+function truckVisualKey(truck) {
+  return truck?`personal-truck:${truck.sourceId}:${truck.trailer??'none'}`:'base-truck';
+}
+function Vehicle({id,simulation,personal=false,vehicleState,onAsk,onSelect,onTruckPositioned}) {
   const truckProfile=id==='truck'?resolveTruckProfile(personal?vehicleState?.sourceId:'truck'):null;
+  const truckKey=id==='truck'?truckVisualKey(personal?vehicleState:null):null;
+  const positioned=useRef(false);
   const group=useRef(null),asset=id==='truck'?truckProfile:id==='car'&&personal?(resolveCarSource(simulation.current.personalVehicles.car?.sourceId??'car')?.asset??realisticWorld.dynamicReplacements.car):getDeliveryReplacement(id)??realisticWorld.dynamicReplacements[id]??prop(id);
   const {scene}=useThree(),surfaces=useRef([]),lastGroundScan=useRef(-Infinity),ray=useMemo(()=>new Raycaster(),[]);
+  // Suspense tears down layout effects when a loaded subtree is hidden again.
+  useLayoutEffect(()=>()=>{
+    if(!positioned.current)return;
+    positioned.current=false;
+    onTruckPositioned?.(truckKey,false);
+  },[truckKey,onTruckPositioned]);
   useFrame(()=>{
     if(!group.current)return;
     const position=BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):TRANSIT_ROUTES[id]?sampleTransit(TRANSIT_ROUTES[id],simulation.current.elapsed):personal?simulation.current.personalVehicles[id]:DRIVE_VEHICLES[id].position;
     if(!position){group.current.visible=false;return;}
-    group.current.visible=id!=='truck'||!personal||resolveTruckProfile(position.sourceId)?.id===truckProfile?.id;
+    group.current.visible=!truckKey||truckKey===truckVisualKey(simulation.current.personalVehicles.truck);
     if(!group.current.visible)return;
     if(simulation.current.elapsed-lastGroundScan.current>1.5){surfaces.current=collectGroundSurfaces(scene);lastGroundScan.current=simulation.current.elapsed;}
     const floor=sampleGroundHeight(ray,surfaces.current,{...position,y:position.y??0},{radius:0});
     group.current.position.set(position.x,floor+.01,position.z);
     group.current.rotation.y=position.heading ?? 0;
+    if(truckKey&&!positioned.current&&[position.x,floor,position.z,group.current.rotation.y].every(Number.isFinite)){
+      positioned.current=true;
+      onTruckPositioned?.(truckKey,true);
+    }
   });
   const driver=preferredCharacter;
   const liveBus=BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):null;
@@ -214,7 +229,7 @@ function GrowthPlot({plot,planted,elapsed,onSelect}) {
     </group>))}
   </group>;
 }
-function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,tractorRef,spaceView,doors,worldObjects,classroomRuntime,hospitalRuntime}) {
+function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,tractorRef,spaceView,doors,worldObjects,classroomRuntime,hospitalRuntime,ready,truckReadyRef}) {
   const accumulator=useRef(0);
   const {scene}=useThree(),solids=useRef([]),lastIndex=useRef(-Infinity);
   const detailed=useMemo(()=>realisticWorld.environmentReplacements.filter(r=>r.position[1]<1).map(r=>{const box=footprintCollider(r,suppliedCatalog);return box?{...box,id:r.id}:null;}).filter(Boolean),[]);
@@ -238,7 +253,8 @@ function RuntimeLoop({simulationRef,input:inputRef,controls,onSnapshot,onNotice,
       const result=applyCyberAction(next,{type:'BUS_DRIVE',keys,delta},{obstacles});
       if(result.ok)next=result.state;
     }
-    if(!spaceView&&next.mode==='truck'){
+    const movingTruck=next.personalVehicles.truck;
+    if(!spaceView&&ready&&next.mode==='truck'&&movingTruck&&truckReadyRef.current===truckVisualKey(movingTruck)){
       const train=sampleTransit(TRANSIT_ROUTES.train,next.elapsed);
       const obstacles=[...transitObstacles.filter(obstacle=>!['truck','truck-trailer'].includes(obstacle.id)),
         ...BUS_IDS.map(id=>busFootprint(sampleLiveBus(next,id))),
@@ -365,7 +381,20 @@ export default function CyberCity() {
   const [driveId,setDriveId]=useState('mototaxi');
   const [garageCarId,setGarageCarId]=useState('car');
   const [garageTruckId,setGarageTruckId]=useState(()=>resolveTruckProfile()?.id??'truck');
-  const currentTruckProfile=resolveTruckProfile(snapshot.personalVehicles.truck?.sourceId??garageTruckId);
+  const personalTruck=snapshot.personalVehicles.truck;
+  const currentTruckProfile=resolveTruckProfile(personalTruck?.sourceId??garageTruckId);
+  const truckKey=truckVisualKey(personalTruck);
+  const truckReadyRef=useRef(null);
+  const [readyTruckKey,setReadyTruckKey]=useState(null);
+  const onTruckPositioned=useCallback((key,positioned)=>{
+    if(positioned){
+      truckReadyRef.current=key;
+      setReadyTruckKey(key);
+    }else if(truckReadyRef.current===key){
+      truckReadyRef.current=null;
+      setReadyTruckKey(null);
+    }
+  },[]);
   const [parkingDestination,setParkingDestination]=useState(parkingPlaces[0].id);
   const audio=useGameAudio();
   const [selectedMotoId,setSelectedMotoId]=useState(null);
@@ -382,6 +411,10 @@ export default function CyberCity() {
   const clock=sampleWorldClock(snapshot.elapsed,clockConfig);
   const bus=sampleLiveBus(snapshot,'bus'),brt=sampleLiveBus(snapshot,'bus-brt'),train=sampleTransit(TRANSIT_ROUTES.train,snapshot.elapsed);
   const ready=coreLoaded.environment&&coreLoaded.characterId===character.id;
+  const truckReady=ready&&readyTruckKey===truckKey;
+  const waitingForTruck=Boolean(personalTruck&&!truckReady);
+  const truckWaitingMessage=ready?'Carregando o caminhão…':'Carregando a cidade e o caminhão…';
+  const showTruckWaitingNotice=waitingForTruck&&!spaceView&&!privateUrl&&!(phoneOpen&&tab==='routes');
   const onReady=useCallback(()=>setCoreLoaded(previous=>({...previous,environment:true})),[]);
   const onCharacterReady=useCallback(()=>setCoreLoaded(previous=>({...previous,characterId:character.id})),[character.id]);
   const farm=near(snapshot.position,[0,0,100],25),beach=near(snapshot.position,[100,0,0],20),elevatorNear=near(snapshot.position,[ELEVATOR_POSITION.x,0,ELEVATOR_POSITION.z],9);
@@ -449,6 +482,9 @@ export default function CyberCity() {
     setNotice('Controles ativos: WASD ou setas para caminhar, Espaço para pular e F para entrar ou sair de veículos.');
   }
   function commit(action) {
+    if(action.type==='DRIVE'&&action.vehicle==='truck'&&(!ready||truckReadyRef.current!==truckVisualKey(simulation.current.personalVehicles.truck))){
+      return {ok:false,message:truckWaitingMessage};
+    }
     if(action.type==='SIT'&&character.characterCapabilities?.sitting===false){setNotice('Este personagem ainda não tem pose sentada ajustada. Escolha Remy para sentar.');return {ok:false};}
     if((action.type==='MOTO_ENTER'||action.type==='DRIVE'&&action.vehicle==='mototaxi')&&character.characterCapabilities?.riding===false){setNotice('Este personagem ainda não tem postura ajustada para moto. Escolha Remy para pilotar.');return {ok:false};}
     const parkingZones=parkingPlaces.map(p=>({id:p.id,label:p.label,position:[p.position[0]+3,0,p.position[2]+2]}));
@@ -652,6 +688,9 @@ export default function CyberCity() {
       <Suspense fallback={null}>
         <Actor asset={character} snapshot={snapshot} simulation={simulation} tractorRef={tractorRef} held={held} displayName={playerName} onReady={onCharacterReady}/>
       </Suspense>
+      {personalTruck&&<CityAssetBoundary key={truckKey} label="caminhão pessoal" assetUrls={[currentTruckProfile?.url,TRAILER_DEFINITIONS[personalTruck.trailer]?.url].filter(Boolean)}>
+        <Vehicle id="truck" personal vehicleState={personalTruck} simulation={simulation} onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
+      </CityAssetBoundary>}
       {ready&&<CityAssetGroup label="objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>
@@ -662,8 +701,8 @@ export default function CyberCity() {
         <HospitalPatientFlow entries={hospitalPatientCharacters} onInspect={setNotice}/>
         <BuildingDoors doors={cityDoors} simulation={simulation} onToggle={toggleDoor} hospitalRuntime={hospitalRuntime} onNotice={setNotice} players={shared.state.players}/>
         <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
-        {Object.keys(DRIVE_VEHICLES).filter(id=>baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
-        {Object.keys(snapshot.personalVehicles).map(id=><CityAssetBoundary key={`personal-${id}${id==='truck'?`:${snapshot.personalVehicles[id].sourceId}:${snapshot.personalVehicles[id].trailer}`:''}`} label={id}><Vehicle id={id} personal vehicleState={snapshot.personalVehicles[id]} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
+        {Object.keys(DRIVE_VEHICLES).filter(id=>baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive} onTruckPositioned={id==='truck'?onTruckPositioned:undefined}/></CityAssetBoundary>)}
+        {Object.keys(snapshot.personalVehicles).filter(id=>id!=='truck').map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal vehicleState={snapshot.personalVehicles[id]} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
         {benches.filter(bench=>bench.id!=='bench-west').map(bench=><AssetProp key={bench.id} id="bench" height={1} position={[bench.position.x,0,bench.position.z]} onClick={()=>commit({type:'SIT',benchId:bench.id})}/>)}
         {shared.state.objects.filter(object=>object.position).map(object=><SharedProp key={object.id} object={object} template={interactionRooms.cyber.templates.find(t=>t.id===object.templateId)} selected={object.id===selectedObjectId} onSelect={selectObject}/>)}
         {others.map(([id,player])=><RemoteActor key={id} player={player} actorId={id} world={shared.state}/>)}
@@ -677,7 +716,7 @@ export default function CyberCity() {
       <Html position={[0,7,-5]} center distanceFactor={16} zIndexRange={[1,0]}><div className="cyber-billboard"><strong>ARAPIRACA · PREP</strong><span>{clock.text} · {clock.phase}</span><small>CHRONOVITAE · conhecimento em movimento</small></div></Html>
       {snapshot.fishing&&<Line points={[[snapshot.position.x+.4,1.7,snapshot.position.z+.3],[107,.2,0]]} color="#b9dce7" lineWidth={1}/>}
       {placement&&<mesh position={[0,snapshot.position.y+.015,0]} rotation={[-Math.PI/2,0,0]} onClick={event=>{event.stopPropagation();objectAction(placement,placement==='DROP'?held:selectedObject,{x:event.point.x,y:snapshot.position.y,z:event.point.z});}}><planeGeometry args={[236,236]}/><meshBasicMaterial color="#6ce5cc" transparent opacity={.08} depthWrite={false}/></mesh>}
-      <RuntimeLoop simulationRef={simulation} input={input} controls={controls} onSnapshot={setSnapshot} onNotice={setNotice} tractorRef={tractorRef} spaceView={spaceView||Boolean(privateUrl)} doors={cityDoors} worldObjects={shared.state.objects} classroomRuntime={classroomRuntime} hospitalRuntime={hospitalRuntime}/>
+      <RuntimeLoop simulationRef={simulation} input={input} controls={controls} onSnapshot={setSnapshot} onNotice={setNotice} tractorRef={tractorRef} spaceView={spaceView||Boolean(privateUrl)} doors={cityDoors} worldObjects={shared.state.objects} classroomRuntime={classroomRuntime} hospitalRuntime={hospitalRuntime} ready={ready} truckReadyRef={truckReadyRef}/>
       <GameAudioLoop audioRef={audio.audioRef} simulation={simulation} doors={cityDoors} onStatus={audio.syncStatus}/>
       <OrbitControls ref={controls} makeDefault target={[CITY_START.x,1,CITY_START.z]} minDistance={3} maxDistance={spaceView?120:65} maxPolarAngle={Math.PI/2.1}/>
     </Canvas></CityBoundary>
@@ -700,7 +739,8 @@ export default function CyberCity() {
     </aside>}
     {contextDrive&&!spaceView&&!privateUrl&&snapshot.mode==='foot'&&<aside className="cyber-car-context" aria-label="Interação com o veículo" data-drive-id={contextDrive.id}>
       <div><strong>{contextDrive.label}</strong>{selectedDriveId&&<button aria-label="Desmarcar veículo" onClick={()=>setSelectedDriveId(null)}>×</button>}</div>
-      <button disabled={!contextDrive.canEnter} onClick={()=>commit({type:'DRIVE',vehicle:contextDrive.id})}>Dirigir · F</button>
+      <button disabled={!contextDrive.canEnter||contextDrive.id==='truck'&&!truckReady} onClick={()=>commit({type:'DRIVE',vehicle:contextDrive.id})}>Dirigir · F</button>
+      {contextDrive.id==='truck'&&!truckReady&&!waitingForTruck&&<p role="status">{truckWaitingMessage}</p>}
     </aside>}
     {phoneOpen&&<aside className="cyber-phone" aria-label="Smartphone CHRONOVITAE">
       <header><div><small>CHRONOVITAE OS · JARVIS</small><strong>{clock.text} <span>{clock.phase}</span></strong></div><button aria-label="Fechar smartphone" onClick={closePhone}>×</button></header>
@@ -734,7 +774,8 @@ export default function CyberCity() {
           {driveId==='car'&&<label>Modelo do carro<select value={garageCarId} onChange={event=>setGarageCarId(event.target.value)}>{listInteractiveCars().filter((car,index,all)=>all.findIndex(c=>c.asset.sourceId===car.asset.sourceId)===index).map(car=><option key={car.id} value={car.id}>{car.label}</option>)}</select></label>}
           {driveId==='truck'&&<label>Modelo do caminhão<select value={garageTruckId} onChange={event=>setGarageTruckId(event.target.value)}>{listTruckProfiles().map(profile=><option key={profile.id} value={profile.id}>{profile.label}</option>)}</select></label>}
           {driveId==='truck'&&resolveTruckProfile(garageTruckId)?.trailerMode==='none'&&<p>Este caminhão não usa semirreboque e será chamado sem reboque.</p>}
-          <div className="cyber-action-grid"><button onClick={summonVehicle} disabled={snapshot.mode!=='foot'||Boolean(snapshot.carEntry)}>Chamar veículo</button><button onClick={enterPersonalVehicle} disabled={snapshot.mode!=='foot'||!Object.keys(snapshot.personalVehicles).length}>Entrar no veículo · F</button><button onClick={toggleVehicle} disabled={!DRIVE_VEHICLES[snapshot.mode]}>Sair do veículo · F</button><button onClick={()=>{const result=commit({type:'STORE_VEHICLE'});if(result.ok){setSelectedCarId(null);setSelectedMotoId(null);setSelectedDriveId(null);}}} disabled={!Object.keys(snapshot.personalVehicles).length}>Guardar no estacionamento</button></div>
+          <div className="cyber-action-grid"><button onClick={summonVehicle} disabled={snapshot.mode!=='foot'||Boolean(snapshot.carEntry)}>Chamar veículo</button><button onClick={enterPersonalVehicle} disabled={snapshot.mode!=='foot'||!Object.keys(snapshot.personalVehicles).length||waitingForTruck}>Entrar no veículo · F</button><button onClick={toggleVehicle} disabled={!DRIVE_VEHICLES[snapshot.mode]}>Sair do veículo · F</button><button onClick={()=>{const result=commit({type:'STORE_VEHICLE'});if(result.ok){setSelectedCarId(null);setSelectedMotoId(null);setSelectedDriveId(null);}}} disabled={!Object.keys(snapshot.personalVehicles).length}>Guardar no estacionamento</button></div>
+          {waitingForTruck&&<><p role="status">{truckWaitingMessage}</p><AssetRetryButton/></>}
           <p>Veículo pessoal no mapa: {Object.keys(snapshot.personalVehicles).length ? DRIVE_VEHICLES[Object.keys(snapshot.personalVehicles)[0]].label : 'nenhum'}.</p>
           {snapshot.mode==='car'&&<><div className="cyber-action-grid"><button disabled={snapshot.carControls?.engineOn} onClick={()=>commit({type:'CAR_DOOR'})}>{snapshot.carControls?.doorOpen?'Fechar':'Abrir'} porta do carro</button><button disabled={snapshot.carControls?.doorOpen} onClick={()=>commit({type:'CAR_ENGINE'})}>{snapshot.carControls?.engineOn?'Desligar':'Ligar'} motor</button><button onClick={()=>commit({type:'CAR_WINDOWS'})}>{snapshot.carControls?.windowsOpen?'Fechar':'Baixar'} vidros laterais</button></div></>}
           {snapshot.mode==='mototaxi'&&<button onClick={()=>commit({type:'MOTO_ENGINE'})}>{snapshot.motorcycleControls?.engineOn?'Desligar':'Ligar'} motor da moto</button>}
@@ -775,7 +816,7 @@ export default function CyberCity() {
       <footer>{sharedServiceLabel(shared.status,others.length+1)} · {snapshot.mode==='foot'?'A PÉ':snapshot.mode.toUpperCase()} · {clock.text}</footer>
     </aside>}
     <div className="cyber-pad" aria-label="Controles de direção">{[['w','↑','Avançar'],['a','←','Esquerda'],['s','↓','Recuar'],['d','→','Direita']].map(([key,icon,label])=><button key={key} aria-label={label} onClick={event=>{if(event.detail===0){focusGame();input.current[key]=true;window.setTimeout(()=>{input.current[key]=false;},250);}}} onPointerDown={event=>{event.preventDefault();event.currentTarget.setPointerCapture(event.pointerId);focusGame();input.current[key]=true;}} onPointerUp={()=>{input.current[key]=false;focusGame();}} onPointerCancel={()=>{input.current[key]=false;}}>{icon}</button>)}</div>
-    <p className="cyber-notice" role="status">{notice}</p><div className="cyber-orbit-note">{clock.subtitle} · {clockSourceLabel(serverClock.status)}</div>
+    <p className="cyber-notice" role="status">{notice}{showTruckWaitingNotice&&<><br/>{truckWaitingMessage}</>}</p><div className="cyber-orbit-note">{clock.subtitle} · {clockSourceLabel(serverClock.status)}</div>
     {privateUrl&&<PrivateHome url={privateUrl} onClose={closeHome}/>}
   </section>;
 }
