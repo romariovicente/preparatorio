@@ -37,7 +37,7 @@ import {createClassroomRuntime,classroomColliders,classroomZones,openClassroomDo
 import {getDeliveryReplacement,newDeliveryColliders,newDeliveryZones,newDeliveryHidePrefixes,resolveDeliveryParking} from './newDeliveryWorld.js';
 import CarModel from './CarModel.jsx';
 import TruckModel from './TruckModel.jsx';
-import {listTruckProfiles,resolveTruckProfile,TRAILER_DEFINITIONS,truckColliders} from './truckInteraction.js';
+import {listTruckProfiles,resolveTruckProfile,resolveTruckTrailer,TRAILER_DEFINITIONS,truckColliders} from './truckInteraction.js';
 import BusModel from './BusModel.jsx';
 import BusControls from './BusControls.jsx';
 import {BUS_IDS,BUS_DEFINITIONS,sampleLiveBus,nearestBus,busFootprint} from './busInteraction.js';
@@ -188,6 +188,12 @@ function truckVisualKey(truck) {
 function Vehicle({id,simulation,personal=false,vehicleState,onAsk,onSelect,onTruckPositioned}) {
   const truckProfile=id==='truck'?resolveTruckProfile(personal?vehicleState?.sourceId:'truck'):null;
   const truckKey=id==='truck'?truckVisualKey(personal?vehicleState:null):null;
+  const trailer=truckProfile&&personal&&vehicleState?resolveTruckTrailer(vehicleState):null;
+  const positionedTrailer=useRef(null);
+  const onTrailerPositioned=useCallback((id,ready)=>{
+    if(ready)positionedTrailer.current=id;
+    else if(positionedTrailer.current===id)positionedTrailer.current=null;
+  },[]);
   const positioned=useRef(false);
   const group=useRef(null),asset=id==='truck'?truckProfile:id==='car'&&personal?(resolveCarSource(simulation.current.personalVehicles.car?.sourceId??'car')?.asset??realisticWorld.dynamicReplacements.car):getDeliveryReplacement(id)??realisticWorld.dynamicReplacements[id]??prop(id);
   const {scene}=useThree(),surfaces=useRef([]),lastGroundScan=useRef(-Infinity),ray=useMemo(()=>new Raycaster(),[]);
@@ -199,23 +205,27 @@ function Vehicle({id,simulation,personal=false,vehicleState,onAsk,onSelect,onTru
   },[truckKey,onTruckPositioned]);
   useFrame(()=>{
     if(!group.current)return;
-    const position=BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):TRANSIT_ROUTES[id]?sampleTransit(TRANSIT_ROUTES[id],simulation.current.elapsed):personal?simulation.current.personalVehicles[id]:DRIVE_VEHICLES[id].position;
-    if(!position){group.current.visible=false;return;}
-    group.current.visible=!truckKey||truckKey===truckVisualKey(simulation.current.personalVehicles.truck);
+    const activeTruck=simulation.current.personalVehicles.truck;
+    const position=id==='truck'?(activeTruck??DRIVE_VEHICLES.truck.position):BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):TRANSIT_ROUTES[id]?sampleTransit(TRANSIT_ROUTES[id],simulation.current.elapsed):personal?simulation.current.personalVehicles[id]:DRIVE_VEHICLES[id].position;
+    group.current.visible=Boolean(position)&&(id!=='truck'||truckProfile?.id===resolveTruckProfile(activeTruck?.sourceId)?.id);
     if(!group.current.visible)return;
     if(simulation.current.elapsed-lastGroundScan.current>1.5){surfaces.current=collectGroundSurfaces(scene);lastGroundScan.current=simulation.current.elapsed;}
     const floor=sampleGroundHeight(ray,surfaces.current,{...position,y:position.y??0},{radius:0});
     group.current.position.set(position.x,floor+.01,position.z);
     group.current.rotation.y=position.heading ?? 0;
-    if(truckKey&&!positioned.current&&[position.x,floor,position.z,group.current.rotation.y].every(Number.isFinite)){
-      positioned.current=true;
-      onTruckPositioned?.(truckKey,true);
+    if(truckKey){
+      const ready=truckKey===truckVisualKey(activeTruck)&&(!trailer||positionedTrailer.current===trailer.id)
+        &&[position.x,floor,position.z,group.current.rotation.y].every(Number.isFinite);
+      if(ready!==positioned.current){
+        positioned.current=ready;
+        onTruckPositioned?.(truckKey,ready);
+      }
     }
   });
   const driver=preferredCharacter;
   const liveBus=BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):null;
   return asset?<group ref={group} userData={{dynamicCollider:true}} onClick={onSelect?event=>{event.stopPropagation();onSelect(personal&&id==='car'?'personal-car':personal&&id==='mototaxi'?'personal-moto':id);}:undefined}>
-    {id==='truck'?<TruckModel key={truckProfile.id} simulation={simulation} personal={personal} profile={truckProfile} trailerId={vehicleState?.trailer}/>:id==='car'?<CarModel asset={asset} simulation={simulation} personal={personal} open={personal&&simulation.current.carControls?.doorOpen}/>:id==='mototaxi'?<MotorcycleModel asset={asset} simulation={simulation} personal={personal}/>:liveBus?<BusModel asset={asset} simulation={simulation} id={id}/>:<ShadowedModel asset={asset} height={asset.height??(id==='tractor'?2.2:id==='harvester'?3.5:3.2)}/>}
+    {id==='truck'?<TruckModel simulation={simulation} profile={truckProfile} definition={trailer} onTrailerPositioned={onTrailerPositioned}/>:id==='car'?<CarModel asset={asset} simulation={simulation} personal={personal} open={personal&&simulation.current.carControls?.doorOpen}/>:id==='mototaxi'?<MotorcycleModel asset={asset} simulation={simulation} personal={personal}/>:liveBus?<BusModel asset={asset} simulation={simulation} id={id}/>:<ShadowedModel asset={asset} height={asset.height??(id==='tractor'?2.2:id==='harvester'?3.5:3.2)}/>}
     {TRANSIT_ROUTES[id]&&driver&&liveBus?.control!=='player'&&<group position={liveBus?BUS_DEFINITIONS[id].driverSeat:[.6,1.1,6]}><CityAssetBoundary label="motorista" assetUrls={[driver.url]}><SeatedModel asset={driver}/></CityAssetBoundary><Html position={[0,1.8,0]} center distanceFactor={12} zIndexRange={[1,0]}><button className="cyber-world-label" onClick={event=>{event.stopPropagation();onAsk('guide',liveBus?'Motorista do ônibus':'Maquinista do trem');}}>Conversar com {liveBus?'motorista':'maquinista'}</button></Html></group>}
   </group>:null;
 }
@@ -382,6 +392,7 @@ export default function CyberCity() {
   const [garageCarId,setGarageCarId]=useState('car');
   const [garageTruckId,setGarageTruckId]=useState(()=>resolveTruckProfile()?.id??'truck');
   const personalTruck=snapshot.personalVehicles.truck;
+  const activeTruckProfile=resolveTruckProfile(personalTruck?.sourceId);
   const currentTruckProfile=resolveTruckProfile(personalTruck?.sourceId??garageTruckId);
   const truckKey=truckVisualKey(personalTruck);
   const truckReadyRef=useRef(null);
@@ -688,8 +699,8 @@ export default function CyberCity() {
       <Suspense fallback={null}>
         <Actor asset={character} snapshot={snapshot} simulation={simulation} tractorRef={tractorRef} held={held} displayName={playerName} onReady={onCharacterReady}/>
       </Suspense>
-      {personalTruck&&<CityAssetBoundary key={truckKey} label="caminhão pessoal" assetUrls={[currentTruckProfile?.url,TRAILER_DEFINITIONS[personalTruck.trailer]?.url].filter(Boolean)}>
-        <Vehicle id="truck" personal vehicleState={personalTruck} simulation={simulation} onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
+      {activeTruckProfile&&(personalTruck||ready)&&<CityAssetBoundary key={activeTruckProfile.id} label={activeTruckProfile.label} assetUrls={[activeTruckProfile.url]}>
+        <Vehicle id="truck" personal={Boolean(personalTruck)} vehicleState={personalTruck} simulation={simulation} onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
       </CityAssetBoundary>}
       {ready&&<CityAssetGroup label="objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
@@ -701,7 +712,7 @@ export default function CyberCity() {
         <HospitalPatientFlow entries={hospitalPatientCharacters} onInspect={setNotice}/>
         <BuildingDoors doors={cityDoors} simulation={simulation} onToggle={toggleDoor} hospitalRuntime={hospitalRuntime} onNotice={setNotice} players={shared.state.players}/>
         <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
-        {Object.keys(DRIVE_VEHICLES).filter(id=>baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive} onTruckPositioned={id==='truck'?onTruckPositioned:undefined}/></CityAssetBoundary>)}
+        {Object.keys(DRIVE_VEHICLES).filter(id=>id!=='truck'&&baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
         {Object.keys(snapshot.personalVehicles).filter(id=>id!=='truck').map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal vehicleState={snapshot.personalVehicles[id]} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
         {benches.filter(bench=>bench.id!=='bench-west').map(bench=><AssetProp key={bench.id} id="bench" height={1} position={[bench.position.x,0,bench.position.z]} onClick={()=>commit({type:'SIT',benchId:bench.id})}/>)}
         {shared.state.objects.filter(object=>object.position).map(object=><SharedProp key={object.id} object={object} template={interactionRooms.cyber.templates.find(t=>t.id===object.templateId)} selected={object.id===selectedObjectId} onSelect={selectObject}/>)}
