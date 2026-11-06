@@ -705,6 +705,7 @@ export default function CyberCity() {
       {activeTruckProfile&&(personalTruck||ready)&&<CityAssetBoundary key={activeTruckProfile.id} label={activeTruckProfile.label} assetUrls={[activeTruckProfile.url]}>
         <Vehicle id="truck" personal={Boolean(personalTruck)} vehicleState={personalTruck} simulation={simulation} onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
       </CityAssetBoundary>}
+      <HospitalPatientFlow entries={hospitalPatientCharacters} simulation={simulation} ready={ready} onInspect={setNotice}/>
       {ready&&<CityAssetGroup label="objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>
@@ -712,7 +713,6 @@ export default function CyberCity() {
         <CityLivingWorld simulation={simulation} onInspect={({asset,placement})=>setNotice(placement?.label??asset?.name??'Campus PREPARATÓRIO')}/>
         <WarpEngine simulation={simulation} onInspect={setNotice}/>
         <CharacterRosterNPCs placements={rosterPlan.placements} simulation={simulation} onSelect={asset=>changeCharacter(asset.id)} onInspect={entry=>setNotice(`${entry.name} · Animações deste personagem ainda em revisão.`)}/>
-        <HospitalPatientFlow entries={hospitalPatientCharacters} onInspect={setNotice}/>
         <BuildingDoors doors={cityDoors} simulation={simulation} onToggle={toggleDoor} hospitalRuntime={hospitalRuntime} onNotice={setNotice} players={shared.state.players}/>
         <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
         {Object.keys(DRIVE_VEHICLES).filter(id=>id!=='truck'&&baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}

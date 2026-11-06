@@ -6,6 +6,11 @@ export const hospitalPatientRoute=[
   [48,0.28,-25.45],
 ];
 
+export function isNearHospitalPatientRoute({x,z}){
+  const loadRadius=45;
+  return hospitalPatientRoute.some(([routeX,,routeZ])=>Math.hypot(x-routeX,z-routeZ)<=loadRadius);
+}
+
 const finitePoint=point=>Array.isArray(point)&&point.length===3&&point.every(Number.isFinite);
 
 export function validateHospitalPatientRoute(route=hospitalPatientRoute){

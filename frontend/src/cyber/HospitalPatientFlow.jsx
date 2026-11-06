@@ -1,9 +1,11 @@
 import {useRef,useState} from 'react';
 import {Html} from '@react-three/drei';
 import {useFrame} from '@react-three/fiber';
-import {sampleHospitalPatientRoute} from './hospitalPatientFlow.js';
+import {isNearHospitalPatientRoute,sampleHospitalPatientRoute} from './hospitalPatientFlow.js';
 import CostumedCharacter from './CostumedCharacter.jsx';
 import CityAssetBoundary from './CityAssetBoundary.js';
+
+const deferredPatientId='SUP_character_cyberpunk_free_3d_by_oscar_cre';
 
 function Patient({entry,index,onInspect}){
   const root=useRef(null),phase=useRef('walking'),[waiting,setWaiting]=useState(false);
@@ -22,9 +24,17 @@ function Patient({entry,index,onInspect}){
   </group>;
 }
 
-export default function HospitalPatientFlow({entries,onInspect}){
+export default function HospitalPatientFlow({entries,onInspect,simulation,ready}){
+  const [deferredPatientStarted,setDeferredPatientStarted]=useState(false);
+  useFrame(()=>{
+    if(ready&&!deferredPatientStarted&&isNearHospitalPatientRoute(simulation.current.position)){
+      setDeferredPatientStarted(true);
+    }
+  });
+
   return <group name="PREP_HOSPITAL_PATIENT_FLOW">
-    {entries.map((entry,index)=><CityAssetBoundary key={entry.id} label={`paciente · ${entry.name}`} assetUrls={[entry.playerAsset.url]}>
+    {entries.map((entry,index)=>(entry.id===deferredPatientId?deferredPatientStarted:ready)&&
+      <CityAssetBoundary key={entry.id} label={`paciente · ${entry.name}`} assetUrls={[entry.playerAsset.url]}>
       <Patient entry={entry} index={index} onInspect={onInspect}/>
     </CityAssetBoundary>)}
   </group>;

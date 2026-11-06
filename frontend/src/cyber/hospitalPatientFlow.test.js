@@ -1,6 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {hospitalPatientRoute,sampleHospitalPatientRoute,validateHospitalPatientRoute} from './hospitalPatientFlow.js';
+import {hospitalPatientRoute,isNearHospitalPatientRoute,sampleHospitalPatientRoute,validateHospitalPatientRoute} from './hospitalPatientFlow.js';
+import {CITY_START} from './simulation.js';
+
+test('the deferred patient starts near the hospital route, away from city and truck starts',()=>{
+  assert.equal(isNearHospitalPatientRoute(CITY_START),false);
+  assert.equal(isNearHospitalPatientRoute({x:93,z:52}),false);
+  assert.equal(isNearHospitalPatientRoute({x:48,z:-21}),true);
+  for(let time=0;time<=60;time+=.5){
+    const [x,,z]=sampleHospitalPatientRoute(time).position;
+    assert.equal(isNearHospitalPatientRoute({x,z}),true);
+  }
+});
 
 test('hospital patients follow a finite sidewalk route to the public triage entrance',()=>{
   assert.equal(validateHospitalPatientRoute(),true);
