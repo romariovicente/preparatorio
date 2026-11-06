@@ -392,6 +392,9 @@ export default function CyberCity() {
   const [garageCarId,setGarageCarId]=useState('car');
   const [garageTruckId,setGarageTruckId]=useState(()=>resolveTruckProfile()?.id??'truck');
   const personalTruck=snapshot.personalVehicles.truck;
+  const personalTrailerUrl=personalTruck?resolveTruckTrailer(personalTruck)?.url:null;
+  // Share the trailer cache with its model, which mounts after the cab loads.
+  useEffect(()=>{if(personalTrailerUrl)useGLTF.preload(personalTrailerUrl);},[personalTrailerUrl]);
   const activeTruckProfile=resolveTruckProfile(personalTruck?.sourceId);
   const currentTruckProfile=resolveTruckProfile(personalTruck?.sourceId??garageTruckId);
   const truckKey=truckVisualKey(personalTruck);
