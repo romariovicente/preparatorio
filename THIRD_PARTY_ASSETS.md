@@ -759,6 +759,7 @@ Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesm
 - Arquivo: `/assets/vehicles/trucks/TRUCK_scania_interactive_20261103.glb`
 - Autor e licença: PAndras, CC-BY-4.0; mesma origem acima.
 - Alterações no Blender: cópia do GLB original preservado, orientação +Z, escala em metros, pneus/rodas separados em seis pivôs, eixo dianteiro direcionável e ponto de engate na quinta roda original. UVs, materiais e texturas incorporadas preservados.
+- Empacotamento de 06/11/2026: geometria com Meshopt e oito texturas com WebP sem perdas. Geometria, UVs e pixels decodificados conferidos contra a derivada de 03/11. O original da derivada foi preservado.
 - Os três semirreboques derivados do projeto usam `/assets/vehicles/trailers/TRAILER_{box,flatbed,tanker}_interactive_20261103.glb`. Carrocerias procedurais: `PROP_truck-trailer-{box,flatbed,tanker}_scene_20261005.glb`, autoria do projeto Romario Vicente Amaro. As rodas traseiras detalhadas, seus aros, pneus duplos, UVs e texturas são derivados do Scania de PAndras, sob CC-BY-4.0, com origem e licença acima. Alterações: escala e eixos alinhados, quatro pivôs, suportes com folga para os pneus, chassi dianteiro elevado contínuo, pino-rei e apoios retráteis. O conjunto é uma montagem derivada do projeto; as carrocerias não foram fornecidas pelo autor do Scania.
 
 ## Estudante 01

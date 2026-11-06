@@ -4,12 +4,14 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {Box3,BufferGeometry,Float32BufferAttribute,Matrix4,Vector3} from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {MeshoptDecoder} from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import {MeshBVH} from 'three-mesh-bvh';
 import {applyCyberAction,createCyberState,DRIVE_VEHICLES} from './simulation.js';
 import {listTruckProfiles,resolveTruckProfile,resolveTruckTrailer,TRAILER_DEFINITIONS,TRUCK_ARTICULATION_LIMIT,truckLocalToWorld,truckTrailerPose,
   truckColliders,truckPositionBlocked,truckSweepBlocked,moveTruck,safeTruckCopy,truckExitPosition} from './truckInteraction.js';
 import {createTruckRig,animateTruckRig} from './truckArticulation.js';
 
+await MeshoptDecoder.ready;
 const wideBounds={minX:-1000,maxX:1000,minZ:-1000,maxZ:1000};
 const freshTruck=(profile=resolveTruckProfile(),extra={})=>({x:0,y:0,z:0,heading:0,sourceId:profile.id,trailer:profile.compatibleTrailers.includes('flatbed')?'flatbed':'none',articulationAngle:0,wheelAngle:0,trailerWheelAngle:0,...extra});
 async function loadGeometry(url){
@@ -19,19 +21,37 @@ async function loadGeometry(url){
   document.images=[];document.textures=[];document.materials=[];
   for(const mesh of document.meshes)for(const primitive of mesh.primitives)delete primitive.material;
   if(!globalThis.ProgressEvent)globalThis.ProgressEvent=class{constructor(type,options){this.type=type;Object.assign(this,options);}};
-  return (await new GLTFLoader().parseAsync(JSON.stringify(document),'')).scene;
+  return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(JSON.stringify(document),'')).scene;
 }
 // Compare exported donor content rather than accepting a copied wheel label.
 // Face UVs are sorted so vertex/index ordering and uniform placement/scale do
 // not affect identity; tyre/rim topology and material appearance still must match.
 function wheelAssemblyIdentities(url){
   const bytes=readFileSync(new URL(`../../public${url}`,import.meta.url)),length=bytes.readUInt32LE(12);
-  const document=JSON.parse(bytes.subarray(20,20+length).toString()),binary=bytes.subarray(28+length),view=new DataView(binary.buffer,binary.byteOffset,binary.byteLength);
+  const document=JSON.parse(bytes.subarray(20,20+length).toString()),binary=bytes.subarray(28+length);
+  const views=new Map();
+  const bufferData=index=>{
+    if(views.has(index))return views.get(index);
+    const bufferView=document.bufferViews[index],compression=bufferView.extensions?.EXT_meshopt_compression;
+    let data;
+    if(compression){
+      const {buffer,byteOffset=0,byteLength,byteStride,count,mode,filter}=compression;
+      assert.equal(buffer,0);
+      const decoded=new Uint8Array(count*byteStride);
+      MeshoptDecoder.decodeGltfBuffer(decoded,count,byteStride,binary.subarray(byteOffset,byteOffset+byteLength),mode,filter);
+      data=new DataView(decoded.buffer);
+    }else{
+      assert.equal(bufferView.buffer,0);
+      data=new DataView(binary.buffer,binary.byteOffset+(bufferView.byteOffset??0),bufferView.byteLength);
+    }
+    views.set(index,data);
+    return data;
+  };
   const componentTypes={5121:['getUint8',1],5123:['getUint16',2],5125:['getUint32',4],5126:['getFloat32',4]};
   const read=(accessorId,index,component=0)=>{
     const accessor=document.accessors[accessorId],bufferView=document.bufferViews[accessor.bufferView],[method,width]=componentTypes[accessor.componentType];
     const components=accessor.type==='VEC2'?2:1,stride=bufferView.byteStride??components*width;
-    return view[method]((bufferView.byteOffset??0)+(accessor.byteOffset??0)+index*stride+component*width,true);
+    return bufferData(accessor.bufferView)[method]((accessor.byteOffset??0)+index*stride+component*width,true);
   };
   const primitives=index=>{
     const node=document.nodes[index],own=(node.mesh===undefined?[]:document.meshes[node.mesh].primitives).map(primitive=>{
