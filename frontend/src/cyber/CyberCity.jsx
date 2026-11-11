@@ -7,6 +7,9 @@ import CharacterRosterNPCs from './CharacterRosterNPCs.jsx';
 import {characterRoster,characterOptions,hospitalPatientCharacters,rosterPlan,rosterObstacles,rosterZones} from '../config/characterCityPlan.js';
 import CityLivingWorld from './CityLivingWorld.jsx';
 import HospitalPatientFlow from './HospitalPatientFlow.jsx';
+import MechanicWorkshop from './MechanicWorkshop.jsx';
+import {mechanicWorkshopCollider,mechanicWorkshopZone} from './mechanicWorkshop.js';
+import StreetLighting from './StreetLighting.jsx';
 import {livingWorldZones,livingWorldColliders,campusBenchLocations} from './cityLivingWorld.js';
 import {prepareLivingWorldDecorations} from './livingWorldDecorations.js';
 import WarpEngine from './WarpEngine.jsx';
@@ -76,8 +79,8 @@ const initialTractor = {x:12,y:0,z:96};
 const prop = id => manifest.props.find(item => item.id === id);
 const near = (position,target,radius=12) => Math.hypot(position.x-target[0],position.z-target[2]) <= radius;
 const shadowSettings = {type:PCFShadowMap};
-const additionalColliders=[...livingWorldColliders,...warpEngineColliders,...rosterObstacles];
-const zones = [...manifest.zones,...livingWorldZones,...warpEngineZones,...rosterZones];
+const additionalColliders=[...livingWorldColliders,...warpEngineColliders,...rosterObstacles,mechanicWorkshopCollider];
+const zones = [...manifest.zones,...livingWorldZones,...warpEngineZones,...rosterZones,mechanicWorkshopZone];
 const parkingPlaces=resolveDeliveryParking(manifest.parking??DEFAULT_PARKING).map(p=>({...p,label:p.label??p.id.replace(/-/g,' · ')}));
 const costumeFor = asset => costumes.find(item=>item.baseId===asset?.id&&item.reimportValidated);
 const playableCharacters=characterRoster.filter(entry=>entry.controllable).map(entry=>entry.playerAsset);
@@ -106,7 +109,7 @@ class CityBoundary extends Component {
   componentDidCatch(){this.props.onError?.();}
   render(){return this.state.failed?<div className="cyber-loading" role="status">Não foi possível abrir este modelo 3D. As ações e os terminais continuam disponíveis.</div>:this.props.children;}
 }
-function Environment({onReady,simulation}) {
+function Environment({onReady,simulation,streetLightsOn}) {
   const {scene}=useGLTF(manifest.sceneUrl);
   const model=useMemo(()=>{
     const copy=setWorldShadows(scene.clone(true));
@@ -119,7 +122,10 @@ function Environment({onReady,simulation}) {
   useEffect(()=>{onReady();},[onReady]);
   useEffect(()=>()=>traffic.dispose(),[traffic]);
   useFrame(()=>traffic.update(simulation.current.elapsed));
-  return <primitive object={model} dispose={null}/>;
+  return <>
+    <primitive object={model} dispose={null}/>
+    <StreetLighting model={model} simulation={simulation} active={streetLightsOn}/>
+  </>;
 }
 function SunLight({simulation,night}) {
   const light=useRef(null);
@@ -694,10 +700,10 @@ export default function CyberCity() {
   return <section ref={gameSurface} className="cyber-city" tabIndex={0} onFocus={event=>setGameActive(event.target===event.currentTarget)} onBlur={()=>{setGameActive(false);directionKeys.current.clear();input.current={};}} onPointerDown={event=>{if(event.target.tagName==='CANVAS')focusGame();}} aria-label="Arapiraca PREP · cidade futurista em desenvolvimento" data-game-active={gameActive&&!spaceView&&!privateUrl} data-cyber-ready={ready} data-cyber-character={character.id} data-cyber-view={spaceView?'planetarium':'city'} data-cyber-mode={snapshot.mode} data-cyber-x={snapshot.position.x.toFixed(2)} data-cyber-y={snapshot.position.y.toFixed(2)} data-cyber-z={snapshot.position.z.toFixed(2)} data-cyber-jump={Number(snapshot.jumpHeight??0).toFixed(3)} data-cyber-jumps={snapshot.jumpCount??0} data-car-steering={snapshot.personalVehicles.car?.steeringAngle??0} data-car-wheel-angle={snapshot.personalVehicles.car?.wheelAngle??0} data-moto-steering={snapshot.personalVehicles.mototaxi?.steeringAngle??0} data-moto-wheel-angle={snapshot.personalVehicles.mototaxi?.wheelAngle??0} data-personal-vehicle-count={Object.keys(snapshot.personalVehicles).length} data-selected-item={selectedObjectId??''} data-cyber-clock={clock.text} data-cyber-flowers={snapshot.inventory.flowers}>
     <CityBoundary onError={()=>setSceneFailed(true)}><Canvas shadows={shadowSettings} dpr={1} camera={{position:[CITY_START.x+3.5,2.6,CITY_START.z+5.5],fov:50,far:450}}>
       <color attach="background" args={[spaceView?'#010207':clock.night?'#080f1c':'#b5d3e1']}/>{!spaceView&&<fog attach="fog" args={[clock.night?'#080f1c':'#c3d9df',110,330]}/>}
-      <ambientLight intensity={clock.night?.08:.1}/><hemisphereLight args={[clock.night?'#6380aa':'#dbeeff',clock.night?'#262a2c':'#64614f',clock.night?.22:.65]}/>
+      <ambientLight intensity={clock.night?.11:.1}/><hemisphereLight args={[clock.night?'#6380aa':'#dbeeff',clock.night?'#262a2c':'#64614f',clock.night?.32:.65]}/>
       <SunLight simulation={simulation} night={clock.night}/>
       <Suspense fallback={<Html center zIndexRange={[1,0]}><span className="cyber-loading">Abrindo Arapiraca PREP…</span></Html>}>
-        <Environment onReady={onReady} simulation={simulation}/>
+        <Environment onReady={onReady} simulation={simulation} streetLightsOn={clock.night&&!spaceView&&!privateUrl}/>
       </Suspense>
       <Suspense fallback={null}>
         <Actor asset={character} snapshot={snapshot} simulation={simulation} tractorRef={tractorRef} held={held} displayName={playerName} onReady={onCharacterReady}/>
@@ -706,6 +712,7 @@ export default function CyberCity() {
         <Vehicle id="truck" personal={Boolean(personalTruck)} vehicleState={personalTruck} simulation={simulation} onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
       </CityAssetBoundary>}
       <HospitalPatientFlow entries={hospitalPatientCharacters} simulation={simulation} ready={ready} onInspect={setNotice}/>
+      {ready&&near(snapshot.position,mechanicWorkshopZone.position,42)&&<MechanicWorkshop/>}
       {ready&&<CityAssetGroup label="objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>

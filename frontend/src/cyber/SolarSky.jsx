@@ -3,13 +3,15 @@ import { useFrame } from '@react-three/fiber';
 import { Html, Line } from '@react-three/drei';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, DataTexture, RGBAFormat, SRGBColorSpace } from 'three';
 import solar from '../config/solarSystem.json';
-import { sampleWorldClock } from './simulation.js';
+import { cityMoonOffset, moonOrbitAngle } from './lunarSky.js';
+import { sampleWorldClock, WORLD_CLOCK_DEFAULTS } from './simulation.js';
 
 const TAU = Math.PI * 2;
 const RAD = Math.PI / 180;
 const decodeColor = hex => [1,3,5].map(offset=>parseInt(hex.slice(offset,offset+2),16));
 const blend = (first,second,amount) => first.map((value,index)=>Math.round(value+(second[index]-value)*amount));
 const wave = (longitude,latitude,seed=0) => .5+.5*Math.sin(longitude*.113+Math.sin(latitude*.19+seed)*2.3+seed)*Math.cos(latitude*.177-longitude*.057);
+const lunarMaria = [[-44,21,35,22],[-18,-16,26,18],[15,29,20,19],[33,16,23,17],[44,-26,19,13],[128,-18,35,23]];
 const inside = (x,y,polygon) => {
   let found=false;
   for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
@@ -23,10 +25,16 @@ function planetTexture(planet) {
   const width=solar.textureWidth,height=solar.textureHeight,data=new Uint8Array(width*height*4);
   const first=decodeColor(planet.colors[0]),second=decodeColor(planet.colors[1]);
   const land=decodeColor(solar.earthLandColor),desert=decodeColor(solar.earthDesertColor);
+  const seed=planet.surface==='moon'?23:planet.orbitRatio*7;
   for(let y=0;y<height;y++)for(let x=0;x<width;x++){
     const longitude=x/(width-1)*360-180,latitude=y/(height-1)*180-90;
-    const detail=wave(longitude,latitude,planet.orbitRatio*7);
+    const detail=wave(longitude,latitude,seed);
     let color=blend(first,second,detail*.65+.15);
+    if(planet.surface==='moon'){
+      const maria=lunarMaria.some(([lon,lat,width,height])=>((longitude-lon)/width)**2+((latitude-lat)/height)**2<.78+detail*.35);
+      const terrain=wave(longitude*2.9,latitude*3.2,seed);
+      color=blend(first,second,(maria?.24:.69)+detail*.12+terrain*.14);
+    }
     if(planet.surface==='bands'){
       const stripe=.5+.5*Math.sin(latitude*.71+Math.sin(longitude*.05)*.7);
       color=blend(first,second,stripe*.7+detail*.3);
@@ -127,6 +135,51 @@ function Planet({planet,simulation,clockConfig,planetarium,glow}) {
   </>;
 }
 
+function Moon({simulation,clockConfig,worldClock,planetarium,glow}) {
+  const moon=solar.moon;
+  const root=useRef(null),orbit=useRef(null);
+  const texture=useMemo(()=>planetTexture(moon),[moon]);
+  const path=useMemo(()=>Array.from({length:97},(_,index)=>orbitOffset(moon,index/96*TAU,moon.orbitRadius)),[moon]);
+  const dayPeriod=clockConfig?.dayPeriodSeconds>0?clockConfig.dayPeriodSeconds:WORLD_CLOCK_DEFAULTS.dayPeriodSeconds;
+  const radius=planetarium?moon.radius:moon.cityRadius;
+  useEffect(()=>()=>texture.dispose(),[texture]);
+
+  useFrame(({camera})=>{
+    if(!root.current)return;
+    const clock=worldClock.clockMode==='server-wall'?worldClock:sampleWorldClock(simulation.current.elapsed,clockConfig);
+    const offset=planetarium
+      ? orbitOffset(moon,moonOrbitAngle(clock.elapsedSeconds,dayPeriod,moon),moon.orbitRadius)
+      : cityMoonOffset(clock,moon.cityDistance);
+    root.current.visible=offset!==null;
+    if(!offset)return;
+
+    if(planetarium){
+      orbit.current?.position.fromArray(clock.earthPosition);
+      root.current.position.fromArray(clock.earthPosition);
+    }else{
+      root.current.position.copy(camera.position);
+    }
+    root.current.position.x+=offset[0];
+    root.current.position.y+=offset[1];
+    root.current.position.z+=offset[2];
+    root.current.rotation.y=-Math.atan2(-offset[2],-offset[0]);
+  });
+
+  return <>
+    {planetarium&&<group ref={orbit}><Line points={path} color={moon.orbitColor} lineWidth={.8} transparent opacity={.62} fog={false} toneMapped={false}/></group>}
+    <group ref={root} visible={false} name="PREP_MOON">
+      <mesh>
+        <sphereGeometry args={[radius,32,24]}/>
+        {planetarium
+          ? <meshStandardMaterial map={texture} roughness={.92} emissiveMap={texture} emissive="#ffffff" emissiveIntensity={.28} fog={false}/>
+          : <meshBasicMaterial map={texture} toneMapped={false} fog={false}/>}
+      </mesh>
+      {!planetarium&&<sprite scale={[radius*4.4,radius*4.4,1]}><spriteMaterial map={glow} color="#c8d8ff" transparent opacity={.15} depthWrite={false} fog={false} toneMapped={false} blending={AdditiveBlending}/></sprite>}
+      {planetarium&&<Html position={[0,-radius-1.3,0]} center zIndexRange={[1,0]} style={{pointerEvents:'none',color:'#e4e9f4',fontSize:11,textShadow:'0 1px 8px #000'}}>{moon.label}</Html>}
+    </group>
+  </>;
+}
+
 export default function SolarSky({simulation,clockConfig,planetarium=false}) {
   const clock=sampleWorldClock(0,clockConfig),glow=useMemo(()=>glowTexture(),[]);
   const sun=useMemo(()=>planetTexture({colors:['#ff9b35','#fff2c2'],surface:'cloud',orbitRatio:2.3}),[]);
@@ -141,5 +194,6 @@ export default function SolarSky({simulation,clockConfig,planetarium=false}) {
       {planetarium&&<Html position={[0,-solar.sunRadius-2,0]} center zIndexRange={[1,0]} style={{pointerEvents:'none',color:'#ffd98b',fontSize:12,textShadow:'0 1px 8px #000'}}>SOL</Html>}
     </group>
     {solar.planets.map(planet=><Planet key={planet.id} planet={planet} simulation={simulation} clockConfig={clockConfig} planetarium={planetarium} glow={glow}/>)}
+    <Moon simulation={simulation} clockConfig={clockConfig} worldClock={clock} planetarium={planetarium} glow={glow}/>
   </group>;
 }

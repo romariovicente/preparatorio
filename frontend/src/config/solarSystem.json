@@ -26,6 +26,7 @@
     {"id":"uranus","label":"Urano","orbitRatio":2.58,"radius":1.18,"periodEarthYears":84.02,"phaseDeg":202,"inclinationDeg":-51,"nodeDeg":34,"orbitColor":"#a2e5f7","colors":["#5997a7","#b0dbe1"],"surface":"cloud","spinRatio":1.4},
     {"id":"neptune","label":"Netuno","orbitRatio":3.02,"radius":1.14,"periodEarthYears":164.8,"phaseDeg":110,"inclinationDeg":38,"nodeDeg":-32,"orbitColor":"#7dadff","colors":["#173978","#507fcd"],"surface":"cloud","spinRatio":1.5}
   ],
+  "moon":{"label":"Lua","radius":0.36,"orbitRadius":4.2,"periodEarthDays":27.3,"phaseDeg":35,"inclinationDeg":5.1,"nodeDeg":12,"orbitColor":"#bec7db","colors":["#79818f","#f4f0e5"],"surface":"moon","cityDistance":120,"cityRadius":3.2},
   "earthCityMarker":{"latitudeDeg":-9.75,"longitudeDeg":-36.66,"label":"Arapiraca · PREPARATÓRIO"},
   "earthLandColor":"#66794d",
   "earthDesertColor":"#b7a174",
