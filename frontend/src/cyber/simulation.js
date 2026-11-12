@@ -3,6 +3,7 @@ import {HOSPITAL_SCRUB_COLOR} from '../network/playerIdentity.js';
 import {resolveCarSource,safeVehicleCopy,canEnterCar} from './carInteraction.js';
 import {resolveMotorcycle,nearestMotorcycle} from './motorcycleInteraction.js';
 import {resolveTruckProfile,TRAILER_DEFINITIONS,moveTruck,stopTruck,safeTruckCopy,truckColliders,truckPositionBlocked,truckExitPosition} from './truckInteraction.js';
+import {changeVehicleLights,vehicleLightingProfile} from './vehicleLighting.js';
 import {playableCityBounds} from '../config/cityBounds.js';
 import deliveryConfigRaw from '../config/newDeliveryWorld.json' with {type:'json'};
 const deliveryConfig=resolveAssetReferences(deliveryConfigRaw);
@@ -420,6 +421,17 @@ export function applyCyberAction(state, action, context = {}) {
     if(state.mode!=='car')return fail('Entre no carro para operar os vidros laterais.');
     const windowsOpen=!state.carControls?.windowsOpen;
     return update({carControls:{...state.carControls,windowsOpen}},windowsOpen?'Vidros laterais baixados. O vidro traseiro permanece fechado.':'Vidros laterais fechados.');
+  }
+  if(action.type==='VEHICLE_LIGHTS'){
+    const kind=state.mode;
+    if(kind!=='car'&&kind!=='truck')return fail('Entre no veículo para ajustar os faróis.');
+    const vehicle=state.personalVehicles[kind];
+    if(!vehicle)return fail('Entre no veículo para ajustar os faróis.');
+    const sourceId=kind==='truck'?resolveTruckProfile(vehicle.sourceId)?.id:resolveCarSource(vehicle.sourceId??'car')?.asset.sourceId;
+    const profile=vehicleLightingProfile(sourceId);
+    const lights=profile&&changeVehicleLights(profile,vehicle.lights,action);
+    if(!lights)return fail('Este comando de iluminação não está disponível neste veículo.');
+    return update({personalVehicles:{...state.personalVehicles,[kind]:{...vehicle,lights}}},'');
   }
   if(action.type==='PARK'){
     return applyCyberAction(state,{type:'STORE_VEHICLE'},context);

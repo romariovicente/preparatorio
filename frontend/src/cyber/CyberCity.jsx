@@ -40,6 +40,9 @@ import {createClassroomRuntime,classroomColliders,classroomZones,openClassroomDo
 import {getDeliveryReplacement,newDeliveryColliders,newDeliveryZones,newDeliveryHidePrefixes,resolveDeliveryParking} from './newDeliveryWorld.js';
 import CarModel from './CarModel.jsx';
 import TruckModel from './TruckModel.jsx';
+import VehicleLights from './VehicleLights.jsx';
+import VehicleLightControls from './VehicleLightControls.jsx';
+import {vehicleLightingProfile} from './vehicleLighting.js';
 import {listTruckProfiles,resolveTruckProfile,resolveTruckTrailer,TRAILER_DEFINITIONS,truckColliders} from './truckInteraction.js';
 import BusModel from './BusModel.jsx';
 import BusControls from './BusControls.jsx';
@@ -191,7 +194,7 @@ function Actor({asset,snapshot,simulation,tractorRef,held,displayName,onReady}) 
 function truckVisualKey(truck) {
   return truck?`personal-truck:${truck.sourceId}:${truck.trailer??'none'}`:'base-truck';
 }
-function Vehicle({id,simulation,personal=false,vehicleState,onAsk,onSelect,onTruckPositioned}) {
+function Vehicle({id,simulation,personal=false,vehicleState,illuminate=false,lightsPowered=false,daylight=false,onAsk,onSelect,onTruckPositioned}) {
   const truckProfile=id==='truck'?resolveTruckProfile(personal?vehicleState?.sourceId:'truck'):null;
   const truckKey=id==='truck'?truckVisualKey(personal?vehicleState:null):null;
   const trailer=truckProfile&&personal&&vehicleState?resolveTruckTrailer(vehicleState):null;
@@ -230,8 +233,10 @@ function Vehicle({id,simulation,personal=false,vehicleState,onAsk,onSelect,onTru
   });
   const driver=preferredCharacter;
   const liveBus=BUS_IDS.includes(id)?sampleLiveBus(simulation.current,id):null;
+  const lightProfile=personal&&vehicleLightingProfile(id==='truck'?truckProfile?.id:asset?.sourceId);
   return asset?<group ref={group} userData={{dynamicCollider:true}} onClick={onSelect?event=>{event.stopPropagation();onSelect(personal&&id==='car'?'personal-car':personal&&id==='mototaxi'?'personal-moto':id);}:undefined}>
     {id==='truck'?<TruckModel simulation={simulation} profile={truckProfile} definition={trailer} onTrailerPositioned={onTrailerPositioned}/>:id==='car'?<CarModel asset={asset} simulation={simulation} personal={personal} open={personal&&simulation.current.carControls?.doorOpen}/>:id==='mototaxi'?<MotorcycleModel asset={asset} simulation={simulation} personal={personal}/>:liveBus?<BusModel asset={asset} simulation={simulation} id={id}/>:<ShadowedModel asset={asset} height={asset.height??(id==='tractor'?2.2:id==='harvester'?3.5:3.2)}/>}
+    {lightProfile&&<VehicleLights profile={lightProfile} value={vehicleState?.lights} powered={lightsPowered} illuminate={illuminate} daylight={daylight}/>}
     {TRANSIT_ROUTES[id]&&driver&&liveBus?.control!=='player'&&<group position={liveBus?BUS_DEFINITIONS[id].driverSeat:[.6,1.1,6]}><CityAssetBoundary label="motorista" assetUrls={[driver.url]}><SeatedModel asset={driver}/></CityAssetBoundary><Html position={[0,1.8,0]} center distanceFactor={12} zIndexRange={[1,0]}><button className="cyber-world-label" onClick={event=>{event.stopPropagation();onAsk('guide',liveBus?'Motorista do ônibus':'Maquinista do trem');}}>Conversar com {liveBus?'motorista':'maquinista'}</button></Html></group>}
   </group>:null;
 }
@@ -453,6 +458,8 @@ export default function CyberCity() {
   const closestCar=nearestInteractiveCar(snapshot.position,snapshot.personalVehicles.car);
   const selectedCar=selectedCarId==='personal-car'&&snapshot.personalVehicles.car?{...resolveCarSource(snapshot.personalVehicles.car.sourceId??'car'),id:'personal-car',position:snapshot.personalVehicles.car}:resolveCarSource(selectedCarId);
   const contextCar=snapshot.mode==='car'?{...resolveCarSource(snapshot.personalVehicles.car?.sourceId??'car'),id:'personal-car',position:snapshot.personalVehicles.car}:selectedCar??closestCar;
+  const carLightProfile=snapshot.mode==='car'&&vehicleLightingProfile(contextCar?.asset?.sourceId);
+  const truckLightProfile=snapshot.mode==='truck'&&vehicleLightingProfile(currentTruckProfile?.id);
   const closestMoto=nearestMotorcycle(snapshot.position,snapshot.personalVehicles.mototaxi);
   const personalMoto=snapshot.personalVehicles.mototaxi?{...resolveMotorcycle(snapshot.personalVehicles.mototaxi.sourceId??'mototaxi'),id:'personal-moto',position:snapshot.personalVehicles.mototaxi}:null;
   const contextMoto=snapshot.mode==='mototaxi'?personalMoto:selectedMotoId==='personal-moto'?personalMoto:resolveMotorcycle(selectedMotoId)??closestMoto;
@@ -709,7 +716,9 @@ export default function CyberCity() {
         <Actor asset={character} snapshot={snapshot} simulation={simulation} tractorRef={tractorRef} held={held} displayName={playerName} onReady={onCharacterReady}/>
       </Suspense>
       {activeTruckProfile&&(personalTruck||ready)&&<CityAssetBoundary key={activeTruckProfile.id} label={activeTruckProfile.label} assetUrls={[activeTruckProfile.url]}>
-        <Vehicle id="truck" personal={Boolean(personalTruck)} vehicleState={personalTruck} simulation={simulation} onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
+        <Vehicle id="truck" personal={Boolean(personalTruck)} vehicleState={personalTruck} simulation={simulation}
+          illuminate={!spaceView&&!privateUrl} lightsPowered={snapshot.mode==='truck'} daylight={!clock.night}
+          onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
       </CityAssetBoundary>}
       <HospitalPatientFlow entries={hospitalPatientCharacters} simulation={simulation} ready={ready} onInspect={setNotice}/>
       {ready&&near(snapshot.position,mechanicWorkshopZone.position,42)&&<MechanicWorkshop/>}
@@ -723,7 +732,9 @@ export default function CyberCity() {
         <BuildingDoors doors={cityDoors} simulation={simulation} onToggle={toggleDoor} hospitalRuntime={hospitalRuntime} onNotice={setNotice} players={shared.state.players}/>
         <CityAssetBoundary label="ônibus urbano"><Vehicle id="bus" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="ônibus articulado"><Vehicle id="bus-brt" simulation={simulation} onAsk={converse} onSelect={selectBus}/></CityAssetBoundary><CityAssetBoundary label="trem"><Vehicle id="train" simulation={simulation} onAsk={converse}/></CityAssetBoundary>
         {Object.keys(DRIVE_VEHICLES).filter(id=>id!=='truck'&&baseVehicleIsVisible(id,snapshot.personalVehicles)).map(id=><CityAssetBoundary key={`base-${id}`} label={id}><Vehicle id={id} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
-        {Object.keys(snapshot.personalVehicles).filter(id=>id!=='truck').map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal vehicleState={snapshot.personalVehicles[id]} simulation={simulation} onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
+        {Object.keys(snapshot.personalVehicles).filter(id=>id!=='truck').map(id=><CityAssetBoundary key={`personal-${id}`} label={id}><Vehicle id={id} personal vehicleState={snapshot.personalVehicles[id]} simulation={simulation}
+          illuminate={id==='car'&&!spaceView&&!privateUrl} lightsPowered={id==='car'&&Boolean(snapshot.carControls?.engineOn)} daylight={!clock.night}
+          onSelect={id==='mototaxi'?selectMoto:id==='car'?selectCar:selectDrive}/></CityAssetBoundary>)}
         {benches.filter(bench=>bench.id!=='bench-west').map(bench=><AssetProp key={bench.id} id="bench" height={1} position={[bench.position.x,0,bench.position.z]} onClick={()=>commit({type:'SIT',benchId:bench.id})}/>)}
         {shared.state.objects.filter(object=>object.position).map(object=><SharedProp key={object.id} object={object} template={interactionRooms.cyber.templates.find(t=>t.id===object.templateId)} selected={object.id===selectedObjectId} onSelect={selectObject}/>)}
         {others.map(([id,player])=><RemoteActor key={id} player={player} actorId={id} world={shared.state}/>)}
@@ -753,6 +764,12 @@ export default function CyberCity() {
     {contextCar&&(snapshot.mode==='car'||snapshot.mode==='foot'&&vehicleContext?.kind==='car')&&!spaceView&&!privateUrl&&<aside className="cyber-car-context" aria-label="Interação com o carro" data-car-id={contextCar.id}>
       <div><strong>{contextCar.label}</strong>{selectedCarId&&snapshot.mode==='foot'&&<button aria-label="Desmarcar carro" onClick={()=>setSelectedCarId(null)}>×</button>}</div>
       {snapshot.mode==='foot'?<><button disabled={!canEnterContextCar} onClick={()=>enterCar(contextCar.id)}>{snapshot.carEntry?'Abrindo a porta…':'Entrar no carro · F'}</button><small>{canEnterContextCar?'F também abre a porta e inicia a entrada.':'Aproxime-se do carro e aguarde terminar a ação atual para entrar.'}</small></>:snapshot.mode==='car'?<><p>Motor {snapshot.carControls?.engineOn?'ligado':'desligado'} · porta {snapshot.carControls?.doorOpen?'aberta':'fechada'}</p><div className="cyber-action-grid"><button disabled={snapshot.carControls?.doorOpen} onClick={()=>commit({type:'CAR_ENGINE'})}>{snapshot.carControls?.engineOn?'Desligar':'Ligar'} motor</button><button disabled={snapshot.carControls?.engineOn} onClick={()=>commit({type:'CAR_DOOR'})}>{snapshot.carControls?.doorOpen?'Fechar':'Abrir'} porta</button><button onClick={()=>commit({type:'CAR_WINDOWS'})}>{snapshot.carControls?.windowsOpen?'Fechar':'Baixar'} vidros laterais</button><button disabled={Boolean(snapshot.carExit)} onClick={()=>commit({type:'CAR_EXIT'})}>{snapshot.carExit?'Abrindo a porta…':'Sair do carro · F'}</button></div></>:<small>Saia do veículo atual para entrar neste carro.</small>}
+      {carLightProfile&&<VehicleLightControls profile={carLightProfile} value={snapshot.personalVehicles.car?.lights}
+        powered={Boolean(snapshot.carControls?.engineOn)} onChange={change=>commit({type:'VEHICLE_LIGHTS',...change})}/>}
+    </aside>}
+    {truckLightProfile&&!spaceView&&!privateUrl&&<aside className="cyber-car-context" aria-label="Iluminação do caminhão">
+      <VehicleLightControls profile={truckLightProfile} value={personalTruck?.lights} powered
+        onChange={change=>commit({type:'VEHICLE_LIGHTS',...change})}/>
     </aside>}
     {showMotoContext&&!showBusContext&&!spaceView&&!privateUrl&&snapshot.mode!=='car'&&<aside className="cyber-car-context cyber-moto-context" aria-label="Interação com a moto" data-moto-id={contextMoto.id}>
       <div><strong>{contextMoto.label}</strong><button aria-label="Desmarcar moto" onClick={()=>setSelectedMotoId(null)}>×</button></div>

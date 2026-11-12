@@ -12,6 +12,11 @@
 .cyber-car-context>div:first-child button {padding:0;width:28px;min-height:28px;}
 .cyber-car-context strong {font-size:13px;}.cyber-car-context>button {width:100%;margin:10px 0 7px;background:#84e5dc;color:#112e35;font-weight:700;}
 .cyber-car-context small,.cyber-car-context p {display:block;font-size:10px;line-height:1.5;color:#c5e4e5;}.cyber-car-context .cyber-action-grid button {font-size:11px;}
+.cyber-vehicle-lights {display:grid;gap:6px;margin:8px 0 0;padding:8px;border:1px solid #467985;border-radius:8px;font-size:12px;}
+.cyber-vehicle-lights legend {padding:0 4px;}
+.cyber-vehicle-lights label {display:flex;align-items:center;gap:6px;}
+.cyber-vehicle-lights select {margin-left:auto;min-width:0;max-width:100%;padding:4px;color:#eefaff;background:#183455;border:1px solid #5e7399;border-radius:4px;}
+.cyber-vehicle-lights input {margin:0;accent-color:#87e9e1;}
 .cyber-audio {position:absolute;z-index:7;left:24px;top:14px;display:flex;gap:12px;align-items:center;padding:5px 8px;border:1px solid #427b89;border-radius:9px;background:#102b3be8;}
 .cyber-audio button {font-size:10px;min-height:28px;padding:4px 8px;}.cyber-audio label {display:flex;align-items:center;gap:6px;font-size:10px;}.cyber-audio input {width:85px;accent-color:#87e9e1;}
 .cyber-heading { position:absolute; left:24px; top:54px; pointer-events:none; text-shadow:0 2px 8px #06102a; max-width:400px; }
