@@ -1081,3 +1081,8 @@ Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesm
 - Origem: https://sketchfab.com/3d-models/oak-trees-pack-17var-lods-seasons-gameready-a5e4e64f9f1d4089bdcc6170a9333393
 - Licença: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 - Alterações: foi extraída somente a hierarquia `Small_oak_tree__001_LOD0`; o objeto foi centralizado e apoiado em Z=0; texturas incorporadas foram limitadas a 1024 px. O arquivo-fonte permanece intacto fora da distribuição pública.
+ 
+## TV da recepção do Hospital PREP
+
+- **TV - Home Theater - RIN**, de CRANEO_ (JLRIN no GLB fornecido). [Modelo original](https://sketchfab.com/3d-models/tv-home-theater-rin-261f4ce4cf9448e5a44e30efe1b03881). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Adaptação para o jogo em `frontend/public/assets/props/PROP_TV_Recepcao_PREP.glb`. Escala de 1,20 m de largura, pivô de parede e orientação ajustados. Materiais e texturas preservados.

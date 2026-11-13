@@ -4,11 +4,26 @@ import {Html,useGLTF} from '@react-three/drei';
 import {HOSPITAL_ASSET_URL,createDoorController,hasNamedAncestor,inspectHospitalModel,PUBLIC_DOOR_PREFIX} from '../hospital/hospitalModel.js';
 import {hospitalReception,HOSPITAL_PLATFORM_URL,markHospitalFloors,markHospitalPlatformFloors,readHospitalDoorColliders,roomDoorwayOccupied} from './hospitalReception.js';
 import {insideBuilding} from './doorGeometry.js';
+import {assetUrl} from '../config/deploymentConfig.js';
 import CityAssetBoundary from './CityAssetBoundary.js';
 import hospitalChairPlan from '../config/hospitalChairs.json';
 import HospitalChairs from './HospitalChairs.jsx';
 import HospitalEquipment from './HospitalEquipment.jsx';
 import {hideHospitalChairRoots,restoreHospitalChairRoots,hospitalChairAssetUrl} from './hospitalChairs.js';
+
+const receptionTvUrl=assetUrl('/assets/props/PROP_TV_Recepcao_PREP.glb');
+
+function ReceptionTv(){
+  const {scene}=useGLTF(receptionTvUrl);
+  const model=useMemo(()=>scene.clone(true),[scene]);
+  return <group position={[7.2,2.1,4.26]}>
+    <mesh position={[0,0,-.08]}>
+      <boxGeometry args={[.38,.23,.16]}/>
+      <meshStandardMaterial color="#242a2d" roughness={.65}/>
+    </mesh>
+    <primitive object={model} dispose={null}/>
+  </group>;
+}
 
 function HospitalPlatform(){
   const {scene}=useGLTF(HOSPITAL_PLATFORM_URL);
@@ -59,6 +74,7 @@ export default function HospitalReception({building,door,simulation,runtime,onTo
   }
   return <group name="PREP_HOSPITAL_RECEPTION_PLAYABLE" position={hospitalReception.position} userData={{dynamicCollider:true,hospitalModule:true}}>
     <CityAssetBoundary label="entrada do hospital"><HospitalPlatform/></CityAssetBoundary>
+    <CityAssetBoundary label="TV da recepção" assetUrls={[receptionTvUrl]}><ReceptionTv/></CityAssetBoundary>
     {hospitalChairPlan.ready&&<CityAssetBoundary label="cadeiras do hospital" assetUrls={[hospitalChairAssetUrl(hospitalChairPlan)]}><HospitalChairs plan={hospitalChairPlan} onReady={setChairsReady}/></CityAssetBoundary>}
     <primitive object={prepared.scene} dispose={null} onClick={event=>{
       if(hasNamedAncestor(event.object,PUBLIC_DOOR_PREFIX)){event.stopPropagation();onToggle(building);return;}
