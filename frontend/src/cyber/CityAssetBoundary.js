@@ -13,13 +13,13 @@ class OptionalAssetErrorBoundary extends Component {
       retry:()=>this.setState({failed:false})});
   }
   componentWillUnmount(){this.unregister?.();}
-  render(){return this.state.failed?null:this.props.children;}
+  render(){return this.state.failed?this.props.fallback:this.props.children;}
 }
 
 // Each secondary model owns its pending/error state. A distant vehicle or
 // interior must not prevent the already loaded ground and player from committing.
-export default function CityAssetBoundary({children,label='objeto da cidade',assetUrls}){
-  return createElement(OptionalAssetErrorBoundary,{label,assetUrls},createElement(Suspense,{fallback:null},children));
+export default function CityAssetBoundary({children,label='objeto da cidade',assetUrls,fallback=null}){
+  return createElement(OptionalAssetErrorBoundary,{label,assetUrls,fallback},createElement(Suspense,{fallback},children));
 }
 
 // The world container must never suspend all ready siblings for one model.

@@ -723,7 +723,7 @@ export default function CyberCity() {
           onSelect={selectDrive} onTruckPositioned={onTruckPositioned}/>
       </CityAssetBoundary>}
       <HospitalPatientFlow entries={hospitalPatientCharacters} simulation={simulation} ready={ready} onInspect={setNotice}/>
-      {ready&&near(snapshot.position,mechanicWorkshopZone.position,42)&&<MechanicWorkshop/>}
+      {coreLoaded.environment&&near(snapshot.position,mechanicWorkshopZone.position,42)&&<MechanicWorkshop/>}
       {ready&&<CityAssetGroup label="objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>

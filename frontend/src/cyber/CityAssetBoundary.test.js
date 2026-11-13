@@ -17,6 +17,16 @@ test('a pending optional model does not hide already loaded city siblings',()=>{
 });
 
 test('a ready optional model renders its own geometry content',()=>{
-  const html=renderToString(createElement(CityAssetBoundary,{label:'banco'},createElement('span',null,'Banco carregado')));
+  const fallback=createElement('span',null,'Banco provisório');
+  const html=renderToString(createElement(CityAssetBoundary,{label:'banco',fallback},createElement('span',null,'Banco carregado')));
   assert.match(html,/Banco carregado/);
+  assert.doesNotMatch(html,/Banco provisório/);
+});
+
+test('a pending optional model shows its configured substitute',()=>{
+  const pending=new Promise(()=>{});
+  function WaitingWorkshop(){throw pending;}
+  const fallback=createElement('span',null,'Oficina Mecânica');
+  const html=renderToString(createElement(CityAssetBoundary,{label:'oficina',fallback},createElement(WaitingWorkshop)));
+  assert.match(html,/Oficina Mecânica/);
 });
