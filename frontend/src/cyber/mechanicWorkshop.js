@@ -14,3 +14,9 @@ export const mechanicWorkshopCollider = {
   w: 12.85,
   d: 17.3,
 };
+
+export function workshopArrivalCamera(action, position) {
+  if (action.type !== 'TELEPORT' || action.zoneId !== mechanicWorkshopZone.id) return null;
+  const {x,y,z} = position;
+  return {position:[x-12,y+4,z-2.8],target:[x,y+1,z]};
+}

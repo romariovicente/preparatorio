@@ -8,7 +8,7 @@ import {characterRoster,characterOptions,hospitalPatientCharacters,rosterPlan,ro
 import CityLivingWorld from './CityLivingWorld.jsx';
 import HospitalPatientFlow from './HospitalPatientFlow.jsx';
 import MechanicWorkshop from './MechanicWorkshop.jsx';
-import {mechanicWorkshopCollider,mechanicWorkshopZone} from './mechanicWorkshop.js';
+import {mechanicWorkshopCollider,mechanicWorkshopZone,workshopArrivalCamera} from './mechanicWorkshop.js';
 import StreetLighting from './StreetLighting.jsx';
 import {livingWorldZones,livingWorldColliders,campusBenchLocations} from './cityLivingWorld.js';
 import {prepareLivingWorldDecorations} from './livingWorldDecorations.js';
@@ -538,14 +538,16 @@ export default function CyberCity() {
     const result=applyCyberAction(simulation.current,action,{zones:[...zones,...newDeliveryZones,...classroomZones,...transportDestinations,elevatorDestination,...drives,...parkingZones],benches:actualBenches,tractor:tractorRef.current,parking:parkingPlaces,obstacles,carrying:Boolean(held)});
     if(result.ok){
       const previousMode=simulation.current.mode,from=simulation.current.position,to=result.state.position;
+      const workshopCamera=workshopArrivalCamera(action,to);
       if(!spaceView){
-        controls.current?.object.position.add(new Vector3(to.x-from.x,to.y-from.y,to.z-from.z));
-        const entryCamera=entryVehicleCamera(previousMode,result.state);
+        if(!workshopCamera)controls.current?.object.position.add(new Vector3(to.x-from.x,to.y-from.y,to.z-from.z));
+        const entryCamera=workshopCamera??entryVehicleCamera(previousMode,result.state);
         if(entryCamera&&controls.current){controls.current.object.position.fromArray(entryCamera.position);controls.current.target.fromArray(entryCamera.target);controls.current.update();}
       }
       simulation.current=result.state;setSnapshot(result.state);
       audio.play(action.type,{...result.state.carControls,engineOn:BUS_IDS.includes(result.state.mode)?sampleLiveBus(result.state,result.state.mode).engineOn:result.state.mode==='mototaxi'?result.state.motorcycleControls?.engineOn:result.state.carControls?.engineOn});
-      if(!phoneOpen)focusGame();
+      if(workshopCamera&&phoneOpen)closePhone();
+      else if(!phoneOpen)focusGame();
     }
     if(result.message)setNotice(result.message);
     return result;
@@ -805,6 +807,7 @@ export default function CyberCity() {
         })}</>}
         {tab==='routes'&&<>
           <h3>Mobilidade da cidade</h3><p>Veículos percorrem rotas automáticas. Embarque e desembarque somente nas paradas.</p>
+          <button onClick={()=>commit({type:'TELEPORT',zoneId:mechanicWorkshopZone.id})}>Ir à Oficina Mecânica</button>
           <div className="cyber-action-grid"><button onClick={()=>openAssetCatalog('Veículos')}>Veículos no Acervo 3D</button><button onClick={()=>openAssetCatalog('Trens')}>Trens no Acervo 3D</button></div>
           {[[bus,'bus'],[brt,'bus-brt'],[train,'train']].map(([vehicle,id])=><article className="cyber-route" key={id}><h4>{TRANSIT_ROUTES[id].label}</h4><p>{vehicle.stopLabel} · próximo: {vehicle.nextStop}</p><small>{vehicle.control==='player'?'Dirigido por você':vehicle.stopped?`Parado por mais ${vehicle.remaining} s`:`Próxima parada em ${vehicle.remaining} s`}</small><button disabled={snapshot.mode!==id&&(!vehicle.stopped||snapshot.mode!=='foot')} onClick={()=>BUS_IDS.includes(id)?snapshot.mode===id?operateBus('EXIT'):boardBus(id):commit({type:snapshot.mode===id?'EXIT':'BOARD',vehicle:id})}>{snapshot.mode===id?'Desembarcar':'Embarcar'}</button><button disabled={snapshot.mode!=='foot'} onClick={()=>commit({type:'TELEPORT',zoneId:`${id}-boarding`})}>Ir à parada inicial</button></article>)}
           <h4>Sua garagem</h4><p>Apenas um veículo pessoal por vez. Chamar outro recolhe o anterior.</p>
