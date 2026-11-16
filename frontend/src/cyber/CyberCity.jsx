@@ -9,6 +9,8 @@ import CityLivingWorld from './CityLivingWorld.jsx';
 import HospitalPatientFlow from './HospitalPatientFlow.jsx';
 import MechanicWorkshop from './MechanicWorkshop.jsx';
 import {mechanicWorkshopCollider,mechanicWorkshopZone,workshopArrivalCamera} from './mechanicWorkshop.js';
+import FuelStation from './FuelStation.jsx';
+import {fuelStationArrivalCamera,fuelStationColliders,fuelStationZone} from './fuelStation.js';
 import StreetLighting from './StreetLighting.jsx';
 import {livingWorldZones,livingWorldColliders,campusBenchLocations} from './cityLivingWorld.js';
 import {prepareLivingWorldDecorations} from './livingWorldDecorations.js';
@@ -82,8 +84,8 @@ const initialTractor = {x:12,y:0,z:96};
 const prop = id => manifest.props.find(item => item.id === id);
 const near = (position,target,radius=12) => Math.hypot(position.x-target[0],position.z-target[2]) <= radius;
 const shadowSettings = {type:PCFShadowMap};
-const additionalColliders=[...livingWorldColliders,...warpEngineColliders,...rosterObstacles,mechanicWorkshopCollider];
-const zones = [...manifest.zones,...livingWorldZones,...warpEngineZones,...rosterZones,mechanicWorkshopZone];
+const additionalColliders=[...livingWorldColliders,...warpEngineColliders,...rosterObstacles,mechanicWorkshopCollider,...fuelStationColliders];
+const zones = [...manifest.zones,...livingWorldZones,...warpEngineZones,...rosterZones,mechanicWorkshopZone,fuelStationZone];
 const parkingPlaces=resolveDeliveryParking(manifest.parking??DEFAULT_PARKING).map(p=>({...p,label:p.label??p.id.replace(/-/g,' · ')}));
 const costumeFor = asset => costumes.find(item=>item.baseId===asset?.id&&item.reimportValidated);
 const playableCharacters=characterRoster.filter(entry=>entry.controllable).map(entry=>entry.playerAsset);
@@ -538,15 +540,15 @@ export default function CyberCity() {
     const result=applyCyberAction(simulation.current,action,{zones:[...zones,...newDeliveryZones,...classroomZones,...transportDestinations,elevatorDestination,...drives,...parkingZones],benches:actualBenches,tractor:tractorRef.current,parking:parkingPlaces,obstacles,carrying:Boolean(held)});
     if(result.ok){
       const previousMode=simulation.current.mode,from=simulation.current.position,to=result.state.position;
-      const workshopCamera=workshopArrivalCamera(action,to);
+      const destinationCamera=workshopArrivalCamera(action,to)??fuelStationArrivalCamera(action,to);
       if(!spaceView){
-        if(!workshopCamera)controls.current?.object.position.add(new Vector3(to.x-from.x,to.y-from.y,to.z-from.z));
-        const entryCamera=workshopCamera??entryVehicleCamera(previousMode,result.state);
+        if(!destinationCamera)controls.current?.object.position.add(new Vector3(to.x-from.x,to.y-from.y,to.z-from.z));
+        const entryCamera=destinationCamera??entryVehicleCamera(previousMode,result.state);
         if(entryCamera&&controls.current){controls.current.object.position.fromArray(entryCamera.position);controls.current.target.fromArray(entryCamera.target);controls.current.update();}
       }
       simulation.current=result.state;setSnapshot(result.state);
       audio.play(action.type,{...result.state.carControls,engineOn:BUS_IDS.includes(result.state.mode)?sampleLiveBus(result.state,result.state.mode).engineOn:result.state.mode==='mototaxi'?result.state.motorcycleControls?.engineOn:result.state.carControls?.engineOn});
-      if(workshopCamera&&phoneOpen)closePhone();
+      if(destinationCamera&&phoneOpen)closePhone();
       else if(!phoneOpen)focusGame();
     }
     if(result.message)setNotice(result.message);
@@ -724,6 +726,7 @@ export default function CyberCity() {
       </CityAssetBoundary>}
       <HospitalPatientFlow entries={hospitalPatientCharacters} simulation={simulation} ready={ready} onInspect={setNotice}/>
       {coreLoaded.environment&&near(snapshot.position,mechanicWorkshopZone.position,42)&&<MechanicWorkshop/>}
+      {coreLoaded.environment&&near(snapshot.position,fuelStationZone.position,55)&&<FuelStation/>}
       {ready&&<CityAssetGroup label="objetos da cidade">
         <DetailedWorld onSelectCar={selectCar} onSelectMoto={selectMoto} personalVehicles={snapshot.personalVehicles}/>
         <NewDeliveryWorld onInspect={({asset,placement})=>{setNotice(asset.description??placement.label);if(["terminal","bus-stop","parked-vehicle"].includes(placement.role)){setTab("routes");setPhoneOpen(true);}}}/>
@@ -808,6 +811,7 @@ export default function CyberCity() {
         {tab==='routes'&&<>
           <h3>Mobilidade da cidade</h3><p>Veículos percorrem rotas automáticas. Embarque e desembarque somente nas paradas.</p>
           <button onClick={()=>commit({type:'TELEPORT',zoneId:mechanicWorkshopZone.id})}>Ir à Oficina Mecânica</button>
+          <button onClick={()=>commit({type:'TELEPORT',zoneId:fuelStationZone.id})}>Ir ao Posto de Gasolina</button>
           <div className="cyber-action-grid"><button onClick={()=>openAssetCatalog('Veículos')}>Veículos no Acervo 3D</button><button onClick={()=>openAssetCatalog('Trens')}>Trens no Acervo 3D</button></div>
           {[[bus,'bus'],[brt,'bus-brt'],[train,'train']].map(([vehicle,id])=><article className="cyber-route" key={id}><h4>{TRANSIT_ROUTES[id].label}</h4><p>{vehicle.stopLabel} · próximo: {vehicle.nextStop}</p><small>{vehicle.control==='player'?'Dirigido por você':vehicle.stopped?`Parado por mais ${vehicle.remaining} s`:`Próxima parada em ${vehicle.remaining} s`}</small><button disabled={snapshot.mode!==id&&(!vehicle.stopped||snapshot.mode!=='foot')} onClick={()=>BUS_IDS.includes(id)?snapshot.mode===id?operateBus('EXIT'):boardBus(id):commit({type:snapshot.mode===id?'EXIT':'BOARD',vehicle:id})}>{snapshot.mode===id?'Desembarcar':'Embarcar'}</button><button disabled={snapshot.mode!=='foot'} onClick={()=>commit({type:'TELEPORT',zoneId:`${id}-boarding`})}>Ir à parada inicial</button></article>)}
           <h4>Sua garagem</h4><p>Apenas um veículo pessoal por vez. Chamar outro recolhe o anterior.</p>

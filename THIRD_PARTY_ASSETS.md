@@ -2,6 +2,8 @@
 
 Criação e direção do PREPARATÓRIO: **Romario Vicente Amaro**.
 
+O Posto PREP da Via Sul é uma criação original do PREPARATÓRIO, sob direção de **Romario Vicente Amaro**.
+
 Arquivos originais preservados na pasta indicada pelo usuário. Versões derivadas locais: redução de malhas estáticas, união de objetos e texturas até 1024 px. A atribuição abaixo reproduz os metadados dos GLBs; não representa verificação independente da autoria.
 
 Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesma licença. Alguns modelos não incluem licença nos metadados; veja a situação individual abaixo. A autorização de redistribuição desses modelos permanece a confirmar.
