@@ -1,5 +1,7 @@
 # Créditos dos modelos fornecidos pelo criador
 
+Criação e direção do PREPARATÓRIO: **Romario Vicente Amaro**.
+
 Arquivos originais preservados na pasta indicada pelo usuário. Versões derivadas locais: redução de malhas estáticas, união de objetos e texturas até 1024 px. A atribuição abaixo reproduz os metadados dos GLBs; não representa verificação independente da autoria.
 
 Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesma licença. Alguns modelos não incluem licença nos metadados; veja a situação individual abaixo. A autorização de redistribuição desses modelos permanece a confirmar.
@@ -1085,4 +1087,4 @@ Hospital 03: CC BY-NC-SA 4.0, apenas uso não comercial e derivação sob a mesm
 ## TV da recepção do Hospital PREP
 
 - **TV - Home Theater - RIN**, de CRANEO_ (JLRIN no GLB fornecido). [Modelo original](https://sketchfab.com/3d-models/tv-home-theater-rin-261f4ce4cf9448e5a44e30efe1b03881). [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-- Adaptação para o jogo em `frontend/public/assets/props/PROP_TV_Recepcao_PREP.glb`. Escala de 1,20 m de largura, pivô de parede e orientação ajustados. Materiais e texturas preservados.
+- Adaptação e integração no PREPARATÓRIO: **Romario Vicente Amaro**. A TV em `frontend/public/assets/props/PROP_TV_Recepcao_PREP.glb` foi ajustada para 1,20 m de largura, com pivô de parede e orientação para a sala de espera. Materiais e texturas preservados.

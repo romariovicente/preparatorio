@@ -97,7 +97,7 @@ export default function WorldShell(){
           <div className="journey-progress"><div><strong>{missionCount} <span>/ 3 destinos</span></strong><small>{missionCount===3?'Jornada concluída':'Seu futuro começa com um passo'}</small></div><progress max={3} value={missionCount}/></div>
           <button className="journey-next" onClick={()=>select(locations.find(p=>p.id===(INTRO_LOCATIONS.find(id=>!progress.visited.includes(id))??'plaza')))}>{missionCount===3?'Explorar a praça':'Próximo destino'}<ArrowUpRight size={17}/></button>
         </section>}
-        <div className="world-footer"><span>ESTUDE <b>·</b> PRATIQUE <b>·</b> CONSTRUA SEU FUTURO</span><span>Criação de Romário Vicente Amaro</span></div>
+        <div className="world-footer"><span>ESTUDE <b>·</b> PRATIQUE <b>·</b> CONSTRUA SEU FUTURO</span><span>Criação de Romario Vicente Amaro</span></div>
       </section>
     </main>
     {notice&&<div className="world-toast" role="status">{notice}<button aria-label="Fechar aviso" onClick={()=>setNotice('')}><X size={16}/></button></div>}
